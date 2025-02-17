@@ -4,16 +4,17 @@
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
-* Nome completo do aluno 5
-* Nome completo do aluno 6
+* Aline Cristina Braz de Oliveira
+* Ana Carolina Costa Coimbra
+* Artur Costa Cavalcante Coelho
+* Henrique Carvalho
+* Julia Rocha Fiorini
+* Renato Douglas Nascimento Silva De Oliveira
+* Vicenzo Fonseca de Mello Souza
 
 ## Professor
 
-* Nome completo do professor 1
+* Michelle Hanne Soares de Andrade
 * Nome completo do professor 2
 * Nome completo do professor 3
 
