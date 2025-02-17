@@ -7,7 +7,7 @@
 * Aline Cristina Braz de Oliveira
 * Ana Carolina Costa Coimbra
 * Artur Costa Cavalcante Coelho
-* Henrique Carvalho
+* Henrique Alvarenga Ribeiro Carvalho
 * Julia Rocha Fiorini
 * Renato Douglas Nascimento Silva De Oliveira
 * Vicenzo Fonseca de Mello Souza
