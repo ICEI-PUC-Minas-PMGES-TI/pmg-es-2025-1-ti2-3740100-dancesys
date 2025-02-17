@@ -1,6 +1,6 @@
-# Nome do projeto
+# DanceSys
 
-Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
+   A necessidade de elaboração de um sistema que gerencie as atividades de uma escola de dança surge, primeiramente, da falta de um sistema adequado no mercado e da inadequação de sistemas existentes para tratarem uma demanda tão específica.
 
 ## Integrantes
 
