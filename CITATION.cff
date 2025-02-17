@@ -2,18 +2,20 @@ cff-version: 1.0.1
 message: Please cite this software using these metadata.
 title: 
 authors:
-  - family-names: sobrenome do aluno 1
-    given-names: Nome do aluno 1 
-  - family-names: sobrenome do aluno 2
-    given-names: Nome do aluno 2 
-  - family-names: sobrenome do aluno 3
-    given-names: Nome do aluno 3 
-  - family-names: sobrenome do aluno 4
-    given-names: Nome do aluno 4 
-  - family-names: sobrenome do aluno 5
-    given-names: Nome do aluno 5 
-  - family-names: sobrenome do aluno 6
-    given-names: Nome do aluno 6 
+  - family-names: Coelho
+    given-names: Artur
+  - family-names: Fonseca
+    given-names: Vicenzo
+  - family-names: Rocha
+    given-names: Julia 
+  - family-names: Carvalho
+    given-names: Henrique
+  - family-names: Nascimento
+    given-names: Renato Douglas
+  - family-names: Coimbra
+    given-names: Ana Carolina 
+  - family-names: Oliveira
+    given-names: Aline 
   - name-suffix: Professora
     affiliation: PUC Minas
     family-names: Alonso Veloso
@@ -23,8 +25,8 @@ authors:
     family-names: Baroni De Carvalho
     given-names: Juliana Amaral 
 keywords:
-  - 
-  - 
+  - DanceSys
+  - Dança
 repository-code: 
 license: CC-BY-4.0
 version: 1.0.0
