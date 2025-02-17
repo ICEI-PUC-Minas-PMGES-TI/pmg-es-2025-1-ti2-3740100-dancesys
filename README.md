@@ -15,8 +15,8 @@
 ## Professor
 
 * Michelle Hanne Soares de Andrade
-* Nome completo do professor 2
-* Nome completo do professor 3
+* Joana gabriela Ribeiro de Souza
+* Danilo de Quadros Maia Filho
 
 ## Instruções de utilização
 
