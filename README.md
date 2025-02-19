@@ -1,6 +1,8 @@
 # DanceSys
 
-   A necessidade de elaboração de um sistema que gerencie as atividades de uma escola de dança surge, primeiramente, da falta de um sistema adequado no mercado e da inadequação de sistemas existentes para tratarem uma demanda tão específica.
+   A proposta deste projeto decorre da necessidade de um sistema especializado para gestão de escolas de dança, uma vez que as soluções existentes no mercado não atendem efetivamente às necessidades específicas deste segmento. Gerenciar uma escola de dança envolve vários processos, como organização de aulas, agendamento de aulas, controle de frequência, monitoramento do desempenho dos alunos e comunicação entre professores, alunos e administradores.
+
+   Nosso objetivo é desenvolver um sistema que integre alunos, professores e administradores para criar um ambiente online intuitivo e eficiente.
 
 ## Integrantes
 
