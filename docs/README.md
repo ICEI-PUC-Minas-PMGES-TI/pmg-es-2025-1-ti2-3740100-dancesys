@@ -1,27 +1,29 @@
-# TITULO DO PROJETO
+# DanceSys
 
 
-**Nome completo do Aluno 1, email do aluno 1**
+**Aline Cristina Braz de Oliveira, acboliveira@sga.pucminas.br**
 
-**Nome completo do Aluno 2, email do aluno 2**
+**Ana Carolina Costa Coimbra, ana.carolina@sga.pucminas.br**
 
-**Nome completo do Aluno 3, email do aluno 3**
+**Artur Costa Cavalcante Coelho, acccoelho@sga.pucminas.br**
 
-**Nome completo do Aluno 4, email do aluno 4**
+**Henrique Moreira Gomes de Carvalho, henrique.carvalho.1521318@sga.pucminas.br**
 
-**Nome completo do Aluno 5, email do aluno 5**
+**Julia Rocha Fiorini, jfiorini@sga.pucminas.br**
 
-**Nome completo do Aluno 6, email do aluno 6**
+**Renato Douglas Nascimento Silva De Oliveira, rdnsoliveira@sga.pucminas.br**
+
+**Vicenzo Fonseca de Mello Souza, vicenzo.fonseca@sga.pucminas.br**
 
 ---
 
 Professores:
 
-** Prof. Nome do Prof 1 **
+** Michelle Hanne Soares de Andrade **
 
-** Prof. Nome do Prof 2 **
+** Joana gabriela Ribeiro de Souza **
 
-** Prof. Nome do Prof 3 **
+** Danilo de Quadros Maia Filho **
 
 ---
 
@@ -31,47 +33,47 @@ _Instituto de Informática e Ciências Exatas – Pontifícia Universidade Cató
 
 ---
 
-_**Resumo**. Escrever aqui o resumo. O resumo deve contextualizar rapidamente o trabalho, descrever seu objetivo e, ao final, 
-mostrar algum resultado relevante do trabalho (até 10 linhas)._
+_**Resumo**. Este projeto visa desenvolver um sistema especializado para a gestão de escolas de dança, abordando necessidades específicas não plenamente atendidas pelas soluções atuais. O sistema integrará alunos, professores e administradores, facilitando processos como organização e agendamento de aulas, controle de frequência, monitoramento do desempenho dos alunos e comunicação interna. Além disso, proporcionará autonomia aos alunos para gerenciar suas aulas, otimizará a gestão financeira e aprimorará a coordenação de eventos escolares. 
 
 ---
 
 
 ## 1. Introdução
 
-_Apresente uma frase introdutória definindo o que será apresentado._
+_A dança desempenha um papel significativo na cultura brasileira, refletindo a diversidade e a riqueza das manifestações artísticas do país. Atualmente, o Brasil conta com um número considerável de escolas de dança, que formam bailarinos e bailarinas de destaque no cenário nacional e internacional. A gestão dessas instituições envolve desafios complexos, incluindo controle de matrículas, organização de turmas e horários, acompanhamento financeiro e comunicação eficaz entre alunos, professores e administradores. Embora existam sistemas de gestão no mercado, muitos não atendem às especificidades das escolas de dança, como a necessidade de flexibilidade nos agendamentos e a gestão detalhada do desempenho artístico dos alunos. Portanto, há uma demanda clara por uma solução integrada e personalizada que aborde essas particularidades, otimizando a administração e melhorando a experiência de todos os envolvidos._
 
 ### 1.1 Contextualização
 
-_Na **contextualização**, o aluno deve dizer do que se trata o trabalho, em que área ou contexto se insere.
-A **contextualização** deve ser desenvolvida de algo mais genérico para algo mais específico. 
-A citação de pesquisas quantitativas é bem aceita aqui (corretamente referenciadas)._
+_Esse sistema deve ser desenvolvido para uma escola de dança_
 
 ### 1.2 Problema
 
-_Em seguida o aluno deve caminhar a contextualização para descrever o **problema** que o trabalho trata. 
-O **problema** pode ser algo vivido em uma empresa específica. Neste caso, o aluno deve rapidamente apresentar 
-o cenário de problema da empresa. A empresa só deve ser citada explicitamente se o aluno tiver autorização 
-para tal._
+_Concluímos que uma escola de dança seria uma demanda adequada para o desenvolvimento desse trabalho, uma vez que era nítido os tópicos onde seria necessário aprimoramento:
+A falta de comunicação entre administração e alunos, bem como uma melhoria expressiva no gerenciamneto financeiro e uma gestão fixa de horários que facilite o agendamento de aulas. Tambem é um problema a falta de autonomia do aluno ao se relacionar com o aplicativo e com a escola, sem a necessidade de procurar alguem da gerencia_
 
 ### 1.3 Objetivo geral
 
-_O aluno deve escrever um pequeno parágrafo ou frase com o **objetivo geral** do trabalho. 
-O objetivo deve ser bem direto, específico e definido com verbos de ação (elaborar, propor, avaliar, comparar, desenvolver, etc.). No caso específico deste projeto, o objetivo deste trabalho é desenvolver um sistema para automação de processos para um problema específico._
+_Criar um ambiente online que estenda a escola para os alunos e professores e crie uma ponte de gerenciamento com a administração da escola.
+Facilitando a conexão e comunicação de todas as partes envolvidas._
 
 #### 1.3.1 Objetivos específicos
 
-_Apresente também alguns (pelo menos 2) **objetivos específicos** dependendo de onde você vai querer 
-concentrar sua prática investigativa, ou como você irá aprofundar seu trabalho._
+_Os objetivo estecificos são:
+Autonomia dos alunos ao marcar e desmarcar aulas;
+Fazer a gestão financeira de alunos e professores;
+Facilitar comunicação entre escola e aluno;
+Ajudar no gerenciamento de eventos da escola._
 
 ### 1.4 Justificativas
 
-_Mostre também as **justificativas** para o 
-desenvolvimento do seu trabalho e, caso deseje, destaque alguma contribuição do trabalho._
+_A  administração de uma escola de dança envolve diversas tarefas, como controle de matrículas, gestão de turmas e horários, acompanhamento financeiro e comunicação com alunos e professores. Quando esses processos são feitos manualmente ou com ferramentas inadequadas, podem ocorrer erros, perda de informações e dificuldades na organização, impactando diretamente a eficiência da escola.
+Um Sistema de Gerenciamento de Escola de Dança é essencial para otimizar a administração, garantindo maior controle sobre as operações e melhorando a experiência dos alunos e professores._
 
 ## 2. Participantes do processo
 
-_Apresente aqui os perfis dos usuários-chave do sistema. Diversas são as informações que podem ser relevantes para a definição dos perfis dos usuários, tais como idade, gênero, aspectos culturais, nível de educação, entre outros. A pesquisa de mercado pode ser uma ferramenta poderosa para se identificar e caracterizar os perfis de usuários. Apresente claramente o papel a ser desempenhado por cada usuário._
+_Alunos - incluso pais e responsáveis;
+Professores;
+Administradores - financeiros, gestores e coordenadores criativos._
 
 ## 3. Modelagem do processo de negócio
 
