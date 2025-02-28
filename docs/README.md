@@ -44,7 +44,9 @@ _A dança desempenha um papel significativo na cultura brasileira, refletindo a 
 
 ### 1.1 Contextualização
 
-_Esse sistema deve ser desenvolvido para uma escola de dança_
+_A administração de escolas de dança vai além do ensino artístico, exigindo um gerenciamento eficaz de turmas, horários, pagamentos e comunicação. Diferente de instituições de ensino tradicionais, essas escolas necessitam de maior flexibilidade nos agendamentos e de um acompanhamento detalhado do progresso técnico e artístico dos alunos.
+
+Muitos gestores enfrentam dificuldades com ferramentas genéricas, que não atendem às especificidades desse setor. Isso cria a necessidade de uma solução tecnológica que unifique e otimize os processos administrativos, garantindo mais organização, eficiência e uma melhor experiência para alunos, professores e administradores._
 
 ### 1.2 Problema
 
