@@ -76,18 +76,48 @@ Professores;
 Administradores - financeiros, gestores e coordenadores criativos._
 
 ## 3. Modelagem do processo de negócio
-
 ### 3.1. Análise da situação atual
 
-Hoje em dia, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes.
+_Atualmete, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes.
  
- A troca de informações entre a administração, docentes e estudantes acontece através de e-mails e aplicativos de mensagens, resultando em desencontros e ausência de centralização.  O gerenciamento financeiro também é realizado de forma independente, o que complica a conexão com a administração acadêmica.
- 
- Ademais, os estudantes possuem limitada autonomia para administrar suas aulas, ficando sujeitos à administração para qualquer modificação.  Em face desses desafios, torna-se evidente a necessidade de um sistema unificado que aprimore esses processos, simplificando a administração e aprimorando a experiência dos utilizadores.
+ Gereciameto de pessoas
+ O gerenciamento pessoal de alunos e pofessores e até mesmo de funcionários é feito, em alguns casos, de forma menual, mantendo pastas de arquivos do tipo docx, ou planilhas do excel e em algumas escolas até mesmo de forma analógica.
+
+ Gerenciamento/ cadastramento de turmas
+ De modo geral, as turmas são montadas no inicio do ano, de acordo com a disponibilidade dos professores, de salas (dependendo da capacidade física da escola) e da demanda dos alunos. Os horários são comunicados por grupos de WhatsApp ou por e-mail. Na maioria das escolas os horários e turmas são definitivas e não possuel muita liberdade de mudanças a curto prazo, e nas escolas onde exite essa flexibilidade não há um controle específico ou o controle é tambem feito pelo WhatsApp.
+
+ Gerenciamento de calendário e eventos
+Em sua maioria, não existe um sistema que gerencie eventos ou que informe especificamente aos alunos e responsáveis sobre os acontecimentos da escola. Os informes são feitos pelo WhatsApp e por e-mail. 
+
+ Gestão financeira
+ Feita utilizando o cadastro de alunos. Usualmente cobranças são feitas por aplicativos de terceiros._
 
 ### 3.2. Descrição geral da proposta de solução
 
-_Apresente aqui uma descrição da sua proposta abordando seus limites e suas ligações com as estratégias e objetivos do negócio. Apresente aqui as oportunidades de melhorias._
+_O propósito deste trabalho será o desenvolvimento de um sistema integrado que otimize o gerenciamento interno de escolas de dança. Em entrevistas com interessados da área, foi constatada a necessidade de serviços especializados no mercado, uma vez que os sistemas utilizados são genéricos e pouco intuitivos.
+
+Gerenciamento de pessoas
+Nessa parte, seria feito um cadastro de cada participante dos processos da instituição:
+-Professores
+-Alunos/ Responsáveis
+-Administradores
+-Funcionários
+Esse cadastro facilita o manejo das informações pessoais e de contato de cada membro, bem como informações profissionais de cada um dos professores, funcionários e administradores da escola, tornando viável sua utilização no sistema. 
+O cadastro de alunos pode ser feito pelo próprio aluno, sem a necessidade de intervenção da escola. Os cadastros de professores e funcionários e ate mesmo administrativos deverão ser feito pelo administrador.
+
+Gerenciamento/ cadastramento de turmas
+Dadas as disponibilidades de horários e de salas, um processo realizado internamente na escola, será feito  através de uma aba onde será possivel gerenciar quantas e quais aulas cada professor dará, sendo visível para os alunos. Dessa forma os alunos terão conhecimento de quais horários cada modalidade e professor estará disponível.
+Nessa aba, os alunos serão divididos em duas categorias, a depender da idade e tipo de matricula. Uma seria uma modalidade livre, onde o aluno tem a liberdade de escolher qual modalidade e qual horário ele gostaria de fazer a aula, a depender da lotação de cada sala. Nessa modalidade estariam alunos mais velhos e/ou com maior experiencia na dança. E uma categoria fixa (previamente estabelecida pela idade e/ou nível técnico do aluno) onde mostraria apenas a grade fixa das aulas que o aluno poderia participar.
+O gerenciamento de turmas e horários deve ser feito pelo administrador, podendo ou não dar alguma liberdade para o professor fazer alguma alteração em sua própria grade de horários.
+
+Gerenciamento de calendário e eventos
+Nessa parte do produto, será feito uma gestão interna da escola que ficaria visível para os alunos e responsáveis de eventos e do calendário útil da escola. Nesse local, será possivel comunicar os dias em que a escola estaria aberta, visto que, muitas vezes as escolas de dança continuam seu funcionamento em feriados nacionais e as atividades extracurriculares aos alunos, como concursos, recitais, audições e espetáculos. Dando uma visibilidade maior aos acontecimentos da instituição, sem a necessidade de um contato direto via e-mail ou WhatsApp.
+Nessa aba, pensamos em criar uma espécie de calendário interativo, para que o aluno possa filtrar quais eventos lhes são importantes.
+Essa parte será unicamente gerenciada pelo administrador.
+
+Gestão Financeira  
+Parte gerencial, onde a administração irá estabelecer e enviar cobranças e pagamentos referentes à salário de professores, ademais, gestão das mensalidades, taxas de atividades extras, valores de figurinos e afins.
+Essa gestão será feita unicamente pelo administrador._
 
 ### 3.3. Modelagem dos processos
 
