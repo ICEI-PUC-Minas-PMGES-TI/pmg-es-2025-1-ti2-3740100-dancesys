@@ -2,20 +2,20 @@ cff-version: 1.0.1
 message: Please cite this software using these metadata.
 title: 
 authors:
-  - family-names: Coelho
+  - family-names: Costa Cavalcante Coelho
     given-names: Artur
-  - family-names: Fonseca
+  - family-names: Fonseca de Mello Souza
     given-names: Vicenzo
-  - family-names: Rocha
+  - family-names: Rocha Fiorini
     given-names: Julia 
-  - family-names: Carvalho
+  - family-names: Moreira Gomes de Carvalho
     given-names: Henrique
-  - family-names: Nascimento
+  - family-names: Nascimento Silva De Oliveira
     given-names: Renato Douglas
-  - family-names: Coimbra
+  - family-names: Costa Coimbra
     given-names: Ana Carolina 
-  - family-names: Oliveira
-    given-names: Aline 
+  - family-names: Braz de Oliveira
+    given-names: Aline Cristina
   - name-suffix: Professora
     affiliation: PUC Minas
     family-names: Alonso Veloso
