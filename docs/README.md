@@ -66,8 +66,8 @@ Ajudar no gerenciamento de eventos da escola, mostrando visualmente por meio de 
 
 ### 1.4 Justificativas
 
-_A  administração de uma escola de dança envolve diversas tarefas, como controle de matrículas, gestão de turmas e horários, acompanhamento financeiro e comunicação com alunos e professores. Quando esses processos são feitos manualmente ou com ferramentas inadequadas, podem ocorrer erros, perda de informações e dificuldades na organização, impactando diretamente a eficiência da escola.
-Um Sistema de Gerenciamento de Escola de Dança é essencial para otimizar a administração, garantindo maior controle sobre as operações e melhorando a experiência dos alunos e professores._
+_A  administração de uma escola de dança envolve diversas tarefas, como controle de matrículas, gestão de turmas e horários, acompanhamento financeiro e comunicação com alunos e professores. Quando esses processos são feitos manualmente ou com ferramentas inadequadas, podem ocorrer erros, perda de informações e dificuldades na organização, impactando diretamente a eficiência da escola, podendo causar prejuízos financeiros e da imagem da escola de dança afastando possíveis clientes.
+Um Sistema de Gerenciamento de Escola de Dança é essencial para otimizar a administração, garantindo maior controle sobre as operações e melhorando a experiência dos alunos e professores, trazendo comodidade aos envolvidos e, principalmente, profissionalismo à escola de dança._
 
 ## 2. Participantes do processo
 
