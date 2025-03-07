@@ -81,7 +81,11 @@ Administradores - financeiros, gestores e coordenadores criativos._
 
 ### 3.1. Análise da situação atual
 
-_Apresente uma descrição textual de como os sistemas atuais resolvem o problema que se propõe a resolver.  Caso sua proposta seja inovadora e não existam processos claramente definidos, **apresente como as tarefas que o seu sistema pretende implementar são executadas atualmente**, mesmo que não se utilize tecnologia computacional._
+_Hoje em dia, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes.
+ 
+ A troca de informações entre a administração, docentes e estudantes acontece através de e-mails e aplicativos de mensagens, resultando em desencontros e ausência de centralização.  O gerenciamento financeiro também é realizado de forma independente, o que complica a conexão com a administração acadêmica.
+ 
+ Ademais, os estudantes possuem limitada autonomia para administrar suas aulas, ficando sujeitos à administração para qualquer modificação.  Em face desses desafios, torna-se evidente a necessidade de um sistema unificado que aprimore esses processos, simplificando a administração e aprimorando a experiência dos utilizadores._
 
 ### 3.2. Descrição geral da proposta de solução
 
