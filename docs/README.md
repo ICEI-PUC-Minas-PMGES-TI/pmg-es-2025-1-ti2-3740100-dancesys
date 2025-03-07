@@ -55,8 +55,7 @@ A falta de comunicação entre administração e alunos, bem como uma melhoria e
 
 ### 1.3 Objetivo geral
 
-_Criar um ambiente online que estenda a escola para os alunos e professores e crie uma ponte de gerenciamento com a administração da escola.
-Facilitando a conexão e comunicação de todas as partes envolvidas._
+_Desenvolver um software para organizar, gerenciar e dar suporte às escolas de dança, solucionando problemas de desordem, falta de gestão financeira e de eventos e comunicação entre integrantes._
 
 #### 1.3.1 Objetivos específicos
 
