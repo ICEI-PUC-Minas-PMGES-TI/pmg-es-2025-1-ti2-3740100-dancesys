@@ -59,11 +59,10 @@ _Desenvolver um software para organizar, gerenciar e dar suporte às escolas de 
 
 #### 1.3.1 Objetivos específicos
 
-_Os objetivo estecificos são:
-Autonomia dos alunos ao marcar e desmarcar aulas;
-Fazer a gestão financeira de alunos e professores;
-Facilitar comunicação entre escola e aluno;
-Ajudar no gerenciamento de eventos da escola._
+_Os objetivos específicos são:
+Solucionar dificuldades dos alunos ao marcar e desmarcar aulas;
+Realizar toda a gestão financeira das aulas, facilitando os pagamentos dos alunos aos professores e escola de dança;
+Ajudar no gerenciamento de eventos da escola, mostrando visualmente por meio de um calendário._
 
 ### 1.4 Justificativas
 
