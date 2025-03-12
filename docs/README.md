@@ -40,13 +40,19 @@ _**Resumo**. Este projeto visa desenvolver um sistema especializado para a gest�
 
 ## 1. Introdução
 
-_A dança desempenha um papel significativo na cultura brasileira, refletindo a diversidade e a riqueza das manifestações artísticas do país. Atualmente, o Brasil conta com um número considerável de escolas de dança, que formam bailarinos e bailarinas de destaque no cenário nacional e internacional. A gestão dessas instituições envolve desafios complexos, incluindo controle de matrículas, organização de turmas e horários, acompanhamento financeiro e comunicação eficaz entre alunos, professores e administradores. Embora existam sistemas de gestão no mercado, muitos não atendem às especificidades das escolas de dança, como a necessidade de flexibilidade nos agendamentos e a gestão detalhada do desempenho artístico dos alunos. Portanto, há uma demanda clara por uma solução integrada e personalizada que aborde essas particularidades, otimizando a administração e melhorando a experiência de todos os envolvidos._
+_A dança desempenha um papel fundamental na cultura brasileira, refletindo a diversidade e a riqueza das manifestações artísticas do país. O Brasil abriga um número expressivo de escolas de dança, que formam bailarinos e bailarinas de destaque no cenário nacional e internacional. De acordo com o Catálogo de Escolas do Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (Inep), há diversas instituições de ensino básico que oferecem disciplinas relacionadas à dança. 
+
+A gestão dessas instituições envolve desafios complexos, como o controle de matrículas, a organização de turmas e horários, o acompanhamento financeiro e a comunicação eficaz entre alunos, professores e administradores. Embora existam sistemas de gestão disponíveis no mercado, muitos não atendem às particularidades das escolas de dança, como a necessidade de flexibilidade nos agendamentos e a gestão detalhada do desempenho artístico dos alunos. Por exemplo, o Moodle é uma plataforma amplamente utilizada em instituições de ensino, mas pode não contemplar todas as especificidades necessárias para a gestão de escolas de dança. 
+
+Essa lacuna cria uma demanda clara por soluções integradas e personalizadas. Atualmente, existem sistemas especializados, como o SisDança, que oferecem funcionalidades adaptadas às necessidades dessas instituições, incluindo cobranças automatizadas e aplicativos para alunos. 
+
+A adoção de sistemas de gestão especializados pode otimizar a administração e proporcionar uma experiência mais eficiente e satisfatória para todos os envolvidos, contribuindo para o desenvolvimento contínuo da dança no Brasil._
 
 ### 1.1 Contextualização
 
-A administração de escolas de dança vai além do ensino artístico, exigindo um gerenciamento eficaz de turmas, horários, pagamentos e comunicação. Diferente de instituições de ensino tradicionais, essas escolas necessitam de maior flexibilidade nos agendamentos e de um acompanhamento detalhado do progresso técnico e artístico dos alunos.
+_A administração de escolas de dança vai além do ensino artístico, exigindo um gerenciamento eficaz de turmas, horários, pagamentos e comunicação. Diferente de instituições de ensino tradicionais, essas escolas necessitam de maior flexibilidade nos agendamentos e de um acompanhamento detalhado do progresso técnico e artístico dos alunos.
 
-Muitos gestores enfrentam dificuldades com ferramentas genéricas, que não atendem às especificidades desse setor. Isso cria a necessidade de uma solução tecnológica que unifique e otimize os processos administrativos, garantindo mais organização, eficiência e uma melhor experiência para alunos, professores e administradores.
+Muitos gestores enfrentam dificuldades com ferramentas genéricas, que não atendem às especificidades desse setor. Isso cria a necessidade de uma solução tecnológica que unifique e otimize os processos administrativos, garantindo mais organização, eficiência e uma melhor experiência para alunos, professores e administradores._
 
 ### 1.2 Problema
 
@@ -59,21 +65,21 @@ _Desenvolver um software para organizar, gerenciar e dar suporte às escolas de 
 
 #### 1.3.1 Objetivos específicos
 
-_Os objetivos específicos são:
-Solucionar dificuldades dos alunos ao marcar e desmarcar aulas;
+_Solucionar dificuldades dos alunos ao marcar e desmarcar aulas;
 Realizar toda a gestão financeira das aulas, facilitando os pagamentos dos alunos aos professores e escola de dança;
 Ajudar no gerenciamento de eventos da escola, mostrando visualmente por meio de um calendário._
 
 ### 1.4 Justificativas
 
-_A  administração de uma escola de dança envolve diversas tarefas, como controle de matrículas, gestão de turmas e horários, acompanhamento financeiro e comunicação com alunos e professores. Quando esses processos são feitos manualmente ou com ferramentas inadequadas, podem ocorrer erros, perda de informações e dificuldades na organização, impactando diretamente a eficiência da escola, podendo causar prejuízos financeiros e da imagem da escola de dança afastando possíveis clientes.
-Um Sistema de Gerenciamento de Escola de Dança é essencial para otimizar a administração, garantindo maior controle sobre as operações e melhorando a experiência dos alunos e professores, trazendo comodidade aos envolvidos e, principalmente, profissionalismo à escola de dança._
+_A administração de uma escola de dança envolve uma série de tarefas essenciais, como o controle de matrículas, a organização de turmas e horários, o acompanhamento financeiro e a comunicação entre alunos e professores. Quando esses processos são realizados manualmente ou com ferramentas inadequadas, surgem riscos como erros, perda de informações e dificuldades na organização, o que afeta diretamente a eficiência da instituição. Esse tipo de falha pode resultar em prejuízos financeiros e danos à imagem da escola, afastando potenciais clientes.
+
+Um Sistema de Gerenciamento de Escola de Dança é fundamental para otimizar a administração, garantindo maior controle sobre as operações diárias e proporcionando uma experiência mais fluida e eficiente para alunos e professores. Essa solução tecnológica contribui para a profissionalização da gestão, agregando valor à escola e fortalecendo sua imagem no mercado._
 
 ## 2. Participantes do processo
 
-_Alunos - incluso pais e responsáveis;
-Professores;
-Administradores - financeiros, gestores e coordenadores criativos._
+_Alunos - incluso pais e responsáveis: São os clientes e alunos da escola, que seriam uma vesão extrema do usuário final. São essas pessoas quem interagem com o sistema na sua versão final
+Professores: Tem pouco acesso direto ao sistema, mas são uma parte integrant do processo
+Administradores - financeiros, gestores e coordenadores criativos: é a parte expressiva de interação com o sistema. São eles quem tem acesso à todas as partes e gerenciamentos do sistema dentro da escola._
 
 ## 3. Modelagem do processo de negócio
 ### 3.1. Análise da situação atual
@@ -81,7 +87,7 @@ Administradores - financeiros, gestores e coordenadores criativos._
 _Atualmete, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes.
  
  Gereciameto de pessoas
- O gerenciamento pessoal de alunos e pofessores e até mesmo de funcionários é feito, em alguns casos, de forma menual, mantendo pastas de arquivos do tipo docx, ou planilhas do excel e em algumas escolas até mesmo de forma analógica.
+O gerenciamento pessoal de alunos e pofessores e até mesmo de funcionários é feito, em alguns casos, de forma menual, mantendo pastas de arquivos do tipo docx, ou planilhas do excel e em algumas escolas até mesmo de forma analógica.
 
  Gerenciamento/ cadastramento de turmas
  De modo geral, as turmas são montadas no inicio do ano, de acordo com a disponibilidade dos professores, de salas (dependendo da capacidade física da escola) e da demanda dos alunos. Os horários são comunicados por grupos de WhatsApp ou por e-mail. Na maioria das escolas os horários e turmas são definitivas e não possuel muita liberdade de mudanças a curto prazo, e nas escolas onde exite essa flexibilidade não há um controle específico ou o controle é tambem feito pelo WhatsApp.
