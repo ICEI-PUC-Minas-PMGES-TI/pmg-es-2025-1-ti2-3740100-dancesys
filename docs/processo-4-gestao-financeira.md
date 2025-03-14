@@ -1,4 +1,4 @@
-### 3.3.4 Processo 4 – gestão Financeira
+### 3.3.4 Processo 4 – Gestão Financeira
 
 O objetivo da gestão financeira é dar a liberade de vizualição de manipulação do controle financeiro pela parte da administração da escola, tanto em pagamentos, reembolsos, dividendos e mensalidades. Os alunos teram um acesso facilitados aos seus boletos, pagamentos de eventos e figurinos e dividendos extras que possa ocorrer
 
