@@ -129,7 +129,7 @@ Essa gestão será feita unicamente pelo administrador._
 
 [PROCESSO 1 - Nome do Processo](processo-1-nome-do-processo.md "Detalhamento do Processo 1.")
 
-[PROCESSO 2 - Nome do Processo](processo-2-marcação-de-aulas.md "Detalhamento do Processo 2.")
+[PROCESSO 2 - Marcação de aulas](processo-2-marcação-de-aulas.md "Detalhamento do Processo 2.")
 
 [PROCESSO 3 - Nome do Processo](processo-3-nome-do-processo.md "Detalhamento do Processo 3.")
 
