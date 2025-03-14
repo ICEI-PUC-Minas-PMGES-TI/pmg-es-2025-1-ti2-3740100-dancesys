@@ -75,9 +75,11 @@ Um Sistema de Gerenciamento de Escola de Dança é fundamental para otimizar a a
 
 ## 2. Participantes do processo
 
-_Alunos - incluso pais e responsáveis: São os clientes e alunos da escola, que seriam uma vesão extrema do usuário final. São essas pessoas quem interagem com o sistema na sua versão final
-Professores: Tem pouco acesso direto ao sistema, mas são uma parte integrant do processo
-Administradores - financeiros, gestores e coordenadores criativos: é a parte expressiva de interação com o sistema. São eles quem tem acesso à todas as partes e gerenciamentos do sistema dentro da escola._
+_Alunos - incluso pais e responsáveis: São os clientes e alunos da escola, que seriam uma vesão extrema do usuário final. São essas pessoas quem interagem com o sistema na sua versão final.
+
+Professores: Tem pouco acesso direto ao sistema, mas são uma parte integrante do processo.
+
+Administradores - financeiros, gestores e coordenadores criativos: são responsáveis por parte expressiva de interação com o sistema. São eles quem tem acesso à todas as partes e gerenciamentos do sistema dentro da escola._
 
 ## 3. Modelagem do processo de negócio
 ### 3.1. Análise da situação atual
