@@ -42,9 +42,9 @@ _**Resumo**. Este projeto visa desenvolver um sistema especializado para a gest�
 
 _A dança é uma expressão cultural rica e diversificada no Brasil, refletindo a mistura de influências indígenas, africanas e europeias. Cada região tem suas danças típicas, como o frevo em Pernambuco e o samba no Rio de Janeiro, que contam histórias e expressam emoções [1.6]. O Brasil abriga um número expressivo de escolas de dança, que formam bailarinos e bailarinas de destaque no cenário nacional e internacional [1.7]. De acordo com o Catálogo de Escolas do Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (Inep), há diversas instituições de ensino básico que oferecem disciplinas relacionadas à dança.
 
-A gestão dessas instituições envolve desafios complexos, como o controle de matrículas, a organização de turmas e horários, o acompanhamento financeiro e a comunicação eficaz entre alunos, professores e administradores. Embora existam sistemas de gestão disponíveis no mercado, muitos não atendem às particularidades das escolas de dança, como a necessidade de flexibilidade nos agendamentos e a gestão detalhada do desempenho artístico dos alunos. Por exemplo, o Moodle é uma plataforma amplamente utilizada em instituições de ensino, mas pode não contemplar todas as especificidades necessárias para a gestão de escolas de dança.
+A gestão dessas instituições envolve desafios complexos, como o controle de matrículas, a organização de turmas e horários, o acompanhamento financeiro e a comunicação eficaz entre alunos, professores e administradores. Embora existam sistemas de gestão disponíveis no mercado, muitos não atendem às particularidades das escolas de dança, como a necessidade de flexibilidade nos agendamentos e a gestão detalhada do desempenho artístico dos alunos. Por exemplo, o Moodle[1.8] é uma plataforma amplamente utilizada em instituições de ensino, mas pode não contemplar todas as especificidades necessárias para a gestão de escolas de dança.
 
-Essa lacuna cria uma demanda clara por soluções integradas e personalizadas. Atualmente, existem sistemas especializados, como o SisDança, que oferecem funcionalidades adaptadas às necessidades dessas instituições, incluindo cobranças automatizadas e aplicativos para alunos.
+Essa lacuna cria uma demanda clara por soluções integradas e personalizadas. Atualmente, existem sistemas especializados, como o SisDança[1.9], que oferecem funcionalidades adaptadas às necessidades dessas instituições, incluindo cobranças automatizadas e aplicativos para alunos.
 A adoção de sistemas de gestão especializados pode otimizar a administração e proporcionar uma experiência mais eficiente e satisfatória para todos os envolvidos, contribuindo para o desenvolvimento contínuo da dança no Brasil._
 
 ### 1.1 Contextualização
@@ -84,7 +84,7 @@ Administradores - financeiros, gestores e coordenadores criativos: são respons�
 ## 3. Modelagem do processo de negócio
 ### 3.1. Análise da situação atual
 
-_Atualmete, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes.
+_Atualmente, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes [1.8][1.9].
  
  Gereciameto de pessoas
 O gerenciamento pessoal de alunos e pofessores e até mesmo de funcionários é feito, em alguns casos, de forma menual, mantendo pastas de arquivos do tipo docx, ou planilhas do excel e em algumas escolas até mesmo de forma analógica.
@@ -180,6 +180,11 @@ http://portal.pucminas.br/imagedb/documento/DOC_DSC_NOME_ARQUI20160217102425.pdf
 **[1.6]** - **Diversidade Cultural no Brasil.** Disponível em: <https://mundoeducacao.uol.com.br/geografia/diversidade-cultural-no-brasil.htm>.
 
 **[1.7]** - **Diversidade Cultural no Brasil.** Disponível em: <https://www.suasaulasparticulares.com.br/blog/aulas-particulares-ballet-criancas-adultos-todo-brasil>.
+
+**[1.8]** - **MOODLE** Disponível em: <https://moodle.org/>.
+
+**[1.9]** - **SISDANÇA** Disponível em: <https://sisdanca.app.br/>.
+
 
 
 
