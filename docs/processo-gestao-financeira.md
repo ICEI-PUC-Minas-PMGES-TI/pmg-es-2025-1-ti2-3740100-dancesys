@@ -4,9 +4,10 @@ O objetivo da gestão financeira é dar a liberade de vizualição de manipulaç
 
 #### Detalhamento das atividades
 
+*Pagamento de Mensalidade*
+
 ![Modelo BPMN do pagamento de mensalidade](images/bpmnPagamentoMensalidade.svg "Modelo BPMN de pagamento de mensalidade")
 
-*Pagamento de Mensalidade*
 ```
 Pagamento de mensalidade se resume em o aluno gerar seus boletos,
 o processo calculara seus dividendos (mensalidades atrasadas e valores extras) e somar ao valor total da mensalidade,
@@ -39,7 +40,10 @@ _* **Boleto** - Campo que sera gerado o pdf do boleto
 *Pagamento de Reembolso*
 ![Modelo BPMN do pagamento de reembolso](images/bpmnPagamentoReembolsos.jpg "Modelo BPMN de pagamento de reembolso")
 ```
-Pagamento de reembolso ocorre após o aluno realizar o requerimento, este, será enviado para análise da administração. Caso o requerimento seja aprovado, a escola realizará o pagamento da quantia requerida, caso contrário o requerimento é indeferido e o processo é finalizado.
+Pagamento de reembolso ocorre após o aluno realizar o requerimento, este,
+será enviado para análise da administração.
+Caso o requerimento seja aprovado, a escola realizará o pagamento da quantia requerida,
+caso contrário o requerimento é indeferido e o processo é finalizado.
 ```
 | **Campo**          | **Tipo**         | **Restrições**         | **Valor default** |
 | ---                | ---              | ---                    | ---               |
@@ -51,7 +55,9 @@ Pagamento de reembolso ocorre após o aluno realizar o requerimento, este, será
 *Pagamento de Eventos*
 ![Modelo BPMN do pagamento de eventos](images/bpmnPagamentoEventos.jpg "Modelo BPMN de pagamento de eventos")
 ```
-Pagamento de eventos ocorre após o aluno ter interesse em algum evento promovido pela escola, o aluno, então, realiza o pagamento do valor de ingresso no evento. A escola, então, após receber o pagamento registra a inscrição do aluno e registra o pagamento no sistema. Assim, concluíndo o processo de pagamento de evento.
+Pagamento de eventos ocorre após o aluno ter interesse em algum evento promovido pela escola,
+o aluno, então, realiza o pagamento do valor de ingresso no evento. A escola, então, após receber o pagamento registra a inscrição do aluno e registra o pagamento no sistema.
+Assim, concluíndo o processo de pagamento de evento.
 ```
 | **Campo**          | **Tipo**         | **Restrições**         | **Valor default** |
 | ---                | ---              | ---                    | ---               |
@@ -63,7 +69,10 @@ Pagamento de eventos ocorre após o aluno ter interesse em algum evento promovid
 *Pagamento de Eventualidades*
 ![Modelo BPMN do pagamento de eventualidades](images/bpmnPagamentoEventualidades.jpg "Modelo BPMN de pagamento de eventualidades")
 ```
-Pagamento de uma eventualidade ocorre quando algo não usual acontece, como algum acidente que irá necessitar de pagamentos. Um exemplo seria um aluno cair e acidentalmente quebrar um espelho. Após o acontecimento da eventualidade, o funcionário registra a eventualidade no sistema. A administração, então, procede a realizar uma análise do ocorrido, do valor e posteriormente da responsabilidade do acontecimento. Caso seja definido que o cliente é o responsável, ele será notificado para pagar o valor, caso contrário a escola procede a pagar o valor. Assim se finaliza o processo
+Pagamento de uma eventualidade ocorre quando algo não usual acontece, como algum acidente que irá necessitar de pagamentos.
+Um exemplo seria um aluno cair e acidentalmente quebrar um espelho. Após o acontecimento da eventualidade, o funcionário registra a eventualidade no sistema.
+A administração, então, procede a realizar uma análise do ocorrido, do valor e posteriormente da responsabilidade do acontecimento.
+Caso seja definido que o cliente é o responsável, ele será notificado para pagar o valor, caso contrário a escola procede a pagar o valor. Assim se finaliza o processo
 ```
 | **Campo**            | **Tipo**          | **Restrições**         | **Valor default** |
 | ---                  | ---               | ---                    | ---               |
@@ -71,6 +80,19 @@ Pagamento de uma eventualidade ocorre quando algo não usual acontece, como algu
 | Descrição            | String            | Tamanho > 0            | ""                |
 | Valor Eventualidade  | float             | (9,2)                  | ""                |
 | Matricula do Aluno   | String            | Tamanho > 0            | ""                |
+
+
+*Pagamento de Salarios*
+![Modelo BPMN do pagamento de eventualidades](images/bpmnPagamentoSalarios.sgv "Modelo BPMN de pagamento de salarios")
+```
+Pagamento de salrio, é calculado perante o numero de faltar, horas extras e salrio base
+```
+| **Campo**            | **Tipo**          | **Restrições**         | **Valor default** |
+| ---                  | ---               | ---                    | ---               |
+| Funcionario          | String            | Tamanho > 0            | ""                |
+| Valor hora extra     | float             | (9,2)                  | ""                |
+| Total horas extras   | time              | hh:mm                  | ""                |
+| Dias falta           | numeric           |                        | ""                |
 
 
 
