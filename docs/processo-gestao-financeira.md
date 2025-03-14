@@ -8,7 +8,9 @@ O objetivo da gestão financeira é dar a liberade de vizualição de manipulaç
 
 *Pagamento de Mensalidade*
 ```
-Pagamento de mensalidade se resume em o aluno gerar seus boletos, o processo calculara seus dividendos (mensalidades atrasadas e valores extras) e somar ao valor total da mensalidade, tudo sera salvo e podera ser exibido em uma tela de vizualização da administração
+Pagamento de mensalidade se resume em o aluno gerar seus boletos,
+o processo calculara seus dividendos (mensalidades atrasadas e valores extras) e somar ao valor total da mensalidade,
+tudo sera salvo e podera ser exibido em uma tela de vizualização da administração
 ```
 
 _Os tipos de dados a serem utilizados são:_
