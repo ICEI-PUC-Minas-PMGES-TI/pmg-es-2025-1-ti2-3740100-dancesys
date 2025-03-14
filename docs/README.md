@@ -129,11 +129,11 @@ Essa gestão será feita unicamente pelo administrador._
 
 [PROCESSO 1 - Cadastro de Alunos](processo-1-cadastro-alunos.md "Processo de cadastro de alunos.")
 
-[PROCESSO 2 - Marcação de Aulas](processo-2-marcação-de-aulas.md "Detalhamento do Processo 2.")
+[PROCESSO 2 - Marcação de Aulas](processo-2-marcação-de-aulas.md "Detalhamento da marcação de aulas.")
 
-[PROCESSO 3 - Gerenciamento de Calendário](processo-3-gerenciamento-de-calendario.md "Detalhamento do Processo 3.")
+[PROCESSO 3 - Gerenciamento de Calendário](processo-3-gerenciamento-de-calendario.md "Detalhamento da gerencia de calendário.")
 
-[PROCESSO 4 - Nome do Processo](processo-4-gestao-financeira.md "Detalhamento do Processo 4.")
+[PROCESSO 4 - Gestão Financeira](processo-4-gestao-financeira.md "Detalhamento da gestão financeira.")
 
 ## 4. Projeto da solução
 
