@@ -87,7 +87,7 @@ Administradores - financeiros, gestores e coordenadores criativos: são respons�
 _Atualmente, a administração de escolas de dança é realizada através de sistemas genéricos, planilhas ou até mesmo manualmente.  Numerosos programas educacionais não satisfazem as demandas específicas dessas instituições de ensino, como a adaptabilidade no horário das aulas e a monitorização do rendimento artístico dos estudantes [1.8][1.9].
  
  Gereciameto de pessoas
-O gerenciamento pessoal de alunos e pofessores e até mesmo de funcionários é feito, em alguns casos, de forma menual, mantendo pastas de arquivos do tipo docx, ou planilhas do excel e em algumas escolas até mesmo de forma analógica.
+O gerenciamento pessoal de alunos e pofessores e até mesmo de funcionários é feito, em alguns casos, de forma manual, mantendo pastas de arquivos do tipo docx, ou planilhas do excel e em algumas escolas até mesmo de forma analógica.
 
  Gerenciamento/ cadastramento de turmas
  De modo geral, as turmas são montadas no inicio do ano, de acordo com a disponibilidade dos professores, de salas (dependendo da capacidade física da escola) e da demanda dos alunos. Os horários são comunicados por grupos de WhatsApp ou por e-mail. Na maioria das escolas os horários e turmas são definitivas e não possuel muita liberdade de mudanças a curto prazo, e nas escolas onde exite essa flexibilidade não há um controle específico ou o controle é tambem feito pelo WhatsApp.
