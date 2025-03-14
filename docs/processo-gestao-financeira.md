@@ -4,7 +4,7 @@ O objetivo da gestão financeira é dar a liberade de vizualição de manipulaç
 
 #### Detalhamento das atividades
 
-![Modelo BPMN do pagamento de mensalidade](images/process.png "Modelo BPMN de pagamento de mensalidade")
+![Modelo BPMN do pagamento de mensalidade](images/bpmnPagamentoMensalidade.svg "Modelo BPMN de pagamento de mensalidade")
 
 *Pagamento de Mensalidade*
 ```
