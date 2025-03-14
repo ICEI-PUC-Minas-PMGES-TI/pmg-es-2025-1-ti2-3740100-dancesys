@@ -127,7 +127,7 @@ Essa gestão será feita unicamente pelo administrador._
 
 ### 3.3. Modelagem dos processos
 
-[PROCESSO 1 - Nome do Processo](processo-1-nome-do-processo.md "Detalhamento do Processo 1.")
+[PROCESSO 1 - Cadastro de Alunos](processo-1-cadastro-alunos.md "Processo de cadastro de alunos.")
 
 [PROCESSO 2 - Marcação de aulas](processo-2-marcação-de-aulas.md "Detalhamento do Processo 2.")
 
