@@ -1,8 +1,8 @@
 ### 3.3.1 Processo 1 – CADASTRO ALUNOS
 
-_Apresentamos aqui o nome e as oportunidades de melhoria para o processo de cadastro de alunos._  
-_O cadastro é realizado pela administração da escola, onde um funcionário cria a conta do aluno solicitando seus dados._  
-_Ao finalizar o cadastro, o aluno recebe um e-mail com as credenciais de acesso e uma senha padrão, sendo solicitado que a altere ao acessar seu perfil pela primeira vez._
+Aqui são apresentados o nome e as oportunidades de melhoria para o processo de cadastro de alunos.
+O cadastro é realizado pela administração da escola, onde é criada a conta do aluno após a solicitação dos dados necessários.
+Ao finalizar o cadastro, é enviado um e-mail ao aluno com as credenciais de acesso e uma senha padrão, sendo solicitada a alteração da senha ao acessar o perfil pela primeira vez.
 
 #### Modelo do Processo
 
