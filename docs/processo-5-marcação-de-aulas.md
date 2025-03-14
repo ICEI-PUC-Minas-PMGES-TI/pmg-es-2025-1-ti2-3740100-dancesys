@@ -1,4 +1,4 @@
-### 3.3.2 Processo 2 – Marcação de aulas
+### 3.3.2 Processo 5 – Marcação de aulas
 
 _Este é o processo de marcação de aulas, onde tanto a administração quanto o aluno podem interagir com o sistema. O aluno, que possui um determinado tipo de matrícula, pode escolher quais aulas pretende fazer durante a semana, sendo guiado pelas regras e validações definidas pelo sistema. A administração pode controlar quais turmas o aluno de matrícula fixa tem acesso._
 
