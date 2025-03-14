@@ -23,7 +23,6 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
    - **Confirmar** ➔ O sistema verifica o tipo de aula e prossegue com o processo.  
    - **Cancelar** ➔ O processo é encerrado sem registrar a solicitação.  
 
----
 
 ### **Atividade 2 – Marcar aula fixa**  
 - **Responsável:** Administrador  
@@ -41,7 +40,6 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
    - **Confirmar** ➔ O sistema agenda a aula e confirma com o aluno.  
    - **Cancelar** ➔ O processo é encerrado sem marcação.  
 
----
 
 ### **Atividade 3 – Marcar aula livre**  
 - **Responsável:** Aluno  
@@ -58,7 +56,6 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
    - **Confirmar** ➔ O sistema agenda a aula e envia a confirmação.  
    - **Cancelar** ➔ O processo é encerrado sem marcação.  
 
----
 
 ### **Atividade 4 – Verificar disponibilidade de vagas para aulas livres**  
 - **Responsável:** Sistema  
@@ -75,7 +72,6 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
    - **Confirmar** ➔ O sistema registra a aula.  
    - **Cancelar aula** ➔ O sistema cancela a aula se estiver dentro do prazo permitido.  
 
----
 
 ##  **Fluxo geral do processo**  
 - O aluno solicita uma aula experimental ou de nivelamento.  
@@ -92,12 +88,17 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
 
 ### **Nome da atividade 1 - Marcação de aula experimental/nivelamento**  
 
-| **Campo**       | **Tipo**         | **Restrições**                               | **Valor default** |
+| **Campo**       | **Tipo**         | **Restrições**                               | **Valor default**|
 |-----------------|------------------|----------------------------------------------|------------------|
 | Nome do aluno   | Caixa de Texto   | Obrigatório                                  | -                |
-| E-mail          | Caixa de Texto   | Formato de e-mail                           | -                |
+| E-mail          | Caixa de Texto   | Formato de e-mail                            | -                |
 | Tipo de aula    | Seleção única    | Experimental ou Nivelamento                  | -                |
 | Nível de aula   | Seleção única    | Iniciante, Básico, Intermediário ou Avançado | -                |
+
+| **Comandos**         |  **Destino**            | **Tipo**          |
+| ---                  | ---                     | ---               |
+| confirma             | Qual o tipo de aula?    | default           |
+| cancelar             | Fim do processo 1       | cancel            |
 
 ---
 
@@ -112,6 +113,11 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
 | Modalidade       | Seleção única    | Lista de modalidades disponíveis                 | -                 |
 | Professor        | Seleção única    | Lista de professores disponíveis                 | -                 |
 
+| **Comandos**         |  **Destino**                     | **Tipo**    |
+| ---                  | ---                              | ---         |
+| confirmar            | Confirmar aula em horário fixo?  | default     |
+| cancelar             | Fim do processo                  |             |
+
 ---
 
 ### **Nome da atividade 3 - Marcar aula livre (Operação realizada pelo aluno)**  
@@ -124,6 +130,11 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
 | Modalidade       | Seleção única    | Lista de modalidades disponíveis                 | -                |
 | Professor        | Seleção única    | Lista de professores disponíveis                 | -                |
 
+| **Comandos**         |  **Destino**                     | **Tipo**    |
+| ---                  | ---                              | ---         |
+| confirmar            | Confirmar aula em horário fixo?  | default     |
+| cancelar             | Fim do processo                  |             |
+
 ---
 
 ### **Nome da atividade 4 - Verificar disponibilidade de vagas para aulas livres (Operação realizada pelo sistema)**  
@@ -135,6 +146,11 @@ _Este é o processo de marcação de aulas, onde tanto a administração quanto 
 | Modalidade            | Seleção única    | Lista de modalidades disponíveis                 | -                 |
 | Professor             | Seleção única    | Lista de professores disponíveis                 | -                 |
 | Data e horário da aula| Data e hora      | Somente horários disponíveis                     | -                 |
+
+| **Comandos**         |  **Destino**                      | **Tipo**    |
+| ---                  | ---                               | ---         |
+| confirmar            | Confirmar aula em horário livre?  | default     |
+| cancelar aula        | Cancelar aula dentro do prazo?    | default     |
 
 ---
 
