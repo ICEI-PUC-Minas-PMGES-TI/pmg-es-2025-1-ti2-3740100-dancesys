@@ -129,9 +129,9 @@ Essa gestão será feita unicamente pelo administrador._
 
 [PROCESSO 1 - Cadastro de Alunos](processo-1-cadastro-alunos.md "Processo de cadastro de alunos.")
 
-[PROCESSO 2 - Marcação de aulas](processo-2-marcação-de-aulas.md "Detalhamento do Processo 2.")
+[PROCESSO 2 - Marcação de Aulas](processo-2-marcação-de-aulas.md "Detalhamento do Processo 2.")
 
-[PROCESSO 3 - Nome do Processo](processo-3-nome-do-processo.md "Detalhamento do Processo 3.")
+[PROCESSO 3 - Gerenciamento de Calendário](processo-3-nome-do-processo.md "Detalhamento do Processo 3.")
 
 [PROCESSO 4 - Nome do Processo](processo-4-nome-do-processo.md "Detalhamento do Processo 4.")
 
