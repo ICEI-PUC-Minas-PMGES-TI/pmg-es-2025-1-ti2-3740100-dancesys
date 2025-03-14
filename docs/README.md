@@ -55,8 +55,7 @@ Muitos gestores enfrentam dificuldades com ferramentas genéricas, que não aten
 
 ### 1.2 Problema
 
-_Concluímos que uma escola de dança seria uma demanda adequada para o desenvolvimento desse trabalho, uma vez que era nítido os tópicos onde seria necessário aprimoramento:
-A falta de comunicação entre administração e alunos, bem como uma melhoria expressiva no gerenciamneto financeiro e uma gestão fixa de horários que facilite o agendamento de aulas. Tambem é um problema a falta de autonomia do aluno ao se relacionar com o aplicativo e com a escola, sem a necessidade de procurar alguem da gerencia_
+_Verifica-se que uma escola de dança seria um ambiente adequado para o desenvolvimento desse trabalho, pois se identificam claramente os tópicos que necessitam de aprimoramento. Entre eles, destacam-se a falta de comunicação entre a administração e os alunos, a necessidade de melhoria significativa no gerenciamento financeiro e a implementação de uma gestão fixa de horários que facilite o agendamento de aulas. Além disso, é um problema a falta de autonomia dos alunos ao interagir com o aplicativo e com a escola, sem a necessidade de recorrer a alguém da gerência._
 
 ### 1.3 Objetivo geral
 
