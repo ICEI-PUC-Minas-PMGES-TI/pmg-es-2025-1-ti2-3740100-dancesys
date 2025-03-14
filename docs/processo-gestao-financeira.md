@@ -83,7 +83,7 @@ Caso seja definido que o cliente é o responsável, ele será notificado para pa
 
 
 *Pagamento de Salarios*
-![Modelo BPMN do pagamento de eventualidades](images/bpmnPagamentoSalarios.sgv "Modelo BPMN de pagamento de salarios")
+![Modelo BPMN do pagamento de salarios](images/bpmnPagamentoSalarios.svg "Modelo BPMN de pagamento de salarios")
 ```
 Pagamento de salrio, é calculado perante o numero de faltar, horas extras e salrio base
 ```
