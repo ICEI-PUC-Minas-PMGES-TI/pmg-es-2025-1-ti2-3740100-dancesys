@@ -41,7 +41,9 @@ _**Resumo**. Este projeto visa desenvolver um sistema especializado para a gest�
 ## 1. Introdução
 
 _A dança é uma expressão cultural rica e diversificada no Brasil, refletindo a mistura de influências indígenas, africanas e europeias. Cada região tem suas danças típicas, como o frevo em Pernambuco e o samba no Rio de Janeiro, que contam histórias e expressam emoções [1.6]. O Brasil abriga um número expressivo de escolas de dança, que formam bailarinos e bailarinas de destaque no cenário nacional e internacional [1.7]. De acordo com o Catálogo de Escolas do Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (Inep), há diversas instituições de ensino básico que oferecem disciplinas relacionadas à dança.
+
 A gestão dessas instituições envolve desafios complexos, como o controle de matrículas, a organização de turmas e horários, o acompanhamento financeiro e a comunicação eficaz entre alunos, professores e administradores. Embora existam sistemas de gestão disponíveis no mercado, muitos não atendem às particularidades das escolas de dança, como a necessidade de flexibilidade nos agendamentos e a gestão detalhada do desempenho artístico dos alunos. Por exemplo, o Moodle é uma plataforma amplamente utilizada em instituições de ensino, mas pode não contemplar todas as especificidades necessárias para a gestão de escolas de dança.
+
 Essa lacuna cria uma demanda clara por soluções integradas e personalizadas. Atualmente, existem sistemas especializados, como o SisDança, que oferecem funcionalidades adaptadas às necessidades dessas instituições, incluindo cobranças automatizadas e aplicativos para alunos.
 A adoção de sistemas de gestão especializados pode otimizar a administração e proporcionar uma experiência mais eficiente e satisfatória para todos os envolvidos, contribuindo para o desenvolvimento contínuo da dança no Brasil._
 
