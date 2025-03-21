@@ -6,7 +6,7 @@ Ao finalizar o cadastro, é enviado um e-mail ao aluno com as credenciais de ace
 
 #### Modelo do Processo
 
-![Modelo BPMN do PROCESSO CADASTRO ALUNOS](images/CadastroAlunos_Diagrama.png "Modelo BPMN do Processo CADASTRO ALUNOS.")
+![Modelo BPMN do PROCESSO CADASTRO ALUNOS](images/CadastroAlunosDiagramaEditado.png "Modelo BPMN do Processo CADASTRO ALUNOS.")
 
 #### Detalhamento das atividades
 
