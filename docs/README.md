@@ -129,7 +129,7 @@ Essa gestão será feita unicamente pelo administrador._
 
 [PROCESSO 1 - Cadastro de Alunos](processo-1-cadastro-alunos.md "Processo de cadastro de alunos.")
 
-[PROCESSO 2 -Cadastro de professores](processo-2-cadastro-professores.md "Processo de cadastro de professores.")
+[PROCESSO 2 - Cadastro de professores](processo-2-cadastro-professores.md "Processo de cadastro de professores.")
 
 [PROCESSO 3 - Gerenciamento de Calendário](processo-3-gerenciamento-de-calendario.md "Detalhamento da gerencia de calendário.")
 
