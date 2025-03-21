@@ -2,7 +2,7 @@
 
 _Este é o processo de gerenciamento de calendário da escola, onde a administração pode adicionar e organizar eventos, além de definir informações de funcionamento da instituição. O administrador tem acesso ao calendário escolar e pode incluir diversos tipos de eventos, configurando detalhes específicos._
 
-![Processo GenrenciarCalendário](images/bpmnGerenciamentoCalendário.png "Modelo BPMN do Processo 3.")
+![Processo GenrenciarCalendário](images/bpmnGerenciamentoCalendário.jpg "Modelo BPMN do Processo 3.")
 
 
 #### Detalhamento das atividades
