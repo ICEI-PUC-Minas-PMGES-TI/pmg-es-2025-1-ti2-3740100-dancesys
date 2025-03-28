@@ -2,7 +2,7 @@
 
 Aqui é apresentado o processo de cadastro de professores.  
 O cadastro é realizado pela administração da escola, onde são solicitadas as informações pessoais e profissionais do professor.  
-Após a verificação e validação dos dados, a compatibilidade de horários é analisada. Caso os horários sejam compatíveis com a disponibilidade da escola, uma grade de horários é montada e um login temporário é gerado.  
+Após a verificação dos dados, a compatibilidade de horários é analisada. Caso os horários sejam compatíveis com a disponibilidade da escola, uma grade de horários é montada e um login temporário é gerado.  
 No final do processo, o professor recebe um e-mail com as credenciais de acesso e uma senha temporária, sendo solicitado que ele altere a senha ao acessar o sistema pela primeira vez.  
 
 #### Modelo do Processo
@@ -25,7 +25,7 @@ _Cadastro completo para professores que desejam atuar na escola._
 | Informações profissionais       | Área de Texto      | Obrigatório                            |                                |
 | Disponibilidade de horários     | Tabela             | Obrigatório                            |                                |
 | Experiência                     | Seleção única      | Sim/Não                                |                                |
-| Login                           | Caixa de Texto     | Auto-gerado                            | Gerado automaticamente        |
+| Login                           | Caixa de Texto     | Formato de e-mail                      | Auto-gerado                    |
 | Senha                           | Caixa de Texto     | Senha padrão enviada por e-mail        | Auto-gerado                    |
 
 | **Comandos**          | **Destino**                                   | **Tipo**   |
@@ -36,13 +36,10 @@ _Cadastro completo para professores que desejam atuar na escola._
 ---
 
 ### **Fluxo de Cadastro**
-1. A administração solicita os dados do professor.  
-2. O professor insere suas informações pessoais e profissionais.  
-3. O professor define sua disponibilidade de horários e a modalidade pretendida.  
-4. A administração valida as informações e verifica a compatibilidade dos horários.  
-   - Caso as informações estejam incorretas, o professor deve corrigi-las.  
-   - Se os horários não forem compatíveis com a disponibilidade da escola, o professor deve ajustá-los.  
-5. Se tudo estiver correto, uma grade de horários é montada.  
+1. A administração solicita os dados pessoais e profissionais do professor.  
+2. A administração informa a disponibilidade de horários do professor.    
+   - Se os horários não forem compatíveis, a administração deve revisar e informar nova disponibilidade de horários do professor.  
+5. Se os horários forem compatíveis, uma grade de horários é montada.  
 6. O sistema gera um login e uma senha temporária para o professor.  
 7. Um e-mail automático é enviado contendo:  
    - Login do professor.  
