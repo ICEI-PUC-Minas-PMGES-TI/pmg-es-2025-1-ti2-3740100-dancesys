@@ -4,7 +4,7 @@
 
 _Apresente o modelo de dados por meio de um modelo relacional que contemple todos os conceitos e atributos apresentados na modelagem dos processos._ 
 
-![modelo relacional](images/TI2DER.png "Modelo Relacional.")
+![modelo relacional](images/TI2DER.svg "Modelo Relacional.")
 ---
 
 ### 4.2. Tecnologias
