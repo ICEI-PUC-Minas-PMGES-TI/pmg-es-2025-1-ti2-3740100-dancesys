@@ -6,7 +6,7 @@ O objetivo da gestão financeira é dar a liberade de vizualição de manipulaç
 
 *Pagamento de Mensalidade*
 
-![Modelo BPMN do pagamento de mensalidade](images/bpmnGestaoFinaceira.svg "Modelo BPMN de Gestão Financeira")
+![Modelo BPMN do pagamento de mensalidade](images/bpmnGestaoFinanceira.svg "Modelo BPMN de Gestão Financeira")
 
 ```
 Gestão se resume em o aluno gerar seus boletos,
