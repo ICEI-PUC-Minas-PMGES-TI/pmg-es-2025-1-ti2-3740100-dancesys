@@ -4,7 +4,7 @@
 
 _Apresente o modelo de dados por meio de um modelo relacional que contemple todos os conceitos e atributos apresentados na modelagem dos processos._ 
 
-![Exemplo de um modelo relacional](images/modeloRelacional.png "Exemplo de Modelo Relacional.")
+![modelo relacional](images/TI2DER.png "Modelo Relacional.")
 ---
 
 ### 4.2. Tecnologias
@@ -14,7 +14,7 @@ _Descreva qual(is) tecnologias você vai usar para resolver o seu problema, ou s
 | **Dimensão**   | **Tecnologia**  |
 | ---            | ---             |
 | SGBD           | MySQL           |
-| Front end      | HTML+CSS+JS     |
+| Front end      | Angular         |
 | Back end       | Java SpringBoot |
 | Deploy         | Github Pages    |
 
