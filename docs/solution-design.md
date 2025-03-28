@@ -13,7 +13,7 @@ _Descreva qual(is) tecnologias você vai usar para resolver o seu problema, ou s
 
 | **Dimensão**   | **Tecnologia**  |
 | ---            | ---             |
-| SGBD           | MySQL           |
+| SGBD           | Azure MS SQL    |
 | Front end      | Angular         |
 | Back end       | Java SpringBoot |
 | Deploy         | Github Pages    |
