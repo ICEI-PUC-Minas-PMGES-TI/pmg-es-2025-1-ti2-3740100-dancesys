@@ -6,11 +6,11 @@ O objetivo da gestão financeira é dar a liberade de vizualição de manipulaç
 
 *Pagamento de Mensalidade*
 
-![Modelo BPMN do pagamento de mensalidade](images/bpmnGestãoFinaceira.svg "Modelo BPMN de Gestão Financeira")
+![Modelo BPMN do pagamento de mensalidade](images/bpmnGestaoFinaceira.svg "Modelo BPMN de Gestão Financeira")
 
 ```
-Pagamento de mensalidade se resume em o aluno gerar seus boletos,
-o processo calculara seus dividendos (mensalidades atrasadas e valores extras) e somar ao valor total da mensalidade,
+Gestão se resume em o aluno gerar seus boletos,
+o processo gera o boleto para que o aluno pague,
 tudo sera salvo e podera ser exibido em uma tela de vizualização da administração
 ```
 
@@ -22,6 +22,8 @@ _* **Dividendos** - Campo que armazerá pagamentos extras caso alunos precise
 
 _* **Valor Boleto** - Campo com o valor da mensalidade somado aos dividendos
 
+_* **Tipo** - enum que salvara o tipo de boleto (1- Mensalidade, 2- Matricula, 3- Evento, 4- Figurino)
+
 _* **Boleto** - Campo que sera gerado o pdf do boleto
 
 | **Campo**          | **Tipo**         | **Restrições**         | **Valor default** |
@@ -29,6 +31,7 @@ _* **Boleto** - Campo que sera gerado o pdf do boleto
 | Status Mensalidade | Boolean          |                        | 0                 |
 | Dividendos         | float            | (9,2)                  |                   |
 | Valor Boleto       | float            | (9,2)                  |                   |
+| Tipo               | int              | enum(1,2,3,4)          |                   |
 | Boleto             | image            | pdf                    |                   |
 
 
