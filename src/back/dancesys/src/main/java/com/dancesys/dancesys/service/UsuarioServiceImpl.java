@@ -31,15 +31,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario logar(UsuarioDto dto) throws Exception {
+    public Usuario login(UsuarioDto dto) throws Exception {
         try {
             Optional<Usuario> user = usuarioRepository.findByEmailAndSenha(dto.getEmail(), dto.getSenha());
 
             if (user.isPresent()) {
-                return user.get();
+                if(user.get().getStatus().equals(Usuario.desativo)){
+                    throw new RuntimeException("Usuário desabilitado!");
+                }else{
+                    return user.get();
+                }
             }
 
-            throw new RuntimeException("Usuário não encontrado ou senha inválida.");
+            throw new RuntimeException("Usuário não encontrado ou senha inválida!");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -51,10 +55,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         try{
             Usuario user =  usuarioRepository.findById(id).get();
             if(user != null){
-                if(user.getStatus().equals(1)){
-                    user.setStatus(0);
+                if(user.getStatus().equals(Usuario.ativo)){
+                    user.setStatus(Usuario.desativo);
                 }else{
-                    user.setStatus(1);
+                    user.setStatus(Usuario.ativo);
                 }
             }
             usuarioRepository.save(user);
@@ -62,5 +66,20 @@ public class UsuarioServiceImpl implements UsuarioService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Usuario aumentarCreditos(Usuario u, Integer creditos) {
+        u.setCreditos(u.getCreditos()+creditos);
+        return u;
+    }
+
+    private Usuario diminuirCreditos(Usuario u, Integer creditos) {
+        u.setCreditos(u.getCreditos()-creditos);
+        return u;
+    }
+
+    private Usuario resetarPontos(Usuario u){
+        u.setCreditos(8);
+        return u;
     }
 }

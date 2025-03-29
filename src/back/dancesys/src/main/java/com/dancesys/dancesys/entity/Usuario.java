@@ -34,13 +34,19 @@ public class Usuario {
     private String senha;
 
     @Column(name = "enum_tipo", nullable = false)
-    private Integer enumTipo;
+    public Integer enumTipo;
+    public static final Integer admin = 1;
+    public static final Integer funcionario = 2;
+    public static final Integer aluno_livre = 3;
+    public static final Integer aluno_fixo = 4;
 
     @Column(name = "creditos", nullable = true)
     private Integer creditos;
 
     @Column(name = "status", nullable = false)
     private Integer status;
+    public static final Integer ativo = 1;
+    public static final Integer desativo = 0;
 
     @Column(name = "url_foto", nullable = true)
     private String urlFoto;
@@ -51,7 +57,7 @@ public class Usuario {
     @Column(name = "criado_em", nullable = false)
     private LocalDate criadoEm;
 
-    @Column(name = "valor_hora_extra",nullable = false, precision = 9, scale = 2)
+    @Column(name = "valor_hora_extra",nullable = true, precision = 9, scale = 2)
     private BigDecimal valorHoraExtra;
 
 }

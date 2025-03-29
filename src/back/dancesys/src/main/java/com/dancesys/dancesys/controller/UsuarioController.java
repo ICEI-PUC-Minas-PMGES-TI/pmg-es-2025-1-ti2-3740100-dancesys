@@ -25,7 +25,7 @@ public class UsuarioController {
 
     @PostMapping(value = "/auth")
     public Usuario logar(@RequestBody UsuarioDto usuario) throws Exception {
-        return usuarioService.logar(usuario);
+        return usuarioService.login(usuario);
     }
 
     @GetMapping("/status/{id}")
