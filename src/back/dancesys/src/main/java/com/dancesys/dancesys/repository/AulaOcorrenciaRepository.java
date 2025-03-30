@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface AulaOcorrenciaRepository extends JpaRepository<AulaOcorrencia, Long> {
-    List<AulaOcorrencia> findByIdAula_IdAndDataGreaterThan(Long idAulaOcorrencia, LocalDate data);
+    List<AulaOcorrencia> findByIdAula_IdAndDataGreaterThan(Long idAula, LocalDate data);
 }

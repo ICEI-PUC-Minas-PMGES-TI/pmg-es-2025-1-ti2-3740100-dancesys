@@ -42,7 +42,13 @@ public class AulaServiceImpl implements AulaService{
             AulaDto newDTO = AulaMapper.toDto(aula);
             if(dto.getId() == null){
                 aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(newDTO);
+            }else{
+                if(dto.getDiaSemana() != null){
+                    aulaOcorrenciaServiceImpl.atualizarOcorrenciasAula(dto);
+                }
+                aulaOcorrenciaServiceImpl.atualizarListaIdsAlunos(dto);
             }
+
             return newDTO;
         }catch(Exception e){
             throw new RuntimeException(e);
