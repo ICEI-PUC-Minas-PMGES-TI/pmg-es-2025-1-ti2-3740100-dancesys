@@ -25,10 +25,10 @@ _Este é o processo de gerenciamento de calendário da escola, onde a administra
 2. O sistema valida os horários disponíveis.
 3. O administrador pode confirmar ou cancelar o registro.
 
-##### **Atividade 4 – Editar informações já existentes**
+##### **Atividade 4 – Editar/Exluir informações já existentes**
 
 1. O administrador acessa o sistema e seleciona a opção de edição.
-2. Ele escolhe o evento, horário atípico ou aula avulsa a ser editado.
+2. Ele escolhe o evento, horário atípico ou aula avulsa a ser editado ou exluído.
 3. O sistema exibe os dados atuais e permite a alteração.
 4. O administrador edita as informações e salva as alterações.
 5. O sistema valida os dados e atualiza o calendário.
@@ -41,7 +41,7 @@ _Este é o processo de gerenciamento de calendário da escola, onde a administra
 2. Caso necessário, ele adiciona eventos ao calendário, incluindo informações como taxa de participação e vencimentos.
 3. Para atividades extras, ele pode definir horários e locais específicos para cada turma.
 4. O sistema verifica automaticamente conflitos de agendamento antes de confirmar eventos e atividades.
-5. O administrador pode editar informações existentes, caso necessário.
+5. O administrador pode editar e excluir informações existentes, caso necessário.
 6. O calendário é atualizado e disponibilizado para consulta pelos alunos e demais interessados.
 
 ---
@@ -74,7 +74,7 @@ _Este é o processo de gerenciamento de calendário da escola, onde a administra
 | Data e horário | Data e Hora    | Deve estar dentro do calendário |                   |
 | Local          | Caixa de texto | Obrigatório                     |                   |
 
-#### **Nome da atividade 4 – Editar informações já existentes**
+#### **Nome da atividade 4 – Editar/Exluir informações já existentes**
 
 | **Campo**        | **Tipo**      | **Restrições**                      | **Valor default** |
 | ---------------- | ------------- | ----------------------------------- | ----------------- |
