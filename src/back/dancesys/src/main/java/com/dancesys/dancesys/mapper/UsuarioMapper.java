@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.mapper;
 
+import com.dancesys.dancesys.dto.LoginDto;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.dto.UsuarioDto;
 
@@ -42,5 +43,18 @@ public class UsuarioMapper {
         entity.setValorHoraExtra(u.getValorHoraExtra());
 
         return entity;
+    }
+
+    public static LoginDto toLoginDto(Usuario u){
+        if(u == null) return null;
+
+        LoginDto dto = new LoginDto();
+
+        dto.setId(u.getId());
+        dto.setEnumTipo(u.getEnumTipo());
+        dto.setStatus(u.getStatus());
+        dto.setUrlFoto(u.getUrlFoto());
+
+        return dto;
     }
 }

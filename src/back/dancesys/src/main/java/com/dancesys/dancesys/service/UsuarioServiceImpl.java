@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.service;
 
+import com.dancesys.dancesys.dto.LoginDto;
 import com.dancesys.dancesys.dto.UsuarioDto;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.mapper.UsuarioMapper;
@@ -21,6 +22,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = new Usuario();
 
         try{
+            if(dto.getNome() == null){
+                dto.setStatus(Usuario.ativo);
+            }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
             UsuarioDto newDTO = UsuarioMapper.toDto(usuario);
             return newDTO;
@@ -31,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario login(UsuarioDto dto) throws Exception {
+    public LoginDto login(UsuarioDto dto) throws Exception {
         try {
             Optional<Usuario> user = usuarioRepository.findByEmailAndSenha(dto.getEmail(), dto.getSenha());
 
@@ -39,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 if(user.get().getStatus().equals(Usuario.desativo)){
                     throw new RuntimeException("Usuário desabilitado!");
                 }else{
-                    return user.get();
+                    return UsuarioMapper.toLoginDto(user.get());
                 }
             }
 
@@ -61,8 +65,8 @@ public class UsuarioServiceImpl implements UsuarioService {
                     user.setStatus(Usuario.ativo);
                 }
             }
-            usuarioRepository.save(user);
-            return user;
+            UsuarioDto newDto = UsuarioMapper.toDto(user);
+            return login(newDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +83,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     private Usuario resetarPontos(Usuario u){
-        u.setCreditos(8);
+        u.setCreditos(Usuario.max_creditos);
         return u;
     }
 }

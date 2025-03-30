@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.controller;
 
+import com.dancesys.dancesys.dto.LoginDto;
 import com.dancesys.dancesys.dto.UsuarioDto;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.service.UsuarioService;
@@ -24,7 +25,7 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "/auth")
-    public Usuario logar(@RequestBody UsuarioDto usuario) throws Exception {
+    public LoginDto logar(@RequestBody UsuarioDto usuario) throws Exception {
         return usuarioService.login(usuario);
     }
 

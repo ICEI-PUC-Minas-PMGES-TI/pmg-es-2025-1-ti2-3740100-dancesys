@@ -42,6 +42,7 @@ public class Usuario {
 
     @Column(name = "creditos", nullable = true)
     private Integer creditos;
+    public static final Integer max_creditos = 8;
 
     @Column(name = "status", nullable = false)
     private Integer status;
