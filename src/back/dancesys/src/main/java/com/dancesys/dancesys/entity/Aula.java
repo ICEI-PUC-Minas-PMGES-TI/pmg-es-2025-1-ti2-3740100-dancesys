@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 
@@ -49,5 +47,13 @@ public class Aula {
 
     @Column(name = "sala", nullable = false)
     private String sala;
+
+    @Column(name = "max_alunos", nullable = false)
+    private Integer maxAlunos;
+
+    @Column(name = "status", nullable = false)
+    private Integer status;
+    public static final Integer ativo = 1;
+    public static final Integer inativo = 0;
 }
 

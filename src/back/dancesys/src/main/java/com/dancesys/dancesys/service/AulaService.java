@@ -12,5 +12,7 @@ public interface AulaService {
 
     public List<Aula> findAllAulas();
 
-    public ResponseEntity<Aula> excluir(Long id) throws Exception;
+    public ResponseEntity<Aula> desativar(Long id) throws Exception;
+
+    public Aula findById(Long id);
 }

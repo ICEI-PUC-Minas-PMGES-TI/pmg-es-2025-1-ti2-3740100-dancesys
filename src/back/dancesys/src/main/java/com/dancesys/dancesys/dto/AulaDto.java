@@ -23,5 +23,7 @@ public class AulaDto extends BaseDto {
     private String listaIdsAlunos;
     private Usuario idProfessor;
     private String sala;
+    private Integer maxAlunos;
+    private Integer status;
 }
 

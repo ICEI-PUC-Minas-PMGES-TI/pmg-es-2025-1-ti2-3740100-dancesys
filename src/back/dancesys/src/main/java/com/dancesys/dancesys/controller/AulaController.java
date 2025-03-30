@@ -25,9 +25,9 @@ public class AulaController {
         return ResponseEntity.ok(salvo);
     }
 
-    @DeleteMapping(value = "/excluir/{id}")
+    @GetMapping(value = "/desativar/{id}")
     public ResponseEntity<Aula> excluir(@PathVariable Long id) throws Exception {
-        return aulaService.excluir(id);
+        return aulaService.desativar(id);
     }
     @GetMapping(value = "/teste")
     public List<Aula> findAllAulas() {

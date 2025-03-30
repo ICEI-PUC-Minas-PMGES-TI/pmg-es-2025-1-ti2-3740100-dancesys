@@ -30,7 +30,7 @@ public class AulaOcorrencia {
     @Column(name = "status", nullable = false)
     private Integer status;
     public static final Integer ativo = 1;
-    public static final Integer desativo = 0;
+    public static final Integer inativo = 0;
 
     @Column(name = "motivo_cancelamento", nullable = true)
     private String motivoCancelamento;

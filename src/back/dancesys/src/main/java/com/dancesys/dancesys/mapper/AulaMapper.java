@@ -15,6 +15,8 @@ public class AulaMapper {
         dto.setSala(a.getSala());
         dto.setIdProfessor(a.getIdProfessor());
         dto.setListaIdsAlunos(a.getListaIdsAlunos());
+        dto.setMaxAlunos(a.getMaxAlunos());
+        dto.setStatus(a.getStatus());
 
         return dto;
     }
@@ -30,6 +32,8 @@ public class AulaMapper {
         entity.setSala(a.getSala());
         entity.setIdProfessor(a.getIdProfessor());
         entity.setListaIdsAlunos(a.getListaIdsAlunos());
+        entity.setMaxAlunos(a.getMaxAlunos());
+        entity.setStatus(a.getStatus());
 
         return entity;
     }
