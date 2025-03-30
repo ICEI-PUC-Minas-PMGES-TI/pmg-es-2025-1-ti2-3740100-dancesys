@@ -9,5 +9,5 @@ public interface UsuarioService {
 
     public LoginDto login(UsuarioDto dto) throws Exception;
 
-    public Usuario mudarStatus(Long id) throws Exception;
+    public UsuarioDto mudarStatus(Long id) throws Exception;
 }

@@ -55,7 +55,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario mudarStatus(Long id) throws Exception{
+    public UsuarioDto mudarStatus(Long id) throws Exception{
         try{
             Usuario user =  usuarioRepository.findById(id).get();
             if(user != null){
@@ -66,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 }
             }
             UsuarioDto newDto = UsuarioMapper.toDto(user);
-            return login(newDto);
+            return salvar(newDto);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

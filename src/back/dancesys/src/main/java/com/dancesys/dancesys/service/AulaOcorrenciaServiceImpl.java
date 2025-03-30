@@ -52,4 +52,15 @@ public class AulaOcorrenciaServiceImpl implements AulaOcorrenciaService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public AulaOcorrenciaDto cancelar(AulaOcorrenciaDto dto) throws Exception{
+        try{
+            dto.setStatus(AulaOcorrencia.desativo);
+            return salvar(dto);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
 }

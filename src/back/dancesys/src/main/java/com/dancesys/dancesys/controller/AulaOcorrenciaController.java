@@ -27,4 +27,10 @@ public class AulaOcorrenciaController {
         final AulaOcorrenciaDto salvo = aulaOcorrenciaService.salvar(aula);
         return ResponseEntity.ok(salvo);
     }
+
+    @PostMapping(value = "/cancelar")
+    public ResponseEntity<AulaOcorrenciaDto> cancelar(@RequestBody AulaOcorrenciaDto aula) throws Exception {
+        final AulaOcorrenciaDto salvo = aulaOcorrenciaService.cancelar(aula);
+        return ResponseEntity.ok(salvo);
+    }
 }

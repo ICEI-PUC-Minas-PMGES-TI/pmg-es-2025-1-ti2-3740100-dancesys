@@ -30,8 +30,8 @@ public class UsuarioController {
     }
 
     @GetMapping("/status/{id}")
-    public ResponseEntity<Usuario> buscarPorId(@PathVariable("id") Long id) throws Exception{
-        final Usuario salvo = usuarioService.mudarStatus(id);
+    public ResponseEntity<UsuarioDto> buscarPorId(@PathVariable("id") Long id) throws Exception{
+        final UsuarioDto salvo = usuarioService.mudarStatus(id);
         return ResponseEntity.ok(salvo);
     }
 }
