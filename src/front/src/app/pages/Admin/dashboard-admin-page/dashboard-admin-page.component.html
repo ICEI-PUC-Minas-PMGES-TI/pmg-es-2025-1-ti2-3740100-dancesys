@@ -1,1 +1,7 @@
-<p>home-admin-page works!</p>
+<div class="flex flex-row h-full bg-main-200">
+	<app-navbar>
+		<app-navbar-button icon="admin" route="main"></app-navbar-button>
+		<app-navbar-button icon="calendar" route="calendar"></app-navbar-button>
+	</app-navbar>
+	<router-outlet />
+</div>

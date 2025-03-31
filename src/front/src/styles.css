@@ -3,9 +3,10 @@
 
 @theme {
 	--color-main-100: oklch(0.95 0.0297 62.59);
-	--color-main-200: oklch(0.87 0.0218 65.28);
+	--color-main-300: oklch(0.87 0.0218 65.28);
 	--color-main-500: oklch(0.37 0.0565 58.42);
-	--color-main-300: oklch(0.69 0.0586 57.7);
+	--color-main-400: oklch(0.69 0.0586 57.7);
+	--color-main-900: oklch(0.19 0.0227 66.08);
 }
 
 html,
