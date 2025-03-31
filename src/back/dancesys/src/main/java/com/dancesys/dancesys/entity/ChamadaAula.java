@@ -23,6 +23,8 @@ public class ChamadaAula {
     @ManyToOne
     @JoinColumn(name = "id_Aula_Ocorrencia", nullable = false)
     private AulaOcorrencia idAulaOcorrencia;
+    public static final Integer presente =1;
+    public static final Integer faltante =2;
 
     @ManyToOne
     @JoinColumn(name = "id_Aluno", nullable = false)

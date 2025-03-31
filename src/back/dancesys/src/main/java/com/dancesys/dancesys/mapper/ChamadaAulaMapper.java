@@ -3,7 +3,7 @@ package com.dancesys.dancesys.mapper;
 import com.dancesys.dancesys.dto.ChamadaAulaDto;
 import com.dancesys.dancesys.entity.ChamadaAula;
 
-public class ChamdaAulaMapper {
+public class ChamadaAulaMapper {
     public static ChamadaAulaDto toDto(ChamadaAula ca){
         if(ca == null) return null;
 

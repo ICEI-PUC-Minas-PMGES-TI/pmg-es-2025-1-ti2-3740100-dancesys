@@ -22,14 +22,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = new Usuario();
 
         try{
-            if(dto.getNome() == null){
+            if(dto.getId() == null){
                 dto.setStatus(Usuario.ativo);
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
             UsuarioDto newDTO = UsuarioMapper.toDto(usuario);
             return newDTO;
         }catch(Exception e){
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
