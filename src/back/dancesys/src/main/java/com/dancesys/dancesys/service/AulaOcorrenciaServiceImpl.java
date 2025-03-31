@@ -75,13 +75,12 @@ public class AulaOcorrenciaServiceImpl implements AulaOcorrenciaService {
 
         while (!dataAtual.isAfter(ultimoDia)) {
             Integer dia = dto.getDiaSemana();
-            int teste = dataAtual.getDayOfWeek().getValue();
             if(dataAtual.getDayOfWeek().getValue() == dia.intValue()) {
                 AulaOcorrencia ao = new AulaOcorrencia();
                 ao.setData(dataAtual);
                 ao.setListaIdsAlunos(dto.getListaIdsAlunos());
                 ao.setIdAula(AulaMapper.toEntity(dto));
-                aulaOcorrenciaRepository.save(ao);
+                salvar(AulaOcorrenciaMapper.toDto(ao));
             }
             dataAtual = dataAtual.plusDays(1);
         }
@@ -118,8 +117,6 @@ public class AulaOcorrenciaServiceImpl implements AulaOcorrenciaService {
             aulaOcorrenciaRepository.save(aulaOcorrencia);
         }
     }
-
-
 
     @Override
     public AulaOcorrenciaDto cancelar(AulaOcorrenciaDto dto) throws Exception{
