@@ -2,19 +2,28 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.LoginDto;
 import com.dancesys.dancesys.dto.UsuarioDto;
+import com.dancesys.dancesys.dto.UsuarioFilterDto;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.mapper.UsuarioMapper;
 import com.dancesys.dancesys.repository.UsuarioRepository;
+import com.dancesys.dancesys.repository.UsuarioRepositoryCustom;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepositoryCustom usuarioRepositoryCustom;
 
-    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+    public UsuarioServiceImpl(
+            UsuarioRepository usuarioRepository,
+            UsuarioRepositoryCustom usuarioRepositoryCustom
+    ) {
         this.usuarioRepository = usuarioRepository;
+        this.usuarioRepositoryCustom = usuarioRepositoryCustom;
     }
 
     @Override
@@ -24,6 +33,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         try{
             if(dto.getId() == null){
                 dto.setStatus(Usuario.ativo);
+                dto.setCriadoEm(LocalDate.now());
+                if(dto.getEnumTipo().equals(Usuario.aluno_livre)){
+                    dto.setCreditos(Usuario.max_creditos);
+                }else{
+                    dto.setCreditos(0);
+                }
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
             UsuarioDto newDTO = UsuarioMapper.toDto(usuario);
@@ -69,6 +84,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Usuario> buscarUsuarios(UsuarioFilterDto filtro) throws Exception {
+        return usuarioRepositoryCustom.buscasrUsuario(filtro);
     }
 
     private Usuario aumentarCreditos(Usuario u, Integer creditos) {
