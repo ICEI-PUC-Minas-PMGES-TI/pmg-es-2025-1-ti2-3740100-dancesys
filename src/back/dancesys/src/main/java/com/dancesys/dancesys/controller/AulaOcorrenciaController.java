@@ -2,15 +2,15 @@ package com.dancesys.dancesys.controller;
 
 
 import com.dancesys.dancesys.dto.AulaOcorrenciaDto;
+import com.dancesys.dancesys.dto.ChamadaAulaDto;
 import com.dancesys.dancesys.service.AulaOcorrenciaService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 //Arquivo para testes ate o job mensal ficar feito
@@ -32,5 +32,10 @@ public class AulaOcorrenciaController {
     public ResponseEntity<AulaOcorrenciaDto> cancelar(@RequestBody AulaOcorrenciaDto aula) throws Exception {
         final AulaOcorrenciaDto salvo = aulaOcorrenciaService.cancelar(aula);
         return ResponseEntity.ok(salvo);
+    }
+
+    @GetMapping(value = "/chamada/{id}")
+    public List<ChamadaAulaDto> gerarChamada(@PathVariable Long id) throws Exception {
+        return aulaOcorrenciaService.gerarChamadaAula(id);
     }
 }

@@ -2,34 +2,42 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.AulaDto;
 import com.dancesys.dancesys.dto.AulaOcorrenciaDto;
+import com.dancesys.dancesys.dto.ChamadaAulaDto;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
+import com.dancesys.dancesys.entity.ChamadaAula;
+import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.mapper.AulaMapper;
 import com.dancesys.dancesys.mapper.AulaOcorrenciaMapper;
+import com.dancesys.dancesys.mapper.ChamadaAulaMapper;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
+import com.dancesys.dancesys.repository.UsuarioRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AulaOcorrenciaServiceImpl implements AulaOcorrenciaService {
     private AulaOcorrenciaRepository aulaOcorrenciaRepository;
     private AulaServiceImpl aulaServiceImpl;
+    private UsuarioRepository usuarioRepository;
+    private ChamadaAulaServiceImpl chamadaAulaServiceImpl;
 
     public AulaOcorrenciaServiceImpl(
             AulaOcorrenciaRepository aulaOcorrenciaRepository,
-            @Lazy AulaServiceImpl aulaServiceImpl
+            @Lazy AulaServiceImpl aulaServiceImpl,
+            UsuarioRepository usuarioRepository,
+            ChamadaAulaServiceImpl chamadaAulaServiceImpl
 
     ) {
         this.aulaOcorrenciaRepository = aulaOcorrenciaRepository;
         this.aulaServiceImpl = aulaServiceImpl;
+        this.usuarioRepository = usuarioRepository;
+        this.chamadaAulaServiceImpl = chamadaAulaServiceImpl;
     }
 
     @Override
@@ -104,15 +112,15 @@ public class AulaOcorrenciaServiceImpl implements AulaOcorrenciaService {
 
     public void atualizarListaIdsAlunos(AulaDto dto) throws Exception {
         String novaListaIdsAlunos = dto.getListaIdsAlunos();
-        Set<String> novosIdsAlunosSet = new HashSet<>(Arrays.asList(novaListaIdsAlunos.split(",")));
+        Set<String> novosIdsAlunosSet = new HashSet<>(Arrays.asList(novaListaIdsAlunos.split("/")));
         LocalDate dataAtual = LocalDate.now();
         LocalDate dataCerta = dataAtual.minusDays(1);
         List<AulaOcorrencia> aulasOcorrentes = aulaOcorrenciaRepository.findByIdAula_IdAndDataGreaterThan(dto.getId(), dataCerta);
 
         for (AulaOcorrencia aulaOcorrencia : aulasOcorrentes) {
-            Set<String> listaIdsAlunosExistenteSet = new HashSet<>(Arrays.asList(aulaOcorrencia.getListaIdsAlunos().split(",")));
+            Set<String> listaIdsAlunosExistenteSet = new HashSet<>(Arrays.asList(aulaOcorrencia.getListaIdsAlunos().split("/")));
             listaIdsAlunosExistenteSet.addAll(novosIdsAlunosSet);
-            aulaOcorrencia.setListaIdsAlunos(String.join(",", listaIdsAlunosExistenteSet));
+            aulaOcorrencia.setListaIdsAlunos(String.join("/", listaIdsAlunosExistenteSet));
 
             aulaOcorrenciaRepository.save(aulaOcorrencia);
         }
@@ -135,5 +143,27 @@ public class AulaOcorrenciaServiceImpl implements AulaOcorrenciaService {
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<ChamadaAulaDto> gerarChamadaAula(Long id) throws Exception{
+        AulaOcorrencia entity = aulaOcorrenciaRepository.findById(id).get();
+        List<ChamadaAulaDto> alunos = new ArrayList<>();
+        String[] idsAlunos = entity.getListaIdsAlunos().split("/");
+        for(String idAluno : idsAlunos) {
+            if (idAluno != null && !idAluno.trim().isEmpty()) {
+                Long idA = Long.parseLong(idAluno.trim());
+                Usuario aluno = new Usuario();
+                aluno = usuarioRepository.findById(idA).get();
+
+                ChamadaAula chamadaAula = new ChamadaAula();
+                chamadaAula.setIdAulaOcorrencia(entity);
+                chamadaAula.setIdAluno(aluno);
+
+                ChamadaAulaDto dto = chamadaAulaServiceImpl.salvar(ChamadaAulaMapper.toDto(chamadaAula));
+                alunos.add(dto);
+            }
+        }
+        return alunos;
     }
 }
