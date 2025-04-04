@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.LoginDto;
+import com.dancesys.dancesys.dto.UsuarioAlunoDto;
 import com.dancesys.dancesys.dto.UsuarioDto;
 import com.dancesys.dancesys.dto.UsuarioFilterDto;
 import com.dancesys.dancesys.entity.Usuario;
@@ -24,6 +25,12 @@ public class UsuarioController {
     @PostMapping(value = "/register")
     public ResponseEntity<UsuarioDto> salvar(@RequestBody UsuarioDto usuario) throws Exception {
         final UsuarioDto salvo = usuarioService.salvar(usuario);
+        return ResponseEntity.ok(salvo);
+    }
+
+    @PostMapping(value = "/aluno")
+    public ResponseEntity<UsuarioAlunoDto> salvar(@RequestBody UsuarioAlunoDto usuario) throws Exception {
+        final UsuarioAlunoDto salvo = usuarioService.salvarAluno(usuario);
         return ResponseEntity.ok(salvo);
     }
 

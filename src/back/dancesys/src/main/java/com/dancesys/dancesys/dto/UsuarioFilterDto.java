@@ -1,7 +1,5 @@
 package com.dancesys.dancesys.dto;
 
-
-import com.dancesys.dancesys.infra.dto.BaseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UsuarioFilterDto extends BaseDto {
+public class UsuarioFilterDto {
     private List<Long> id;
     private List<Integer> enumTipo;
     private Integer status;

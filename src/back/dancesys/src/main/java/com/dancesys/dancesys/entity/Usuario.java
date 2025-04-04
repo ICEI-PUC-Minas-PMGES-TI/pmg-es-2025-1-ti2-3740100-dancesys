@@ -58,8 +58,20 @@ public class Usuario {
     @Column(name = "criado_em", nullable = false)
     private LocalDate criadoEm;
 
-    @Column(name = "valor_hora_extra",nullable = true, precision = 9, scale = 2)
-    private BigDecimal valorHoraExtra;
+    @Column(name = "modalidades",nullable = true)
+    private String modalidades;
+
+    @Column(name = "experiencia",nullable = true)
+    private Integer experiencia;
+
+    @Column(name = "boolBaile",nullable = true)
+    private Integer boolBaile;
+
+    public static final Integer sim = 1;
+    public static final Integer nao = 0;
+
+    @Column(name = "endereco",nullable = true)
+    private String endereco;
 
 }
 

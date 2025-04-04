@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.LoginDto;
+import com.dancesys.dancesys.dto.UsuarioAlunoDto;
 import com.dancesys.dancesys.dto.UsuarioDto;
 import com.dancesys.dancesys.dto.UsuarioFilterDto;
 import com.dancesys.dancesys.entity.Usuario;
@@ -15,4 +16,6 @@ public interface UsuarioService {
     public UsuarioDto mudarStatus(Long id) throws Exception;
 
     public List<Usuario> buscarUsuarios(UsuarioFilterDto filtro) throws Exception;
+
+    public UsuarioAlunoDto salvarAluno(UsuarioAlunoDto dto) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.mapper;
 
 import com.dancesys.dancesys.dto.LoginDto;
+import com.dancesys.dancesys.dto.UsuarioAlunoDto;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.dto.UsuarioDto;
 
@@ -21,7 +22,9 @@ public class UsuarioMapper {
         dto.setUrlFoto(u.getUrlFoto());
         dto.setDataNascimento(u.getDataNascimento());
         dto.setCriadoEm(u.getCriadoEm());
-        dto.setValorHoraExtra(u.getValorHoraExtra());
+        dto.setExperiencia(u.getExperiencia());
+        dto.setModalidades(u.getModalidades());
+        dto.setExperiencia(u.getExperiencia());
         return dto;
     }
 
@@ -40,8 +43,9 @@ public class UsuarioMapper {
         entity.setUrlFoto(u.getUrlFoto());
         entity.setDataNascimento(u.getDataNascimento());
         entity.setCriadoEm(u.getCriadoEm());
-        entity.setValorHoraExtra(u.getValorHoraExtra());
-
+        entity.setExperiencia(u.getExperiencia());
+        entity.setModalidades(u.getModalidades());
+        entity.setExperiencia(u.getExperiencia());
         return entity;
     }
 
@@ -55,6 +59,41 @@ public class UsuarioMapper {
         dto.setStatus(u.getStatus());
         dto.setUrlFoto(u.getUrlFoto());
 
+        return dto;
+    }
+
+    public static UsuarioDto alunoToDto(UsuarioAlunoDto u){
+        if(u == null) return null;
+        UsuarioDto dto = new UsuarioDto();
+
+        dto.setId(u.getId());
+        dto.setNome(u.getNome());
+        dto.setCpf(u.getCpf());
+        dto.setNumero(u.getNumero());
+        dto.setEmail(u.getEmail());
+        dto.setEnumTipo(u.getEnumTipo());
+        dto.setDataNascimento(u.getDataNascimento());
+        dto.setExperiencia(u.getExperiencia());
+        dto.setModalidades(u.getModalidades());
+        dto.setExperiencia(u.getExperiencia());
+        return dto;
+
+    }
+
+    public static UsuarioAlunoDto toDtoAluno(UsuarioDto u){
+        if(u == null) return null;
+
+        UsuarioAlunoDto dto = new UsuarioAlunoDto();
+        dto.setId(u.getId());
+        dto.setNome(u.getNome());
+        dto.setCpf(u.getCpf());
+        dto.setNumero(u.getNumero());
+        dto.setEmail(u.getEmail());
+        dto.setEnumTipo(u.getEnumTipo());
+        dto.setDataNascimento(u.getDataNascimento());
+        dto.setExperiencia(u.getExperiencia());
+        dto.setModalidades(u.getModalidades());
+        dto.setExperiencia(u.getExperiencia());
         return dto;
     }
 }

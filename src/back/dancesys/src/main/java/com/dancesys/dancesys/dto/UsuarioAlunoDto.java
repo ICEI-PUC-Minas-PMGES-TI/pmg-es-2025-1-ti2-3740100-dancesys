@@ -1,30 +1,25 @@
 package com.dancesys.dancesys.dto;
 
-import jakarta.persistence.Column;
+import com.dancesys.dancesys.entity.ExperienciaAlunoModalidade;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
-public class UsuarioDto {
+public class UsuarioAlunoDto {
     private Long id;
     private String nome;
     private String cpf;
     private String numero;
     private String email;
-    private String senha;
     private Integer enumTipo;
-    private Integer creditos;
-    private Integer status;
-    private String urlFoto;
     private LocalDate dataNascimento;
-    private LocalDate criadoEm;
     private String modalidades;
     private Integer experiencia;
     private Integer boolBaile;
     private String endereco;
+    private List<ExperienciaAlunoModalidade> expericaMod;
 }
-
