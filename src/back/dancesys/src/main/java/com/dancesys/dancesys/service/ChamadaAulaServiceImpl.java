@@ -11,7 +11,7 @@ import com.dancesys.dancesys.repository.ChamadaAulaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ChamadaAulaServiceImpl {
+public class ChamadaAulaServiceImpl implements ChamadaAulaService {
     private ChamadaAulaRepository chamadaAulaRepository;
     public ChamadaAulaServiceImpl(ChamadaAulaRepository chamadaAulaRepository) {
         this.chamadaAulaRepository = chamadaAulaRepository;
@@ -30,5 +30,16 @@ public class ChamadaAulaServiceImpl {
         }catch(Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public ChamadaAulaDto mudarStatus(ChamadaAulaDto dto) throws Exception{
+        if(dto.getId().equals(ChamadaAula.faltante)){
+            dto.setPresenca(ChamadaAula.presente);
+        }else{
+            dto.setPresenca(ChamadaAula.faltante);
+        }
+
+        return salvar(dto);
     }
 }
