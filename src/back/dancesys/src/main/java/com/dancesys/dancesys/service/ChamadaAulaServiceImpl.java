@@ -29,4 +29,15 @@ public class ChamadaAulaServiceImpl implements ChamadaAulaService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public ChamadaAulaDto mudarStatus(ChamadaAulaDto dto) throws Exception{
+        if(dto.getId().equals(ChamadaAula.faltante)){
+            dto.setPresenca(ChamadaAula.presente);
+        }else{
+            dto.setPresenca(ChamadaAula.faltante);
+        }
+
+        return salvar(dto);
+    }
 }
