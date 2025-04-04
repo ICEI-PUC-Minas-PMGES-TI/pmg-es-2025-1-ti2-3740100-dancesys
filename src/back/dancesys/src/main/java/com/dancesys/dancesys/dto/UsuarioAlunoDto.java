@@ -21,5 +21,6 @@ public class UsuarioAlunoDto {
     private Integer experiencia;
     private Integer boolBaile;
     private String endereco;
-    private List<ExperienciaAlunoModalidade> expericaMod;
+    private List<ExperienciaAlunoModalidade> newExpericaMod;
+    private List<ExperienciaAlunoModalidade> deleteExpericaMod;
 }

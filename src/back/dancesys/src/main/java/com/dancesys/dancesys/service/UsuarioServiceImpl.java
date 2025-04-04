@@ -97,23 +97,34 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioAlunoDto salvarAluno(UsuarioAlunoDto dto) throws Exception{
         try{
-            UsuarioDto newDto = UsuarioMapper.alunoToDto(dto);
-            String mods = "/";
-            for(ExperienciaAlunoModalidade ex : dto.getExpericaMod()){
-                mods.concat(ex.getModalidade().toString() + "/");
+            if(!dto.getNewExpericaMod().isEmpty() || !dto.getDeleteExpericaMod().isEmpty()){
+                String mods = "/";
+                for(ExperienciaAlunoModalidade ex : dto.getNewExpericaMod()){
+                    mods.concat(ex.getModalidade().toString() + "/");
+                }
+                dto.setModalidades(mods);
             }
-            newDto.setModalidades(mods);
-            UsuarioDto newSave = salvar(newDto);
+            UsuarioDto newDto = salvar(UsuarioMapper.alunoToDto(dto));
 
             UsuarioAlunoDto newAulnoDto = UsuarioMapper.toDtoAluno(newDto);
-            List<ExperienciaAlunoModalidade> newModalidades = new ArrayList<>();
-            for(ExperienciaAlunoModalidade ex : dto.getExpericaMod()){
-                ExperienciaAlunoModalidade newEx = new ExperienciaAlunoModalidade();
-                newEx.setIdAluno(UsuarioMapper.toEntity(newSave));
-                newEx = experienciaAlunoModalidadeRepository.save(ex);
-                newModalidades.add(newEx);
+
+            if(!dto.getDeleteExpericaMod().isEmpty()){
+                List<ExperienciaAlunoModalidade> newModalidades = new ArrayList<>();
+                for(ExperienciaAlunoModalidade ex : dto.getNewExpericaMod()){
+                    ExperienciaAlunoModalidade newEx = new ExperienciaAlunoModalidade();
+                    newEx.setIdAluno(UsuarioMapper.toEntity(newDto));
+                    newEx = experienciaAlunoModalidadeRepository.save(ex);
+                    newModalidades.add(newEx);
+                }
+                newAulnoDto.setNewExpericaMod(newModalidades);
             }
-            newAulnoDto.setExpericaMod(newModalidades);
+
+            if(!dto.getDeleteExpericaMod().isEmpty()){
+                for(ExperienciaAlunoModalidade ex : dto.getNewExpericaMod()){
+                    experienciaAlunoModalidadeRepository.deleteById(ex.getId());
+                }
+            }
+
             return newAulnoDto;
         }catch(Exception e){
             throw new RuntimeException(e);
