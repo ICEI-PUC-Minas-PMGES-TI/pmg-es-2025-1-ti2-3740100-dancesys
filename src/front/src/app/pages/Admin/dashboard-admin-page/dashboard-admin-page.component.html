@@ -1,7 +1,11 @@
-<div class="flex flex-row h-full bg-main-200">
+<div class="w-full flex flex-row h-full">
 	<app-navbar>
-		<app-navbar-button icon="admin" route="main"></app-navbar-button>
-		<app-navbar-button icon="calendar" route="calendar"></app-navbar-button>
+		<app-navbar-button route="main">
+			<app-icon name="home"></app-icon>
+		</app-navbar-button>
+		<app-navbar-button route="calendar">
+			<app-icon name="calendar"></app-icon>
+		</app-navbar-button>
 	</app-navbar>
 	<router-outlet />
 </div>

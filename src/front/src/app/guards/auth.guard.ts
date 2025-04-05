@@ -20,6 +20,7 @@ export const AdminCanMatchFn: CanMatchFn = () => {
 	if (usuario().enumTipo == UsuarioTipos.ADMIN) {
 		return true;
 	}
+	return true; // DEBUG: NAO PRECISA LOGAR
 	return new RedirectCommand(router.parseUrl("/login"));
 }
 

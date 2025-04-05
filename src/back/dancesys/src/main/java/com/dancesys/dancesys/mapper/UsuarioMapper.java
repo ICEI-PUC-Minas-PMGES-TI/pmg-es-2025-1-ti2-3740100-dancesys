@@ -7,8 +7,9 @@ import com.dancesys.dancesys.dto.UsuarioDto;
 
 public class UsuarioMapper {
 
-    public static UsuarioDto toDto(Usuario u){
-        if(u == null) return null;
+    public static UsuarioDto toDto(Usuario u) {
+        if (u == null)
+            return null;
         UsuarioDto dto = new UsuarioDto();
         dto.setId(u.getId());
         dto.setNome(u.getNome());
@@ -25,11 +26,13 @@ public class UsuarioMapper {
         dto.setExperiencia(u.getExperiencia());
         dto.setModalidades(u.getModalidades());
         dto.setExperiencia(u.getExperiencia());
+        dto.setBoolBaile(u.setBoolBaile());
         return dto;
     }
 
-    public static Usuario toEntity(UsuarioDto u){
-        if(u == null) return null;
+    public static Usuario toEntity(UsuarioDto u) {
+        if (u == null)
+            return null;
         Usuario entity = new Usuario();
         entity.setId(u.getId());
         entity.setNome(u.getNome());
@@ -46,11 +49,13 @@ public class UsuarioMapper {
         entity.setExperiencia(u.getExperiencia());
         entity.setModalidades(u.getModalidades());
         entity.setExperiencia(u.getExperiencia());
+        entity.setBoolBaile(u.getBoolBaile());
         return entity;
     }
 
-    public static LoginDto toLoginDto(Usuario u){
-        if(u == null) return null;
+    public static LoginDto toLoginDto(Usuario u) {
+        if (u == null)
+            return null;
 
         LoginDto dto = new LoginDto();
 
@@ -62,8 +67,9 @@ public class UsuarioMapper {
         return dto;
     }
 
-    public static UsuarioDto alunoToDto(UsuarioAlunoDto u){
-        if(u == null) return null;
+    public static UsuarioDto alunoToDto(UsuarioAlunoDto u) {
+        if (u == null)
+            return null;
         UsuarioDto dto = new UsuarioDto();
 
         dto.setId(u.getId());
@@ -80,8 +86,9 @@ public class UsuarioMapper {
 
     }
 
-    public static UsuarioAlunoDto toDtoAluno(UsuarioDto u){
-        if(u == null) return null;
+    public static UsuarioAlunoDto toDtoAluno(UsuarioDto u) {
+        if (u == null)
+            return null;
 
         UsuarioAlunoDto dto = new UsuarioAlunoDto();
         dto.setId(u.getId());

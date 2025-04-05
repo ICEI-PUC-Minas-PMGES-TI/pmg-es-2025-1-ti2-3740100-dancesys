@@ -171,11 +171,12 @@
 	<section class="p-10 flex flex-1 bg-main-100 flex-col justify-center space-y-10 items-center">
 		<h1 class="text-6xl md:text-7xl text-main-500 font-bold">DanceSys</h1>
 		<form (ngSubmit)="onSubmitLoginForm()" class="flex space-y-3 flex-col w-3/4 items-center">
-			<input class="p-3 rounded-sm bg-main-200 w-full" type="text" placeholder="Email..." name="email"
+			<input class="p-3 rounded-sm bg-main-300 w-full" type="text" placeholder="Email..." name="email"
 				[(ngModel)]="currentEmail">
-			<input class="p-3 rounded-sm bg-main-200 w-full" type="password" placeholder="Senha..." name="password"
+			<input class="p-3 rounded-sm bg-main-300 w-full" type="password" placeholder="Senha..." name="password"
 				[(ngModel)]="currentPassword">
-			<button class="bg-main-300 p-3 rounded-lg w-2/3" type="submit">Login</button>
+			<button class="bg-main-400 text-white font-bold cursor-pointer p-3 rounded-lg w-2/3"
+				type="submit">Login</button>
 		</form>
 	</section>
 	<section class="bgPattern md:hidden h-1/5">

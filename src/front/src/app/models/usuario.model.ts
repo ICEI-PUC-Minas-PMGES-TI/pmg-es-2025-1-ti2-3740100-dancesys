@@ -12,7 +12,10 @@ export class Usuario {
 	urlFoto!: string;
 	dataNascimento!: Date;
 	criadoEm!: Date;
-	valorHoraExtra!: number;
+	modalidades!: string;
+	experiencia!: number;
+	boolBaile!: number;
+	endereco!: string;
 
 }
 
