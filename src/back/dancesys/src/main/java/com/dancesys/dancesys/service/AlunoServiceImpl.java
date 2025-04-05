@@ -13,9 +13,15 @@ public class AlunoServiceImpl implements AlunoService{
     }
 
     public Aluno salvar(Aluno entity) throws Exception{
+
         try{
-            Aluno salvo = alunoRepository.save(entity);
-            return salvo;
+            if(entity.getTipo().equals(Aluno.fixo)){
+                entity.setCreditos(0);
+            }else{
+                entity.setCreditos(Aluno.fixo);
+            }
+            Aluno newEntity = alunoRepository.save(entity);
+            return newEntity;
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }

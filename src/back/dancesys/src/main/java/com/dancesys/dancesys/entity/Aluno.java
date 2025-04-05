@@ -16,8 +16,9 @@ public class Aluno {
 
     @Column(name = "creditos", nullable = false)
     private Integer creditos;
+    public static final Integer max_creditos = 8;
 
-    @Column(name = "boolBaile", nullable = false)
+    @Column(name = "bool_baile", nullable = false)
     private Integer boolBaile;
     public static final Integer sim = 1;
     public static final Integer nao = 0;

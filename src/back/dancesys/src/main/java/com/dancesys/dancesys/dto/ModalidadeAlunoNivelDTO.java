@@ -10,8 +10,10 @@ import lombok.Setter;
 @Setter
 
 public class ModalidadeAlunoNivelDTO {
-    private AlunoModalidade id;
+    private Long idAluno;
+    private Long idModalidade;
+    private Aluno aluno;
+    private Modalidade modalidade;
     private Integer nivel;
-    private Aluno idAluno;
-    private Modalidade idModalidade;
+
 }

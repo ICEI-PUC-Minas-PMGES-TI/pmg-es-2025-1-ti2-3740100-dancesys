@@ -1,11 +1,13 @@
 package com.dancesys.dancesys.dto;
 
 import com.dancesys.dancesys.entity.Modalidade;
+import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
 import com.dancesys.dancesys.entity.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,6 +29,6 @@ public class AlunoDTO {
     private Boolean boolBaile;
     private Integer tipoAluno;
     private Usuario idUsuario;
-    private List<Modalidade> modalidades;
-    private List<Modalidade> dModalidades;
+    private List<ModalidadeAlunoNivelDTO> modalidades = new ArrayList<>();
+    private List<ModalidadeAlunoNivelDTO> dModalidades = new ArrayList<>();
 }

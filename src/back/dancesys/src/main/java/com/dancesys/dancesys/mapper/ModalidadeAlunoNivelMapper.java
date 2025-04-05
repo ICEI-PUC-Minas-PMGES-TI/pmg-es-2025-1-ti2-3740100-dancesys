@@ -9,10 +9,9 @@ public class ModalidadeAlunoNivelMapper {
 
         ModalidadeAlunoNivel entity = new ModalidadeAlunoNivel();
 
-        entity.setId(dto.getId());
         entity.setNivel(dto.getNivel());
-        entity.setIdAluno(dto.getIdAluno());
-        entity.setIdModalidade(dto.getIdModalidade());
+        entity.setIdAluno(dto.getAluno());
+        entity.setIdModalidade(dto.getModalidade());
 
         return entity;
     }
@@ -22,10 +21,11 @@ public class ModalidadeAlunoNivelMapper {
 
         ModalidadeAlunoNivelDTO dto = new ModalidadeAlunoNivelDTO();
 
-        dto.setId(entity.getId());
         dto.setNivel(entity.getNivel());
-        dto.setIdAluno(entity.getIdAluno());
-        dto.setIdModalidade(entity.getIdModalidade());
+        dto.setIdAluno(entity.getIdAluno().getId());
+        dto.setIdModalidade(entity.getIdModalidade().getId());
+        dto.setModalidade(entity.getIdModalidade());
+        dto.setAluno(entity.getIdAluno());
 
         return  dto;
     }

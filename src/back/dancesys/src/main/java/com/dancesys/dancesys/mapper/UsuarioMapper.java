@@ -90,7 +90,6 @@ public class UsuarioMapper {
             dto.setEndereco(Adto.getEndereco());
             dto.setUrlFoto(Adto.getUrlFoto());
             dto.setDataNascimento(Adto.getDataNascimento());
-            dto.setCriadoEm(Adto.getCriadoEm());
 
             return dto;
         }

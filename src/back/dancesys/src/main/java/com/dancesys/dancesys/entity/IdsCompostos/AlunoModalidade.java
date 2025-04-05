@@ -15,8 +15,10 @@ import java.util.Objects;
 @EqualsAndHashCode
 public class AlunoModalidade implements Serializable {
     @Column(name = "id_Aluno")
-    private Integer idAluno;
+    private Long idAluno;
 
     @Column(name = "id_Modalidade")
-    private Integer idModalidade;
+    private Long idModalidade;
+
+
 }

@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.controller;
 
+import com.dancesys.dancesys.dto.AlunoDTO;
 import com.dancesys.dancesys.dto.LoginDTO;
 import com.dancesys.dancesys.dto.UsuarioDTO;
 
@@ -30,5 +31,11 @@ public class UsuarioController {
     public ResponseEntity<LoginDTO> login(@RequestBody UsuarioDTO usuario) throws Exception {
         final LoginDTO login = usuarioService.login(usuario);
         return ResponseEntity.ok(login);
+    }
+
+    @PostMapping(value = "aluno")
+    public ResponseEntity<AlunoDTO> salvarAluno(@RequestBody AlunoDTO dto) throws Exception {
+        final  AlunoDTO aluno = usuarioService.salvarAluno(dto);
+        return ResponseEntity.ok(aluno);
     }
 }
