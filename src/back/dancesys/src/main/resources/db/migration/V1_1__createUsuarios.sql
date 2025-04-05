@@ -5,10 +5,10 @@ CREATE TABLE Usuario (
     numero CHAR(11) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     senha VARCHAR(30) NOT NULL,
-    enum_tipo INT NOT NULL,
-    creditos INT,
+    tipo INT NOT NULL,
     status INT NOT NULL,
+    endereco VARCHAR(255) NOT NULL,
     url_foto VARCHAR(255),
     data_nascimento DATE NOT NULL,
-    criado_em DATE
+    criado_em DATE NOT NULL
 );

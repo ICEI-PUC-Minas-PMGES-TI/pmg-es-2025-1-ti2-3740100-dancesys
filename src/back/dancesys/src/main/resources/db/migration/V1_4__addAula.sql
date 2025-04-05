@@ -1,1 +1,0 @@
-ALTER TABLE Aula ADD sala VARCHAR(30);

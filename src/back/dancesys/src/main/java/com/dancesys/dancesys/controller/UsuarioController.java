@@ -1,10 +1,8 @@
 package com.dancesys.dancesys.controller;
 
-import com.dancesys.dancesys.dto.LoginDto;
-import com.dancesys.dancesys.dto.UsuarioAlunoDto;
-import com.dancesys.dancesys.dto.UsuarioDto;
-import com.dancesys.dancesys.dto.UsuarioFilterDto;
-import com.dancesys.dancesys.entity.Usuario;
+import com.dancesys.dancesys.dto.LoginDTO;
+import com.dancesys.dancesys.dto.UsuarioDTO;
+
 import com.dancesys.dancesys.service.UsuarioService;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,31 +20,15 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<UsuarioDto> salvar(@RequestBody UsuarioDto usuario) throws Exception {
-        final UsuarioDto salvo = usuarioService.salvar(usuario);
+    @PostMapping(value = {"", "alterar"})
+    public ResponseEntity<UsuarioDTO> salvar(@RequestBody UsuarioDTO usuario) throws Exception {
+        final UsuarioDTO salvo = usuarioService.salvar(usuario);
         return ResponseEntity.ok(salvo);
     }
 
-    @PostMapping(value = "/aluno")
-    public ResponseEntity<UsuarioAlunoDto> salvar(@RequestBody UsuarioAlunoDto usuario) throws Exception {
-        final UsuarioAlunoDto salvo = usuarioService.salvarAluno(usuario);
-        return ResponseEntity.ok(salvo);
-    }
-
-    @PostMapping(value = "/auth")
-    public LoginDto logar(@RequestBody UsuarioDto usuario) throws Exception {
-        return usuarioService.login(usuario);
-    }
-
-    @GetMapping("/status/{id}")
-    public ResponseEntity<UsuarioDto> buscarPorId(@PathVariable("id") Long id) throws Exception{
-        final UsuarioDto salvo = usuarioService.mudarStatus(id);
-        return ResponseEntity.ok(salvo);
-    }
-
-    @PostMapping(value = "/buscar")
-    public List<Usuario> buscarUsarios(@RequestBody UsuarioFilterDto filtro) throws Exception {
-        return usuarioService.buscarUsuarios(filtro);
+    @PostMapping(value = "auth")
+    public ResponseEntity<LoginDTO> login(@RequestBody UsuarioDTO usuario) throws Exception {
+        final LoginDTO login = usuarioService.login(usuario);
+        return ResponseEntity.ok(login);
     }
 }
