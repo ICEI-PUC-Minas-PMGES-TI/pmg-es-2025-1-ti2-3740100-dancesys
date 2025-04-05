@@ -31,7 +31,7 @@ public class ModalidadeController {
         return modalidadeService.buscar();
     }
 
-    @GetMapping(value = "excluir/{id}")
+    @DeleteMapping(value = "excluir/{id}")
     public String excluir(@PathVariable Long id) throws Exception {
         return modalidadeService.excluir(id);
     }

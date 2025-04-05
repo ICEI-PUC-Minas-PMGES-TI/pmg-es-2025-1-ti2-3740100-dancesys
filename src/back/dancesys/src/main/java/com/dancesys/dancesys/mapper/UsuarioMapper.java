@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.mapper;
 
+import com.dancesys.dancesys.dto.AlunoDTO;
 import com.dancesys.dancesys.dto.LoginDTO;
 import com.dancesys.dancesys.dto.UsuarioDTO;
 import com.dancesys.dancesys.entity.Usuario;
@@ -69,6 +70,27 @@ public class UsuarioMapper {
             }
             dto.setTipo(entity.getTipo());
             dto.setUrlFoto(entity.getUrlFoto());
+
+            return dto;
+        }
+
+        public static UsuarioDTO alunoDTOtoDto(AlunoDTO Adto){
+            if (Adto == null) return null;
+
+            UsuarioDTO dto = new UsuarioDTO();
+
+            dto.setId(Adto.getId());
+            dto.setNome(Adto.getNome());
+            dto.setCpf(Adto.getCpf());
+            dto.setNumero(Adto.getNumero());
+            dto.setEmail(Adto.getEmail());
+            dto.setSenha(Adto.getSenha());
+            dto.setTipo(Adto.getTipo());
+            dto.setStatus(Adto.getStatus());
+            dto.setEndereco(Adto.getEndereco());
+            dto.setUrlFoto(Adto.getUrlFoto());
+            dto.setDataNascimento(Adto.getDataNascimento());
+            dto.setCriadoEm(Adto.getCriadoEm());
 
             return dto;
         }
