@@ -1,0 +1,4 @@
+CREATE TABLE Modalidade (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    nome VARCHAR(80) NOT NULL
+);

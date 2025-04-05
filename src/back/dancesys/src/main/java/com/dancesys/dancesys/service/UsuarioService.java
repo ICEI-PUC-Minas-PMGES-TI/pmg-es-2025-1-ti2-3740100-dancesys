@@ -1,21 +1,10 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.LoginDto;
-import com.dancesys.dancesys.dto.UsuarioAlunoDto;
-import com.dancesys.dancesys.dto.UsuarioDto;
-import com.dancesys.dancesys.dto.UsuarioFilterDto;
-import com.dancesys.dancesys.entity.Usuario;
+import com.dancesys.dancesys.dto.LoginDTO;
+import com.dancesys.dancesys.dto.UsuarioDTO;
 
-import java.util.List;
+public interface UsuarioService{
+    public UsuarioDTO salvar(UsuarioDTO dto) throws Exception;
 
-public interface UsuarioService {
-    public UsuarioDto salvar(UsuarioDto dto) throws Exception;
-
-    public LoginDto login(UsuarioDto dto) throws Exception;
-
-    public UsuarioDto mudarStatus(Long id) throws Exception;
-
-    public List<Usuario> buscarUsuarios(UsuarioFilterDto filtro) throws Exception;
-
-    public UsuarioAlunoDto salvarAluno(UsuarioAlunoDto dto) throws Exception;
+    public LoginDTO login(UsuarioDTO dto) throws Exception;
 }

@@ -1,153 +1,52 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.LoginDto;
-import com.dancesys.dancesys.dto.UsuarioAlunoDto;
-import com.dancesys.dancesys.dto.UsuarioDto;
-import com.dancesys.dancesys.dto.UsuarioFilterDto;
-import com.dancesys.dancesys.entity.ExperienciaAlunoModalidade;
+import com.dancesys.dancesys.dto.LoginDTO;
+import com.dancesys.dancesys.dto.UsuarioDTO;
 import com.dancesys.dancesys.entity.Usuario;
-import com.dancesys.dancesys.mapper.ExperienciaAlunoModalidadeMapper;
 import com.dancesys.dancesys.mapper.UsuarioMapper;
-import com.dancesys.dancesys.repository.ExperienciaAlunoModalidadeRepository;
 import com.dancesys.dancesys.repository.UsuarioRepository;
-import com.dancesys.dancesys.repository.UsuarioRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
-    private final UsuarioRepositoryCustom usuarioRepositoryCustom;
-    private final ExperienciaAlunoModalidadeRepository  experienciaAlunoModalidadeRepository;
 
-    public UsuarioServiceImpl(
-            UsuarioRepository usuarioRepository,
-            UsuarioRepositoryCustom usuarioRepositoryCustom,
-            ExperienciaAlunoModalidadeRepository experienciaAlunoModalidadeRepository
-    ) {
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.usuarioRepositoryCustom = usuarioRepositoryCustom;
-        this.experienciaAlunoModalidadeRepository = experienciaAlunoModalidadeRepository;
     }
 
     @Override
-    public UsuarioDto salvar(UsuarioDto dto) throws Exception{
+    public UsuarioDTO salvar(UsuarioDTO dto) throws Exception{
         Usuario usuario = new Usuario();
-
-        try{
-            if(dto.getId() == null){
-                dto.setStatus(Usuario.ativo);
+        try {
+            if(dto.getId()==null){
+                dto.setStatus(true);
                 dto.setCriadoEm(LocalDate.now());
-                if(dto.getEnumTipo().equals(Usuario.aluno_livre)){
-                    dto.setCreditos(Usuario.max_creditos);
-                }else{
-                    dto.setCreditos(0);
-                }
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
-            UsuarioDto newDTO = UsuarioMapper.toDto(usuario);
+            UsuarioDTO newDTO = UsuarioMapper.toDTO(usuario);
             return newDTO;
-        }catch(Exception e){
-            throw new RuntimeException(e);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public LoginDto login(UsuarioDto dto) throws Exception {
-        try {
-            Optional<Usuario> user = usuarioRepository.findByEmailAndSenha(dto.getEmail(), dto.getSenha());
-
-            if (user.isPresent()) {
-                if(user.get().getStatus().equals(Usuario.desativo)){
-                    throw new RuntimeException("Usuário desabilitado!");
-                }else{
-                    return UsuarioMapper.toLoginDto(user.get());
-                }
-            }
-
-            throw new RuntimeException("Usuário não encontrado ou senha inválida!");
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public UsuarioDto mudarStatus(Long id) throws Exception{
+    public LoginDTO login(UsuarioDTO dto) throws Exception{
         try{
-            Usuario user =  usuarioRepository.findById(id).get();
-            if(user != null){
-                if(user.getStatus().equals(Usuario.ativo)){
-                    user.setStatus(Usuario.desativo);
-                }else{
-                    user.setStatus(Usuario.ativo);
-                }
+            Usuario user = usuarioRepository.findByEmailAndSenha(dto.getEmail(), dto.getSenha());
+            if(user==null){
+                throw new Exception("Usuario não encontrado");
             }
-            UsuarioDto newDto = UsuarioMapper.toDto(user);
-            return salvar(newDto);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+            if(user.getStatus().equals(Usuario.desativo)){
+                throw new Exception("Usuario desativado");
+            }
+            return UsuarioMapper.toLoginDTO(user);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
         }
-    }
-
-    @Override
-    public UsuarioAlunoDto salvarAluno(UsuarioAlunoDto dto) throws Exception{
-        try{
-            if(!dto.getNewExpericaMod().isEmpty() || !dto.getDeleteExpericaMod().isEmpty()){
-                String mods = "/";
-                for(ExperienciaAlunoModalidade ex : dto.getNewExpericaMod()){
-                    mods.concat(ex.getModalidade().toString() + "/");
-                }
-                dto.setModalidades(mods);
-            }
-            UsuarioDto newDto = salvar(UsuarioMapper.alunoToDto(dto));
-
-            UsuarioAlunoDto newAulnoDto = UsuarioMapper.toDtoAluno(newDto);
-
-            if(!dto.getDeleteExpericaMod().isEmpty()){
-                List<ExperienciaAlunoModalidade> newModalidades = new ArrayList<>();
-                for(ExperienciaAlunoModalidade ex : dto.getNewExpericaMod()){
-                    ExperienciaAlunoModalidade newEx = new ExperienciaAlunoModalidade();
-                    newEx.setIdAluno(UsuarioMapper.toEntity(newDto));
-                    newEx = experienciaAlunoModalidadeRepository.save(ex);
-                    newModalidades.add(newEx);
-                }
-                newAulnoDto.setNewExpericaMod(newModalidades);
-            }
-
-            if(!dto.getDeleteExpericaMod().isEmpty()){
-                for(ExperienciaAlunoModalidade ex : dto.getNewExpericaMod()){
-                    experienciaAlunoModalidadeRepository.deleteById(ex.getId());
-                }
-            }
-
-            return newAulnoDto;
-        }catch(Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public List<Usuario> buscarUsuarios(UsuarioFilterDto filtro) throws Exception {
-        return usuarioRepositoryCustom.buscasrUsuario(filtro);
-    }
-
-    private Usuario aumentarCreditos(Usuario u, Integer creditos) {
-        u.setCreditos(u.getCreditos()+creditos);
-        return u;
-    }
-
-    private Usuario diminuirCreditos(Usuario u, Integer creditos) {
-        u.setCreditos(u.getCreditos()-creditos);
-        return u;
-    }
-
-    private Usuario resetarPontos(Usuario u){
-        u.setCreditos(Usuario.max_creditos);
-        return u;
     }
 }

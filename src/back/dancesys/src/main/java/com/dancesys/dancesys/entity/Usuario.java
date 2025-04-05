@@ -33,21 +33,19 @@ public class Usuario {
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    @Column(name = "enum_tipo", nullable = false)
-    public Integer enumTipo;
+    @Column(name = "tipo", nullable = false)
+    public Integer tipo;
     public static final Integer admin = 1;
     public static final Integer funcionario = 2;
-    public static final Integer aluno_livre = 3;
-    public static final Integer aluno_fixo = 4;
-
-    @Column(name = "creditos", nullable = true)
-    private Integer creditos;
-    public static final Integer max_creditos = 8;
+    public static final Integer aluno= 3;
 
     @Column(name = "status", nullable = false)
     private Integer status;
     public static final Integer ativo = 1;
     public static final Integer desativo = 0;
+
+    @Column(name = "endereco",nullable = false)
+    private String endereco;
 
     @Column(name = "url_foto", nullable = true)
     private String urlFoto;
@@ -57,21 +55,5 @@ public class Usuario {
 
     @Column(name = "criado_em", nullable = false)
     private LocalDate criadoEm;
-
-    @Column(name = "modalidades",nullable = true)
-    private String modalidades;
-
-    @Column(name = "experiencia",nullable = true)
-    private Integer experiencia;
-
-    @Column(name = "boolBaile",nullable = true)
-    private Integer boolBaile;
-
-    public static final Integer sim = 1;
-    public static final Integer nao = 0;
-
-    @Column(name = "endereco",nullable = true)
-    private String endereco;
-
 }
 

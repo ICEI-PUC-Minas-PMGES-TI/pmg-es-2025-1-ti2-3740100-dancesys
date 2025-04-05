@@ -1,106 +1,75 @@
 package com.dancesys.dancesys.mapper;
 
-import com.dancesys.dancesys.dto.LoginDto;
-import com.dancesys.dancesys.dto.UsuarioAlunoDto;
+import com.dancesys.dancesys.dto.LoginDTO;
+import com.dancesys.dancesys.dto.UsuarioDTO;
 import com.dancesys.dancesys.entity.Usuario;
-import com.dancesys.dancesys.dto.UsuarioDto;
 
 public class UsuarioMapper {
+        public static Usuario toEntity(UsuarioDTO dto) {
+            if (dto == null) return null;
 
-    public static UsuarioDto toDto(Usuario u) {
-        if (u == null)
-            return null;
-        UsuarioDto dto = new UsuarioDto();
-        dto.setId(u.getId());
-        dto.setNome(u.getNome());
-        dto.setCpf(u.getCpf());
-        dto.setNumero(u.getNumero());
-        dto.setEmail(u.getEmail());
-        dto.setSenha(u.getSenha());
-        dto.setEnumTipo(u.getEnumTipo());
-        dto.setCreditos(u.getCreditos());
-        dto.setStatus(u.getStatus());
-        dto.setUrlFoto(u.getUrlFoto());
-        dto.setDataNascimento(u.getDataNascimento());
-        dto.setCriadoEm(u.getCriadoEm());
-        dto.setExperiencia(u.getExperiencia());
-        dto.setModalidades(u.getModalidades());
-        dto.setExperiencia(u.getExperiencia());
-        dto.setBoolBaile(u.setBoolBaile());
-        return dto;
-    }
+            Usuario entity = new Usuario();
 
-    public static Usuario toEntity(UsuarioDto u) {
-        if (u == null)
-            return null;
-        Usuario entity = new Usuario();
-        entity.setId(u.getId());
-        entity.setNome(u.getNome());
-        entity.setCpf(u.getCpf());
-        entity.setNumero(u.getNumero());
-        entity.setEmail(u.getEmail());
-        entity.setSenha(u.getSenha());
-        entity.setEnumTipo(u.getEnumTipo());
-        entity.setCreditos(u.getCreditos());
-        entity.setStatus(u.getStatus());
-        entity.setUrlFoto(u.getUrlFoto());
-        entity.setDataNascimento(u.getDataNascimento());
-        entity.setCriadoEm(u.getCriadoEm());
-        entity.setExperiencia(u.getExperiencia());
-        entity.setModalidades(u.getModalidades());
-        entity.setExperiencia(u.getExperiencia());
-        entity.setBoolBaile(u.getBoolBaile());
-        return entity;
-    }
+            entity.setId(dto.getId());
+            entity.setNome(dto.getNome());
+            entity.setCpf(dto.getCpf());
+            entity.setNumero(dto.getNumero());
+            entity.setEmail(dto.getEmail());
+            entity.setSenha(dto.getSenha());
+            entity.setTipo(dto.getTipo());
+            if(dto.getStatus().equals(true)){
+                entity.setStatus(Usuario.ativo);
+            }else if(dto.getStatus().equals(false)){
+                entity.setStatus(Usuario.desativo);
+            }
+            entity.setEndereco(dto.getEndereco());
+            entity.setUrlFoto(dto.getUrlFoto());
+            entity.setDataNascimento(dto.getDataNascimento());
+            entity.setCriadoEm(dto.getCriadoEm());
 
-    public static LoginDto toLoginDto(Usuario u) {
-        if (u == null)
-            return null;
+            return entity;
+        }
 
-        LoginDto dto = new LoginDto();
+        public static UsuarioDTO toDTO(Usuario entity) {
+            if (entity == null) return null;
 
-        dto.setId(u.getId());
-        dto.setEnumTipo(u.getEnumTipo());
-        dto.setStatus(u.getStatus());
-        dto.setUrlFoto(u.getUrlFoto());
+            UsuarioDTO dto = new UsuarioDTO();
 
-        return dto;
-    }
+            dto.setId(entity.getId());
+            dto.setNome(entity.getNome());
+            dto.setCpf(entity.getCpf());
+            dto.setNumero(entity.getNumero());
+            dto.setEmail(entity.getEmail());
+            dto.setSenha(entity.getSenha());
+            dto.setTipo(entity.getTipo());
+            if(entity.getStatus().equals(Usuario.ativo)){
+                dto.setStatus(true);
+            }else if(entity.getStatus().equals(Usuario.desativo)){
+                dto.setStatus(false);
+            }
+            dto.setEndereco(entity.getEndereco());
+            dto.setUrlFoto(entity.getUrlFoto());
+            dto.setDataNascimento(entity.getDataNascimento());
+            dto.setCriadoEm(entity.getCriadoEm());
 
-    public static UsuarioDto alunoToDto(UsuarioAlunoDto u) {
-        if (u == null)
-            return null;
-        UsuarioDto dto = new UsuarioDto();
+            return dto;
+        }
 
-        dto.setId(u.getId());
-        dto.setNome(u.getNome());
-        dto.setCpf(u.getCpf());
-        dto.setNumero(u.getNumero());
-        dto.setEmail(u.getEmail());
-        dto.setEnumTipo(u.getEnumTipo());
-        dto.setDataNascimento(u.getDataNascimento());
-        dto.setExperiencia(u.getExperiencia());
-        dto.setModalidades(u.getModalidades());
-        dto.setExperiencia(u.getExperiencia());
-        return dto;
+        public static LoginDTO toLoginDTO(Usuario entity) {
+            if (entity == null) return null;
 
-    }
+            LoginDTO dto = new LoginDTO();
 
-    public static UsuarioAlunoDto toDtoAluno(UsuarioDto u) {
-        if (u == null)
-            return null;
+            dto.setId(entity.getId());
+            dto.setNome(entity.getNome());
+            if(entity.getStatus().equals(Usuario.ativo)){
+                dto.setStatus(true);
+            }else{
+                dto.setStatus(false);
+            }
+            dto.setTipo(entity.getTipo());
+            dto.setUrlFoto(entity.getUrlFoto());
 
-        UsuarioAlunoDto dto = new UsuarioAlunoDto();
-        dto.setId(u.getId());
-        dto.setNome(u.getNome());
-        dto.setCpf(u.getCpf());
-        dto.setNumero(u.getNumero());
-        dto.setEmail(u.getEmail());
-        dto.setEnumTipo(u.getEnumTipo());
-        dto.setDataNascimento(u.getDataNascimento());
-        dto.setExperiencia(u.getExperiencia());
-        dto.setModalidades(u.getModalidades());
-        dto.setExperiencia(u.getExperiencia());
-        return dto;
-    }
+            return dto;
+        }
 }
