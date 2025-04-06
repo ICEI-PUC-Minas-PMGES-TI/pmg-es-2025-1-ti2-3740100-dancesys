@@ -1,9 +1,8 @@
 package com.dancesys.dancesys.controller;
 
-import com.dancesys.dancesys.dto.AlunoDTO;
-import com.dancesys.dancesys.dto.LoginDTO;
-import com.dancesys.dancesys.dto.UsuarioDTO;
+import com.dancesys.dancesys.dto.*;
 
+import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.service.UsuarioService;
 import lombok.Getter;
@@ -36,8 +35,26 @@ public class UsuarioController {
 
     @PostMapping(value = "aluno")
     public ResponseEntity<AlunoDTO> salvarAluno(@RequestBody AlunoDTO dto) throws Exception {
-        final  AlunoDTO aluno = usuarioService.salvarAluno(dto);
+        final AlunoDTO aluno = usuarioService.salvarAluno(dto);
         return ResponseEntity.ok(aluno);
+    }
+
+    @PostMapping(value = "professor")
+    public ResponseEntity<ProfessorDTO> salvarProfessor(@RequestBody ProfessorDTO dto) throws Exception {
+        final ProfessorDTO professor = usuarioService.salvarProfessor(dto);
+        return ResponseEntity.ok(professor);
+    }
+
+    @GetMapping("aluno/buscar")
+    public ResponseEntity<List<AlunoDTO>> buscarAlunos(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer tipo,
+            @RequestParam(required = false) Integer status) {
+
+        List<AlunoDTO> alunos = usuarioService.buscarAlunos(nome, cpf, email, tipo, status);
+        return ResponseEntity.ok(alunos);
     }
 
     @GetMapping(value = "buscar")

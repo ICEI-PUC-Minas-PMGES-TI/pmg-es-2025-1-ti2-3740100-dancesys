@@ -2,7 +2,9 @@ package com.dancesys.dancesys.mapper;
 
 import com.dancesys.dancesys.dto.AlunoDTO;
 import com.dancesys.dancesys.dto.LoginDTO;
+import com.dancesys.dancesys.dto.ProfessorDTO;
 import com.dancesys.dancesys.dto.UsuarioDTO;
+import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Usuario;
 
 public class UsuarioMapper {
@@ -90,6 +92,26 @@ public class UsuarioMapper {
             dto.setEndereco(Adto.getEndereco());
             dto.setUrlFoto(Adto.getUrlFoto());
             dto.setDataNascimento(Adto.getDataNascimento());
+
+            return dto;
+        }
+
+        public static UsuarioDTO professorDTOtoDto(ProfessorDTO pDto){
+            if (pDto == null) return null;
+
+            UsuarioDTO dto = new UsuarioDTO();
+
+            dto.setId(pDto.getId());
+            dto.setNome(pDto.getNome());
+            dto.setCpf(pDto.getCpf());
+            dto.setNumero(pDto.getNumero());
+            dto.setEmail(pDto.getEmail());
+            dto.setSenha(pDto.getSenha());
+            dto.setTipo(pDto.getTipo());
+            dto.setStatus(pDto.getStatus());
+            dto.setEndereco(pDto.getEndereco());
+            dto.setUrlFoto(pDto.getUrlFoto());
+            dto.setDataNascimento(pDto.getDataNascimento());
 
             return dto;
         }
