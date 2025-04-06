@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/modalidade")
 public class ModalidadeController {
-
     @Autowired
     private ModalidadeService modalidadeService;
 
@@ -27,7 +26,7 @@ public class ModalidadeController {
     }
 
     @GetMapping(value = "buscar")
-    public List<Modalidade> buscar(ModalidadeDTO dto) throws Exception {
+    public List<Modalidade> buscar() throws Exception {
         return modalidadeService.buscar();
     }
 

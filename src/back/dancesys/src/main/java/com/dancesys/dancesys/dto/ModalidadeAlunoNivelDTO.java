@@ -15,5 +15,4 @@ public class ModalidadeAlunoNivelDTO {
     private Aluno aluno;
     private Modalidade modalidade;
     private Integer nivel;
-
 }

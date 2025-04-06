@@ -4,6 +4,7 @@ import com.dancesys.dancesys.dto.AlunoDTO;
 import com.dancesys.dancesys.dto.LoginDTO;
 import com.dancesys.dancesys.dto.UsuarioDTO;
 
+import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.service.UsuarioService;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,5 +38,10 @@ public class UsuarioController {
     public ResponseEntity<AlunoDTO> salvarAluno(@RequestBody AlunoDTO dto) throws Exception {
         final  AlunoDTO aluno = usuarioService.salvarAluno(dto);
         return ResponseEntity.ok(aluno);
+    }
+
+    @GetMapping(value = "buscar")
+    public List<Usuario> buscar(){
+        return usuarioService.buscar();
     }
 }

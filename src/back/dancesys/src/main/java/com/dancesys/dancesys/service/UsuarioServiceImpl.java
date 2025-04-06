@@ -79,6 +79,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             for (ModalidadeAlunoNivelDTO obj : dto.getModalidades()) {
                 obj.setAluno(newAluno);
                 obj.setIdAluno(newAluno.getId());
+
                 ModalidadeAlunoNivel mod = modalidadeAlunoNivelServiceImpl.salvar(obj);
 
                 modList.add(ModalidadeAlunoNivelMapper.toDto(mod));
@@ -89,5 +90,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Usuario> buscar(){
+        return usuarioRepository.findAll();
     }
 }

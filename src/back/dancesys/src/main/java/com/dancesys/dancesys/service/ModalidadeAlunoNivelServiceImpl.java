@@ -8,6 +8,8 @@ import com.dancesys.dancesys.mapper.ModalidadeAlunoNivelMapper;
 import com.dancesys.dancesys.repository.ModalidadeAlunoNivelRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelService{
     private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
@@ -25,5 +27,10 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
         modalidadeAlunoNivel.setIdAluno(dto.getAluno());
         modalidadeAlunoNivel.setIdModalidade(dto.getModalidade());
         return modalidadeAlunoNivelRepository.save(modalidadeAlunoNivel);
+    }
+
+    @Override
+    public List<ModalidadeAlunoNivel> buscarTodos(){
+        return modalidadeAlunoNivelRepository.findAll();
     }
 }
