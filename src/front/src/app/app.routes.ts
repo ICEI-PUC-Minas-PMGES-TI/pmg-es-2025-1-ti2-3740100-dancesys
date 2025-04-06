@@ -5,6 +5,7 @@ import { DashboardAdminPageComponent } from './pages/Admin/dashboard-admin-page/
 import { AdminCanMatchFn, AlunoCanMatchFn } from './guards/auth.guard';
 import { MainAdminPageComponent } from './pages/Admin/main-admin-page/main-admin-page.component';
 import { CalendarAdminPageComponent } from './pages/Admin/calendar-admin-page/calendar-admin-page.component';
+import { UsuariosAdminPageComponent } from './pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component';
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -20,7 +21,11 @@ export const routes: Routes = [
 			{ path: "", redirectTo: "dashboard/main", pathMatch: "full" },
 			{
 				path: "dashboard", component: DashboardAdminPageComponent, children: [
-					{ path: "main", component: MainAdminPageComponent },
+					{
+						path: "main", component: MainAdminPageComponent, children: [
+							{ path: "usuarios", component: UsuariosAdminPageComponent }
+						]
+					},
 					{ path: "calendar", component: CalendarAdminPageComponent },
 				]
 			}
