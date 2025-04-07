@@ -11,7 +11,6 @@ const USER_INFO_EXPIRE_DAYS: number = 1; // em dias
 	providedIn: "root",
 })
 export class UsuarioService {
-
 	// atributos
 	private currentUsuario = signal<Usuario>(new Usuario());
 	public usuario = this.currentUsuario.asReadonly();
@@ -29,32 +28,31 @@ export class UsuarioService {
 		const cookie = this.cookieService.get("user_cookie");
 		if (cookie) {
 			// coloca o usuário no signal
-			const userCookie: UsuarioCookie = JSON.parse(cookie)
+			const userCookie: UsuarioCookie = JSON.parse(cookie);
 			const newUser: Usuario = new Usuario();
 			newUser.id = userCookie.id;
-			newUser.enumTipo = userCookie.enumTipo;
+			newUser.tipo = userCookie.tipo;
 			newUser.status = userCookie.status;
 			newUser.nome = userCookie.nome;
 			newUser.urlFoto = userCookie.urlFoto;
-			this.currentUsuario.set({ ...newUser });
+			this.currentUsuario.set(structuredClone(newUser));
 			// redirecionamento do usuario
-			this.redirecionarUsuario()
+			this.redirecionarUsuario();
 		}
 	}
 
 	private redirecionarUsuario() {
 		// redireciona baseado no tipo do usuário
-		if (this.currentUsuario().enumTipo == UsuarioTipos.ADMIN) {
+		if (this.currentUsuario().tipo == UsuarioTipos.ADMIN) {
 			this.router.navigate(["admin"]);
-		} else if (this.currentUsuario().enumTipo == UsuarioTipos.FUNCIONARIO) {
+		} else if (this.currentUsuario().tipo == UsuarioTipos.FUNCIONARIO) {
 			this.router.navigate(["funcionario"]);
-		} else if (this.currentUsuario().enumTipo == UsuarioTipos.ALUNO_FIXO || UsuarioTipos.ALUNO_LIVRE) {
+		} else if (this.currentUsuario().tipo == UsuarioTipos.ALUNO) {
 			this.router.navigate(["aluno"]);
 		}
 	}
 
 	public login(item: Usuario) {
-
 		const url = `${environment.API_URL}${this.usuarioController}/auth`;
 		this.http.post(url, item).subscribe({
 			next: (resp) => {
@@ -64,21 +62,22 @@ export class UsuarioService {
 				// gerenciamento de cookie
 				const userCookie: UsuarioCookie = {
 					id: userResp.id,
-					enumTipo: userResp.enumTipo,
+					tipo: userResp.tipo,
 					status: userResp.status,
 					nome: userResp.nome,
-					urlFoto: userResp.urlFoto
-				}
-				this.cookieService.set("user_cookie", JSON.stringify(userCookie), USER_INFO_EXPIRE_DAYS);
+					urlFoto: userResp.urlFoto,
+				};
+				this.cookieService.set(
+					"user_cookie",
+					JSON.stringify(userCookie),
+					USER_INFO_EXPIRE_DAYS,
+				);
 				// redireciona o usuário
 				this.redirecionarUsuario();
 			},
 			error: (err) => {
 				console.log(err);
-			}
+			},
 		});
-
 	}
-
-
 }

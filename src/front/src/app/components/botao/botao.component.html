@@ -1,5 +1,15 @@
 <div [class]="styling">
-	<span>
-		<ng-content />
-	</span>
+	@if (iconSlot == "left" && iconName) {
+		<app-icon [name]="iconName" [size]="iconSize"></app-icon>
+	}
+	@if (iconSlot != "icon-only") {
+		<span>
+			<ng-content />
+		</span>
+	} @else {
+		<app-icon [name]="iconName" [size]="iconSize"></app-icon>
+	}
+	@if (iconSlot == "right" && iconName) {
+		<app-icon [name]="iconName" [size]="iconSize"></app-icon>
+	}
 </div>

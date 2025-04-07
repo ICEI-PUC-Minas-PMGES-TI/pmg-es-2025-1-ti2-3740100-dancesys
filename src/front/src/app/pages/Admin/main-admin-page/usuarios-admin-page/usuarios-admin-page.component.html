@@ -1,41 +1,141 @@
-<main class="py-4 max-w-full">
+<main class="py-4 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
 		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
-		<form class="flex flex-col">
-			<div class="flex flex-row space-x-2">
+		<form class="flex flex-col text-main-500 font-bold">
+			<div class="flex px-1 flex-row space-x-2">
 				<div class="flex flex-col">
 					<label for="nomeFilter">Nome:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="">
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 				<div class="flex flex-col">
 					<label for="nomeFilter">CPF:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="">
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 				<div class="flex flex-col">
 					<label for="nomeFilter">E-Mail:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="">
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 			</div>
-			<div class="flex flex-row space-x-2">
+			<div class="flex px-1 flex-row space-x-2">
 				<div class="flex flex-col">
 					<label for="nomeFilter">Tipo:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="">
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 				<div class="flex flex-col">
 					<label for="nomeFilter">Status:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="">
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 			</div>
 		</form>
 	</section>
-	<section class="flex justify-start flex-row space-x-2">
-		<button appButton color="dark">Novo aluno</button>
-		<button appButton color="dark">Novo Professor</button>
-		<button appButton color="dark">Filtrar</button>
+	<section class="flex justify-between flex-row">
+		<div class="flex flex-row space-x-2">
+			<button icon="add_circle" icon-slot="right" appButton color="dark">
+				Novo aluno
+			</button>
+			<button icon="add_circle" icon-slot="right" appButton color="dark">
+				Novo Professor
+			</button>
+			<button icon="search" icon-slot="right" appButton color="dark">
+				Filtrar
+			</button>
+		</div>
+		<div>
+			<button
+				icon="reload"
+				(click)="reloadUsers()"
+				icon-slot="icon-only"
+				appButton
+				color="dark"
+			></button>
+		</div>
 	</section>
+	@if (users.length > 0) {
+		<section class="flex flex-1 mt-4 max-h-full overflow-y-scroll">
+			<table class="table-auto text-main-500 tabela w-full">
+				<thead class="w-full">
+					<tr>
+						<th>Nome</th>
+						<th>E-mail</th>
+						<th>Telefone</th>
+						<th>Tipo</th>
+						<th>Status</th>
+						<th>Data de Nascimento</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody class="overflow-y-scroll h-full max-h-full">
+					@for (user of usersTabela; track user.nome) {
+						<tr>
+							<td>{{ user.nome }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.telefone }}</td>
+							<td>{{ user.tipo }}</td>
+							<td>{{ user.status }}</td>
+							<td>{{ user.dataNasc }}</td>
+							<td>
+								<div
+									class="flex flex-row space-x-3 px-3 justify-center"
+								>
+									<button
+										appButton
+										icon="edit"
+										title="Editar"
+										icon-slot="icon-only"
+										color="blue"
+									></button>
+									<button
+										appButton
+										icon="warning"
+										icon-slot="icon-only"
+										title="Ativar/Desativar conta"
+										[color]="
+											user.status == 'Ativo'
+												? 'danger'
+												: 'success'
+										"
+									></button>
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</section>
+	}
 </main>
