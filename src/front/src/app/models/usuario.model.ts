@@ -1,35 +1,48 @@
 export class Usuario {
+	public id!: number; // Long
+	public nome!: string; // String
+	public cpf!: string; // String
+	public numero!: string; // String
+	public email!: string; // String
+	public senha!: string; // String
+	public tipo!: number; // Integer
+	public status!: boolean; // Boolean
+	public endereco!: string; // String
+	public urlFoto!: string; // String
+	public dataNascimento!: Date; // LocalDate
+	public criadoEm!: Date; // LocalDate
 
-	id!: number;
-	nome!: string;
-	cpf!: string;
-	numero!: string;
-	email!: string;
-	senha!: string;
-	enumTipo!: number;
-	creditos!: number;
-	status!: number;
-	urlFoto!: string;
-	dataNascimento!: Date;
-	criadoEm!: Date;
-	modalidades!: string;
-	experiencia!: number;
-	boolBaile!: number;
-	endereco!: string;
+	public static getTipoString(t: number): string {
+		switch (t) {
+			case UsuarioTipos.ADMIN:
+				return "Admin";
+			case UsuarioTipos.ALUNO:
+				return "Aluno";
+			case UsuarioTipos.FUNCIONARIO:
+				return "Funcionário";
+			default:
+				return "Unknown";
+		}
+	}
 
+	public static getStatusString(s: boolean): string {
+		if (s) {
+			return "Ativo";
+		}
+		return "Inativo";
+	}
 }
 
 export interface UsuarioCookie {
 	nome: string;
 	id: number;
-	enumTipo: number;
-	status: number;
+	tipo: number;
+	status: boolean;
 	urlFoto: string;
 }
 
 export enum UsuarioTipos {
-	ALUNO_FIXO = 3,
-	ALUNO_LIVRE = 4,
 	ADMIN = 1,
-	FUNCIONARIO = 2
+	FUNCIONARIO = 2,
+	ALUNO = 3,
 }
