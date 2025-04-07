@@ -21,4 +21,8 @@ public class Professor {
 
     @Column(name = "valor_hora_extra", nullable = false)
     private BigDecimal valorHoraExtra;
+
+    @OneToOne
+    @JoinColumn(name = "id_Usuario", nullable = false)
+    private Usuario idUsuario;
 }

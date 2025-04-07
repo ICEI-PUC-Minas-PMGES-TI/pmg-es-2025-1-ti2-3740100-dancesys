@@ -20,7 +20,7 @@ public class ProfessorModalidade {
     @ManyToOne
     @MapsId("idProfessor")
     @JoinColumn(name = "id_Professor", nullable = false)
-    private Aluno idProfessor;
+    private Professor idProfessor;
 
     @ManyToOne
     @MapsId("idModalidade")

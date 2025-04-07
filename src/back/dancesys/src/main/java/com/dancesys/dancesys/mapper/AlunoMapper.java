@@ -4,7 +4,6 @@ import com.dancesys.dancesys.dto.AlunoDTO;
 import com.dancesys.dancesys.dto.ModalidadeAlunoNivelDTO;
 import com.dancesys.dancesys.dto.UsuarioDTO;
 import com.dancesys.dancesys.entity.Aluno;
-import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
 import com.dancesys.dancesys.entity.Usuario;
 
 import java.util.List;
@@ -26,6 +25,39 @@ public class AlunoMapper {
         entity.setIdUsuario(dto.getIdUsuario());
 
         return entity;
+    }
+
+    public static AlunoDTO toDto(Aluno entity){
+       if(entity == null) return null;
+
+       AlunoDTO dto = new AlunoDTO();
+
+       dto.setId(entity.getId());
+       dto.setNome(entity.getIdUsuario().getNome());
+       dto.setCpf(entity.getIdUsuario().getCpf());
+       dto.setNumero(entity.getIdUsuario().getNumero());
+       dto.setEmail(entity.getIdUsuario().getEmail());
+       dto.setSenha(entity.getIdUsuario().getSenha());
+       dto.setTipo(entity.getIdUsuario().getTipo());
+       if(entity.getBoolBaile().equals(Usuario.ativo)){
+           dto.setStatus(true);
+       }else{
+           dto.setStatus(false);
+       }
+       dto.setEndereco(entity.getIdUsuario().getEndereco());
+       dto.setUrlFoto(entity.getIdUsuario().getUrlFoto());
+       dto.setDataNascimento(entity.getIdUsuario().getDataNascimento());
+       dto.setCriadoEm(entity.getIdUsuario().getCriadoEm());
+       dto.setCreditos(entity.getCreditos());
+       if(entity.getBoolBaile().equals(Aluno.sim)){
+           dto.setBoolBaile(true);
+       }else{
+           dto.setBoolBaile(false);
+       }
+       dto.setTipoAluno(entity.getTipo());
+       dto.setIdUsuario(entity.getIdUsuario());
+
+       return dto;
     }
 
     public static AlunoDTO allToDTO(UsuarioDTO user, Aluno aluno, List<ModalidadeAlunoNivelDTO> modList){

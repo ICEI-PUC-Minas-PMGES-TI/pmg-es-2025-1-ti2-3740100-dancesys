@@ -1,18 +1,9 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.AlunoDTO;
-import com.dancesys.dancesys.dto.LoginDTO;
-import com.dancesys.dancesys.dto.ModalidadeAlunoNivelDTO;
-import com.dancesys.dancesys.dto.UsuarioDTO;
-import com.dancesys.dancesys.entity.Aluno;
-import com.dancesys.dancesys.entity.IdsCompostos.AlunoModalidade;
-import com.dancesys.dancesys.entity.Modalidade;
-import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
-import com.dancesys.dancesys.entity.Usuario;
-import com.dancesys.dancesys.mapper.AlunoMapper;
-import com.dancesys.dancesys.mapper.ModalidadeAlunoNivelMapper;
-import com.dancesys.dancesys.mapper.UsuarioMapper;
-import com.dancesys.dancesys.repository.UsuarioRepository;
+import com.dancesys.dancesys.dto.*;
+import com.dancesys.dancesys.entity.*;
+import com.dancesys.dancesys.mapper.*;
+import com.dancesys.dancesys.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,15 +15,27 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final AlunoServiceImpl alunoServiceImpl;
     private final ModalidadeAlunoNivelServiceImpl modalidadeAlunoNivelServiceImpl;
+    private final ProfessorServiceImpl professorServiceImpl;
+    private final ProfessorModalidadeServiceImpl professorModalidadeServiceImpl;
+    private final AlunoRepository alunoRepository;
+    private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
 
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository,
             AlunoServiceImpl alunoServiceImpl,
-            ModalidadeAlunoNivelServiceImpl modalidadeAlunoNivelServiceImpl
+            ModalidadeAlunoNivelServiceImpl modalidadeAlunoNivelServiceImpl,
+            ProfessorServiceImpl professorServiceImpl,
+            ProfessorModalidadeServiceImpl professorModalidadeServiceImpl,
+            AlunoRepository alunoRepository,
+            ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository
     ) {
         this.usuarioRepository = usuarioRepository;
         this.alunoServiceImpl = alunoServiceImpl;
         this.modalidadeAlunoNivelServiceImpl = modalidadeAlunoNivelServiceImpl;
+        this.professorServiceImpl = professorServiceImpl;
+        this.professorModalidadeServiceImpl = professorModalidadeServiceImpl;
+        this.alunoRepository = alunoRepository;
+        this.modalidadeAlunoNivelRepository = modalidadeAlunoNivelRepository;
     }
 
     @Override
@@ -44,8 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 dto.setCriadoEm(LocalDate.now());
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
-            UsuarioDTO newDTO = UsuarioMapper.toDTO(usuario);
-            return newDTO;
+            return UsuarioMapper.toDTO(usuario);
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
@@ -88,8 +90,51 @@ public class UsuarioServiceImpl implements UsuarioService {
             AlunoDTO newDto = AlunoMapper.allToDTO(user, newAluno, modList);
             return newDto;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    public ProfessorDTO salvarProfessor(ProfessorDTO dto) throws Exception{
+        try{
+            UsuarioDTO user = salvar(UsuarioMapper.professorDTOtoDto(dto));
+            Professor professor = ProfessorMapper.toEntity(dto);
+            professor.setIdUsuario(UsuarioMapper.toEntity(user));
+            Professor newProfessor = professorServiceImpl.salvar(professor);
+            List<ProfessorModalidadeDTO> modList = new ArrayList<>();
+            for(ProfessorModalidadeDTO obj : dto.getModalidades()){
+                obj.setProfessor(newProfessor);
+                obj.setIdProfessor(newProfessor.getId());
+
+                ProfessorModalidade mod = professorModalidadeServiceImpl.salvar(obj);
+
+                modList.add(ProfessorModalidadeMapper.toDto(mod));
+            }
+
+            ProfessorDTO newDto = ProfessorMapper.AlltoDto(user, newProfessor, modList);
+            return newDto;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<AlunoDTO> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status) {
+        List<Aluno> alunos = alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
+        List<AlunoDTO> dtos = new ArrayList<>();
+        for(Aluno aluno : alunos){
+            List<ModalidadeAlunoNivel> modEntity = modalidadeAlunoNivelRepository.findByIdAluno_Id(aluno.getId());
+            List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
+            for(ModalidadeAlunoNivel obj : modEntity){
+                modList.add(ModalidadeAlunoNivelMapper.toDto(obj));
+            }
+
+            AlunoDTO dto = AlunoMapper.toDto(aluno);
+            dto.setModalidades(modList);
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 
     @Override
