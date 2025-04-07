@@ -25,7 +25,8 @@ public class ProfessorDTO {
     private LocalDate criadoEm;
     private String informacoesProfissionais;
     private BigDecimal valorHoraExtra;
-    private Usuario idUsuario;
+    private Long idUsuario;
+    private Usuario usuario;
     private List<ProfessorModalidadeDTO> modalidades;
     private List<ProfessorModalidadeDTO> dmodalidades;
 }

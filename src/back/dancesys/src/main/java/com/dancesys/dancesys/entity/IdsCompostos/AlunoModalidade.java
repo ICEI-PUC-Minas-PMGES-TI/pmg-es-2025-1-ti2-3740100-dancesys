@@ -19,6 +19,4 @@ public class AlunoModalidade implements Serializable {
 
     @Column(name = "id_Modalidade")
     private Long idModalidade;
-
-
 }
