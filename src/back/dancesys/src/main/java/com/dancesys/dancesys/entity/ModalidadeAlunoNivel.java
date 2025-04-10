@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.entity;
 
 import com.dancesys.dancesys.entity.IdsCompostos.AlunoModalidade;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class ModalidadeAlunoNivel {
     @ManyToOne
     @MapsId("idAluno")
     @JoinColumn(name = "id_Aluno", nullable = false)
+    @JsonBackReference
     private Aluno idAluno;
 
     @ManyToOne

@@ -46,14 +46,14 @@ public class UsuarioController {
     }
 
     @GetMapping("aluno/buscar")
-    public ResponseEntity<List<AlunoDTO>> buscarAlunos(
+    public ResponseEntity<List<Aluno>> buscarAlunos(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String cpf,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) Integer tipo,
             @RequestParam(required = false) Integer status) {
 
-        List<AlunoDTO> alunos = usuarioService.buscarAlunos(nome, cpf, email, tipo, status);
+        List<Aluno> alunos = usuarioService.buscarAlunos(nome, cpf, email, tipo, status);
         return ResponseEntity.ok(alunos);
     }
 

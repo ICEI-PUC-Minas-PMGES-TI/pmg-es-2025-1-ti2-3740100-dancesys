@@ -15,7 +15,7 @@ public interface UsuarioService{
 
     public ProfessorDTO salvarProfessor(ProfessorDTO dto) throws Exception;
 
-    public List<AlunoDTO> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status);
+    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status);
 
     public List<Usuario> buscar();
 }
