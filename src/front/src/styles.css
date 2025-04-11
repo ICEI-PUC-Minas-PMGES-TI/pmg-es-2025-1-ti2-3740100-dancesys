@@ -23,29 +23,35 @@ body {
 }
 
 .tabela {
-	border-width: 0.25rem;
-	border-color: var(--color-main-500);
-	border-style: solid;
-	border-radius: 0.5rem;
+	background-color: var(--color-main-100);
+	max-height: 60vh;
+	width: 100%;
+	margin-top: 0.5rem;
+	overflow-y: auto;
+	scrollbar-color: var(--color-main-500) var(--color-main-100);
+	padding-bottom: 1rem;
 
-	/* max-height: 100%; */
+	table {
+		width: 100%;
+		max-height: 60vh;
+		table-layout: auto;
 
-	thead,
-	tbody,
-	th,
-	td {
-		border-width: 0.25rem;
-		border-color: var(--color-main-500);
-		border-style: solid;
-	}
+		thead {
+			background-color: var(--color-main-500);
+			color: white;
+			top: 0;
+		}
 
-	th,
-	td {
-		padding: 0.25rem;
-	}
+		th {
+			padding: 0.5rem;
+		}
 
-	th {
-		background-color: var(--color-main-500);
-		color: white;
+		tr,
+		td {
+			padding: 0.25rem;
+			border-width: 3px;
+			border-color: var(--color-main-500);
+			border-style: solid;
+		}
 	}
 }
