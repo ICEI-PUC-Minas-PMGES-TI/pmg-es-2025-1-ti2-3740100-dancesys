@@ -119,22 +119,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public List<AlunoDTO> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status) {
-        List<Aluno> alunos = alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
-        List<AlunoDTO> dtos = new ArrayList<>();
-        for(Aluno aluno : alunos){
-            List<ModalidadeAlunoNivel> modEntity = modalidadeAlunoNivelRepository.findByIdAluno_Id(aluno.getId());
-            List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
-            for(ModalidadeAlunoNivel obj : modEntity){
-                modList.add(ModalidadeAlunoNivelMapper.toDto(obj));
-            }
-
-            AlunoDTO dto = AlunoMapper.toDto(aluno);
-            dto.setModalidades(modList);
-            dtos.add(dto);
-        }
-
-        return dtos;
+    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status) {
+        return alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
     }
 
     @Override

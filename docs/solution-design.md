@@ -11,10 +11,10 @@ _Apresente o modelo de dados por meio de um modelo relacional que contemple todo
 
 _Descreva qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços Web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas._
 
-| **Dimensão**   | **Tecnologia**  |
-| ---            | ---             |
-| SGBD           | Azure MS SQL    |
-| Front end      | Angular         |
-| Back end       | Java SpringBoot |
-| Deploy         | Github Pages    |
+| **Dimensão**   | **Tecnologia**     |
+| ---            | ---                |
+| SGBD           | Azure MS SQL       |
+| Front end      | Angular            |
+| Back end       | Java SpringBoot    |
+| Deploy         | Azure App Services |
 

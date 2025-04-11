@@ -28,7 +28,8 @@ public class AlunoDTO {
     private Integer creditos;
     private Boolean boolBaile;
     private Integer tipoAluno;
-    private Usuario idUsuario;
+    private Long idUsuario;
+    private Usuario usuario;
     private List<ModalidadeAlunoNivelDTO> modalidades = new ArrayList<>();
     private List<ModalidadeAlunoNivelDTO> dModalidades = new ArrayList<>();
 }

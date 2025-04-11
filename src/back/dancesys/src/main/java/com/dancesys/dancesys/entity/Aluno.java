@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,4 +35,9 @@ public class Aluno {
     @OneToOne
     @JoinColumn(name = "id_Usuario", nullable = false)
     private Usuario idUsuario;
+
+    @OneToMany(mappedBy = "idAluno", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ModalidadeAlunoNivel> modalidades;
+
 }

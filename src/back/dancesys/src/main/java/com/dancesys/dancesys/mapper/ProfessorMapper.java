@@ -16,7 +16,7 @@ public class ProfessorMapper {
         entity.setId(dto.getId());
         entity.setInformacoesProfissionais(dto.getInformacoesProfissionais());
         entity.setValorHoraExtra(dto.getValorHoraExtra());
-        entity.setIdUsuario(dto.getIdUsuario());
+        entity.setIdUsuario(dto.getUsuario());
 
         return entity;
     }
@@ -38,7 +38,8 @@ public class ProfessorMapper {
         dto.setCriadoEm(uDto.getCriadoEm());
         dto.setInformacoesProfissionais(entity.getInformacoesProfissionais());
         dto.setValorHoraExtra(entity.getValorHoraExtra());
-        dto.setIdUsuario(entity.getIdUsuario());
+        dto.setUsuario(entity.getIdUsuario());
+        dto.setIdUsuario(entity.getIdUsuario().getId());
         dto.setModalidades(mods);
 
         return dto;
