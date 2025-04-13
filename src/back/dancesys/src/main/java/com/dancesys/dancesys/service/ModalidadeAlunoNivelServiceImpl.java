@@ -1,9 +1,7 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.ModalidadeAlunoNivelDTO;
-import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.IdsCompostos.AlunoModalidade;
-import com.dancesys.dancesys.entity.Modalidade;
 import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
 import com.dancesys.dancesys.mapper.ModalidadeAlunoNivelMapper;
 import com.dancesys.dancesys.repository.ModalidadeAlunoNivelRepository;

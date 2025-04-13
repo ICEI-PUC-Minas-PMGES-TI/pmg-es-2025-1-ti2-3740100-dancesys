@@ -1,6 +1,8 @@
 package com.dancesys.dancesys.mapper;
 
 import com.dancesys.dancesys.dto.ProfessorModalidadeDTO;
+import com.dancesys.dancesys.entity.Modalidade;
+import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.ProfessorModalidade;
 
 public class ProfessorModalidadeMapper {
@@ -8,10 +10,13 @@ public class ProfessorModalidadeMapper {
         if (dto == null) return null;
 
         ProfessorModalidade entity = new ProfessorModalidade();
+        Professor prof = new Professor();
+        Modalidade mod = new Modalidade();
 
-        entity.setId(dto.getId());
-        entity.setIdModalidade(dto.getModalidade());
-        entity.setIdProfessor(dto.getProfessor());
+        prof.setId(dto.getIdProfessor());
+        mod.setId(dto.getIdModalidade());
+        entity.setIdModalidade(mod);
+        entity.setIdProfessor(prof);
 
         return entity;
     }
@@ -21,9 +26,6 @@ public class ProfessorModalidadeMapper {
 
         ProfessorModalidadeDTO dto = new ProfessorModalidadeDTO();
 
-        dto.setId(entity.getId());
-        dto.setProfessor(entity.getIdProfessor());
-        dto.setModalidade(entity.getIdModalidade());
         dto.setIdProfessor(entity.getIdProfessor().getId());
         dto.setIdModalidade(entity.getIdModalidade().getId());
 

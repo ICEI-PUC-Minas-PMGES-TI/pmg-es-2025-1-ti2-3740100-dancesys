@@ -103,7 +103,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             Professor newProfessor = professorServiceImpl.salvar(professor);
             List<ProfessorModalidadeDTO> modList = new ArrayList<>();
             for(ProfessorModalidadeDTO obj : dto.getModalidades()){
-                obj.setProfessor(newProfessor);
                 obj.setIdProfessor(newProfessor.getId());
 
                 ProfessorModalidade mod = professorModalidadeServiceImpl.salvar(obj);
@@ -111,8 +110,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 modList.add(ProfessorModalidadeMapper.toDto(mod));
             }
 
-            ProfessorDTO newDto = ProfessorMapper.AlltoDto(user, newProfessor, modList);
-            return newDto;
+            return ProfessorMapper.AlltoDto(user, newProfessor, modList);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

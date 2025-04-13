@@ -26,7 +26,5 @@ public class ProfessorDTO {
     private String informacoesProfissionais;
     private BigDecimal valorHoraExtra;
     private Long idUsuario;
-    private Usuario usuario;
     private List<ProfessorModalidadeDTO> modalidades;
-    private List<ProfessorModalidadeDTO> dmodalidades;
 }
