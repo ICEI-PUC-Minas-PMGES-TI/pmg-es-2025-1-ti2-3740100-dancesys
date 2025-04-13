@@ -18,11 +18,7 @@ public class AlunoMapper {
         entity.setId(dto.getId());
         entity.setCreditos(dto.getCreditos());
         entity.setTipo(dto.getTipo());
-        if(dto.getBoolBaile().equals(true)){
-            entity.setBoolBaile(Aluno.sim);
-        }else if(dto.getBoolBaile().equals(false)){
-            entity.setBoolBaile(Aluno.nao);
-        }
+        entity.setBoolBaile(dto.getBoolBaile());
         user.setId(dto.getIdUsuario());
         entity.setIdUsuario(user);
 
@@ -46,11 +42,7 @@ public class AlunoMapper {
        dto.setDataNascimento(entity.getIdUsuario().getDataNascimento());
        dto.setCriadoEm(entity.getIdUsuario().getCriadoEm());
        dto.setCreditos(entity.getCreditos());
-       if(entity.getBoolBaile().equals(Aluno.sim)){
-           dto.setBoolBaile(true);
-       }else{
-           dto.setBoolBaile(false);
-       }
+       dto.setBoolBaile(entity.getBoolBaile());
        dto.setTipoAluno(entity.getTipo());
        dto.setIdUsuario(entity.getIdUsuario().getId());
 
@@ -72,11 +64,7 @@ public class AlunoMapper {
         dto.setCriadoEm(user.getCriadoEm());
         dto.setUrlFoto(user.getUrlFoto());
         dto.setCreditos(aluno.getCreditos());
-        if(aluno.getBoolBaile().equals(Aluno.sim)){
-            dto.setBoolBaile(true);
-        }else if(aluno.getBoolBaile().equals(Aluno.nao)){
-            dto.setBoolBaile(false);
-        }
+        dto.setBoolBaile(aluno.getBoolBaile());
         dto.setTipoAluno(aluno.getTipo());
         dto.setIdUsuario(UsuarioMapper.toEntity(user).getId());
         dto.setModalidades(modList);
