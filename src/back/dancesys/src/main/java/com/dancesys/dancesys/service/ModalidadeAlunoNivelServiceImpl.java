@@ -22,15 +22,9 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
 
     public ModalidadeAlunoNivel salvar(ModalidadeAlunoNivelDTO dto) {
         AlunoModalidade id = new AlunoModalidade(dto.getIdAluno(), dto.getIdModalidade());
-        ModalidadeAlunoNivel modalidadeAlunoNivel = new ModalidadeAlunoNivel();
-        Modalidade mod = new Modalidade();
-        Aluno aluno = new Aluno();
-        aluno.setId(dto.getIdAluno());
-        mod.setId(dto.getIdModalidade());
-        modalidadeAlunoNivel.setIdModalidade(mod);
-        modalidadeAlunoNivel.setIdAluno(aluno);
+        ModalidadeAlunoNivel modalidadeAlunoNivel = ModalidadeAlunoNivelMapper.toEntity(dto);
+
         modalidadeAlunoNivel.setId(id);
-        modalidadeAlunoNivel.setNivel(dto.getNivel());
         return modalidadeAlunoNivelRepository.save(modalidadeAlunoNivel);
     }
 
