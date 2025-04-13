@@ -13,6 +13,7 @@ public class AlunoMapper {
         if(dto == null) return null;
 
         Aluno entity = new Aluno();
+        Usuario user = new Usuario();
 
         entity.setId(dto.getId());
         entity.setCreditos(dto.getCreditos());
@@ -22,7 +23,8 @@ public class AlunoMapper {
         }else if(dto.getBoolBaile().equals(false)){
             entity.setBoolBaile(Aluno.nao);
         }
-        entity.setIdUsuario(dto.getUsuario());
+        user.setId(dto.getIdUsuario());
+        entity.setIdUsuario(user);
 
         return entity;
     }
@@ -39,11 +41,6 @@ public class AlunoMapper {
        dto.setEmail(entity.getIdUsuario().getEmail());
        dto.setSenha(entity.getIdUsuario().getSenha());
        dto.setTipo(entity.getIdUsuario().getTipo());
-       if(entity.getBoolBaile().equals(Usuario.ativo)){
-           dto.setStatus(true);
-       }else{
-           dto.setStatus(false);
-       }
        dto.setEndereco(entity.getIdUsuario().getEndereco());
        dto.setUrlFoto(entity.getIdUsuario().getUrlFoto());
        dto.setDataNascimento(entity.getIdUsuario().getDataNascimento());
@@ -55,7 +52,6 @@ public class AlunoMapper {
            dto.setBoolBaile(false);
        }
        dto.setTipoAluno(entity.getTipo());
-       dto.setUsuario(entity.getIdUsuario());
        dto.setIdUsuario(entity.getIdUsuario().getId());
 
        return dto;
@@ -83,7 +79,6 @@ public class AlunoMapper {
         }
         dto.setTipoAluno(aluno.getTipo());
         dto.setIdUsuario(UsuarioMapper.toEntity(user).getId());
-        dto.setUsuario(UsuarioMapper.toEntity(user));
         dto.setModalidades(modList);
 
         return  dto;

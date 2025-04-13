@@ -32,6 +32,7 @@ public class Usuario {
 
     @Column(name = "senha", nullable = false)
     private String senha;
+    public static final String SENHA_PADRAO = "Dancesys2025";
 
     @Column(name = "tipo", nullable = false)
     public Integer tipo;

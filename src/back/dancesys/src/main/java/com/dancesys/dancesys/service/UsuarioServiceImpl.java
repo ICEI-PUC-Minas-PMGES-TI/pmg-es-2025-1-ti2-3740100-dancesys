@@ -45,6 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             if(dto.getId()==null){
                 dto.setStatus(true);
                 dto.setCriadoEm(LocalDate.now());
+                dto.setSenha(Usuario.SENHA_PADRAO);
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
             return UsuarioMapper.toDTO(usuario);
@@ -79,7 +80,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             Aluno newAluno = alunoServiceImpl.salvar(aluno);
             List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
             for (ModalidadeAlunoNivelDTO obj : dto.getModalidades()) {
-                obj.setAluno(newAluno);
                 obj.setIdAluno(newAluno.getId());
 
                 ModalidadeAlunoNivel mod = modalidadeAlunoNivelServiceImpl.salvar(obj);
