@@ -17,7 +17,7 @@ public class AlunoMapper {
 
         entity.setId(dto.getId());
         entity.setCreditos(dto.getCreditos());
-        entity.setTipo(dto.getTipo());
+        entity.setTipo(dto.getTipoAluno());
         entity.setBoolBaile(dto.getBoolBaile());
         user.setId(dto.getIdUsuario());
         entity.setIdUsuario(user);

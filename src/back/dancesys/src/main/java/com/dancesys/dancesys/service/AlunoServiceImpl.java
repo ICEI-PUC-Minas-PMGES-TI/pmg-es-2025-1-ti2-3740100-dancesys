@@ -18,7 +18,7 @@ public class AlunoServiceImpl implements AlunoService{
             if(entity.getTipo().equals(Aluno.fixo)){
                 entity.setCreditos(0);
             }else{
-                entity.setCreditos(Aluno.fixo);
+                entity.setCreditos(Aluno.max_creditos);
             }
             Aluno newEntity = alunoRepository.save(entity);
             return newEntity;
