@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = new Usuario();
         try {
             if(dto.getId()==null){
-                dto.setStatus(true);
+                dto.setStatus(Usuario.ativo);
                 dto.setCriadoEm(LocalDate.now());
                 dto.setSenha(Usuario.SENHA_PADRAO);
             }
