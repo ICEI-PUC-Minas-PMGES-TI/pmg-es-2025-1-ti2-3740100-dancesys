@@ -1,4 +1,4 @@
 export type ModalidadeAlunoNivel = {
-	modalidadeId: number;
+	idModalidade: number;
 	nivel: 1 | 2 | 3;
 };

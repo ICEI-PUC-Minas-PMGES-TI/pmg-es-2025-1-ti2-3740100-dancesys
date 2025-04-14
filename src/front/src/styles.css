@@ -33,12 +33,11 @@ body {
 	margin-top: 0.5rem;
 	overflow-y: auto;
 	scrollbar-color: var(--color-main-500) var(--color-main-100);
-	padding-bottom: 1rem;
-
 	table {
 		width: 100%;
 		max-height: 60vh;
 		table-layout: auto;
+		padding-bottom: 1rem;
 
 		thead {
 			background-color: var(--color-main-500);

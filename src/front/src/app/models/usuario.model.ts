@@ -41,6 +41,14 @@ export interface UsuarioCookie {
 	urlFoto: string;
 }
 
+export interface UsuarioFiltro {
+	nome?: string;
+	email: string;
+	tipo: UsuarioTipos;
+	status: 0 | 1;
+	cpf: string;
+}
+
 export enum UsuarioTipos {
 	ADMIN = 1,
 	FUNCIONARIO = 2,

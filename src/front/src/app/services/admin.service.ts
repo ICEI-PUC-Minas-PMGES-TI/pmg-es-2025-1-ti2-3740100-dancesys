@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Usuario } from "../models/usuario.model";
+import { Usuario, UsuarioFiltro, UsuarioTipos } from "../models/usuario.model";
 import { Observable } from "rxjs";
 import { environment } from "../../environment/environment";
 import { FormAlunoValue } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
@@ -17,8 +17,15 @@ export class AdminService {
 	}
 
 	public addUsuarioAluno(aluno: FormAlunoValue) {
-		this.http
-			.post(`${environment.API_URL}usuario/aluno`, aluno)
-			.subscribe();
+		return this.http.post(`${environment.API_URL}usuario/aluno`, aluno);
+	}
+
+	public filterUsuarios(filtro: UsuarioFiltro) {
+		const params = new HttpParams({
+			fromObject: { ...filtro },
+		});
+		return this.http.get(
+			`${environment}usuario/buscar?${params.toString()}`,
+		);
 	}
 }
