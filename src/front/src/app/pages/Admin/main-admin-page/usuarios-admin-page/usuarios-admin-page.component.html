@@ -1,99 +1,227 @@
-@if (isModalOpen){
-<app-modal (onClose)="closeAddAlunoModal()">
-	<div class="w-full">
-		<header class="border-b-4 border-b-main-500 w-full flex flex-row justify-start">
-			<h1 class="font-bold text-3xl">Criar Usuário Aluno</h1>
-		</header>
-		<main>
-			<form class="flex flex-1 space-y-2 flex-col p-2" #form="ngForm">
-				<section class="flex flex-row space-x-2">
-					<section class="flex flex-col space-y-2">
-						<div class="flex flex-col">
-							<label for="nome">Nome:</label>
-							<input class="p-1 bg-main-300 rounded-md" type="text" name="nome" ngModel placeholder="..."
-								#nomeCtrl="ngModel" required>
+@if (isModalOpen) {
+	<app-modal (onClose)="closeAddAlunoModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Criar Usuário Aluno</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#form="ngForm"
+					(ngSubmit)="submitAddAlunoForm(form)"
+				>
+					<section class="flex flex-row space-x-2 flex-1">
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="nome">Nome:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="nome"
+									ngModel
+									placeholder="..."
+									#nomeCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="email">E-mail:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="email"
+									name="email"
+									ngModel
+									placeholder="..."
+									#emailCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="dataNascimento"
+									>Data de Nascimento:</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="date"
+									name="dataNascimento"
+									ngModel
+									placeholder="..."
+									#dataNascCtrl="ngModel"
+									required
+								/>
+							</div>
+						</section>
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="cpf">CPF:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="cpf"
+									ngModel
+									placeholder="..."
+									#cpfCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="numero">Telefone:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="tel"
+									name="numero"
+									ngModel
+									placeholder="..."
+									#telefoneCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="endereco">Endereço:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="endereco"
+									ngModel
+									placeholder="..."
+									#enderecoCtrl="ngModel"
+									required
+								/>
+							</div>
+						</section>
+					</section>
+					<section
+						class="flex flex-row space-x-2 justify-between w-full"
+					>
+						<div class="flex flex-1 flex-col">
+							<label for="tipo">Tipo</label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="tipoAluno"
+								ngModel
+								#tipoCtrl="ngModel"
+								required
+							>
+								<option value="1">Fixo</option>
+								<option value="2">Flexível</option>
+							</select>
 						</div>
-						<div class="flex flex-col">
-							<label for="email">E-mail:</label>
-							<input class="p-1 bg-main-300 rounded-md" type="email" name="email" ngModel
-								placeholder="..." #emailCtrl="ngModel" required>
-						</div>
-						<div class="flex flex-col">
-							<label for="dataNasc">Data de Nascimento:</label>
-							<input class="p-1 bg-main-300 rounded-md" type="date" name="dataNasc" ngModel
-								placeholder="..." #dataNascCtrl="ngModel" required>
+						<div class="flex flex-1 flex-col">
+							<label for="corpoDeBaile">Corpo de Baile:</label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="corpoDeBaile"
+								ngModel
+								#corpoDeBaileCtrl="ngModel"
+								required
+							>
+								<option value="1">Sim</option>
+								<option value="0">Não</option>
+							</select>
 						</div>
 					</section>
-					<section class="flex flex-col space-y-2">
-						<div class="flex flex-col">
-							<label for="cpf">CPF:</label>
-							<input class="p-1 bg-main-300 rounded-md" type="text" name="cpf" ngModel placeholder="..."
-								#cpfCtrl="ngModel" required>
-						</div>
-						<div class="flex flex-col">
-							<label for="senha">Senha:</label>
-							<input class="p-1 bg-main-300 rounded-md" type="text" name="senha" ngModel placeholder="..."
-								#senhaCtrl="ngModel" required>
-						</div>
-						<div class="flex flex-col">
-							<label for="endereco">Endereço:</label>
-							<input class="p-1 bg-main-300 rounded-md" type="text" name="endereco" ngModel
-								placeholder="..." #enderecoCtrl="ngModel" required>
+					<section
+						class="flex flex-row w-full justify-between space-x-2"
+					>
+						<div class="flex flex-1 flex-col">
+							<div
+								class="flex justify-between flex-1 space-x-2 flex-row"
+							>
+								<div class="flex flex-col flex-1">
+									<label for="modalidade">Modalidade</label>
+									<select
+										class="p-1 py-[0.5rem] bg-main-300 rounded-md"
+										name="modalidade"
+										required
+										#modalidadeInput
+									>
+										<option [value]="1">
+											Modalidade 1
+										</option>
+										<option [value]="2">
+											Modalidade 2
+										</option>
+										<option [value]="3">
+											Modalidade 3
+										</option>
+									</select>
+								</div>
+								<div class="flex flex-col flex-1">
+									<label for="nivel">Nível:</label>
+									<div
+										class="flex flex-row flex-1 justify-between space-x-2"
+									>
+										<select
+											class="p-1 py-[0.5rem] bg-main-300 flex-1 rounded-md"
+											required
+											#nivelInput
+										>
+											<option [value]="1">Básico</option>
+											<option [value]="2">
+												Intermediário
+											</option>
+											<option [value]="3">
+												Avançado
+											</option>
+										</select>
+										<button
+											(click)="
+												addModalidadeAluno(
+													modalidadeInput,
+													nivelInput
+												)
+											"
+											type="button"
+											appButton
+											icon-size="medium"
+											icon="add_circle"
+											color="medium"
+											icon-slot="icon-only"
+											moreStyles="p-[0rem]"
+										></button>
+									</div>
+								</div>
+							</div>
+							<div
+								class="flex w-full flex-col space-y-1 pt-2 overflow-auto max-h-1/2 app-scrollbar"
+							>
+								@for (
+									mod of modalidadesAlunoArr;
+									track mod.modalidadeId;
+									let i = $index
+								) {
+									<div
+										class="flex flex-1 space-x-2 flex-row justify-between"
+									>
+										<strong
+											>ModalidadeId:
+											{{ mod.modalidadeId }}</strong
+										>
+										Nível: {{ mod.nivel }}
+										<button
+											type="button"
+											appButton
+											icon-slot="icon-only"
+											(click)="deleteModalidadeAluno(i)"
+											icon="delete"
+											color="danger"
+											icon-size="small"
+											moreStyles="p-[0rem]"
+										></button>
+									</div>
+								}
+							</div>
 						</div>
 					</section>
-				</section>
-				<section class="flex flex-row space-x-2 justify-between w-full">
-					<div class="flex flex-1 flex-col">
-						<label for="tipo">Tipo</label>
-						<select class="p-1 bg-main-300 rounded-md" name="tipo" ngModel #tipoCtrl="ngModel" required>
-							<option value="fixo">Fixo</option>
-							<option value="flexivel">Flexível</option>
-						</select>
-					</div>
-					<div class="flex flex-1 flex-col">
-						<label for="experiencia">Experiência:</label>
-						<select class="p-1 bg-main-300 rounded-md" name="experiencia" ngModel #experienciaCtrl="ngModel"
-							required>
-							<option value="baixa">Baixa</option>
-							<option value="media">Média</option>
-							<option value="alta">Alta</option>
-						</select>
-					</div>
-					<div class="flex flex-1 flex-col">
-						<label for="corpoDeBaile">Corpo de Baile:</label>
-						<select class="p-1 bg-main-300 rounded-md" name="corpoDeBaile" ngModel
-							#corpoDeBaileCtrl="ngModel" required>
-							<option value="placeholder">?</option>
-							<option value="placeholder">?</option>
-							<option value="placeholder">?</option>
-						</select>
-					</div>
-				</section>
-				<section class="flex flex-row w-full justify-between space-x-2">
-					<div class="flex flex-1 flex-col">
-						<label for="modalidade">Modalidade</label>
-						<select class="p-1 py-[0.5rem] bg-main-300 rounded-md" name="modalidade" ngModel
-							#modalidadeCtrl="ngModel" required>
-							<option value="placeholder">Modalidade 1</option>
-							<option value="placeholder">Modalidade 2</option>
-							<option value="placeholder">Modalidade 3</option>
-						</select>
-					</div>
-					<div class="flex flex-col">
-						<label for="nivel">Nível:</label>
-						<div class="flex flex-row space-x-2">
-							<input class="p-1 bg-main-300 rounded-md" type="text" name="nivel" ngModel placeholder="..."
-								#nivelCtrl="ngModel" required>
-							<button type="button" appButton icon-size="medium" icon="add_circle" color="medium"
-								icon-slot="icon-only" moreStyles="p-[0rem]"></button>
-						</div>
-					</div>
-				</section>
-				<button class="flex flex-0 mt-3" type="submit" appButton>Adicionar</button>
-			</form>
-		</main>
-	</div>
-</app-modal>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Adicionar
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
 }
 <main class="py-4 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
@@ -102,37 +230,73 @@
 			<div class="flex px-1 flex-row space-x-2">
 				<div class="flex flex-col">
 					<label for="nomeFilter">Nome:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="" />
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 				<div class="flex flex-col">
 					<label for="nomeFilter">CPF:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="" />
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 				<div class="flex flex-col">
 					<label for="nomeFilter">E-Mail:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="" />
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 			</div>
 			<div class="flex px-1 flex-row space-x-2">
 				<div class="flex flex-col">
 					<label for="nomeFilter">Tipo:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="" />
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 				<div class="flex flex-col">
 					<label for="nomeFilter">Status:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="" />
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
 				</div>
 			</div>
 		</form>
 	</section>
 	<section class="flex justify-between flex-row">
 		<div class="flex flex-row space-x-2">
-			<button (click)="openAddAlunoModal()" icon="add_circle" icon-slot="right" appButton color="dark">
+			<button
+				(click)="openAddAlunoModal()"
+				icon="add_circle"
+				icon-slot="right"
+				appButton
+				color="dark"
+			>
 				Novo aluno
 			</button>
 			<button icon="add_circle" icon-slot="right" appButton color="dark">
@@ -143,47 +307,66 @@
 			</button>
 		</div>
 		<div>
-			<button icon="reload" (click)="reloadUsers()" icon-slot="icon-only" appButton color="dark"></button>
+			<button
+				icon="reload"
+				(click)="reloadUsers()"
+				icon-slot="icon-only"
+				appButton
+				color="dark"
+			></button>
 		</div>
 	</section>
 	@if (users.length > 0) {
-	<section class="tabela">
-		<table class="">
-			<thead [class]="isModalOpen ? '' : 'sticky'">
-				<tr>
-					<th>Nome</th>
-					<th>E-mail</th>
-					<th>Telefone</th>
-					<th>Tipo</th>
-					<th>Status</th>
-					<th>Data de Nascimento</th>
-					<th>Ações</th>
-				</tr>
-			</thead>
-			<tbody class="">
-				@for (user of usersTabela; track user.nome) {
-				<tr>
-					<td>{{ user.nome }}</td>
-					<td>{{ user.email }}</td>
-					<td>{{ user.telefone }}</td>
-					<td>{{ user.tipo | tipoUsuario }}</td>
-					<td>{{ user.status | statusUsuario }}</td>
-					<td>{{ user.dataNasc }}</td>
-					<td>
-						<div class="flex flex-row space-x-3 px-3 justify-center">
-							<button appButton icon="edit" title="Editar" icon-slot="icon-only" color="blue"></button>
-							<button appButton icon="warning" icon-slot="icon-only" title="Ativar/Desativar conta"
-								[color]="
+		<section class="tabela">
+			<table class="">
+				<thead [class]="isModalOpen ? '' : 'sticky'">
+					<tr>
+						<th>Nome</th>
+						<th>E-mail</th>
+						<th>Telefone</th>
+						<th>Tipo</th>
+						<th>Status</th>
+						<th>Data de Nascimento</th>
+						<th>Ações</th>
+					</tr>
+				</thead>
+				<tbody class="">
+					@for (user of usersTabela; track user.nome) {
+						<tr>
+							<td>{{ user.nome }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.telefone }}</td>
+							<td>{{ user.tipo | tipoUsuario }}</td>
+							<td>{{ user.status | statusUsuario }}</td>
+							<td>{{ user.dataNasc }}</td>
+							<td>
+								<div
+									class="flex flex-row space-x-3 px-3 justify-center"
+								>
+									<button
+										appButton
+										icon="edit"
+										title="Editar"
+										icon-slot="icon-only"
+										color="blue"
+									></button>
+									<button
+										appButton
+										icon="warning"
+										icon-slot="icon-only"
+										title="Ativar/Desativar conta"
+										[color]="
 											user.status == true
 												? 'danger'
 												: 'success'
-										"></button>
-						</div>
-					</td>
-				</tr>
-				}
-			</tbody>
-		</table>
-	</section>
+										"
+									></button>
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</section>
 	}
 </main>
