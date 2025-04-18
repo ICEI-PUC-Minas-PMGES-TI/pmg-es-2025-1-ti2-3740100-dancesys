@@ -13,6 +13,8 @@ enum Icons {
 	search = "search_icon.svg",
 	reload = "reload_icon.svg",
 	delete = "delete_icon.svg",
+	menu = "menu_icon.svg",
+	check = "check_icon.svg",
 }
 
 enum Sizes {
@@ -32,12 +34,18 @@ enum Sizes {
 export class IconComponent {
 	@Input({ required: true }) name!: string;
 	@Input("size") size: string = "1/1";
+	@Input("fill") fill: boolean = false;
 
 	public get iconSrc() {
 		return Icons[this.name as keyof typeof Icons];
 	}
 
 	public get styling() {
-		return [Sizes[this.size as keyof typeof Sizes], "p-1"];
+		const styles = [Sizes[this.size as keyof typeof Sizes], "p-1"];
+		if (this.fill) {
+			styles.push("bg-main-500");
+			styles.push("rounded-full");
+		}
+		return styles;
 	}
 }
