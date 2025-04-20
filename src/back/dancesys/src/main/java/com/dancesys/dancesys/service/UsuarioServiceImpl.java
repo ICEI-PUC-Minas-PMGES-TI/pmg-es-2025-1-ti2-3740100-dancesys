@@ -125,4 +125,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> buscar(){
         return usuarioRepository.findAll();
     }
+
+    @Override
+    public Usuario alterarStatus(Long id){
+        Usuario u = usuarioRepository.findById(id);
+        if(u.getStatus().equals(Usuario.desativo)){
+            u.setStatus(Usuario.ativo);
+        }else{
+            u.setStatus(Usuario.desativo);
+        }
+        usuarioRepository.save(u);
+        return u;
+    }
 }

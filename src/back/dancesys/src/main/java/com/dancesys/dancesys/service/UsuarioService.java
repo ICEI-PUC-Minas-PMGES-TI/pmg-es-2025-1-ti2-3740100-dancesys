@@ -18,4 +18,6 @@ public interface UsuarioService{
     public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status);
 
     public List<Usuario> buscar();
+
+    public Usuario alterarStatus(Long id);
 }
