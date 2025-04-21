@@ -8,7 +8,7 @@ import com.dancesys.dancesys.repository.ProfessorModalidadeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProfessorModalidadeServiceImpl implements ProfessorModalidadeService{
+public class ProfessorModalidadeServiceImpl{
 
     private final ProfessorModalidadeRepository professorModalidadeRepository;
 

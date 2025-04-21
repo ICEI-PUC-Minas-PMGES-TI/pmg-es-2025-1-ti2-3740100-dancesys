@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelService{
+public class ModalidadeAlunoNivelServiceImpl{
     private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
 
 
@@ -27,25 +27,6 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
         return modalidadeAlunoNivelRepository.save(modalidadeAlunoNivel);
     }
 
-
-    @Override
-    public String excluir(Long idAluno, Long idModalidade) throws Exception{
-        try{
-            AlunoModalidade id = new AlunoModalidade(idAluno, idModalidade);
-            if(modalidadeAlunoNivelRepository.findById(id).isEmpty()){
-                throw new RuntimeException("Registro não encontrado!");
-            }
-
-            modalidadeAlunoNivelRepository.deleteById(id);
-            return "Excluido com sucesso!";
-
-        }catch(Exception e){
-            throw new RuntimeException(e.getMessage());
-        }
-
-
-    }
-
     public void excluirAll(List<ModalidadeAlunoNivelDTO> list, Long idAluno){
         List<Long> ids = new ArrayList<>();
         for(ModalidadeAlunoNivelDTO dto : list){
@@ -53,10 +34,5 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
         }
         List<ModalidadeAlunoNivel> newList = modalidadeAlunoNivelRepository.findByIdAlunoIdAndIdModalidadeIdNotIn(idAluno, ids);
         modalidadeAlunoNivelRepository.deleteAll(newList);
-    }
-
-    @Override
-    public List<ModalidadeAlunoNivel> buscarTodos(){
-        return modalidadeAlunoNivelRepository.findAll();
     }
 }

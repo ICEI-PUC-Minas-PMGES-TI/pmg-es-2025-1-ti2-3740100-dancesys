@@ -5,7 +5,7 @@ import com.dancesys.dancesys.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProfessorServiceImpl implements  ProfessorService {
+public class ProfessorServiceImpl {
     private final ProfessorRepository professorRepository;
 
     public ProfessorServiceImpl(ProfessorRepository professorRepository) {

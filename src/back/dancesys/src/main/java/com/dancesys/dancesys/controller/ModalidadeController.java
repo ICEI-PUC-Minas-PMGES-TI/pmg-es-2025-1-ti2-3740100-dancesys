@@ -2,7 +2,6 @@ package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.ModalidadeDTO;
 import com.dancesys.dancesys.entity.Modalidade;
-import com.dancesys.dancesys.service.ModalidadeAlunoNivelService;
 import com.dancesys.dancesys.service.ModalidadeService;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +19,6 @@ public class ModalidadeController {
     @Autowired
     private ModalidadeService modalidadeService;
 
-    @Autowired
-    private ModalidadeAlunoNivelService modalidadeAlunoNivelService;
 
     @PostMapping(value = {"", "alterar"})
     public ResponseEntity<ModalidadeDTO> salvar(@RequestBody ModalidadeDTO dto) throws Exception {
@@ -37,10 +34,5 @@ public class ModalidadeController {
     @DeleteMapping(value = "excluir/{id}")
     public String excluir(@PathVariable Long id) throws Exception {
         return modalidadeService.excluir(id);
-    }
-
-    @DeleteMapping(value = "aluno/excluir/{idAluno}/{idModalidade}")
-    public String excluirModAluno(@PathVariable Long idAluno, @PathVariable Long idModalidade) throws Exception {
-        return modalidadeAlunoNivelService.excluir(idAluno, idModalidade);
     }
 }
