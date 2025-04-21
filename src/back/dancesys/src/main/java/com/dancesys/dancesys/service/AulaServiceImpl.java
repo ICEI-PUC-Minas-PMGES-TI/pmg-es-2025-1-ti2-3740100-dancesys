@@ -11,23 +11,29 @@ public class AulaServiceImpl implements  AulaService {
 
     private final AulaRepository aulaRepository;
     private final AulaAlunoServiceImpl aulaAlunoServiceImpl;
+    private final AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl;
 
     public AulaServiceImpl(
             AulaRepository aulaRepository,
-            AulaAlunoServiceImpl aulaAlunoServiceImpl
+            AulaAlunoServiceImpl aulaAlunoServiceImpl,
+            AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl
     ) {
         this.aulaRepository = aulaRepository;
         this.aulaAlunoServiceImpl = aulaAlunoServiceImpl;
+        this.aulaOcorrenciaServiceImpl = aulaOcorrenciaServiceImpl;
     }
 
     @Override
     public AulaDTO salvar(AulaDTO dto) throws Exception{
         try{
-            if(dto.getId()==null){
-                dto.setStatus(Aula.ativo);
-            }
+            if(dto.getId()==null) dto.setStatus(Aula.ativo);
+
             Aula entity = aulaRepository.save(AulaMapper.toEntity(dto));
             aulaAlunoServiceImpl.salvar(dto.getAlunos(),entity.getId());
+
+            if(dto.getId()==null){
+                aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(dto, entity);
+            }
             return AulaMapper.toDto(entity);
         }catch(Exception e){
             throw new RuntimeException(e.getMessage());
