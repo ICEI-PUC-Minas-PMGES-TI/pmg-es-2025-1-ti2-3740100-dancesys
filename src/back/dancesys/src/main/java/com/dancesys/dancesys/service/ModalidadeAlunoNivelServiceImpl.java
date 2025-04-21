@@ -52,7 +52,7 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
             ids.add(dto.getIdModalidade());
         }
         List<ModalidadeAlunoNivel> newList = modalidadeAlunoNivelRepository.findByIdAlunoIdAndIdModalidadeIdNotIn(idAluno, ids);
-        System.out.println(newList);
+        modalidadeAlunoNivelRepository.deleteAll(newList);
     }
 
     @Override
