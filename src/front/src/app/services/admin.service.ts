@@ -4,16 +4,50 @@ import { Usuario, UsuarioFiltro, UsuarioTipos } from "../models/usuario.model";
 import { Observable } from "rxjs";
 import { environment } from "../../environment/environment";
 import { FormAlunoValue } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
+import { Aluno } from "../models/aluno.model";
+
+export type AlunoResponse = {
+	id: number;
+	creditos: number;
+	boolBaile: boolean;
+	tipo: number;
+	idUsuario: {
+		id: number;
+		nome: string;
+		cpf: string;
+		numero: string;
+		email: string;
+		senha: string;
+		tipo: 3;
+		status: boolean;
+		endereco: string;
+		urlFoto: null | string;
+		dataNascimento: Date;
+		criadoEm: Date;
+	};
+	modalidades: {
+		id: {
+			idAluno: number;
+			idModalidade: number;
+		};
+		idModalidade: {
+			id: number;
+			nome: string;
+		};
+		nivel: 1 | 2 | 3;
+	}[];
+};
+
 @Injectable({
 	providedIn: "root",
 })
 export class AdminService {
 	http = inject(HttpClient);
 
-	public fetchUsuarios(): Observable<Usuario[]> {
+	public fetchAlunos(): Observable<AlunoResponse[]> {
 		return this.http.get(
-			`${environment.API_URL}usuario/buscar`,
-		) as Observable<Usuario[]>;
+			`${environment.API_URL}usuario/aluno/buscar`,
+		) as Observable<AlunoResponse[]>;
 	}
 
 	public addUsuarioAluno(aluno: FormAlunoValue) {
@@ -25,7 +59,12 @@ export class AdminService {
 			fromObject: { ...filtro },
 		});
 		return this.http.get(
-			`${environment}usuario/buscar?${params.toString()}`,
+			`${environment.API_URL}usuario/buscar?${params.toString()}`,
 		);
+	}
+
+	// deve ser o ID da tabela Usuarios
+	public toggleUserStatus(id: number) {
+		return this.http.get(`${environment.API_URL}usuario/status/${id}`);
 	}
 }
