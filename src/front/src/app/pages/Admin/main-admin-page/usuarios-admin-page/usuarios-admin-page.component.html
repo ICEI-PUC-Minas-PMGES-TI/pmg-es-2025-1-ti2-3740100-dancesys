@@ -1,4 +1,15 @@
-@if (isModalOpen) {
+@if (isModalOpen == "confirmToggleAluno") {
+	<app-modal
+		[confirmMode]="true"
+		[message]="
+			isActivatingUser
+				? toggleUserStatusMessages.ACTIVATE
+				: toggleUserStatusMessages.DEACTIVATE
+		"
+		(onClose)="onConfirmToggleAluno($event)"
+	></app-modal>
+}
+@if (isModalOpen == "addAluno") {
 	<app-modal (onClose)="closeAddAlunoModal()">
 		<div class="w-full">
 			<header
@@ -148,15 +159,14 @@
 										required
 										#modalidadeInput
 									>
-										<option [value]="1">
-											Modalidade 1
-										</option>
-										<option [value]="2">
-											Modalidade 2
-										</option>
-										<option [value]="3">
-											Modalidade 3
-										</option>
+										@for (
+											modalidade of modalidades;
+											track modalidade.id
+										) {
+											<option [value]="modalidade.id">
+												{{ modalidade.nome }}
+											</option>
+										}
 									</select>
 								</div>
 								<div class="flex flex-col flex-1">
@@ -201,11 +211,17 @@
 									<div
 										class="flex flex-1 space-x-2 flex-row justify-between"
 									>
-										<strong
-											>ModalidadeId:
-											{{ mod.idModalidade }}</strong
+										<strong class="flex flex-1">
+											{{
+												getModalidadeNome(
+													mod.idModalidade
+												)
+											}}</strong
 										>
-										Nível: {{ mod.nivel }}
+										<span class="flex flex-1"
+											>Nível:
+											{{ getNivelTexto(mod.nivel) }}</span
+										>
 										<button
 											type="button"
 											appButton
@@ -223,6 +239,244 @@
 					</section>
 					<button class="flex flex-0 mt-3" type="submit" appButton>
 						Adicionar
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+@if (isModalOpen == "editAluno" && tempEditAluno) {
+	<app-modal (onClose)="closeEditAlunoModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Editar Aluno</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#form="ngForm"
+					(ngSubmit)="submitEditAlunoForm(form)"
+				>
+					<section class="flex flex-row space-x-2 flex-1">
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="nome">Nome:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="nome"
+									id="nome"
+									[(ngModel)]="tempEditAluno.usuario.nome"
+									placeholder="..."
+									#nomeCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="email">E-mail:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="email"
+									name="email"
+									id="email"
+									[(ngModel)]="tempEditAluno.usuario.email"
+									placeholder="..."
+									#emailCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="dataNascimento"
+									>Data de Nascimento:</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="date"
+									name="dataNascimento"
+									id="dataNascimento"
+									[(ngModel)]="
+										tempEditAluno.usuario.dataNascimento
+									"
+									placeholder="..."
+									#dataNascCtrl="ngModel"
+									required
+								/>
+							</div>
+						</section>
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="cpf">CPF:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									maxlength="11"
+									minlength="11"
+									name="cpf"
+									id="cpf"
+									[(ngModel)]="tempEditAluno.usuario.cpf"
+									placeholder="..."
+									#cpfCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="numero">Telefone:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="tel"
+									name="numero"
+									id="numero"
+									[(ngModel)]="tempEditAluno.usuario.numero"
+									placeholder="..."
+									#telefoneCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="endereco">Endereço:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="endereco"
+									id="endereco"
+									[(ngModel)]="tempEditAluno.usuario.endereco"
+									placeholder="..."
+									#enderecoCtrl="ngModel"
+									required
+								/>
+							</div>
+						</section>
+					</section>
+					<section
+						class="flex flex-row space-x-2 justify-between items-end w-full"
+					>
+						<div class="flex flex-1 flex-col">
+							<label for="tipo">Tipo</label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="tipoAluno"
+								id="tipoAluno"
+								[(ngModel)]="tempEditAluno.tipo"
+								#tipoCtrl="ngModel"
+								required
+							>
+								<option value="1">Fixo</option>
+								<option value="2">Flexível</option>
+							</select>
+						</div>
+						<div class="flex flex-1 flex-col">
+							<label for="boolBaile">Corpo de Baile:</label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								id="boolBaile"
+								name="boolBaile"
+								[(ngModel)]="tempEditAluno.boolBaile"
+								#boolBaileCtrl="ngModel"
+								required
+							>
+								<option [value]="1">Sim</option>
+								<option [value]="0">Não</option>
+							</select>
+						</div>
+					</section>
+					<section
+						class="flex flex-row w-full justify-between space-x-2"
+					>
+						<div class="flex w-full flex-col">
+							<div
+								class="flex justify-between flex-1 items-end space-x-2 flex-row"
+							>
+								<div class="flex flex-col flex-1">
+									<label for="modalidade">Modalidade</label>
+									<select
+										class="p-1 bg-main-300 rounded-md"
+										name="modalidade"
+										id="modalidade"
+										required
+										#modalidadeInput
+									>
+										@for (
+											modalidade of modalidades;
+											track modalidade.id
+										) {
+											<option [value]="modalidade.id">
+												{{ modalidade.nome }}
+											</option>
+										}
+									</select>
+								</div>
+								<div class="flex flex-col flex-1">
+									<label for="nivel">Nível:</label>
+									<select
+										class="p-1 bg-main-300 rounded-md"
+										required
+										id="nivel"
+										#nivelInput
+									>
+										<option [value]="1">Básico</option>
+										<option [value]="2">
+											Intermediário
+										</option>
+										<option [value]="3">Avançado</option>
+									</select>
+								</div>
+								<button
+									(click)="
+										addModalidadeAluno(
+											modalidadeInput,
+											nivelInput
+										)
+									"
+									type="button"
+									appButton
+									icon-size="medium"
+									icon="add_circle"
+									color="medium"
+									icon-slot="icon-only"
+									moreStyles="p-[0rem]"
+								></button>
+							</div>
+							<div
+								class="flex w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar"
+							>
+								@for (
+									mod of tempEditAluno.modalidades;
+									track mod.idModalidade;
+									let i = $index
+								) {
+									<div
+										class="flex flex-1 space-x-2 flex-row justify-between"
+									>
+										<strong class="flex flex-1">
+											{{
+												getModalidadeNome(
+													mod.idModalidade
+												)
+											}}</strong
+										>
+										<span class="flex flex-1"
+											>Nível:
+											{{ getNivelTexto(mod.nivel) }}</span
+										>
+										<button
+											type="button"
+											appButton
+											icon-slot="icon-only"
+											(click)="deleteModalidadeAluno(i)"
+											icon="delete"
+											color="danger"
+											icon-size="small"
+											moreStyles="p-[0rem]"
+										></button>
+									</div>
+								}
+							</div>
+						</div>
+					</section>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Salvar Edições
 					</button>
 				</form>
 			</main>
@@ -354,7 +608,7 @@
 			></button>
 		</div>
 	</section>
-	@if (users.length > 0) {
+	@if (alunos.length > 0 && !isLoading) {
 		<section class="tabela">
 			<table class="">
 				<thead [class]="isModalOpen ? '' : 'sticky'">
@@ -369,7 +623,7 @@
 					</tr>
 				</thead>
 				<tbody class="">
-					@for (user of usersTabela; track user.email) {
+					@for (user of usersTabela; track user.id) {
 						<tr>
 							<td>{{ user.nome }}</td>
 							<td>{{ user.email }}</td>
@@ -385,11 +639,18 @@
 										appButton
 										icon="edit"
 										title="Editar"
+										(click)="openEditAlunoModal(user.id)"
 										icon-slot="icon-only"
 										color="blue"
 									></button>
 									<button
 										appButton
+										(click)="
+											toggleUserStatus(
+												user.id,
+												user.status
+											)
+										"
 										icon="warning"
 										icon-slot="icon-only"
 										title="Ativar/Desativar conta"
