@@ -259,6 +259,11 @@ export class UsuariosAdminPageComponent implements OnInit {
 		value.modalidades = [...this.tempEditAluno!.modalidades];
 		this.closeEditAlunoModal();
 		console.log(value);
+		this.adminService.editarAluno(value).subscribe({
+			next: ()=>{
+				this.reloadUsers();
+			}
+		});
 	}
 
 	filterFormSubmit(form: NgForm) {

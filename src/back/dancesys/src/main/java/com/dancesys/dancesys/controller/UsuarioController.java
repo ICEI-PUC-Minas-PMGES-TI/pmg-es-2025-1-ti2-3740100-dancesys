@@ -33,7 +33,7 @@ public class UsuarioController {
         return ResponseEntity.ok(login);
     }
 
-    @PostMapping(value = "aluno")
+    @PostMapping(value = {"aluno", "aluno/alterar"})
     public ResponseEntity<AlunoDTO> salvarAluno(@RequestBody AlunoDTO dto) throws Exception {
         final AlunoDTO aluno = usuarioService.salvarAluno(dto);
         return ResponseEntity.ok(aluno);

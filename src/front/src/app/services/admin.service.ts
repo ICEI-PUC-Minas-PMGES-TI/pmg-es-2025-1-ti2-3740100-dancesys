@@ -67,4 +67,8 @@ export class AdminService {
 	public toggleUserStatus(id: number) {
 		return this.http.get(`${environment.API_URL}usuario/status/${id}`);
 	}
+
+	public editarAluno(aluno: FormAlunoValue){
+		return this.http.post(`${environment.API_URL}usuario/aluno/alterar`, aluno)
+	}
 }

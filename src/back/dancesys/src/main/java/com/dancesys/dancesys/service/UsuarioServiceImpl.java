@@ -78,7 +78,13 @@ public class UsuarioServiceImpl implements UsuarioService {
             Aluno aluno = AlunoMapper.toEntity(dto);
             aluno.setIdUsuario(UsuarioMapper.toEntity(user));
             Aluno newAluno = alunoServiceImpl.salvar(aluno);
+
             List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
+
+            if(dto.getId() != null){
+                modalidadeAlunoNivelServiceImpl.excluirAll(dto.getModalidades(), newAluno.getId());
+            }
+
             for (ModalidadeAlunoNivelDTO obj : dto.getModalidades()) {
                 obj.setIdAluno(newAluno.getId());
 

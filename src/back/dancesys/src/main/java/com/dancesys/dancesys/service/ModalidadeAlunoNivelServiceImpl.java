@@ -7,6 +7,7 @@ import com.dancesys.dancesys.mapper.ModalidadeAlunoNivelMapper;
 import com.dancesys.dancesys.repository.ModalidadeAlunoNivelRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +44,15 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
         }
 
 
+    }
+
+    public void excluirAll(List<ModalidadeAlunoNivelDTO> list, Long idAluno){
+        List<Long> ids = new ArrayList<>();
+        for(ModalidadeAlunoNivelDTO dto : list){
+            ids.add(dto.getIdModalidade());
+        }
+        List<ModalidadeAlunoNivel> newList = modalidadeAlunoNivelRepository.findByIdAlunoIdAndIdModalidadeIdNotIn(idAluno, ids);
+        System.out.println(newList);
     }
 
     @Override
