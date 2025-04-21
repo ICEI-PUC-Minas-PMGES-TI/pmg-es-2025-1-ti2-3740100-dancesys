@@ -62,7 +62,7 @@ public class UsuarioController {
         return usuarioService.buscar();
     }
 
-    @PutMapping(value = "status/{id}")
+    @GetMapping(value = "status/{id}")
     public ResponseEntity<Usuario> alterarStatus(@PathVariable Long id){
         Usuario u = usuarioService.alterarStatus(id);
         return ResponseEntity.ok(u);

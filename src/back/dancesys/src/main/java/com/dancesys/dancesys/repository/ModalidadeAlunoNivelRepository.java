@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface ModalidadeAlunoNivelRepository extends JpaRepository<ModalidadeAlunoNivel, AlunoModalidade> {
     public List<ModalidadeAlunoNivel> findByIdAluno_Id(Long id);
+
 }
