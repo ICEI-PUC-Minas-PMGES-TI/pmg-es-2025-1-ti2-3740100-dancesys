@@ -22,17 +22,17 @@ public class EmailServiceImpl {
     @Value("${spring.mail.username}")
     private String remetente;
 
-    public String enviarEmailHtml(String destinatario, String usuario, String senha) {
+    public String enviarEmailHtml(String destinatario, String senha) {
         try {
-            String htmlContent = carregarTemplateEmail(usuario, senha);
+            String htmlContent = carregarTemplateEmail(destinatario, senha);
 
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
             helper.setFrom(remetente);
             helper.setTo(destinatario);
-            helper.setSubject("Bem-vindo ao Dancesys! teste");
-            helper.setText(htmlContent, true); // Define como HTML
+            helper.setSubject("Bem-vindo ao Dancesys!");
+            helper.setText(htmlContent, true);
 
             javaMailSender.send(mimeMessage);
             return "Email enviado com sucesso";

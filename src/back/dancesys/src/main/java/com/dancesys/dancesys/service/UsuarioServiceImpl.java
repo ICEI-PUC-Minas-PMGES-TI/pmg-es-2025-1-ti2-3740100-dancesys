@@ -18,7 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final ProfessorServiceImpl professorServiceImpl;
     private final ProfessorModalidadeServiceImpl professorModalidadeServiceImpl;
     private final AlunoRepository alunoRepository;
-    private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
+    private final EmailServiceImpl emailServiceImpl;
 
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository,
@@ -27,15 +27,15 @@ public class UsuarioServiceImpl implements UsuarioService {
             ProfessorServiceImpl professorServiceImpl,
             ProfessorModalidadeServiceImpl professorModalidadeServiceImpl,
             AlunoRepository alunoRepository,
-            ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository
-    ) {
+            EmailServiceImpl emailServiceImpl
+            ) {
         this.usuarioRepository = usuarioRepository;
         this.alunoServiceImpl = alunoServiceImpl;
         this.modalidadeAlunoNivelServiceImpl = modalidadeAlunoNivelServiceImpl;
         this.professorServiceImpl = professorServiceImpl;
         this.professorModalidadeServiceImpl = professorModalidadeServiceImpl;
         this.alunoRepository = alunoRepository;
-        this.modalidadeAlunoNivelRepository = modalidadeAlunoNivelRepository;
+        this.emailServiceImpl = emailServiceImpl;
     }
 
     @Override
@@ -46,6 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 dto.setStatus(Usuario.ativo);
                 dto.setCriadoEm(LocalDate.now());
                 dto.setSenha(Usuario.SENHA_PADRAO);
+                emailServiceImpl.enviarEmailHtml(dto.getEmail(), dto.getSenha());
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
             return UsuarioMapper.toDTO(usuario);
