@@ -27,8 +27,13 @@ public class AlunoServiceImpl{
         }
     }
 
-    public Aluno dimuirCredito(Aluno entity, Integer sub){
-        entity.setCreditos(entity.getCreditos() - sub);
+    public Aluno dimuirCredito(Aluno entity, Integer n){
+        entity.setCreditos(entity.getCreditos() - n);
+        return alunoRepository.save(entity);
+    }
+
+    public Aluno aumentarCredito(Aluno entity, Integer n){
+        entity.setCreditos(entity.getCreditos() + n);
         return alunoRepository.save(entity);
     }
 

@@ -25,8 +25,7 @@ public class ChamadaServiceImpl implements ChamadaService {
     public void gerarChamada(List<Long> alunos, Long idAulaOcorrencia){
         try{
             for(Long idAluno: alunos){
-                ChamadaId id = new ChamadaId(idAluno,idAulaOcorrencia);
-                Chamada chamada = chamadaRepository.save(ChamadaMapper.toEntity(id,idAulaOcorrencia,idAluno,Chamada.faltante));
+                Chamada chamada = chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,idAluno,Chamada.faltante));
             }
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
@@ -43,13 +42,24 @@ public class ChamadaServiceImpl implements ChamadaService {
                 if(aluno.getCreditos() == 0){
                     throw new RuntimeException("Creditos insuficiente");
                 }else{
-                    ChamadaId id = new ChamadaId(idAluno,idAulaOcorrencia);
                     alunoServiceImpl.dimuirCredito(aluno, 1);
-                    return chamadaRepository.save(ChamadaMapper.toEntity(id,idAulaOcorrencia,idAluno,Chamada.faltante));
+                    return chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,idAluno,Chamada.faltante));
                 }
             }
         }catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public String removerAluno(Long idAluno, Long idAulaOcorrencia){
+        ChamadaId id =  new ChamadaId(idAluno,idAulaOcorrencia);
+        chamadaRepository.deleteById(id);
+        Aluno aluno = alunoServiceImpl.findById(idAluno);
+        alunoServiceImpl.aumentarCredito(aluno,1);
+
+        return "Removido com sucesso";
+    }
+
+
 }

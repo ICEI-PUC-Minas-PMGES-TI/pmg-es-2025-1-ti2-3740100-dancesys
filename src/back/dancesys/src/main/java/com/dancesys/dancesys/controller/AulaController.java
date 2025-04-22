@@ -33,4 +33,9 @@ public class AulaController {
         return ResponseEntity.ok(chamada);
     }
 
+    @GetMapping(value = "desinscrever/{idAulaOcorrencia}/{idAluno}")
+    public String removerAluno(@PathVariable Long idAulaOcorrencia, @PathVariable Long idAluno ) throws RuntimeException {
+        return chamadaService.removerAluno(idAluno,idAulaOcorrencia);
+    }
+
 }
