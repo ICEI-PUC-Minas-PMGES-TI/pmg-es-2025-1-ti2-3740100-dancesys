@@ -26,4 +26,13 @@ public class AlunoServiceImpl{
             throw new Exception(e.getMessage());
         }
     }
+
+    public Aluno dimuirCredito(Aluno entity, Integer sub){
+        entity.setCreditos(entity.getCreditos() - sub);
+        return alunoRepository.save(entity);
+    }
+
+    public Aluno findById(Long id){
+        return alunoRepository.findById(id);
+    }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
 
+        Aluno findById(Long id);
 
         @Query("SELECT a FROM Aluno a JOIN a.idUsuario u " +
                 "WHERE (:nome IS NULL OR LOWER(u.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) " +

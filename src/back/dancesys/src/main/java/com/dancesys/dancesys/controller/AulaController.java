@@ -1,7 +1,9 @@
 package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.AulaDTO;
+import com.dancesys.dancesys.entity.Chamada;
 import com.dancesys.dancesys.service.AulaService;
+import com.dancesys.dancesys.service.ChamadaService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,19 @@ public class AulaController {
     @Autowired
     private AulaService aulaService;
 
+    @Autowired
+    private ChamadaService chamadaService;
+
     @PostMapping(value = {"", "alterar"})
     public ResponseEntity<AulaDTO> salvar(@RequestBody AulaDTO dto) throws Exception {
         AulaDTO salvo = aulaService.salvar(dto);
         return ResponseEntity.ok(salvo);
+    }
+
+    @GetMapping(value = "inscrever/{idAulaOcorrencia}/{idAluno}")
+    public ResponseEntity<Chamada> adicionarAluno(@PathVariable Long idAulaOcorrencia, @PathVariable Long idAluno ) throws RuntimeException {
+        Chamada chamada = chamadaService.adicionarAluno(idAulaOcorrencia, idAluno);
+        return ResponseEntity.ok(chamada);
     }
 
 }
