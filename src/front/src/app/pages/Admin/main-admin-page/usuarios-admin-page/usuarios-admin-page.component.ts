@@ -261,7 +261,7 @@ export class UsuariosAdminPageComponent implements OnInit {
 		console.log(value);
 		this.adminService.editarAluno(value).subscribe({
 			next: ()=>{
-				this.reloadUsers();
+				this.reloadUsers()
 			}
 		});
 	}
