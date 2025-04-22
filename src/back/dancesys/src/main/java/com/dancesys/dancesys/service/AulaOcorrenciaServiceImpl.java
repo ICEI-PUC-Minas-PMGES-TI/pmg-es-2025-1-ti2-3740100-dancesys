@@ -4,20 +4,27 @@ import com.dancesys.dancesys.dto.AulaDTO;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
+import com.dancesys.dancesys.repository.ChamadaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
 
 @Service
 public class AulaOcorrenciaServiceImpl {
     private final AulaOcorrenciaRepository aulaOcorrenciaRepository;
+    private final ChamadaServiceImpl chamadaServiceImpl;
 
-    public AulaOcorrenciaServiceImpl(AulaOcorrenciaRepository aulaOcorrenciaRepository) {
+    public AulaOcorrenciaServiceImpl(
+            AulaOcorrenciaRepository aulaOcorrenciaRepository,
+            ChamadaServiceImpl chamadaServiceImpl
+    ) {
         this.aulaOcorrenciaRepository = aulaOcorrenciaRepository;
+        this.chamadaServiceImpl = chamadaServiceImpl;
     }
 
-    private void salvar(AulaOcorrencia ao){
+    private void salvar(AulaOcorrencia ao, List<Long> alunos){
 
         try{
             if(ao.getId()==null){
@@ -38,7 +45,9 @@ public class AulaOcorrenciaServiceImpl {
 
             ao.setCodigo(codaula);
 
-            aulaOcorrenciaRepository.save(ao);
+            AulaOcorrencia newAo = aulaOcorrenciaRepository.save(ao);
+            chamadaServiceImpl.gerarChamada(alunos, newAo.getId());
+
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
@@ -57,7 +66,7 @@ public class AulaOcorrenciaServiceImpl {
                 AulaOcorrencia ao = new AulaOcorrencia();
                 ao.setData(dataAtual);
                 ao.setIdAula(entity);
-                salvar(ao);
+                salvar(ao, dto.getAlunos());
             }
             dataAtual = dataAtual.plusDays(1);
         }

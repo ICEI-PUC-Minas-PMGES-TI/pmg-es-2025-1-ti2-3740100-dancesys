@@ -1,10 +1,12 @@
 package com.dancesys.dancesys.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "Aula_Ocorrencia")
 @Entity(name = "Aula_Ocorrencia")
@@ -33,4 +35,8 @@ public class AulaOcorrencia {
     @ManyToOne
     @JoinColumn(name = "id_Aula", nullable = false)
     private Aula idAula;
+
+    @OneToMany(mappedBy = "idAulaOcorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Chamada> chamada;
 }
