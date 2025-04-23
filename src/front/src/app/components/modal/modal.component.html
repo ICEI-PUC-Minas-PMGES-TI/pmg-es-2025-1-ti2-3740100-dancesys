@@ -1,0 +1,36 @@
+<div class="back" (click)="onClose()"></div>
+<dialog open class="bg-main-100 border-main-500 border-2 rounded-3xl p-4">
+	<div class="flex flex-1 flex-col w-full text-main-500">
+		@if (!confirmMode) {
+			<ng-content />
+		} @else {
+			<section class="flex flex-1 border-b-main-500 border-b-4">
+				<span class="text-lg text-main-500 font-bold">{{
+					message
+				}}</span>
+			</section>
+			<section class="flex flex-1 space-x-3 pt-3 justify-start">
+				<button
+					type="button"
+					(click)="onConfirm()"
+					appButton
+					icon="check"
+					icon-slot="right"
+					icon-size="small"
+				>
+					Confimar
+				</button>
+				<button
+					icon-size="small"
+					type="button"
+					(click)="onCancel()"
+					appButton
+					icon="delete"
+					icon-slot="right"
+				>
+					Cancelar
+				</button>
+			</section>
+		}
+	</div>
+</dialog>

@@ -18,7 +18,7 @@ public class ProfessorDTO {
     private String email;
     private String senha;
     public Integer tipo;
-    private Boolean status;
+    private Integer status;
     private String endereco;
     private String urlFoto;
     private LocalDate dataNascimento;
@@ -26,7 +26,5 @@ public class ProfessorDTO {
     private String informacoesProfissionais;
     private BigDecimal valorHoraExtra;
     private Long idUsuario;
-    private Usuario usuario;
     private List<ProfessorModalidadeDTO> modalidades;
-    private List<ProfessorModalidadeDTO> dmodalidades;
 }

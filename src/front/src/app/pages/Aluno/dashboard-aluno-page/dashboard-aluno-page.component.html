@@ -1,1 +1,41 @@
-<p>home-aluno-page works!</p>
+<div class="w-full flex flex-col sm:flex-row h-full">
+	<app-navbar>
+		<app-navbar-button
+			[route]="possibleRoutes.MAIN"
+			[active]="possibleRoutes.MAIN === currentSelectedRoute"
+			(selected)="handleSelectRoute($event)"
+		>
+			<app-icon name="home"></app-icon>
+		</app-navbar-button>
+		<app-navbar-button
+			[route]="possibleRoutes.CALENDAR"
+			[active]="possibleRoutes.CALENDAR === currentSelectedRoute"
+			(selected)="handleSelectRoute($event)"
+		>
+			<app-icon name="calendar"></app-icon>
+		</app-navbar-button>
+		<app-navbar-button
+			[route]="possibleRoutes.FINANCEIRO"
+			[active]="possibleRoutes.FINANCEIRO === currentSelectedRoute"
+			(selected)="handleSelectRoute($event)"
+		>
+			<app-icon name="money"></app-icon>
+		</app-navbar-button>
+		<app-navbar-button
+			[route]="possibleRoutes.EVENTOS"
+			[active]="possibleRoutes.EVENTOS === currentSelectedRoute"
+			(selected)="handleSelectRoute($event)"
+		>
+			<app-icon name="events"></app-icon>
+		</app-navbar-button>
+		<app-navbar-button
+			bottom
+			[route]="possibleRoutes.PROFILE"
+			[active]="possibleRoutes.PROFILE === currentSelectedRoute"
+			(selected)="handleSelectRoute($event)"
+		>
+			<app-icon name="account"></app-icon>
+		</app-navbar-button>
+	</app-navbar>
+	<router-outlet />
+</div>

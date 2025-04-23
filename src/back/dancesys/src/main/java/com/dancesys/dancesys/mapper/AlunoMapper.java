@@ -13,16 +13,14 @@ public class AlunoMapper {
         if(dto == null) return null;
 
         Aluno entity = new Aluno();
+        Usuario user = new Usuario();
 
         entity.setId(dto.getId());
         entity.setCreditos(dto.getCreditos());
-        entity.setTipo(dto.getTipo());
-        if(dto.getBoolBaile().equals(true)){
-            entity.setBoolBaile(Aluno.sim);
-        }else if(dto.getBoolBaile().equals(false)){
-            entity.setBoolBaile(Aluno.nao);
-        }
-        entity.setIdUsuario(dto.getUsuario());
+        entity.setTipo(dto.getTipoAluno());
+        entity.setBoolBaile(dto.getBoolBaile());
+        user.setId(dto.getIdUsuario());
+        entity.setIdUsuario(user);
 
         return entity;
     }
@@ -39,23 +37,13 @@ public class AlunoMapper {
        dto.setEmail(entity.getIdUsuario().getEmail());
        dto.setSenha(entity.getIdUsuario().getSenha());
        dto.setTipo(entity.getIdUsuario().getTipo());
-       if(entity.getBoolBaile().equals(Usuario.ativo)){
-           dto.setStatus(true);
-       }else{
-           dto.setStatus(false);
-       }
        dto.setEndereco(entity.getIdUsuario().getEndereco());
        dto.setUrlFoto(entity.getIdUsuario().getUrlFoto());
        dto.setDataNascimento(entity.getIdUsuario().getDataNascimento());
        dto.setCriadoEm(entity.getIdUsuario().getCriadoEm());
        dto.setCreditos(entity.getCreditos());
-       if(entity.getBoolBaile().equals(Aluno.sim)){
-           dto.setBoolBaile(true);
-       }else{
-           dto.setBoolBaile(false);
-       }
+       dto.setBoolBaile(entity.getBoolBaile());
        dto.setTipoAluno(entity.getTipo());
-       dto.setUsuario(entity.getIdUsuario());
        dto.setIdUsuario(entity.getIdUsuario().getId());
 
        return dto;
@@ -76,14 +64,9 @@ public class AlunoMapper {
         dto.setCriadoEm(user.getCriadoEm());
         dto.setUrlFoto(user.getUrlFoto());
         dto.setCreditos(aluno.getCreditos());
-        if(aluno.getBoolBaile().equals(Aluno.sim)){
-            dto.setBoolBaile(true);
-        }else if(aluno.getBoolBaile().equals(Aluno.nao)){
-            dto.setBoolBaile(false);
-        }
+        dto.setBoolBaile(aluno.getBoolBaile());
         dto.setTipoAluno(aluno.getTipo());
         dto.setIdUsuario(UsuarioMapper.toEntity(user).getId());
-        dto.setUsuario(UsuarioMapper.toEntity(user));
         dto.setModalidades(modList);
 
         return  dto;

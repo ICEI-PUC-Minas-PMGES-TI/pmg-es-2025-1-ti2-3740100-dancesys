@@ -5,7 +5,7 @@ import com.dancesys.dancesys.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AlunoServiceImpl implements AlunoService{
+public class AlunoServiceImpl{
     private final AlunoRepository alunoRepository;
 
     public AlunoServiceImpl(AlunoRepository alunoRepository) {
@@ -18,12 +18,26 @@ public class AlunoServiceImpl implements AlunoService{
             if(entity.getTipo().equals(Aluno.fixo)){
                 entity.setCreditos(0);
             }else{
-                entity.setCreditos(Aluno.fixo);
+                entity.setCreditos(Aluno.max_creditos);
             }
             Aluno newEntity = alunoRepository.save(entity);
             return newEntity;
         }catch(Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    public Aluno dimuirCredito(Aluno entity, Integer n){
+        entity.setCreditos(entity.getCreditos() - n);
+        return alunoRepository.save(entity);
+    }
+
+    public Aluno aumentarCredito(Aluno entity, Integer n){
+        entity.setCreditos(entity.getCreditos() + n);
+        return alunoRepository.save(entity);
+    }
+
+    public Aluno findById(Long id){
+        return alunoRepository.findById(id);
     }
 }

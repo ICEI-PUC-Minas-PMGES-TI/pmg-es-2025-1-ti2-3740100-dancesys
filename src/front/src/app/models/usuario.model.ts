@@ -8,7 +8,7 @@ export class Usuario {
 	public tipo!: number; // Integer
 	public status!: boolean; // Boolean
 	public endereco!: string; // String
-	public urlFoto!: string; // String
+	public urlFoto!: string | null; // String
 	public dataNascimento!: Date; // LocalDate
 	public criadoEm!: Date; // LocalDate
 
@@ -38,7 +38,15 @@ export interface UsuarioCookie {
 	id: number;
 	tipo: number;
 	status: boolean;
-	urlFoto: string;
+	urlFoto: string | null;
+}
+
+export interface UsuarioFiltro {
+	nome?: string;
+	email: string;
+	tipo: UsuarioTipos;
+	status: 0 | 1;
+	cpf: string;
 }
 
 export enum UsuarioTipos {

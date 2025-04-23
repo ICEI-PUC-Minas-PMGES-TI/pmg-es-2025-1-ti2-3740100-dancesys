@@ -2,16 +2,16 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.ModalidadeAlunoNivelDTO;
 import com.dancesys.dancesys.entity.IdsCompostos.AlunoModalidade;
-import com.dancesys.dancesys.entity.Modalidade;
 import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
 import com.dancesys.dancesys.mapper.ModalidadeAlunoNivelMapper;
 import com.dancesys.dancesys.repository.ModalidadeAlunoNivelRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelService{
+public class ModalidadeAlunoNivelServiceImpl{
     private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
 
 
@@ -21,16 +21,18 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
 
     public ModalidadeAlunoNivel salvar(ModalidadeAlunoNivelDTO dto) {
         AlunoModalidade id = new AlunoModalidade(dto.getIdAluno(), dto.getIdModalidade());
-        ModalidadeAlunoNivel modalidadeAlunoNivel = new ModalidadeAlunoNivel();
+        ModalidadeAlunoNivel modalidadeAlunoNivel = ModalidadeAlunoNivelMapper.toEntity(dto);
+
         modalidadeAlunoNivel.setId(id);
-        modalidadeAlunoNivel.setNivel(dto.getNivel());
-        modalidadeAlunoNivel.setIdAluno(dto.getAluno());
-        modalidadeAlunoNivel.setIdModalidade(dto.getModalidade());
         return modalidadeAlunoNivelRepository.save(modalidadeAlunoNivel);
     }
 
-    @Override
-    public List<ModalidadeAlunoNivel> buscarTodos(){
-        return modalidadeAlunoNivelRepository.findAll();
+    public void excluirAll(List<ModalidadeAlunoNivelDTO> list, Long idAluno){
+        List<Long> ids = new ArrayList<>();
+        for(ModalidadeAlunoNivelDTO dto : list){
+            ids.add(dto.getIdModalidade());
+        }
+        List<ModalidadeAlunoNivel> newList = modalidadeAlunoNivelRepository.findByIdAlunoIdAndIdModalidadeIdNotIn(idAluno, ids);
+        modalidadeAlunoNivelRepository.deleteAll(newList);
     }
 }

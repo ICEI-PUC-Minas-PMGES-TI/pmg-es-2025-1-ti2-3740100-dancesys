@@ -1,10 +1,13 @@
-<aside class="flex h-full p-2 py-8 bgPattern w-18 items-center flex-col justify-between">
+<aside
+	class="h-full hidden sm:flex p-2 py-8 bgPattern w-18 items-center flex-col justify-between"
+>
 	<div class="flex flex-col space-y-4">
 		<ng-content></ng-content>
 	</div>
 	<div class="flex flex-col justify-end">
-		<app-navbar-button route="profile">
-			<app-icon name="account"></app-icon>
-		</app-navbar-button>
+		<ng-content select="app-navbar-button[bottom]"></ng-content>
 	</div>
 </aside>
+<header class="sm:hidden w-full bgPattern p-3 flex flex-row justify-end">
+	<button type="button" appButton icon="home" icon-slot="icon-only"></button>
+</header>
