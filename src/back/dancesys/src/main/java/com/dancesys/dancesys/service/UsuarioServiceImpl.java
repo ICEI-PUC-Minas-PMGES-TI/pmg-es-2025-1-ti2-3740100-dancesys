@@ -19,7 +19,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final ProfessorModalidadeServiceImpl professorModalidadeServiceImpl;
     private final AlunoRepository alunoRepository;
     private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
-    private final DividendoServiceImpl dividendoServiceImpl;
 
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository,
@@ -28,8 +27,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             ProfessorServiceImpl professorServiceImpl,
             ProfessorModalidadeServiceImpl professorModalidadeServiceImpl,
             AlunoRepository alunoRepository,
-            ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository,
-            DividendoServiceImpl dividendoServiceImpl
+            ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository
     ) {
         this.usuarioRepository = usuarioRepository;
         this.alunoServiceImpl = alunoServiceImpl;
@@ -38,7 +36,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.professorModalidadeServiceImpl = professorModalidadeServiceImpl;
         this.alunoRepository = alunoRepository;
         this.modalidadeAlunoNivelRepository = modalidadeAlunoNivelRepository;
-        this.dividendoServiceImpl = dividendoServiceImpl;
     }
 
     @Override
@@ -80,10 +77,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             Aluno aluno = AlunoMapper.toEntity(dto);
             aluno.setIdUsuario(UsuarioMapper.toEntity(user));
             Aluno newAluno = alunoServiceImpl.salvar(aluno);
-            if(dto.getId()==null){
-                dividendoServiceImpl.gerarMatricula(newAluno);
-                dividendoServiceImpl.gerarMatricula(newAluno);
-            }
             List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
             for (ModalidadeAlunoNivelDTO obj : dto.getModalidades()) {
                 obj.setAluno(newAluno);

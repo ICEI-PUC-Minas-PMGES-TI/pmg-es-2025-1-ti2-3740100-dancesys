@@ -20,8 +20,6 @@ public class Dividendo {
 
     @Column(name = "valor", nullable = false)
     private BigDecimal valor;
-    public static final BigDecimal VALOR_MATRICULA = new BigDecimal(150.00);
-    public static final BigDecimal VALOR_MENSALIDADE = new BigDecimal(350.00);
 
     @Column(name = "criado_em", nullable = false)
     private LocalDate criadoEm;
