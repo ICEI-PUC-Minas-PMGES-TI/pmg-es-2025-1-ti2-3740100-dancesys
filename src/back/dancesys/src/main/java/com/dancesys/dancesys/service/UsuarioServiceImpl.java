@@ -84,8 +84,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             Aluno newAluno = alunoServiceImpl.salvar(aluno);
 
             if(dto.getId()==null){
-                // dividendoServiceImpl.gerarMatricula(newAluno);
-               // dividendoServiceImpl.gerarMatricula(newAluno);
+                dividendoServiceImpl.gerarMatricula(newAluno);
+                dividendoServiceImpl.gerarMensalidade(newAluno);
             }
 
             List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
