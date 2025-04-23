@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.ModalidadeAlunoNivelDTO;
+import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.IdsCompostos.AlunoModalidade;
 import com.dancesys.dancesys.entity.Modalidade;
 import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
@@ -22,6 +23,8 @@ public class ModalidadeAlunoNivelServiceImpl implements ModalidadeAlunoNivelServ
     public ModalidadeAlunoNivel salvar(ModalidadeAlunoNivelDTO dto) {
         AlunoModalidade id = new AlunoModalidade(dto.getIdAluno(), dto.getIdModalidade());
         ModalidadeAlunoNivel modalidadeAlunoNivel = new ModalidadeAlunoNivel();
+        Modalidade newModalidade = new Modalidade();
+        newModalidade.setId(dto.getIdModalidade());
         modalidadeAlunoNivel.setId(id);
         modalidadeAlunoNivel.setNivel(dto.getNivel());
         modalidadeAlunoNivel.setIdAluno(dto.getAluno());
