@@ -18,7 +18,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final ProfessorServiceImpl professorServiceImpl;
     private final ProfessorModalidadeServiceImpl professorModalidadeServiceImpl;
     private final AlunoRepository alunoRepository;
-    private final ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository;
+    private final EmailServiceImpl emailServiceImpl;
     private final DividendoServiceImpl dividendoServiceImpl;
 
     public UsuarioServiceImpl(
@@ -28,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             ProfessorServiceImpl professorServiceImpl,
             ProfessorModalidadeServiceImpl professorModalidadeServiceImpl,
             AlunoRepository alunoRepository,
-            ModalidadeAlunoNivelRepository modalidadeAlunoNivelRepository,
+            EmailServiceImpl emailServiceImpl,
             DividendoServiceImpl dividendoServiceImpl
     ) {
         this.usuarioRepository = usuarioRepository;
@@ -37,7 +37,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.professorServiceImpl = professorServiceImpl;
         this.professorModalidadeServiceImpl = professorModalidadeServiceImpl;
         this.alunoRepository = alunoRepository;
-        this.modalidadeAlunoNivelRepository = modalidadeAlunoNivelRepository;
+        this.emailServiceImpl = emailServiceImpl;
         this.dividendoServiceImpl = dividendoServiceImpl;
     }
 
@@ -46,8 +46,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = new Usuario();
         try {
             if(dto.getId()==null){
-                dto.setStatus(true);
+                dto.setStatus(Usuario.ativo);
                 dto.setCriadoEm(LocalDate.now());
+                dto.setSenha(Usuario.SENHA_PADRAO);
+                emailServiceImpl.enviarEmailHtml(dto.getEmail(), dto.getSenha());
             }
             usuario = usuarioRepository.save(UsuarioMapper.toEntity(dto));
             return UsuarioMapper.toDTO(usuario);
@@ -80,13 +82,19 @@ public class UsuarioServiceImpl implements UsuarioService {
             Aluno aluno = AlunoMapper.toEntity(dto);
             aluno.setIdUsuario(UsuarioMapper.toEntity(user));
             Aluno newAluno = alunoServiceImpl.salvar(aluno);
+
             if(dto.getId()==null){
                 dividendoServiceImpl.gerarMatricula(newAluno);
                 dividendoServiceImpl.gerarMatricula(newAluno);
             }
+
             List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
+
+            if(dto.getId() != null){
+                modalidadeAlunoNivelServiceImpl.excluirAll(dto.getModalidades(), newAluno.getId());
+            }
+
             for (ModalidadeAlunoNivelDTO obj : dto.getModalidades()) {
-                obj.setAluno(newAluno);
                 obj.setIdAluno(newAluno.getId());
 
                 ModalidadeAlunoNivel mod = modalidadeAlunoNivelServiceImpl.salvar(obj);
@@ -110,7 +118,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             Professor newProfessor = professorServiceImpl.salvar(professor);
             List<ProfessorModalidadeDTO> modList = new ArrayList<>();
             for(ProfessorModalidadeDTO obj : dto.getModalidades()){
-                obj.setProfessor(newProfessor);
                 obj.setIdProfessor(newProfessor.getId());
 
                 ProfessorModalidade mod = professorModalidadeServiceImpl.salvar(obj);
@@ -118,8 +125,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 modList.add(ProfessorModalidadeMapper.toDto(mod));
             }
 
-            ProfessorDTO newDto = ProfessorMapper.AlltoDto(user, newProfessor, modList);
-            return newDto;
+            return ProfessorMapper.AlltoDto(user, newProfessor, modList);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
@@ -133,5 +139,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> buscar(){
         return usuarioRepository.findAll();
+    }
+
+    @Override
+    public Usuario alterarStatus(Long id){
+        Usuario u = usuarioRepository.findById(id);
+        if(u.getStatus().equals(Usuario.desativo)){
+            u.setStatus(Usuario.ativo);
+        }else{
+            u.setStatus(Usuario.desativo);
+        }
+        usuarioRepository.save(u);
+        return u;
     }
 }

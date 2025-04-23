@@ -1,4 +1,12 @@
-<div (click)="onClick()"
-	class="size-14 hover:bg-main-900/75 cursor-pointer bg-main-900 flex justify-center items-center rounded-md">
+<div
+	(click)="onClick()"
+	class="size-14 cursor-pointer flex justify-center items-center rounded-md"
+	[class]="{
+		'hover:bg-main-900/75': !active,
+		'bg-main-900': !active,
+		'bg-main-400': active,
+		'hover:bg-main-400/75': active,
+	}"
+>
 	<ng-content />
 </div>

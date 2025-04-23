@@ -20,11 +20,7 @@ public class UsuarioMapper {
             entity.setEmail(dto.getEmail());
             entity.setSenha(dto.getSenha());
             entity.setTipo(dto.getTipo());
-            if(dto.getStatus().equals(true)){
-                entity.setStatus(Usuario.ativo);
-            }else if(dto.getStatus().equals(false)){
-                entity.setStatus(Usuario.desativo);
-            }
+            entity.setStatus(dto.getStatus());
             entity.setEndereco(dto.getEndereco());
             entity.setUrlFoto(dto.getUrlFoto());
             entity.setDataNascimento(dto.getDataNascimento());
@@ -45,11 +41,7 @@ public class UsuarioMapper {
             dto.setEmail(entity.getEmail());
             dto.setSenha(entity.getSenha());
             dto.setTipo(entity.getTipo());
-            if(entity.getStatus().equals(Usuario.ativo)){
-                dto.setStatus(true);
-            }else if(entity.getStatus().equals(Usuario.desativo)){
-                dto.setStatus(false);
-            }
+            dto.setStatus(entity.getStatus());
             dto.setEndereco(entity.getEndereco());
             dto.setUrlFoto(entity.getUrlFoto());
             dto.setDataNascimento(entity.getDataNascimento());

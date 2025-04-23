@@ -15,7 +15,7 @@ public class UsuarioDTO {
     private String email;
     private String senha;
     public Integer tipo;
-    private Boolean status;
+    private Integer status;
     private String endereco;
     private String urlFoto;
     private LocalDate dataNascimento;

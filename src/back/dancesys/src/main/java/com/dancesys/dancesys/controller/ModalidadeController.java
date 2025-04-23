@@ -19,6 +19,7 @@ public class ModalidadeController {
     @Autowired
     private ModalidadeService modalidadeService;
 
+
     @PostMapping(value = {"", "alterar"})
     public ResponseEntity<ModalidadeDTO> salvar(@RequestBody ModalidadeDTO dto) throws Exception {
         ModalidadeDTO salvo = modalidadeService.salvar(dto);

@@ -6,7 +6,11 @@ import { AdminCanMatchFn, AlunoCanMatchFn } from "./guards/auth.guard";
 import { MainAdminPageComponent } from "./pages/Admin/main-admin-page/main-admin-page.component";
 import { CalendarAdminPageComponent } from "./pages/Admin/calendar-admin-page/calendar-admin-page.component";
 import { UsuariosAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
-import { HorariosAdminPageComponent } from "./pages/Admin/MainAdminPage/horarios-admin-page/horarios-admin-page.component";
+import { HorariosAdminPageComponent } from "./pages/Admin/main-admin-page/horarios-admin-page/horarios-admin-page.component";
+import { MainAlunoPageComponent } from "./pages/Aluno/main-aluno-page/main-aluno-page.component";
+import { CalendarAlunoPageComponent } from "./pages/Aluno/calendar-aluno-page/calendar-aluno-page.component";
+import { FinanceiroAlunoPageComponent } from "./pages/Aluno/financeiro-aluno-page/financeiro-aluno-page.component";
+import { EventosAlunoPageComponent } from "./pages/Aluno/eventos-aluno-page/eventos-aluno-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -15,8 +19,29 @@ export const routes: Routes = [
 		path: "aluno",
 		canMatch: [AlunoCanMatchFn],
 		children: [
-			{ path: "", redirectTo: "dashboard", pathMatch: "full" },
-			{ path: "dashboard", component: DashboardAlunoPageComponent },
+			{ path: "", redirectTo: "dashboard/main", pathMatch: "full" },
+			{
+				path: "dashboard",
+				component: DashboardAlunoPageComponent,
+				children: [
+					{
+						path: "main",
+						component: MainAlunoPageComponent,
+					},
+					{
+						path: "calendar",
+						component: CalendarAlunoPageComponent,
+					},
+					{
+						path: "financeiro",
+						component: FinanceiroAlunoPageComponent,
+					},
+					{
+						path: "eventos",
+						component: EventosAlunoPageComponent,
+					},
+				],
+			},
 		],
 	},
 	{

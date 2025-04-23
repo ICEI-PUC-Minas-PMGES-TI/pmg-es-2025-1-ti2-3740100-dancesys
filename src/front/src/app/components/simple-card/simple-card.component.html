@@ -1,0 +1,23 @@
+<div class="bg-main-300 rounded-md relative">
+	<img
+		class="rounded-t-md"
+		[src]="!!imageUrl ? imageUrl : 'https://placehold.co/600x500'"
+		alt=""
+	/>
+	<div
+		class="p-4 text-main-500 flex flex-col flex-1 justify-center items-center"
+	>
+		<h1 class="font-bold text-lg">{{ title }}</h1>
+		<p class="text-center">
+			<ng-content></ng-content>
+		</p>
+	</div>
+	@if (checked) {
+		<app-icon
+			name="check"
+			[fill]="true"
+			class="absolute -bottom-2 -right-2"
+			size="small"
+		></app-icon>
+	}
+</div>

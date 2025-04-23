@@ -1,8 +1,5 @@
 package com.dancesys.dancesys.dto;
 
-import com.dancesys.dancesys.entity.Modalidade;
-import com.dancesys.dancesys.entity.ModalidadeAlunoNivel;
-import com.dancesys.dancesys.entity.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,16 +17,14 @@ public class AlunoDTO {
     private String email;
     private String senha;
     public Integer tipo;
-    private Boolean status;
+    private Integer status;
     private String endereco;
     private String urlFoto;
     private LocalDate dataNascimento;
     private LocalDate criadoEm;
     private Integer creditos;
-    private Boolean boolBaile;
+    private Integer boolBaile;
     private Integer tipoAluno;
     private Long idUsuario;
-    private Usuario usuario;
     private List<ModalidadeAlunoNivelDTO> modalidades = new ArrayList<>();
-    private List<ModalidadeAlunoNivelDTO> dModalidades = new ArrayList<>();
 }

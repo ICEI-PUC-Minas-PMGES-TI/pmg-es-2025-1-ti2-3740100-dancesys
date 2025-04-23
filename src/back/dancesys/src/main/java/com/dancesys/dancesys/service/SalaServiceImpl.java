@@ -19,9 +19,8 @@ public class SalaServiceImpl implements SalaService {
 
     @Override
     public SalaDTO salvar(SalaDTO dto) throws Exception{
-        Sala sala = new Sala();
         try {
-            sala = salaRepository.save(sala);
+            Sala sala = salaRepository.save(SalaMapper.toEntity(dto));
             return SalaMapper.toDto(sala);
         }catch (Exception e) {
             throw new RuntimeException(e);

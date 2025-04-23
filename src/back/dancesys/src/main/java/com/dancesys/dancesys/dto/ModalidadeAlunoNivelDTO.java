@@ -12,7 +12,5 @@ import lombok.Setter;
 public class ModalidadeAlunoNivelDTO {
     private Long idAluno;
     private Long idModalidade;
-    private Aluno aluno;
-    private Modalidade modalidade;
     private Integer nivel;
 }
