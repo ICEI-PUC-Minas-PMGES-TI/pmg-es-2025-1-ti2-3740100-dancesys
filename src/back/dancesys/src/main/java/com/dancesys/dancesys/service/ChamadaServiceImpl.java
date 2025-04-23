@@ -35,13 +35,7 @@ public class ChamadaServiceImpl implements ChamadaService {
     @Override
     public Chamada adicionarAluno(Long idAulaOcorrencia, Long idAluno) throws RuntimeException {
         try{
-            if(chamadaRepository.findByIdAluno_Id(idAluno) !=null){
-                throw new RuntimeException("você ja esta inscrito nesta aula");
-            }else{
-                Aluno aluno = alunoServiceImpl.findById(idAluno);
-                if(aluno.getCreditos() == 0){
-                    throw new RuntimeException("Creditos insuficiente");
-                }else{
+            if(chamadaRepository.findByIdAluno_Id(idAluno) !=null){ throw new RuntimeException("você ja esta inscrito nesta aula"); }else{ Aluno aluno = alunoServiceImpl.findById(idAluno); if(aluno.getCreditos() == 0){ throw new RuntimeException("Creditos insuficiente"); }else{
                     alunoServiceImpl.dimuirCredito(aluno, 1);
                     return chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,idAluno,Chamada.faltante));
                 }
@@ -61,5 +55,18 @@ public class ChamadaServiceImpl implements ChamadaService {
         return "Removido com sucesso";
     }
 
+    public List<Chamada> buscarPorAula(Long idAula){
+        List<Chamada> chamadas = chamadaRepository.findByIdAulaOcorrencia_Id(idAula);
+        return chamadas;
+    }
+
+    public void deletarAll(List<Chamada> chamadas){
+        for(Chamada chamada : chamadas){
+            if(chamada.getIdAluno().getTipo().equals(Aluno.livre) && chamada.getIdAluno().getCreditos() < Aluno.max_creditos){
+                Aluno aluno = alunoServiceImpl.aumentarCredito(chamada.getIdAluno(),1);
+            }
+        }
+        chamadaRepository.deleteAll(chamadas);
+    }
 
 }

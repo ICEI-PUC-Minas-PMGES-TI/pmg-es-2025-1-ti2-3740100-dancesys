@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.service;
 
+import com.dancesys.dancesys.entity.AulaAluno;
 import com.dancesys.dancesys.entity.IdsCompostos.AulaAlunoId;
 import com.dancesys.dancesys.mapper.AulaAlunoMapper;
 import com.dancesys.dancesys.repository.AulaAlunoRepository;
@@ -20,5 +21,9 @@ public class AulaAlunoServiceImpl {
             AulaAlunoId id = new AulaAlunoId(idAula, idAluno);
             aulaAlunoRepository.save(AulaAlunoMapper.toEntity(id,idAluno,idAula));
         }
+    }
+
+    public List<AulaAluno> buscarPorAula(Long idAula) {
+        return aulaAlunoRepository.findByIdAula_Id(idAula);
     }
 }

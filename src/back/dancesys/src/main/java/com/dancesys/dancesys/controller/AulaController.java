@@ -38,4 +38,9 @@ public class AulaController {
         return chamadaService.removerAluno(idAluno,idAulaOcorrencia);
     }
 
+    @GetMapping(value = "status/{id}")
+    public String mudarStatus(@PathVariable Long id) throws Exception {
+        return aulaService.mudarStatus(id);
+    }
+
 }

@@ -28,11 +28,21 @@ public class AlunoServiceImpl{
     }
 
     public Aluno dimuirCredito(Aluno entity, Integer n){
+        if(entity.getCreditos().equals(0)){
+            throw new RuntimeException("Aluno ja com o minimo de craditos");
+        }
         entity.setCreditos(entity.getCreditos() - n);
         return alunoRepository.save(entity);
     }
 
     public Aluno aumentarCredito(Aluno entity, Integer n){
+        if(entity.getTipo().equals(Aluno.fixo)){
+            throw new RuntimeException("Aluno do tipo fixo");
+        }
+        if(entity.getCreditos().equals(Aluno.max_creditos)){
+            throw new RuntimeException("Aluno ja com creditos maximos");
+        }
+
         entity.setCreditos(entity.getCreditos() + n);
         return alunoRepository.save(entity);
     }
