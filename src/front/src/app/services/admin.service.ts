@@ -71,9 +71,9 @@ export class AdminService {
 	}
 
 	public editarAluno(aluno: Aluno) {
-		return this.http.post(
-			`${environment.API_URL}usuario/aluno/alterar`,
-			aluno,
-		);
+		return this.http.post(`${environment.API_URL}usuario/aluno/alterar`, {
+			...aluno,
+			boolBaile: aluno.boolBaile ? 1 : 0,
+		});
 	}
 }
