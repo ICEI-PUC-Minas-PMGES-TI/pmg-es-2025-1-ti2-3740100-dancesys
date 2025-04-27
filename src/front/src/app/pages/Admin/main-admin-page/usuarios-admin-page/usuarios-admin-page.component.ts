@@ -256,13 +256,12 @@ export class UsuariosAdminPageComponent implements OnInit {
 	}
 
 	submitEditAlunoForm(form: NgForm) {
-		const value: FormAlunoValue = <FormAlunoValue>(
-			structuredClone(form.value)
-		);
-		value.tipo = UsuarioTipos.ALUNO; // forçado
-		value.modalidades = [...this.tempEditAluno!.modalidades];
-		value.id = this.tempEditAluno!.id;
-		value.idUsuario = this.tempEditAluno!.usuario.id;
+		const value: Aluno = {
+			...this.tempEditAluno!,
+			...(<FormAlunoValue>form.value),
+			tipo: (form.value as FormAlunoValue).tipoAluno,
+			boolBaile: !!(form.value as FormAlunoValue).boolBaile,
+		};
 		this.closeEditAlunoModal();
 		console.log(value);
 		this.adminService.editarAluno(value).subscribe({

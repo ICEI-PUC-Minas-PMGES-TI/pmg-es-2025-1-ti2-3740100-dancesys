@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environment/environment";
 import { UsuarioFiltro } from "../models/usuario.model";
 import { FormAlunoValue } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
+import { Aluno } from "../models/aluno.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -45,7 +46,7 @@ export class AdminService {
 
 	public fetchAlunos(): Observable<AlunoResponse[]> {
 		return this.http.get(
-			`${environment.API_URL}usuario/aluno/buscar`
+			`${environment.API_URL}usuario/aluno/buscar`,
 		) as Observable<AlunoResponse[]>;
 	}
 
@@ -60,7 +61,7 @@ export class AdminService {
 		return this.http.get<AlunoResponse[]>(
 			`${
 				environment.API_URL
-			}usuario/aluno/aluno/buscar?${params.toString()}`
+			}usuario/aluno/aluno/buscar?${params.toString()}`,
 		) as Observable<AlunoResponse[]>;
 	}
 
@@ -69,10 +70,10 @@ export class AdminService {
 		return this.http.get(`${environment.API_URL}usuario/status/${id}`);
 	}
 
-	public editarAluno(aluno: FormAlunoValue) {
+	public editarAluno(aluno: Aluno) {
 		return this.http.post(
 			`${environment.API_URL}usuario/aluno/alterar`,
-			aluno
+			aluno,
 		);
 	}
 }
