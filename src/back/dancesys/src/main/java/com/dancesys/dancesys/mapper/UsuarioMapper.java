@@ -73,7 +73,7 @@ public class UsuarioMapper {
 
             UsuarioDTO dto = new UsuarioDTO();
 
-            dto.setId(Adto.getId());
+            dto.setId(Adto.getIdUsuario());
             dto.setNome(Adto.getNome());
             dto.setCpf(Adto.getCpf());
             dto.setNumero(Adto.getNumero());
