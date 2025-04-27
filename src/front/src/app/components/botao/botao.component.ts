@@ -2,9 +2,9 @@ import { Component, Input } from "@angular/core";
 import { IconComponent } from "../icon/icon.component";
 
 enum ButtonColors {
-	light = "bg-main-300 text-main-500",
-	medium = "bg-main-400 text-white",
-	dark = "bg-main-500 text-white",
+	light = "bg-main-300 hover:bg-main-300/80 text-main-500",
+	medium = "bg-main-400 hover:bg-main-400/80 text-white",
+	dark = "bg-main-500 hover:bg-main-500/80 text-white",
 	danger = "bg-danger text-white",
 	blue = "bg-blue-500 text-white",
 	success = "bg-green-500 text-white",
@@ -14,6 +14,15 @@ enum IconSlots {
 	LEFT = "left",
 	RIGHT = "right",
 	ICON_ONLY = "icon-only",
+}
+
+enum Sizes {
+	extraSmall = "text-xs",
+	small = "text-sm",
+	medium = "text-md",
+	large = "text-lg",
+	extraLarge = "text-xl",
+	default = medium,
 }
 
 @Component({
@@ -26,6 +35,7 @@ export class BotaoComponent {
 	@Input("icon") iconName: string = "";
 	@Input("icon-slot") iconSlot: string = IconSlots.LEFT;
 	@Input("icon-size") iconSize: string = "medium";
+	@Input("size") size: string = Sizes.default;
 	@Input("color") color: string = "dark";
 	@Input("moreStyles") moreStyles: string = "";
 
@@ -39,6 +49,7 @@ export class BotaoComponent {
 			"flex",
 			"justify-center",
 			"items-center",
+			Sizes[this.size as keyof typeof Sizes],
 		];
 		if (this.iconName && this.iconSlot === IconSlots.ICON_ONLY) {
 			styles[0] = "rounded-4xl";

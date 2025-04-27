@@ -1,6 +1,9 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject, OnInit, ViewChild } from "@angular/core";
 import { BotaoComponent } from "../../../../components/botao/botao.component";
-import { AdminService } from "../../../../services/admin.service";
+import {
+	AdminService,
+	AlunoResponse,
+} from "../../../../services/admin.service";
 import {
 	Usuario,
 	UsuarioFiltro,
@@ -26,6 +29,8 @@ export type FormAlunoValue = {
 	senha: string;
 	telefone: string;
 	tipoAluno: 1 | 2;
+	id: number;
+	idUsuario: number;
 	tipo: UsuarioTipos.ALUNO;
 	boolBaile: 0 | 1;
 };
@@ -34,6 +39,8 @@ enum ToggleUserStatusMessages {
 	ACTIVATE = "Tem certeza que deseja habilitar a conta?",
 	DEACTIVATE = "Tem certeza que deseja desabilitar a conta?",
 }
+
+// I USE ARCH BTW 󰣇 󰣇 󰣇
 
 @Component({
 	selector: "app-usuarios-admin-page",
@@ -50,6 +57,9 @@ enum ToggleUserStatusMessages {
 export class UsuariosAdminPageComponent implements OnInit {
 	adminService = inject(AdminService);
 	modalidadesService = inject(ModalidadesService);
+
+	@ViewChild("filterForm") filterForm!: NgForm;
+
 	users: Usuario[] = [];
 	alunos: Aluno[] = [];
 	modalidades: Modalidade[] = [];
@@ -73,31 +83,36 @@ export class UsuariosAdminPageComponent implements OnInit {
 		this.isLoading = true;
 		this.adminService.fetchAlunos().subscribe({
 			next: (response) => {
-				this.alunos = [];
-				response.forEach((alResponse) => {
-					const aluno: Aluno = {
-						id: alResponse.id,
-						creditos: alResponse.creditos,
-						boolBaile: alResponse.boolBaile,
-						tipo: alResponse.tipo,
-						usuario: {
-							...alResponse.idUsuario,
-						},
-						modalidades: alResponse.modalidades.map((obj) => {
-							const mod: ModalidadeAlunoNivel = {
-								idModalidade: obj.idModalidade.id,
-								nivel: obj.nivel,
-							};
-							return mod;
-						}),
-					};
-					this.alunos = [...this.alunos, aluno];
-					this.isLoading = false;
-				});
+				this.handleAlunoResponse(response);
+				console.log(this.filterForm);
 			},
 			error: (err) => {
 				console.log(err);
 			},
+		});
+	}
+
+	private handleAlunoResponse(response: AlunoResponse[]) {
+		this.alunos = [];
+		response.forEach((alResponse) => {
+			const aluno: Aluno = {
+				id: alResponse.id,
+				creditos: alResponse.creditos,
+				boolBaile: alResponse.boolBaile,
+				tipo: alResponse.tipo,
+				usuario: {
+					...alResponse.idUsuario,
+				},
+				modalidades: alResponse.modalidades.map((obj) => {
+					const mod: ModalidadeAlunoNivel = {
+						idModalidade: obj.idModalidade.id,
+						nivel: obj.nivel,
+					};
+					return mod;
+				}),
+			};
+			this.alunos = [...this.alunos, aluno];
+			this.isLoading = false;
 		});
 	}
 
@@ -125,8 +140,8 @@ export class UsuariosAdminPageComponent implements OnInit {
 
 	openEditAlunoModal(id: number) {
 		const index = this.alunos.findIndex((al) => {
-			return al.usuario.id == id;
-		});
+			return al.id == id;
+		}); //     
 		this.tempEditAluno = structuredClone(this.alunos[index]);
 		this.isModalOpen = "editAluno";
 	}
@@ -156,27 +171,16 @@ export class UsuariosAdminPageComponent implements OnInit {
 	}
 
 	get usersTabela() {
-		// return this.users.map((usuario) => {
-		// 	const dataNascimento = new Date(usuario.dataNascimento);
-		// 	dataNascimento.setDate(dataNascimento.getDate() + 1);
-		// 	return {
-		// 		nome: usuario.nome,
-		// 		email: usuario.email,
-		// 		telefone: usuario.numero,
-		// 		tipo: usuario.tipo,
-		// 		status: usuario.status,
-		// 		dataNasc: dataNascimento.toLocaleDateString("pt-BR"),
-		// 	};
-		// });
 		return this.alunos.map((aluno) => {
 			const dataNascimento = new Date(aluno.usuario.dataNascimento);
 			dataNascimento.setDate(dataNascimento.getDate() + 1);
 			return {
 				nome: aluno.usuario.nome,
-				email: aluno.usuario.nome,
+				email: aluno.usuario.email,
 				telefone: aluno.usuario.numero,
 				tipo: aluno.usuario.tipo,
-				id: aluno.usuario.id,
+				usuario: aluno.usuario,
+				id: aluno.id,
 				status: aluno.usuario.status,
 				dataNasc: dataNascimento.toLocaleDateString("pt-BR"),
 			};
@@ -257,29 +261,46 @@ export class UsuariosAdminPageComponent implements OnInit {
 		);
 		value.tipo = UsuarioTipos.ALUNO; // forçado
 		value.modalidades = [...this.tempEditAluno!.modalidades];
+		value.id = this.tempEditAluno!.id;
+		value.idUsuario = this.tempEditAluno!.usuario.id;
 		this.closeEditAlunoModal();
 		console.log(value);
 		this.adminService.editarAluno(value).subscribe({
-			next: ()=>{
-				this.reloadUsers()
-			}
+			next: () => {
+				this.reloadUsers();
+			},
 		});
 	}
 
-	filterFormSubmit(form: NgForm) {
-		console.log(form.value);
+	filterFormSubmit() {
+		console.log(this.filterForm.value);
 		const filtro: UsuarioFiltro = {
-			nome: form.value.nomeFilter,
-			email: form.value.emailFilter,
-			cpf: form.value.cpfFilter,
-			tipo: form.value.tipoFilter,
-			status: form.value.statusFilter,
+			nome: this.filterForm.value.nomeFilter || "",
+			email: this.filterForm.value.emailFilter || "",
+			cpf: this.filterForm.value.cpfFilter || "",
+			tipo: this.filterForm.value.tipoFilter || "",
+			status: this.filterForm.value.statusFilter || "",
 		};
 		this.adminService.filterUsuarios(filtro).subscribe({
-			next: () => {
+			next: (response) => {
+				this.handleAlunoResponse(response);
 				console.log("Filtrouu");
 			},
 		});
+	}
+
+	limparFiltros() {
+		this.filterForm.reset();
+		this.filterFormSubmit();
+	}
+
+	get hasFormValues(): boolean {
+		if (this.filterForm) {
+			return Object.keys(this.filterForm.value).some(
+				(k) => !!this.filterForm.value[k],
+			);
+		}
+		return false;
 	}
 
 	toggleUserStatus(id: number, status: boolean) {
