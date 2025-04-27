@@ -4,6 +4,8 @@ import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AlunoServiceImpl{
     private final AlunoRepository alunoRepository;
@@ -49,5 +51,9 @@ public class AlunoServiceImpl{
 
     public Aluno findById(Long id){
         return alunoRepository.findById(id);
+    }
+
+    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status){
+        return alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
     }
 }

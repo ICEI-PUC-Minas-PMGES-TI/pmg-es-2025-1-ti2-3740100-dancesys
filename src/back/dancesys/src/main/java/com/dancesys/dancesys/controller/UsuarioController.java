@@ -3,6 +3,7 @@ package com.dancesys.dancesys.controller;
 import com.dancesys.dancesys.dto.*;
 
 import com.dancesys.dancesys.entity.Aluno;
+import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.service.UsuarioService;
 import lombok.Getter;
@@ -66,5 +67,14 @@ public class UsuarioController {
     public ResponseEntity<Usuario> alterarStatus(@PathVariable Long id){
         Usuario u = usuarioService.alterarStatus(id);
         return ResponseEntity.ok(u);
+    }
+
+    @GetMapping(value = "professor/buscar")
+    public ResponseEntity<List<Professor>> buscarProfessors(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer status) {
+        return ResponseEntity.ok(usuarioService.buscarProfessores(nome,cpf,email,status));
     }
 }

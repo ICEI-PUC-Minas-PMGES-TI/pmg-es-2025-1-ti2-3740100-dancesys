@@ -2,6 +2,7 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aluno;
+import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.Usuario;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface UsuarioService{
     public List<Usuario> buscar();
 
     public Usuario alterarStatus(Long id);
+
+    public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status);
 }

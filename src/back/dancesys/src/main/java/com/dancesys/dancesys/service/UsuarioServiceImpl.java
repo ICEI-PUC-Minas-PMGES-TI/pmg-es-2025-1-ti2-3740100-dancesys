@@ -17,7 +17,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final ModalidadeAlunoNivelServiceImpl modalidadeAlunoNivelServiceImpl;
     private final ProfessorServiceImpl professorServiceImpl;
     private final ProfessorModalidadeServiceImpl professorModalidadeServiceImpl;
-    private final AlunoRepository alunoRepository;
     private final EmailServiceImpl emailServiceImpl;
     private final DividendoServiceImpl dividendoServiceImpl;
 
@@ -27,7 +26,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             ModalidadeAlunoNivelServiceImpl modalidadeAlunoNivelServiceImpl,
             ProfessorServiceImpl professorServiceImpl,
             ProfessorModalidadeServiceImpl professorModalidadeServiceImpl,
-            AlunoRepository alunoRepository,
             EmailServiceImpl emailServiceImpl,
             DividendoServiceImpl dividendoServiceImpl
     ) {
@@ -36,7 +34,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.modalidadeAlunoNivelServiceImpl = modalidadeAlunoNivelServiceImpl;
         this.professorServiceImpl = professorServiceImpl;
         this.professorModalidadeServiceImpl = professorModalidadeServiceImpl;
-        this.alunoRepository = alunoRepository;
         this.emailServiceImpl = emailServiceImpl;
         this.dividendoServiceImpl = dividendoServiceImpl;
     }
@@ -133,7 +130,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status) {
-        return alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
+        return alunoServiceImpl.buscarAlunos(nome, cpf, email, tipo, status);
+    }
+
+    @Override
+    public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status){
+        return professorServiceImpl.buscarProfessores(nome, cpf, email, status);
     }
 
     @Override
