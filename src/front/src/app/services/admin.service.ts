@@ -74,6 +74,10 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}usuario/aluno/alterar`, {
 			...aluno,
 			boolBaile: aluno.boolBaile ? 1 : 0,
+			status: aluno.usuario.status,
+			senha: aluno.usuario.senha,
+			criadoEm: aluno.usuario.criadoEm,
+			urlFoto: aluno.usuario.urlFoto,
 		});
 	}
 }
