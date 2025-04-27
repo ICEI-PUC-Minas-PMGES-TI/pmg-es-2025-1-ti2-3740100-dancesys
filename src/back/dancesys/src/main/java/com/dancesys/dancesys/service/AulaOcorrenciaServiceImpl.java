@@ -1,10 +1,9 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.AulaDTO;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
-import com.dancesys.dancesys.repository.ChamadaRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ public class AulaOcorrenciaServiceImpl {
 
     public AulaOcorrenciaServiceImpl(
             AulaOcorrenciaRepository aulaOcorrenciaRepository,
-            ChamadaServiceImpl chamadaServiceImpl
+            @Lazy ChamadaServiceImpl chamadaServiceImpl
     ) {
         this.aulaOcorrenciaRepository = aulaOcorrenciaRepository;
         this.chamadaServiceImpl = chamadaServiceImpl;

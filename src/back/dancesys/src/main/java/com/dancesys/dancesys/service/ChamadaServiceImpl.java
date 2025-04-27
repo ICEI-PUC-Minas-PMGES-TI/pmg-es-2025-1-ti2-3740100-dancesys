@@ -6,6 +6,7 @@ import com.dancesys.dancesys.entity.Chamada;
 import com.dancesys.dancesys.entity.IdsCompostos.ChamadaId;
 import com.dancesys.dancesys.mapper.ChamadaMapper;
 import com.dancesys.dancesys.repository.ChamadaRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -20,7 +21,8 @@ public class ChamadaServiceImpl implements ChamadaService {
     public ChamadaServiceImpl(
             ChamadaRepository chamadaRepository,
             AlunoServiceImpl alunoServiceImpl,
-            AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl) {
+            @Lazy AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl
+    ) {
         this.chamadaRepository = chamadaRepository;
         this.alunoServiceImpl = alunoServiceImpl;
         this.aulaOcorrenciaServiceImpl = aulaOcorrenciaServiceImpl;
