@@ -7,7 +7,6 @@ import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.entity.Chamada;
 import com.dancesys.dancesys.mapper.AulaMapper;
 import com.dancesys.dancesys.repository.AulaRepository;
-import jakarta.persistence.Id;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -54,7 +53,7 @@ public class AulaServiceImpl implements  AulaService {
     @Override
     public String mudarStatus(Long id) throws Exception{
         Aula aula = aulaRepository.findById(id).get();
-        if(aula.getStatus()==Aula.ativo){
+        if(aula.getStatus().equals(Aula.ativo)){
             aula.setStatus(Aula.desativo);
             List<AulaOcorrencia> aulas = aulaOcorrenciaServiceImpl.buscarAulasPosData(LocalDate.now(), id);
             for(AulaOcorrencia ao : aulas){

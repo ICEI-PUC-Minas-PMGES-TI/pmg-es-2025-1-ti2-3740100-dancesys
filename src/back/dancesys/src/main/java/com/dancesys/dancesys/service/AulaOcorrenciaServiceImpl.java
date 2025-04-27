@@ -79,4 +79,8 @@ public class AulaOcorrenciaServiceImpl {
     public void deletarAll(List<AulaOcorrencia> aos){
         aulaOcorrenciaRepository.deleteAll(aos);
     }
+
+    public AulaOcorrencia buscarPorId(Long id){
+        return aulaOcorrenciaRepository.findById(id).get();
+    }
 }

@@ -59,7 +59,7 @@ export class AdminService {
 			fromObject: { ...filtro },
 		});
 		return this.http.get(
-			`${environment.API_URL}usuario/buscar?${params.toString()}`,
+			`${environment.API_URL}usuario/aluno/buscar?${params.toString()}`,
 		);
 	}
 
