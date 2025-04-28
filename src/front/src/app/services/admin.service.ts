@@ -3,8 +3,12 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../environment/environment";
 import { UsuarioFiltro } from "../models/usuario.model";
-import { FormAlunoValue } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
+import {
+	FormAlunoValue,
+	FormProfessorValue,
+} from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
 import { Aluno } from "../models/aluno.model";
+import { Professor } from "../models/professor.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -37,6 +41,35 @@ export type AlunoResponse = {
 		nivel: 1 | 2 | 3;
 	}[];
 };
+export type ProfessorResponse = {
+	id: number;
+	informacoesProfissionais: string;
+	valorHoraExtra: number;
+	idUsuario: {
+		id: number;
+		nome: string;
+		cpf: string;
+		numero: string;
+		email: string;
+		senha: string;
+		tipo: 2;
+		status: boolean;
+		endereco: string;
+		urlFoto: null | string;
+		dataNascimento: Date;
+		criadoEm: Date;
+	};
+	modalidades: {
+		id: {
+			idProfessor: number;
+			idModalidade: number;
+		};
+		idModalidade: {
+			id: number;
+			nome: string;
+		};
+	}[];
+};
 
 @Injectable({
 	providedIn: "root",
@@ -50,8 +83,33 @@ export class AdminService {
 		) as Observable<AlunoResponse[]>;
 	}
 
+	public fetchProfessores(): Observable<ProfessorResponse[]> {
+		return this.http.get(
+			`${environment.API_URL}usuario/professor/buscar`,
+		) as Observable<ProfessorResponse[]>;
+	}
+
 	public addUsuarioAluno(aluno: FormAlunoValue) {
 		return this.http.post(`${environment.API_URL}usuario/aluno`, aluno);
+	}
+
+	public addUsuarioProfessor(professor: FormProfessorValue) {
+		console.log(professor);
+		return this.http.post(`${environment.API_URL}usuario/professor`, {
+			valorHoraExtra: professor.valorHoraExtra,
+			informacoesProfissionais: professor.informacoesProfissionais,
+			modalidades: [...professor.modalidades],
+			usuario: {
+				nome: professor.nome,
+				endereco: professor.endereco,
+				cpf: professor.cpf,
+				numero: professor.telefone,
+				tipo: professor.tipo,
+				urlFoto: null,
+				dataNascimento: professor.dataNascimento,
+				email: professor.email,
+			},
+		});
 	}
 
 	public filterUsuarios(filtro: UsuarioFiltro): Observable<AlunoResponse[]> {
@@ -79,5 +137,14 @@ export class AdminService {
 			criadoEm: aluno.usuario.criadoEm,
 			urlFoto: aluno.usuario.urlFoto,
 		});
+	}
+
+	public editarProfessor(professor: Professor) {
+		return this.http.post(
+			`${environment.API_URL}usuario/professor/alterar`,
+			{
+				...professor,
+			},
+		);
 	}
 }

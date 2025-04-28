@@ -40,7 +40,7 @@ public class UsuarioController {
         return ResponseEntity.ok(aluno);
     }
 
-    @PostMapping(value = "professor")
+    @PostMapping(value = {"professor", "professor/alterar"})
     public ResponseEntity<ProfessorDTO> salvarProfessor(@RequestBody ProfessorDTO dto) throws Exception {
         final ProfessorDTO professor = usuarioService.salvarProfessor(dto);
         return ResponseEntity.ok(professor);
