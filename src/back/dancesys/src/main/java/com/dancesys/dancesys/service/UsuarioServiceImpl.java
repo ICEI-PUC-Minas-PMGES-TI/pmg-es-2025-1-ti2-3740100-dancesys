@@ -89,9 +89,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
             if(dto.getId() != null){
                 if(dto.getModalidades().isEmpty()){
-                    modalidadeAlunoNivelServiceImpl.excluirAllPorAluno(newAluno.getId());
+                    modalidadeAlunoNivelServiceImpl.excluirAllPorAluno(dto.getId());
                 }else{
-                    modalidadeAlunoNivelServiceImpl.excluirAll(dto.getModalidades(), newAluno.getId());
+                    modalidadeAlunoNivelServiceImpl.excluirAll(dto.getModalidades(), dto.getId());
                 }
             }
 
@@ -117,6 +117,13 @@ public class UsuarioServiceImpl implements UsuarioService {
             Professor professor = ProfessorMapper.toEntity(dto);
             professor.setIdUsuario(UsuarioMapper.toEntity(user));
             Professor newProfessor = professorServiceImpl.salvar(professor);
+            if(dto.getId() != null){
+                if(dto.getModalidades().isEmpty()){
+                    professorModalidadeServiceImpl.excluirAllPorIdProfessor(dto.getId());
+                }else{
+                    professorModalidadeServiceImpl.excluirAll(dto.getId(), dto.getModalidades());
+                }
+            }
             for(Long obj : dto.getModalidades()){
                 ProfessorModalidade pm = new ProfessorModalidade();
                 pm.setIdProfessor(professor);

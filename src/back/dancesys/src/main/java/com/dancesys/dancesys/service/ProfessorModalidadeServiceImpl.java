@@ -7,6 +7,8 @@ import com.dancesys.dancesys.mapper.ProfessorModalidadeMapper;
 import com.dancesys.dancesys.repository.ProfessorModalidadeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfessorModalidadeServiceImpl{
 
@@ -21,5 +23,15 @@ public class ProfessorModalidadeServiceImpl{
 
         entity.setId(id);
         return professorModalidadeRepository.save(entity);
+    }
+
+    public void excluirAll(Long idProfessor, List<Long> idMods){
+        List<ProfessorModalidade> mods = professorModalidadeRepository.findByIdProfessorIdAndidModalidadeIdNotIn(idProfessor, idMods);
+        professorModalidadeRepository.deleteAll(mods);
+    }
+
+    public void excluirAllPorIdProfessor(Long idProfessor){
+        List<ProfessorModalidade> mods = professorModalidadeRepository.findByIdProfessorId(idProfessor);
+        professorModalidadeRepository.deleteAll(mods);
     }
 }
