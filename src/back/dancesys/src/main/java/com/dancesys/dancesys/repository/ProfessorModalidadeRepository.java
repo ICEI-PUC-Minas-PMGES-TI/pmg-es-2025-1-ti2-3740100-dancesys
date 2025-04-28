@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProfessorModalidadeRepository extends JpaRepository<ProfessorModalidade, ProfessorModalidadeId> {
-    List<ProfessorModalidade> findByIdProfessorIdAndidModalidadeIdNotIn(Long idProfessor, List<Long> mods);
+    List<ProfessorModalidade> findByIdProfessorIdAndIdModalidadeIdNotIn(Long idProfessor, List<Long> mods);
 
     List<ProfessorModalidade> findByIdProfessorId(Long idProfessor);
 }

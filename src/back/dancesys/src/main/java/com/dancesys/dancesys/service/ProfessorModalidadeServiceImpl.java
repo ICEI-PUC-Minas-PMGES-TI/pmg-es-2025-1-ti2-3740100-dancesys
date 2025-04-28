@@ -26,7 +26,7 @@ public class ProfessorModalidadeServiceImpl{
     }
 
     public void excluirAll(Long idProfessor, List<Long> idMods){
-        List<ProfessorModalidade> mods = professorModalidadeRepository.findByIdProfessorIdAndidModalidadeIdNotIn(idProfessor, idMods);
+        List<ProfessorModalidade> mods = professorModalidadeRepository.findByIdProfessorIdAndIdModalidadeIdNotIn(idProfessor, idMods);
         professorModalidadeRepository.deleteAll(mods);
     }
 
