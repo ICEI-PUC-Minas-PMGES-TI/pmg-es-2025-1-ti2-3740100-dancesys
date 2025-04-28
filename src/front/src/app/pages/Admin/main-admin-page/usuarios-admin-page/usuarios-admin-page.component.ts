@@ -42,7 +42,7 @@ export type FormProfessorValue = {
 	modalidades: number[];
 	cpf: string;
 	senha: string;
-	telefone: string;
+	numero: string;
 	email: string;
 	id: number;
 	informacoesProfissionais: string;

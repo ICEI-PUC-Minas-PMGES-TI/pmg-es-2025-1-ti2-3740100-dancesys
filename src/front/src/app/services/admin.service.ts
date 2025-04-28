@@ -103,7 +103,7 @@ export class AdminService {
 				nome: professor.nome,
 				endereco: professor.endereco,
 				cpf: professor.cpf,
-				numero: professor.telefone,
+				numero: professor.numero,
 				tipo: professor.tipo,
 				urlFoto: null,
 				dataNascimento: professor.dataNascimento,
