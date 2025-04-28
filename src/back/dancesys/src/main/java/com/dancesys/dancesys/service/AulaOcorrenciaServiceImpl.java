@@ -82,4 +82,5 @@ public class AulaOcorrenciaServiceImpl {
     public AulaOcorrencia buscarPorId(Long id){
         return aulaOcorrenciaRepository.findById(id).get();
     }
+
 }

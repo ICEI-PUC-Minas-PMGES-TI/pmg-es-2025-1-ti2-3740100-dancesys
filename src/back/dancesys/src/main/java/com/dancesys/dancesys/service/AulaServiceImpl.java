@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AulaServiceImpl implements  AulaService {
@@ -72,5 +73,17 @@ public class AulaServiceImpl implements  AulaService {
         }
         aulaRepository.save(aula);
         return "Status alterado com sucesso";
+    }
+
+    @Override
+    public void gerarAulasJobMensal() throws Exception{
+        List<Aula> aulas = aulaRepository.findByStatus(Aula.ativo);
+        for(Aula  a : aulas){
+            List<Long> idsAlunos = aulaAlunoServiceImpl.buscarPorAula(a.getId())
+                    .stream()
+                    .map(aulaAluno -> aulaAluno.getIdAluno().getId())
+                    .collect(Collectors.toList());
+            aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(idsAlunos, a);
+        }
     }
 }
