@@ -89,23 +89,4 @@ public class UsuarioMapper {
             return dto;
         }
 
-        public static UsuarioDTO professorDTOtoDto(ProfessorDTO pDto){
-            if (pDto == null) return null;
-
-            UsuarioDTO dto = new UsuarioDTO();
-
-            dto.setId(pDto.getId());
-            dto.setNome(pDto.getNome());
-            dto.setCpf(pDto.getCpf());
-            dto.setNumero(pDto.getNumero());
-            dto.setEmail(pDto.getEmail());
-            dto.setSenha(pDto.getSenha());
-            dto.setTipo(pDto.getTipo());
-            dto.setStatus(pDto.getStatus());
-            dto.setEndereco(pDto.getEndereco());
-            dto.setUrlFoto(pDto.getUrlFoto());
-            dto.setDataNascimento(pDto.getDataNascimento());
-
-            return dto;
-        }
 }

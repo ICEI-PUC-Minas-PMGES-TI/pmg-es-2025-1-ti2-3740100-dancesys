@@ -35,4 +35,9 @@ public class ModalidadeAlunoNivelServiceImpl{
         List<ModalidadeAlunoNivel> newList = modalidadeAlunoNivelRepository.findByIdAlunoIdAndIdModalidadeIdNotIn(idAluno, ids);
         modalidadeAlunoNivelRepository.deleteAll(newList);
     }
+
+    public void excluirAllPorAluno(Long idAluno){
+        List<ModalidadeAlunoNivel> mods = modalidadeAlunoNivelRepository.findByIdAlunoId(idAluno);
+        modalidadeAlunoNivelRepository.deleteAll(mods);
+    }
 }

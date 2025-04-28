@@ -16,11 +16,10 @@ public class ProfessorModalidadeServiceImpl{
         this.professorModalidadeRepository = professorModalidadeRepository;
     }
 
-    public ProfessorModalidade salvar(ProfessorModalidadeDTO dto){
-        ProfessorModalidadeId id = new ProfessorModalidadeId(dto.getIdProfessor(), dto.getIdModalidade());
-        ProfessorModalidade professorModalidade = ProfessorModalidadeMapper.toEntity(dto);
+    public ProfessorModalidade salvar(ProfessorModalidade entity){
+        ProfessorModalidadeId id = new ProfessorModalidadeId(entity.getIdProfessor().getId(), entity.getIdModalidade().getId());
 
-        professorModalidade.setId(id);
-        return professorModalidadeRepository.save(professorModalidade);
+        entity.setId(id);
+        return professorModalidadeRepository.save(entity);
     }
 }

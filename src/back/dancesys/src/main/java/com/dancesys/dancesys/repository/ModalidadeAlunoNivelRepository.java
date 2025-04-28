@@ -14,4 +14,6 @@ public interface ModalidadeAlunoNivelRepository extends JpaRepository<Modalidade
     public List<ModalidadeAlunoNivel> findByIdAluno_Id(Long id);
 
     List<ModalidadeAlunoNivel> findByIdAlunoIdAndIdModalidadeIdNotIn(Long idAluno, List<Long> idsModalidade);
+
+    List<ModalidadeAlunoNivel> findByIdAlunoId(Long id);
 }

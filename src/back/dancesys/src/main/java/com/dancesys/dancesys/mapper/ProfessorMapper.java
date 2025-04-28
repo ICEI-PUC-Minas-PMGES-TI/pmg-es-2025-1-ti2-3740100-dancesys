@@ -20,24 +20,13 @@ public class ProfessorMapper {
         return entity;
     }
 
-    public static ProfessorDTO AlltoDto(UsuarioDTO uDto, Professor entity, List<ProfessorModalidadeDTO> mods){
+    public static ProfessorDTO AlltoDto(UsuarioDTO uDto, Professor entity, List<Long> mods){
         ProfessorDTO dto = new ProfessorDTO();
 
         dto.setId(entity.getId());
-        dto.setNome(uDto.getNome());
-        dto.setCpf(uDto.getCpf());
-        dto.setNumero(uDto.getNumero());
-        dto.setEmail(uDto.getEmail());
-        dto.setSenha(uDto.getSenha());
-        dto.setTipo(uDto.getTipo());
-        dto.setStatus(uDto.getStatus());
-        dto.setEndereco(uDto.getEndereco());
-        dto.setUrlFoto(uDto.getUrlFoto());
-        dto.setDataNascimento(uDto.getDataNascimento());
-        dto.setCriadoEm(uDto.getCriadoEm());
         dto.setInformacoesProfissionais(entity.getInformacoesProfissionais());
         dto.setValorHoraExtra(entity.getValorHoraExtra());
-        dto.setIdUsuario(entity.getIdUsuario().getId());
+        dto.setUsuario(entity.getIdUsuario());
         dto.setModalidades(mods);
 
         return dto;

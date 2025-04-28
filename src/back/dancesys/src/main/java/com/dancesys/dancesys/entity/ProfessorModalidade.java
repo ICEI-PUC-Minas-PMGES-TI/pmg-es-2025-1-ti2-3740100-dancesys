@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.entity;
 
 import com.dancesys.dancesys.entity.IdsCompostos.ProfessorModalidadeId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class ProfessorModalidade {
     @ManyToOne
     @MapsId("idProfessor")
     @JoinColumn(name = "id_Professor", nullable = false)
+    @JsonBackReference
     private Professor idProfessor;
 
     @ManyToOne

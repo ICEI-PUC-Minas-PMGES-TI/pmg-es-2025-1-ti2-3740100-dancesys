@@ -88,7 +88,11 @@ public class UsuarioServiceImpl implements UsuarioService {
             List<ModalidadeAlunoNivelDTO> modList = new ArrayList<>();
 
             if(dto.getId() != null){
-                modalidadeAlunoNivelServiceImpl.excluirAll(dto.getModalidades(), newAluno.getId());
+                if(dto.getModalidades().isEmpty()){
+                    modalidadeAlunoNivelServiceImpl.excluirAllPorAluno(newAluno.getId());
+                }else{
+                    modalidadeAlunoNivelServiceImpl.excluirAll(dto.getModalidades(), newAluno.getId());
+                }
             }
 
             for (ModalidadeAlunoNivelDTO obj : dto.getModalidades()) {
@@ -109,20 +113,22 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ProfessorDTO salvarProfessor(ProfessorDTO dto) throws Exception{
         try{
-            UsuarioDTO user = salvar(UsuarioMapper.professorDTOtoDto(dto));
+            UsuarioDTO user = salvar(UsuarioMapper.toDTO(dto.getUsuario()));
             Professor professor = ProfessorMapper.toEntity(dto);
             professor.setIdUsuario(UsuarioMapper.toEntity(user));
             Professor newProfessor = professorServiceImpl.salvar(professor);
-            List<ProfessorModalidadeDTO> modList = new ArrayList<>();
-            for(ProfessorModalidadeDTO obj : dto.getModalidades()){
-                obj.setIdProfessor(newProfessor.getId());
+            for(Long obj : dto.getModalidades()){
+                ProfessorModalidade pm = new ProfessorModalidade();
+                pm.setIdProfessor(professor);
+                Modalidade mod = new Modalidade();
+                mod.setId(obj);
+                pm.setIdModalidade(mod);
 
-                ProfessorModalidade mod = professorModalidadeServiceImpl.salvar(obj);
+                professorModalidadeServiceImpl.salvar(pm);
 
-                modList.add(ProfessorModalidadeMapper.toDto(mod));
             }
 
-            return ProfessorMapper.AlltoDto(user, newProfessor, modList);
+            return ProfessorMapper.AlltoDto(user, newProfessor, dto.getModalidades());
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
