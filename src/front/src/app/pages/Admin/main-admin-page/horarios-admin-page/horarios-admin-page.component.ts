@@ -5,6 +5,12 @@ import { MultiSelectInputComponent } from "../../../../components/multi-select-i
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
 import { AdminService, ProfessorResponse } from "../../../../services/admin.service";
+import { ModalComponent } from "../../../../components/modal/modal.component";
+
+enum ToggleModal {
+	NEW = "Cria Horario",
+	EDIT = "Editar Horario",
+}
 
 @Component({
 	selector: "app-horarios-admin-page",
@@ -15,18 +21,23 @@ import { AdminService, ProfessorResponse } from "../../../../services/admin.serv
 		MultiSelectInputComponent,
 		CommonModule,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		ModalComponent
 	],
 	templateUrl: "./horarios-admin-page.component.html",
 	styleUrl: "./horarios-admin-page.component.css",
 })
+
 export class HorariosAdminPageComponent {
 	adminService = inject(AdminService);
 
 	filterForm: FormGroup;
+	ToggleModal = ToggleModal;
 	professoresFilter!: number[];
 	diasSemanaFilter!: number[];
 	professoresObj: any = [];
+	isModalOpen: "isOpenModal" | false = false;
+	isEdit = false;
 	diasObj = [
 		{dia: 1, nome: "Segunda"},
 		{dia: 2, nome: "Terça"},
@@ -68,13 +79,13 @@ export class HorariosAdminPageComponent {
 		{
 		  icon: 'edit',
 		  title: 'Editar',
-		  cor: 'blue',
+		  cor: 'dark',
 		  callback: (item: any) => this.editar(item)
 		},
 		{
 		  icon: 'delete',
 		  title: 'Excluir',
-		  cor: 'danger',
+		  cor: 'dark',
 		  callback: (item: any) => this.excluir(item)
 		}
 	  ];
@@ -121,6 +132,15 @@ export class HorariosAdminPageComponent {
 				console.log(err, { color: "red" });
 			},
 		});
+	}
+
+	closeModal(){
+		this.isModalOpen = false;	
+	}
+
+	openAddModal(){
+		this.isModalOpen = "isOpenModal";
+		this.isEdit = false;
 	}
 
 	editar(item: any) {
