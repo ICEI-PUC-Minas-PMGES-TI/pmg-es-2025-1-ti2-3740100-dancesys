@@ -1,0 +1,64 @@
+import { Component, Input, Output, EventEmitter, NgModule, HostListener, ElementRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
+
+@Component({
+  selector: 'app-multi-select-input',
+  standalone: true,
+  imports: [ CommonModule, FormsModule],
+  templateUrl: './multi-select-input.component.html',
+  styleUrl: './multi-select-input.component.css'
+})
+export class MultiSelectInputComponent {
+  @Input() label: string = 'Selecione';
+  @Input() options: any[] = [];
+  @Input() optionLabel: string = '';
+  @Input() optionValue: string = '';
+  @Output() selectionChange = new EventEmitter<any[]>();
+
+  selectedValues: any[] = [];
+  showDropdown = false;
+
+  constructor(private elementRef: ElementRef) {}
+
+  
+  getPropByPath(obj: any, path: string): any {
+    return path.split('.').reduce((acc, part) => acc?.[part], obj);
+  }
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  isChecked(value: any): boolean {
+    return this.selectedValues.includes(value);
+  }
+
+  onCheckboxChange(option: any) {
+    const value = this.getPropByPath(option, this.optionValue);  // ← aqui
+    const index = this.selectedValues.indexOf(value);
+  
+    if (index > -1) {
+      this.selectedValues.splice(index, 1);
+    } else {
+      this.selectedValues.push(value);
+    }
+  
+    this.selectionChange.emit(this.selectedValues);
+  }
+  
+  get selectedLabels(): string[] {
+    return this.options
+      .filter(option => this.selectedValues.includes(this.getPropByPath(option, this.optionValue))) // ← aqui
+      .map(option => this.getPropByPath(option, this.optionLabel)); // ← aqui
+  }
+  
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.showDropdown = false;
+    }
+  }
+
+}

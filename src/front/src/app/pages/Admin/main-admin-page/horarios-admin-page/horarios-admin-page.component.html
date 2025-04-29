@@ -3,16 +3,21 @@
 		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
 		<form class="flex flex-col text-main-500 font-bold">
 			<div class="flex px-1 flex-row space-x-2">
-				<div class="flex flex-col">
-					<label for="nomeFilter">Professor:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="nomeFilter" placeholder="..."
-						id="nomeFilter" value="" />
-				</div>
-				<div class="flex flex-col">
-					<label for="diasFilter">Dias:</label>
-					<input class="p-1 rounded-md bg-main-300" type="text" name="diasFilter" placeholder="..."
-						id="diasFilter" value="" />
-				</div>
+				<app-multi-select-input
+				[label]="'Professor:'"
+				[options]="professoresObj"
+				optionLabel="idUsuario.nome"
+				optionValue="id"
+				(selectionChange)="onProfessorChange($event)"
+				></app-multi-select-input>
+
+				<app-multi-select-input
+				[label]="'Dias:'"
+				[options]="diasObj"
+				optionLabel="nome"
+				optionValue="dia"
+				(selectionChange)="onDiaChange($event)"
+				></app-multi-select-input>
 			</div>
 		</form>
 	</section>
@@ -21,7 +26,7 @@
 			<button icon="add_circle" icon-slot="right" appButton color="dark">
 				Novo
 			</button>
-			<button icon="search" icon-slot="right" appButton color="dark">
+			<button icon="search" icon-slot="right" appButton color="dark" (click)="buscar()">
 				Filtrar
 			</button>
 		</div>
@@ -29,33 +34,9 @@
 			<button icon="reload" icon-slot="icon-only" color="dark" appButton></button>
 		</div>
 	</section>
-	<section class="tabela">
-		<table class="">
-			<thead class="">
-				<tr>
-					<th>Professor</th>
-					<th>Horário 1</th>
-					<th>Horário 2</th>
-					<th>Dias da Semana</th>
-					<th>Ações</th>
-				</tr>
-			</thead>
-			<tbody class="">
-
-				<tr>
-					<td>djfnsd</td>
-					<td>djfnsd</td>
-					<td>djfnsd</td>
-					<td>djfnsd</td>
-					<td>
-						<div class="flex justify-center items-center space-x-3">
-							<button appButton icon="edit" title="Editar" icon-slot="icon-only" color="blue"></button>
-							<button appButton icon="delete" icon-slot="icon-only" title="Ativar/Desativar conta"
-								color="danger"></button>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
+	<app-simple-table
+	[colunas]="colunas"
+	[dados]="professores"
+	[botoesAcoes]="acoes">
+	</app-simple-table>
 </main>

@@ -3,6 +3,7 @@ import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "../../environment/environment";
 import { UsuarioFiltro } from "../models/usuario.model";
+import { horarioProfessorFilter } from "../models/horarioProfessorFilter.model";
 import {
 	FormAlunoValue,
 	FormProfessorValue,
@@ -146,5 +147,13 @@ export class AdminService {
 				...professor,
 			},
 		);
+	}
+
+	public fetchHoraioProfessor(filtro: horarioProfessorFilter){
+		return this.http.post(`${environment.API_URL}horario/buscar`,
+			{
+				...filtro,
+			},);
+
 	}
 }

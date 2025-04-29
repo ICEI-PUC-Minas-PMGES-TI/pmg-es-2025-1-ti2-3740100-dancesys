@@ -1,0 +1,28 @@
+<section class="tabela">
+  <table class="w-full">
+    <thead>
+      <tr>
+        <th *ngFor="let coluna of colunas" [style.width]="coluna.width">{{ coluna.titulo }}</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dados">
+        <td *ngFor="let coluna of colunas">{{ coluna.formatar ? coluna.formatar(getValor(item, coluna.chave), item) : getValor(item, coluna.chave) }}</td>
+        <td>
+          <div class="flex justify-center items-center space-x-3">
+            <button
+              *ngFor="let botao of botoesAcoes"
+              appButton
+              [icon]="botao.icon"
+              icon-slot="icon-only"
+              [title]="botao.title"
+              [color]="botao.cor"
+              (click)="botao.callback(item)">
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

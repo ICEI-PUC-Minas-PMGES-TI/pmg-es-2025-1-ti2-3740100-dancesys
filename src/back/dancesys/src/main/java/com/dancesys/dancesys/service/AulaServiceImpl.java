@@ -76,14 +76,14 @@ public class AulaServiceImpl implements  AulaService {
     }
 
     @Override
-    public void gerarAulasJobMensal() throws Exception{
-        List<Aula> aulas = aulaRepository.findByStatus(Aula.ativo);
-        for(Aula  a : aulas){
-            List<Long> idsAlunos = aulaAlunoServiceImpl.buscarPorAula(a.getId())
-                    .stream()
-                    .map(aulaAluno -> aulaAluno.getIdAluno().getId())
-                    .collect(Collectors.toList());
-            aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(idsAlunos, a);
-        }
+   public void gerarAulasJobMensal() throws Exception{
+       List<Aula> aulas = aulaRepository.findByStatus(Aula.ativo);
+       for(Aula  a : aulas){
+           List<Long> idsAlunos = aulaAlunoServiceImpl.buscarPorAula(a.getId())
+                   .stream()
+                   .map(aulaAluno -> aulaAluno.getIdAluno().getId())
+                   .collect(Collectors.toList());
+           aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(idsAlunos, a);
+       }
     }
 }
