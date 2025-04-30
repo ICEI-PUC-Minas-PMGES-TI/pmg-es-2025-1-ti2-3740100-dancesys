@@ -49,7 +49,6 @@ export class SimpleTableComponent implements OnChanges {
   onItensPorPaginaChange(valor: number): void {
     this.itensPage = valor;
     this.paginaSelecionada = 1;
-    this.gerarPgsLs();
     if(valor == 0){
       this.totalPaginas = 1;
     }else{
