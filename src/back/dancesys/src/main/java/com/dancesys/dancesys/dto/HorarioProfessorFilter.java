@@ -11,4 +11,6 @@ import java.util.List;
 public class HorarioProfessorFilter {
     private List<Integer> diasSemana;
     private List<Long> professores;
+    private Integer pagina;
+    private Integer tamanho;
 }

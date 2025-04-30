@@ -117,6 +117,9 @@
 	<app-simple-table
 	[colunas]="colunas"
 	[dados]="professores.conteudo"
-	[botoesAcoes]="acoes">
+	[botoesAcoes]="acoes"
+	[totalItens]="professores.total"
+	(paginaSelecionadaChange)="onPaginaSelecionada($event)"
+  	(itensPageChange)="onItensPage($event)">
 	</app-simple-table>
 </main>

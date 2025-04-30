@@ -39,6 +39,8 @@ export class HorariosAdminPageComponent {
 	professoresObj: any = [];
 	isModalOpen: boolean = false;
 	isEdit = false;
+	paginaAtual: number = 0;
+	itensPage: number = 10;
 	diasObj = [
 		{dia: 1, nome: "Segunda"},
 		{dia: 2, nome: "Terça"},
@@ -53,8 +55,8 @@ export class HorariosAdminPageComponent {
 		this.filterForm = this.fb.group({
 		  professores: [[]],
 		  diasSemana: [[]],
-		  pagina: [0],
-		  tamanho: [10]
+		  pagina: [this.paginaAtual],
+		  tamanho: [this.itensPage]
 		});
 
 		this.horarioForm = this.fb.group({
@@ -135,7 +137,6 @@ export class HorariosAdminPageComponent {
 	isFormValido(): boolean {
 		return this.horarioForm.valid;
 	}
-	  
 
 	carregarProfessores(){
 		this.adminService.fetchProfessores().subscribe({
@@ -159,7 +160,9 @@ export class HorariosAdminPageComponent {
 	filterGet(){
 		this.filterForm = this.fb.group({
 			professores: [this.professoresFilter],
-			diasSemana: [this.diasSemanaFilter]
+			diasSemana: [this.diasSemanaFilter],
+			pagina: [this.paginaAtual],
+		  	tamanho: [this.itensPage]
 		  });
 		return this.filterForm.value;
 	}
@@ -206,4 +209,15 @@ export class HorariosAdminPageComponent {
 	excluir(item: any) {
 		console.log('Excluindo:', item);
 	}
+
+	onPaginaSelecionada(pagina: number) {
+		this.paginaAtual = --pagina
+		this.buscar();
+	}
+	  
+	onItensPage(itens: number) {
+		this.itensPage = itens
+		this.buscar();
+	}
+	  
 }

@@ -2,6 +2,7 @@ package com.dancesys.dancesys.repository;
 
 import com.dancesys.dancesys.dto.HorarioProfessorFilter;
 import com.dancesys.dancesys.entity.HorarioProfessor;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -20,24 +21,51 @@ public class HorarioProfessorRepositoryCustom {
         this.em = em;
     }
 
-    public List<HorarioProfessor> buscar(HorarioProfessorFilter filtro){
+
+    public PaginatedResponse<HorarioProfessor> buscar(HorarioProfessorFilter filtro) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
+
         CriteriaQuery<HorarioProfessor> query = cb.createQuery(HorarioProfessor.class);
         Root<HorarioProfessor> root = query.from(HorarioProfessor.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
-        if(filtro.getDiasSemana() != null && !filtro.getDiasSemana().isEmpty()){
+        if (filtro.getDiasSemana() != null && !filtro.getDiasSemana().isEmpty()) {
             predicates.add(root.get("diaSemana").in(filtro.getDiasSemana()));
         }
 
-        if(filtro.getProfessores() != null && !filtro.getProfessores().isEmpty()){
+        if (filtro.getProfessores() != null && !filtro.getProfessores().isEmpty()) {
             predicates.add(root.get("idProfessor").get("id").in(filtro.getProfessores()));
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));
-
         TypedQuery<HorarioProfessor> typedQuery = em.createQuery(query);
-        return typedQuery.getResultList();
+
+        if (filtro.getTamanho() != null && filtro.getTamanho() > 0) {
+            int pagina = filtro.getPagina() != null ? filtro.getPagina() : 0;
+            typedQuery.setFirstResult(pagina * filtro.getTamanho());
+            typedQuery.setMaxResults(filtro.getTamanho());
+        }
+
+        List<HorarioProfessor> resultado = typedQuery.getResultList();
+
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        Root<HorarioProfessor> countRoot = countQuery.from(HorarioProfessor.class);
+        countQuery.select(cb.count(countRoot));
+
+        List<Predicate> countPredicates = new ArrayList<>();
+
+        if (filtro.getDiasSemana() != null && !filtro.getDiasSemana().isEmpty()) {
+            countPredicates.add(countRoot.get("diaSemana").in(filtro.getDiasSemana()));
+        }
+
+        if (filtro.getProfessores() != null && !filtro.getProfessores().isEmpty()) {
+            countPredicates.add(countRoot.get("idProfessor").get("id").in(filtro.getProfessores()));
+        }
+
+        countQuery.where(cb.and(countPredicates.toArray(new Predicate[0])));
+        Long total = em.createQuery(countQuery).getSingleResult();
+
+        return new PaginatedResponse<>(resultado, total);
     }
 }

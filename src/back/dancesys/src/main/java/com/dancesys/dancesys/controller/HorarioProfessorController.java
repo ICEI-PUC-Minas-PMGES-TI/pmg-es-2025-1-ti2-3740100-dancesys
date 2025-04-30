@@ -3,6 +3,7 @@ package com.dancesys.dancesys.controller;
 import com.dancesys.dancesys.dto.HorarioProfessorDTO;
 import com.dancesys.dancesys.dto.HorarioProfessorFilter;
 import com.dancesys.dancesys.entity.HorarioProfessor;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.HorarioProfessorService;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,5 +33,5 @@ public class HorarioProfessorController {
     }
 
     @PostMapping(value = "buscar")
-    public List<HorarioProfessor> buscar(@RequestBody HorarioProfessorFilter filtro){ return  horarioProfessorService.buscar(filtro); }
+    public PaginatedResponse<HorarioProfessor> buscar(@RequestBody HorarioProfessorFilter filtro){ return  horarioProfessorService.buscar(filtro); }
 }

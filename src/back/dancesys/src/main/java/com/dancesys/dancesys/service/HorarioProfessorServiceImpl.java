@@ -3,6 +3,7 @@ package com.dancesys.dancesys.service;
 import com.dancesys.dancesys.dto.HorarioProfessorDTO;
 import com.dancesys.dancesys.dto.HorarioProfessorFilter;
 import com.dancesys.dancesys.entity.HorarioProfessor;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.HorarioProfessorMapper;
 import com.dancesys.dancesys.repository.HorarioProfessorRepository;
 import com.dancesys.dancesys.repository.HorarioProfessorRepositoryCustom;
@@ -41,7 +42,7 @@ public class HorarioProfessorServiceImpl implements HorarioProfessorService {
     }
 
     @Override
-    public List<HorarioProfessor> buscar(HorarioProfessorFilter filtro){
+    public PaginatedResponse<HorarioProfessor> buscar(HorarioProfessorFilter filtro){
         return horarioProfessorRepositoryCustom.buscar(filtro);
     }
 }
