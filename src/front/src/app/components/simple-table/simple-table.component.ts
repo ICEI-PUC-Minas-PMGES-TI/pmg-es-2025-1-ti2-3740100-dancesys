@@ -17,8 +17,7 @@ export class SimpleTableComponent implements OnChanges {
   @Input() botoesAcoes: { icon: string; title: string; cor: string; callback: (item: any) => void }[] = [];
   @Input() totalItens: number = 0;
 
-  @Output() paginaSelecionadaChange = new EventEmitter<number>();
-  @Output() itensPageChange = new EventEmitter<number>();
+  @Output() paginacaoChange = new EventEmitter<{ paginaSelecionada: number; itensPage: number }>();
 
 
   itensForm: FormGroup;
@@ -57,32 +56,31 @@ export class SimpleTableComponent implements OnChanges {
       this.calcTotalPaginas();
     }
     this.gerarPgsLs();
-    this.emitirPaginaSelecionada();
-    this.emitirItensPage();
+    this.emitirPaginacao();
   }
   
 
   selecionarPagina(pagina: number): void {
     this.paginaSelecionada = pagina;
-    this.emitirPaginaSelecionada();
+    this.emitirPaginacao();
   }
 
   primeiraPagina(){
     this.paginaSelecionada = this.paginaIn;
     this.gerarPgsLs();
-    this.emitirPaginaSelecionada();
+    this.emitirPaginacao();
   }
 
   ultimaPagina(){
     this.paginaSelecionada = this.totalPaginas;
     this.gerarPgsLsUltimo();
-    this.emitirPaginaSelecionada();
+    this.emitirPaginacao();
   }
 
   proximaPagina(){
     if(this.paginaSelecionada !== this.totalPaginas){
       this.paginaSelecionada++
-      this.emitirPaginaSelecionada();
+      this.emitirPaginacao();
     }
 
     if(this.paginaSelecionada > this.pgsLs[4]){
@@ -93,7 +91,7 @@ export class SimpleTableComponent implements OnChanges {
   anteriorPagina(){
     if(this.paginaSelecionada !== this.paginaIn){
       this.paginaSelecionada--
-      this.emitirPaginaSelecionada();
+      this.emitirPaginacao();
     }
 
     if(this.paginaSelecionada < this.pgsLs[0]){
@@ -148,15 +146,13 @@ export class SimpleTableComponent implements OnChanges {
     }
   }
 
-  emitirPaginaSelecionada() {
-    this.paginaSelecionadaChange.emit(this.paginaSelecionada);
+  emitirPaginacao() {
+    this.paginacaoChange.emit({
+      paginaSelecionada: this.paginaSelecionada,
+      itensPage: this.itensPage
+    });
   }
   
-  emitirItensPage() {
-    this.itensPageChange.emit(this.itensPage);
-  }
-  
-
   getValor(item: any, chave: string): any {
     const valor = chave.split('.').reduce((obj, key) => {
       return obj?.[key];

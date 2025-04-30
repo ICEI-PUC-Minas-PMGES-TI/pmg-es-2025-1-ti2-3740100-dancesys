@@ -164,6 +164,7 @@ export class HorariosAdminPageComponent {
 			pagina: [this.paginaAtual],
 		  	tamanho: [this.itensPage]
 		  });
+		  console.log(this.filterForm.value)
 		return this.filterForm.value;
 	}
 
@@ -208,6 +209,12 @@ export class HorariosAdminPageComponent {
 	  
 	excluir(item: any) {
 		console.log('Excluindo:', item);
+	}
+
+	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }){
+		this.paginaAtual = --event.paginaSelecionada;
+		this.itensPage = event.itensPage;
+		this.buscar();
 	}
 
 	onPaginaSelecionada(pagina: number) {
