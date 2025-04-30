@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../environment/environment";
 import { UsuarioFiltro } from "../models/usuario.model";
 import { horarioProfessorFilter } from "../models/horarioProfessorFilter.model";
+import { HorarioProfessor } from "../models/horarioProfessor.model";
 import {
 	FormAlunoValue,
 	FormProfessorValue,
@@ -155,5 +156,9 @@ export class AdminService {
 				...filtro,
 			},);
 
+	}
+
+	public salvarHorarioProfessor(item: HorarioProfessor){
+		return this.http.post(`${environment.API_URL}horario`,{...item});
 	}
 }

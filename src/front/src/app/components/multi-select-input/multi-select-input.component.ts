@@ -10,11 +10,12 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './multi-select-input.component.css'
 })
 export class MultiSelectInputComponent {
-  @Input() label: string = 'Selecione';
+  @Input() label: string = '';
   @Input() options: any[] = [];
   @Input() optionLabel: string = '';
   @Input() optionValue: string = '';
   @Output() selectionChange = new EventEmitter<any[]>();
+  @Input() nullLabel: string = '';
 
   selectedValues: any[] = [];
   showDropdown = false;
@@ -35,7 +36,7 @@ export class MultiSelectInputComponent {
   }
 
   onCheckboxChange(option: any) {
-    const value = this.getPropByPath(option, this.optionValue);  // ← aqui
+    const value = this.getPropByPath(option, this.optionValue); 
     const index = this.selectedValues.indexOf(value);
   
     if (index > -1) {
@@ -49,8 +50,8 @@ export class MultiSelectInputComponent {
   
   get selectedLabels(): string[] {
     return this.options
-      .filter(option => this.selectedValues.includes(this.getPropByPath(option, this.optionValue))) // ← aqui
-      .map(option => this.getPropByPath(option, this.optionLabel)); // ← aqui
+      .filter(option => this.selectedValues.includes(this.getPropByPath(option, this.optionValue))) 
+      .map(option => this.getPropByPath(option, this.optionLabel));
   }
   
 

@@ -2,7 +2,7 @@
     <label>{{ label }}</label>
   
     <div class="border p-1 rounded-md bg-main-300 whitespace-nowrap overflow-x-hidden overflow-y-hidden w-50 text-base" (click)="toggleDropdown()">
-      {{ selectedLabels.length ? selectedLabels.join(', ') : 'Todos' }}
+      {{ selectedLabels.length ? selectedLabels.join(', ') : nullLabel }}
     </div>
   
     <div *ngIf="showDropdown" class="absolute z-10 bg-main-300 border mt-1 w-full max-h-60 overflow-y-auto">

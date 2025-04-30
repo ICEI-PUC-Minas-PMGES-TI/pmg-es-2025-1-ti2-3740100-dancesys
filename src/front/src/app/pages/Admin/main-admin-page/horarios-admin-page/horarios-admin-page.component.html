@@ -1,4 +1,4 @@
-@if (isModalOpen == "isOpenModal"){
+@if (isModalOpen){
 	<app-modal
 		(onClose)="closeModal()"
 	>
@@ -9,13 +9,68 @@
 			<h1 class="font-bold text-3xl">{{ isEdit? ToggleModal.EDIT : ToggleModal.NEW}}</h1>
 		</header>
 		<main>
-			<form
-				class="flex flex-1 space-y-2 flex-col p-2">
-		
-				<button class="flex flex-0 mt-3" type="submit" appButton>
-					Adicionar
+			<form [formGroup]="horarioForm" class="flex flex-col p-2 space-y-2">
+				<section class="flex flex-row space-x-3 flex-1">
+				  <div class="flex flex-col flex-2">
+					<label for="idProfessor">Professor: </label>
+					<select
+					class="p-1 bg-main-300 rounded-md"
+					name="idProfessor"
+					id="idProfessor"
+					formControlName="idProfessor"
+					required>
+						<option value="">Selecione...</option>	
+						<option *ngFor="let professor of professoresObj" [ngValue]="professor.id">{{ professor.idUsuario.nome }}</option>
+					</select>
+				  </div>
+
+				  <div class="flex flex-col flex-1">
+					<label for="diaSemana">Dia semana: </label>
+					<select
+					class="p-1 bg-main-300 rounded-md"
+					name="diaSemana"
+					id="diaSemana"
+					formControlName="diaSemana"
+					required>
+						<option value="">Selecione...</option>	
+						<option *ngFor="let dias of diasObj" [ngValue]="dias.dia">{{ dias.nome }}</option>
+					</select>
+				  </div>
+				</section>
+				<section class="flex flex-row space-x-2 flex-1">
+					<div class="flex flex-col flex-1">
+						<label for="horarioEntrada">Horário de Entrada:</label>
+						<input
+						  class="p-1 bg-main-300 rounded-md"
+						  type="time"
+						  lang="pt-BR"
+						  name="horarioEntrada"
+						  id="horarioEntrada"
+						  formControlName="horarioEntrada"
+						  placeholder="..."
+						  required
+						/>
+					  </div>
+				  
+					  <div class="flex flex-col flex-1">
+						<label for="horarioSaida">Horário de Saída:</label>
+						<input
+						  class="p-1 bg-main-300 rounded-md"
+						  type="time"
+						  lang="pt-BR"
+						  name="horarioSaida"
+						  id="horarioSaida"
+						  formControlName="horarioSaida"
+						  placeholder="..."
+						  required
+						/>
+					  </div>
+				</section>
+			  
+				<button class="self-start mt-3" type="submit" [disabled]="!isFormValido()" (click)="salvar()" appButton>
+				  Adicionar
 				</button>
-			</form>
+			  </form>
 		</main>
 	</div>
 	</app-modal>
@@ -32,6 +87,7 @@
 				optionLabel="idUsuario.nome"
 				optionValue="id"
 				(selectionChange)="onProfessorChange($event)"
+				nullLabel="Todos"
 				></app-multi-select-input>
 
 				<app-multi-select-input
@@ -39,6 +95,7 @@
 				[options]="diasObj"
 				optionLabel="nome"
 				optionValue="dia"
+				nullLabel="Todos"
 				(selectionChange)="onDiaChange($event)"
 				></app-multi-select-input>
 			</div>
@@ -59,7 +116,7 @@
 	</section>
 	<app-simple-table
 	[colunas]="colunas"
-	[dados]="professores"
+	[dados]="professores.conteudo"
 	[botoesAcoes]="acoes">
 	</app-simple-table>
 </main>

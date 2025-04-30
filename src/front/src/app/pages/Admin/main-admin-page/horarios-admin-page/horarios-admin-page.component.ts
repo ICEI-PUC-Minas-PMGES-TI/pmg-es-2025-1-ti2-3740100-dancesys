@@ -3,8 +3,9 @@ import { BotaoComponent } from "../../../../components/botao/botao.component";
 import { SimpleTableComponent } from "../../../../components/simple-table/simple-table.component"
 import { MultiSelectInputComponent } from "../../../../components/multi-select-input/multi-select-input.component"
 import { CommonModule } from '@angular/common';
-import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
-import { AdminService, ProfessorResponse } from "../../../../services/admin.service";
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
+import { AdminService } from "../../../../services/admin.service";
+import { HorarioProfessor } from "../../../../models/horarioProfessor.model";
 import { ModalComponent } from "../../../../components/modal/modal.component";
 
 enum ToggleModal {
@@ -20,7 +21,6 @@ enum ToggleModal {
 		SimpleTableComponent, 
 		MultiSelectInputComponent,
 		CommonModule,
-		FormsModule,
 		ReactiveFormsModule,
 		ModalComponent
 	],
@@ -32,11 +32,12 @@ export class HorariosAdminPageComponent {
 	adminService = inject(AdminService);
 
 	filterForm: FormGroup;
+	horarioForm: FormGroup;
 	ToggleModal = ToggleModal;
 	professoresFilter!: number[];
 	diasSemanaFilter!: number[];
 	professoresObj: any = [];
-	isModalOpen: "isOpenModal" | false = false;
+	isModalOpen: boolean = false;
 	isEdit = false;
 	diasObj = [
 		{dia: 1, nome: "Segunda"},
@@ -51,8 +52,18 @@ export class HorariosAdminPageComponent {
 	constructor(private fb: FormBuilder) {
 		this.filterForm = this.fb.group({
 		  professores: [[]],
-		  diasSemana: [[]]
+		  diasSemana: [[]],
+		  pagina: [0],
+		  tamanho: [10]
 		});
+
+		this.horarioForm = this.fb.group({
+			id: [],
+			diaSemana: [],
+			horarioEntrada: [],
+			horarioSaida: [],
+			idProfessor: []
+		})
 	  }
 
 	  diaSemanaMap: Record<number, string> = {
@@ -95,11 +106,41 @@ export class HorariosAdminPageComponent {
 		this.buscar();
 	}
 
+	resetHorarioForm(){
+		this.horarioForm = this.fb.group({
+			id: [],
+			diaSemana: [],
+			horarioEntrada: [],
+			horarioSaida: [],
+			idProfessor: []
+		})
+	}
+
+	preencherHorarioForm(item: HorarioProfessor){
+		this.horarioForm = this.fb.group({
+			id: [item.id],
+			diaSemana: [item.diaSemana],
+			horarioEntrada: [item.horarioEntrada],
+			horarioSaida: [item.horarioSaida],
+			idProfessor: [item.idProfessor.id]
+		})
+	}
+
+	getHorarioFormvalue(){
+		const item = this.horarioForm.value;
+		const horarioItem: HorarioProfessor = item;
+		return horarioItem;
+	}
+
+	isFormValido(): boolean {
+		return this.horarioForm.valid;
+	}
+	  
+
 	carregarProfessores(){
 		this.adminService.fetchProfessores().subscribe({
 			next: (response) => {
 				this.professoresObj = response;
-				console.log(this.professoresObj);
 			},
 			error: (err) => {
 				console.log(err, { color: "red" });
@@ -139,12 +180,27 @@ export class HorariosAdminPageComponent {
 	}
 
 	openAddModal(){
-		this.isModalOpen = "isOpenModal";
+		this.isModalOpen = true;
 		this.isEdit = false;
+		this.resetHorarioForm();
+	}
+
+	salvar(){
+		this.adminService.salvarHorarioProfessor(this.getHorarioFormvalue()).subscribe({
+			next: (response) =>{
+				this.closeModal();
+				this.buscar();
+			},
+			error: (err) => {
+				console.log(err, { color: "red" });
+			},
+		});
 	}
 
 	editar(item: any) {
-		console.log('Editando:', item);
+		this.isModalOpen = true;
+		this.isEdit = true;
+		this.preencherHorarioForm(item);
 	}
 	  
 	excluir(item: any) {
