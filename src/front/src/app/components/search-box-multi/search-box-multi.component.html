@@ -1,0 +1,28 @@
+<div class="flex flex-col relative">
+  <label>{{ label }}</label>
+
+  <div class="border p-1 rounded-md bg-main-300 whitespace-nowrap overflow-x-hidden overflow-y-hidden w-50 text-base" (click)="toggleDropdown()">
+    {{ selectedLabels.length ? selectedLabels.join(', ') : nullLabel }}
+  </div>
+
+  <div *ngIf="showDropdown" class="absolute z-10 bg-main-300 border mt-1 w-full max-h-60 overflow-y-auto">
+    
+    <input
+      type="text"
+      class="w-full p-2 border-b"
+      placeholder="Pesquisar..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="onSearchChange($event)"
+    />
+
+    <label *ngFor="let option of options" class="block p-2 hover:bg-gray-100 cursor-pointer border-1 border-b-main-500">
+      <input
+        type="checkbox"
+        [checked]="isChecked(getPropByPath(option, optionValue))"
+        (change)="onCheckboxChange(option)"
+        class="mr-2"
+      />
+      {{ getPropByPath(option, optionLabel) }}
+    </label>
+  </div>
+</div>

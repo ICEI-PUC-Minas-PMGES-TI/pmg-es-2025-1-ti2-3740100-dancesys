@@ -11,6 +11,7 @@ import { MainAlunoPageComponent } from "./pages/Aluno/main-aluno-page/main-aluno
 import { CalendarAlunoPageComponent } from "./pages/Aluno/calendar-aluno-page/calendar-aluno-page.component";
 import { FinanceiroAlunoPageComponent } from "./pages/Aluno/financeiro-aluno-page/financeiro-aluno-page.component";
 import { EventosAlunoPageComponent } from "./pages/Aluno/eventos-aluno-page/eventos-aluno-page.component";
+import { FincanceiroAdminPageComponent } from "./pages/Admin/main-admin-page/fincanceiro-admin-page/fincanceiro-admin-page.component"
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -69,6 +70,10 @@ export const routes: Routes = [
 								path: "horarios",
 								component: HorariosAdminPageComponent,
 							},
+							{
+								path: "financeiro",
+								component: FincanceiroAdminPageComponent
+							}
 						],
 					},
 					{ path: "calendar", component: CalendarAdminPageComponent },

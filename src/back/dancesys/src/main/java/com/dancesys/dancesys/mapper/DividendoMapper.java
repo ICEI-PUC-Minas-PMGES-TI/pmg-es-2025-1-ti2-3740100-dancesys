@@ -5,6 +5,8 @@ import com.dancesys.dancesys.entity.Dividendo;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DividendoMapper {
     public static Dividendo toEntity(DividendoDTO dto){
@@ -40,6 +42,15 @@ public class DividendoMapper {
         dto.setCodigo(entity.getCodigo());
         dto.setStatus(entity.getStatus());
         dto.setIdAluno(entity.getIdAluno());
+
+        return dto;
+    }
+
+    public static List<DividendoDTO> toDto(List<Dividendo> entity){
+        List<DividendoDTO> dto = new ArrayList<DividendoDTO>();
+        for(Dividendo e : entity){
+            dto.add(toDto(e));
+        }
 
         return dto;
     }

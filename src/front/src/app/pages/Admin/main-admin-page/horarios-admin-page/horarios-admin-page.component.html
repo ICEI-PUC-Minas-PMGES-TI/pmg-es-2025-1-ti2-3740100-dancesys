@@ -1,3 +1,10 @@
+@if (isModalConfirm) {
+	<app-modal
+		[confirmMode]="true"
+		message="Deseja excluir esse horario?"
+		(onClose)="onConfirmDelete($event)"
+	></app-modal>
+}
 @if (isModalOpen){
 	<app-modal
 		(onClose)="closeModal()"

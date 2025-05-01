@@ -71,6 +71,26 @@ public class AulaOcorrenciaServiceImpl {
         }
     }
 
+
+    public void gerarOcrrenciaAulaJob(List<Long> alunos, Aula entity) throws Exception {
+        LocalDate dataAtual = LocalDate.now();
+        YearMonth yearMonth = YearMonth.of(dataAtual.getYear(), dataAtual.getMonth());
+        YearMonth proximoMes = yearMonth.plusMonths(1);
+        LocalDate ultimoDia = proximoMes.atEndOfMonth();
+
+
+        while (!dataAtual.plusMonths(1).isAfter(ultimoDia)) {
+            Integer dia = entity.getDiaSemana();
+            if(dataAtual.getDayOfWeek().getValue() == dia.intValue()) {
+                AulaOcorrencia ao = new AulaOcorrencia();
+                ao.setData(dataAtual);
+                ao.setIdAula(entity);
+                salvar(ao, alunos);
+            }
+            dataAtual = dataAtual.plusDays(1);
+        }
+    }
+
     public List<AulaOcorrencia> buscarAulasPosData(LocalDate data, Long idAula){
         return aulaOcorrenciaRepository.findByIdAula_IdAndDataGreaterThan(idAula, data);
     }

@@ -2,10 +2,13 @@ package com.dancesys.dancesys.service;
 
 
 import com.dancesys.dancesys.dto.DividendoDTO;
+import com.dancesys.dancesys.dto.DividendoFilter;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Dividendo;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.DividendoMapper;
 import com.dancesys.dancesys.repository.DividendoRepository;
+import com.dancesys.dancesys.repository.DividendoRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,9 +18,11 @@ import java.util.List;
 @Service
 public class DividendoServiceImpl implements DividendoService {
     private final DividendoRepository dividendoRepository;
+    private final DividendoRepositoryCustom dividendoRepositoryCustom;
 
-    public DividendoServiceImpl(DividendoRepository dividendoRepository) {
+    public DividendoServiceImpl(DividendoRepository dividendoRepository, DividendoRepositoryCustom dividendoRepositoryCustom) {
         this.dividendoRepository = dividendoRepository;
+        this.dividendoRepositoryCustom = dividendoRepositoryCustom;
     }
 
     @Override
@@ -61,14 +66,16 @@ public class DividendoServiceImpl implements DividendoService {
     }
 
     @Override
-    public List<DividendoDTO> buscar(){
-        List<DividendoDTO> dtos = new ArrayList<>();
-        List<Dividendo> dividendos = dividendoRepository.findAll();
-        for(Dividendo entity : dividendos){
-            dtos.add(DividendoMapper.toDto(entity));
-        }
+    public PaginatedResponse<DividendoDTO> buscar(DividendoFilter filtro){
+        return dividendoRepositoryCustom.buscar(filtro);
+    }
 
-        return dtos;
+    @Override
+    public DividendoDTO pagar(Long id) throws Exception{
+        Dividendo entity = dividendoRepository.findById(id).get();
+        entity.setStatus(Dividendo.pago);
+        entity.setPagoEm(LocalDate.now());
+        return salvar(DividendoMapper.toDto(entity));
     }
 
     @Override

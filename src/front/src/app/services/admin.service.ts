@@ -11,6 +11,7 @@ import {
 } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
 import { Aluno } from "../models/aluno.model";
 import { Professor } from "../models/professor.model";
+import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -121,7 +122,7 @@ export class AdminService {
 		return this.http.get<AlunoResponse[]>(
 			`${
 				environment.API_URL
-			}usuario/aluno/aluno/buscar?${params.toString()}`,
+			}usuario/aluno/buscar?${params.toString()}`,
 		) as Observable<AlunoResponse[]>;
 	}
 
@@ -158,7 +159,18 @@ export class AdminService {
 
 	}
 
+	public excluirHorarioProfessor(id: number){
+		return this.http.delete(`${environment.API_URL}horario/excluir/${id}`, { responseType: 'text' });
+	}	  
+
 	public salvarHorarioProfessor(item: HorarioProfessor){
 		return this.http.post(`${environment.API_URL}horario`,{...item});
+	}
+
+	public filterDividendos(filtro: DividendoFilter){
+		return this.http.post(`${environment.API_URL}dividendo/buscar`,
+			{
+				...filtro,
+			},);
 	}
 }

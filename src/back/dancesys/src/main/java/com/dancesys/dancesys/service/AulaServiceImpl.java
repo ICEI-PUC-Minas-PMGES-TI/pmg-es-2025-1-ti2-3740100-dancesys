@@ -83,7 +83,7 @@ public class AulaServiceImpl implements  AulaService {
                    .stream()
                    .map(aulaAluno -> aulaAluno.getIdAluno().getId())
                    .collect(Collectors.toList());
-           aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(idsAlunos, a);
+           aulaOcorrenciaServiceImpl.gerarOcrrenciaAulaJob(idsAlunos, a);
        }
     }
 }

@@ -16,6 +16,7 @@ export class SimpleTableComponent implements OnChanges {
   @Input() dados: any[] = [];
   @Input() botoesAcoes: { icon: string; title: string; cor: string; callback: (item: any) => void }[] = [];
   @Input() totalItens: number = 0;
+  @Input() paged: boolean = true;
 
   @Output() paginacaoChange = new EventEmitter<{ paginaSelecionada: number; itensPage: number }>();
 
@@ -114,7 +115,6 @@ export class SimpleTableComponent implements OnChanges {
   gerarPgsLsUltimo(){
     this.pgsLs = [];
     let count = this.totalPaginas % 5;
-    console.log(this.totalPaginas - count)
     if(count == 0){
       for(let i = 4; i >= 0; i--){
         this.pgsLs.push(this.paginaSelecionada - i);
@@ -122,7 +122,6 @@ export class SimpleTableComponent implements OnChanges {
     }else{
       for(let i = this.totalPaginas - count; i < this.totalPaginas; i++){
         this.pgsLs.push(i + 1);
-        console.log(count, this.totalPaginas, i)
       }
     }
   }

@@ -38,6 +38,8 @@ export class HorariosAdminPageComponent {
 	diasSemanaFilter!: number[];
 	professoresObj: any = [];
 	isModalOpen: boolean = false;
+	isModalConfirm: boolean = false;
+	idDelete!: number
 	isEdit = false;
 	paginaAtual: number = 0;
 	itensPage: number = 10;
@@ -164,7 +166,6 @@ export class HorariosAdminPageComponent {
 			pagina: [this.paginaAtual],
 		  	tamanho: [this.itensPage]
 		  });
-		  console.log(this.filterForm.value)
 		return this.filterForm.value;
 	}
 
@@ -206,9 +207,23 @@ export class HorariosAdminPageComponent {
 		this.isEdit = true;
 		this.preencherHorarioForm(item);
 	}
+
+	onConfirmDelete(choice: boolean | void){
+		this.adminService.excluirHorarioProfessor(this.idDelete).subscribe({
+			next: () =>{
+				console.log('next completa');
+				this.isModalConfirm = false;
+				this.buscar();
+			},
+			error: (err) => {
+				console.log(err, { color: "red" });
+			},
+		})
+	}
 	  
 	excluir(item: any) {
-		console.log('Excluindo:', item);
+		this.idDelete = item.id;
+		this.isModalConfirm = true;
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }){
@@ -216,15 +231,4 @@ export class HorariosAdminPageComponent {
 		this.itensPage = event.itensPage;
 		this.buscar();
 	}
-
-	onPaginaSelecionada(pagina: number) {
-		this.paginaAtual = --pagina
-		this.buscar();
-	}
-	  
-	onItensPage(itens: number) {
-		this.itensPage = itens
-		this.buscar();
-	}
-	  
 }
