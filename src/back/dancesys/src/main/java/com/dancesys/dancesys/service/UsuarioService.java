@@ -4,6 +4,7 @@ import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.Usuario;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface UsuarioService{
     public Usuario alterarStatus(Long id);
 
     public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status);
+
+    public PaginatedResponse<Aluno> buscarAlunosTeste(AlunoFilter filtro);
 }

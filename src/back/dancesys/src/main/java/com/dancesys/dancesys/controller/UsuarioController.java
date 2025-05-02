@@ -5,6 +5,7 @@ import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.Usuario;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.UsuarioService;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +47,7 @@ public class UsuarioController {
         return ResponseEntity.ok(professor);
     }
 
-    @GetMapping("aluno/buscar")
+    @GetMapping(value ="aluno/buscar")
     public ResponseEntity<List<Aluno>> buscarAlunos(
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String cpf,
@@ -56,6 +57,11 @@ public class UsuarioController {
 
         List<Aluno> alunos = usuarioService.buscarAlunos(nome, cpf, email, tipo, status);
         return ResponseEntity.ok(alunos);
+    }
+
+    @PostMapping(value = "aluno/buscar/teste")
+    public PaginatedResponse<Aluno> buscarAlunosTeste(@RequestBody AlunoFilter filtro){
+        return usuarioService.buscarAlunosTeste(filtro);
     }
 
     @GetMapping(value = "buscar")

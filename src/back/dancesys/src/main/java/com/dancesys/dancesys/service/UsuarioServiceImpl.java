@@ -2,6 +2,7 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.*;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.*;
 import com.dancesys.dancesys.repository.*;
 import org.springframework.stereotype.Service;
@@ -166,5 +167,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuarioRepository.save(u);
         return u;
+    }
+
+    @Override
+    public PaginatedResponse<Aluno> buscarAlunosTeste(AlunoFilter filtro){
+        return alunoServiceImpl.buscar(filtro);
     }
 }
