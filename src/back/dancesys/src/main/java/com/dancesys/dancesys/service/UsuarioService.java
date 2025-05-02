@@ -4,7 +4,6 @@ import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.Usuario;
-import com.dancesys.dancesys.infra.PaginatedResponse;
 
 import java.util.List;
 
@@ -17,11 +16,11 @@ public interface UsuarioService{
 
     public ProfessorDTO salvarProfessor(ProfessorDTO dto) throws Exception;
 
+    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status);
+
     public List<Usuario> buscar();
 
     public Usuario alterarStatus(Long id);
 
-    public PaginatedResponse<Aluno> buscarAlunos(AlunoFilter filtro);
-
-    public PaginatedResponse<Professor> buscarProfessor(ProfessorFilter filtro);
+    public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status);
 }

@@ -1,10 +1,7 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.AlunoFilter;
 import com.dancesys.dancesys.entity.Aluno;
-import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.repository.AlunoRepository;
-import com.dancesys.dancesys.repository.AlunoRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +9,9 @@ import java.util.List;
 @Service
 public class AlunoServiceImpl{
     private final AlunoRepository alunoRepository;
-    private final AlunoRepositoryCustom alunoRepositoryCustom;
 
-    public AlunoServiceImpl(AlunoRepository alunoRepository, AlunoRepositoryCustom alunoRepositoryCustom) {
+    public AlunoServiceImpl(AlunoRepository alunoRepository) {
         this.alunoRepository = alunoRepository;
-        this.alunoRepositoryCustom = alunoRepositoryCustom;
     }
 
     public Aluno salvar(Aluno entity) throws Exception{
@@ -60,9 +55,5 @@ public class AlunoServiceImpl{
 
     public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status){
         return alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
-    }
-
-    public PaginatedResponse<Aluno> buscar(AlunoFilter filtro){
-        return alunoRepositoryCustom.buscar(filtro);
     }
 }

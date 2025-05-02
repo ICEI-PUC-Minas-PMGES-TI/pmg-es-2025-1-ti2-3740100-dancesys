@@ -5,7 +5,6 @@ import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.entity.Usuario;
-import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.UsuarioService;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,14 +46,16 @@ public class UsuarioController {
         return ResponseEntity.ok(professor);
     }
 
-    @PostMapping(value = "aluno/buscar")
-    public PaginatedResponse<Aluno> buscarAlunos(@RequestBody AlunoFilter filtro){
-        return usuarioService.buscarAlunos(filtro);
-    }
+    @GetMapping("aluno/buscar")
+    public ResponseEntity<List<Aluno>> buscarAlunos(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer tipo,
+            @RequestParam(required = false) Integer status) {
 
-    @PostMapping(value = "professor/buscar")
-    public PaginatedResponse<Professor> buscarProfessor(@RequestBody ProfessorFilter filtro){
-        return usuarioService.buscarProfessor(filtro);
+        List<Aluno> alunos = usuarioService.buscarAlunos(nome, cpf, email, tipo, status);
+        return ResponseEntity.ok(alunos);
     }
 
     @GetMapping(value = "buscar")
@@ -66,5 +67,14 @@ public class UsuarioController {
     public ResponseEntity<Usuario> alterarStatus(@PathVariable Long id){
         Usuario u = usuarioService.alterarStatus(id);
         return ResponseEntity.ok(u);
+    }
+
+    @GetMapping(value = "professor/buscar")
+    public ResponseEntity<List<Professor>> buscarProfessors(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer status) {
+        return ResponseEntity.ok(usuarioService.buscarProfessores(nome,cpf,email,status));
     }
 }

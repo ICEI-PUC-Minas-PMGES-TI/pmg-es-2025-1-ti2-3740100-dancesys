@@ -2,7 +2,6 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.*;
-import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.*;
 import com.dancesys.dancesys.repository.*;
 import org.springframework.stereotype.Service;
@@ -143,6 +142,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status) {
+        return alunoServiceImpl.buscarAlunos(nome, cpf, email, tipo, status);
+    }
+
+    @Override
+    public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status){
+        return professorServiceImpl.buscarProfessores(nome, cpf, email, status);
+    }
+
+    @Override
     public List<Usuario> buscar(){
         return usuarioRepository.findAll();
     }
@@ -157,15 +166,5 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuarioRepository.save(u);
         return u;
-    }
-
-    @Override
-    public PaginatedResponse<Aluno> buscarAlunos(AlunoFilter filtro){
-        return alunoServiceImpl.buscar(filtro);
-    }
-
-    @Override
-    public PaginatedResponse<Professor> buscarProfessor(ProfessorFilter filtro){
-        return professorServiceImpl.buscar(filtro);
     }
 }
