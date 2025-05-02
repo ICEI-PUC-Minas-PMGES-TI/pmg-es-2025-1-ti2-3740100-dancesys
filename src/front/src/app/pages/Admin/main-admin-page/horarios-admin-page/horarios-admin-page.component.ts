@@ -1,16 +1,12 @@
 import { Component, NgModule, inject } from "@angular/core";
 import { BotaoComponent } from "../../../../components/botao/botao.component";
-import {
-	ItensPorPagina,
-	SimpleTableComponent,
-} from "../../../../components/simple-table/simple-table.component";
-import { MultiSelectInputComponent } from "../../../../components/multi-select-input/multi-select-input.component";
-import { CommonModule } from "@angular/common";
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { SimpleTableComponent } from "../../../../components/simple-table/simple-table.component"
+import { MultiSelectInputComponent } from "../../../../components/multi-select-input/multi-select-input.component"
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
 import { AdminService } from "../../../../services/admin.service";
 import { HorarioProfessor } from "../../../../models/horarioProfessor.model";
 import { ModalComponent } from "../../../../components/modal/modal.component";
-import { ProfessorFiltro } from "../../../../models/professor.model";
 
 enum ToggleModal {
 	NEW = "Cria Horario",
@@ -21,16 +17,17 @@ enum ToggleModal {
 	selector: "app-horarios-admin-page",
 	standalone: true,
 	imports: [
-		BotaoComponent,
-		SimpleTableComponent,
+		BotaoComponent, 
+		SimpleTableComponent, 
 		MultiSelectInputComponent,
 		CommonModule,
 		ReactiveFormsModule,
-		ModalComponent,
+		ModalComponent
 	],
 	templateUrl: "./horarios-admin-page.component.html",
 	styleUrl: "./horarios-admin-page.component.css",
 })
+
 export class HorariosAdminPageComponent {
 	adminService = inject(AdminService);
 
@@ -42,26 +39,26 @@ export class HorariosAdminPageComponent {
 	professoresObj: any = [];
 	isModalOpen: boolean = false;
 	isModalConfirm: boolean = false;
-	idDelete!: number;
+	idDelete!: number
 	isEdit = false;
 	paginaAtual: number = 0;
-	itensPage: ItensPorPagina = 10;
+	itensPage: number = 10;
 	diasObj = [
-		{ dia: 1, nome: "Segunda" },
-		{ dia: 2, nome: "Terça" },
-		{ dia: 3, nome: "Quarta" },
-		{ dia: 4, nome: "Quinta" },
-		{ dia: 5, nome: "Sexta" },
-		{ dia: 6, nome: "Sabado" },
-		{ dia: 7, nome: "Domingo" },
-	];
+		{dia: 1, nome: "Segunda"},
+		{dia: 2, nome: "Terça"},
+		{dia: 3, nome: "Quarta"},
+		{dia: 4, nome: "Quinta"},
+		{dia: 5, nome: "Sexta"},
+		{dia: 6, nome: "Sabado"},
+		{dia: 7, nome: "Domingo"},
+	] 
 
 	constructor(private fb: FormBuilder) {
 		this.filterForm = this.fb.group({
-			professores: [[]],
-			diasSemana: [[]],
-			pagina: [this.paginaAtual],
-			tamanho: [this.itensPage],
+		  professores: [[]],
+		  diasSemana: [[]],
+		  pagina: [this.paginaAtual],
+		  tamanho: [this.itensPage]
 		});
 
 		this.horarioForm = this.fb.group({
@@ -69,76 +66,71 @@ export class HorariosAdminPageComponent {
 			diaSemana: [],
 			horarioEntrada: [],
 			horarioSaida: [],
-			idProfessor: [],
-		});
-	}
+			idProfessor: []
+		})
+	  }
 
-	diaSemanaMap: Record<number, string> = {
-		1: "Segunda",
-		2: "Terça",
-		3: "Quarta",
-		4: "Quinta",
-		5: "Sexta",
-		6: "Sábado",
-		7: "Domingo",
-	};
+	  diaSemanaMap: Record<number, string> = {
+		1: 'Segunda',
+		2: 'Terça',
+		3: 'Quarta',
+		4: 'Quinta',
+		5: 'Sexta',
+		6: 'Sábado',
+		7: 'Domingo'
+	  };
+	  
 
 	colunas = [
-		{ chave: "idProfessor.idUsuario.nome", titulo: "Professor" },
-		{ chave: "horarioEntrada", titulo: "Entrada" },
-		{ chave: "horarioSaida", titulo: "Saida" },
+		{ chave: 'idProfessor.idUsuario.nome', titulo: 'Professor' },
+		{ chave: 'horarioEntrada', titulo: 'Entrada' },
+		{ chave: 'horarioSaida', titulo: 'Saida' },
+		{ chave: 'diaSemana', titulo: 'Dia', width: '10%', formatar: (valor: number) => this.diaSemanaMap[valor] ?? String(valor) }
+	  ];
+	  
+	  professores: any = [];
+	  
+	  acoes = [
 		{
-			chave: "diaSemana",
-			titulo: "Dia",
-			width: "10%",
-			formatar: (valor: number) =>
-				this.diaSemanaMap[valor] ?? String(valor),
-		},
-	];
-
-	professores: any = [];
-
-	acoes = [
-		{
-			icon: "edit",
-			title: "Editar",
-			cor: "dark",
-			callback: (item: any) => this.editar(item),
+		  icon: 'edit',
+		  title: 'Editar',
+		  cor: 'dark',
+		  callback: (item: any) => this.editar(item)
 		},
 		{
-			icon: "delete",
-			title: "Excluir",
-			cor: "dark",
-			callback: (item: any) => this.excluir(item),
-		},
-	];
+		  icon: 'delete',
+		  title: 'Excluir',
+		  cor: 'dark',
+		  callback: (item: any) => this.excluir(item)
+		}
+	  ];
 
-	ngOnInit(): void {
+	ngOnInit(): void{
 		this.carregarProfessores();
 		this.buscar();
 	}
 
-	resetHorarioForm() {
+	resetHorarioForm(){
 		this.horarioForm = this.fb.group({
 			id: [],
 			diaSemana: [],
 			horarioEntrada: [],
 			horarioSaida: [],
-			idProfessor: [],
-		});
+			idProfessor: []
+		})
 	}
 
-	preencherHorarioForm(item: HorarioProfessor) {
+	preencherHorarioForm(item: HorarioProfessor){
 		this.horarioForm = this.fb.group({
 			id: [item.id],
 			diaSemana: [item.diaSemana],
 			horarioEntrada: [item.horarioEntrada],
 			horarioSaida: [item.horarioSaida],
-			idProfessor: [item.idProfessor.id],
-		});
+			idProfessor: [item.idProfessor.id]
+		})
 	}
 
-	getHorarioFormvalue() {
+	getHorarioFormvalue(){
 		const item = this.horarioForm.value;
 		const horarioItem: HorarioProfessor = item;
 		return horarioItem;
@@ -148,43 +140,10 @@ export class HorariosAdminPageComponent {
 		return this.horarioForm.valid;
 	}
 
-	carregarProfessores() {
-		const emptyFilter: ProfessorFiltro = {
-			nome: "",
-			email: "",
-			cpf: "",
-			status: null,
-			tamanho: 0,
-			pagina: 0,
-		};
-		this.adminService.filtrarProfessores({ ...emptyFilter }).subscribe({
+	carregarProfessores(){
+		this.adminService.fetchProfessores().subscribe({
 			next: (response) => {
-				this.professores = response.conteudo;
-			},
-		});
-	}
-	onDiaChange(selected: number[]) {
-		this.diasSemanaFilter = selected;
-	}
-
-	onProfessorChange(selected: number[]) {
-		this.professoresFilter = selected;
-	}
-
-	filterGet() {
-		this.filterForm = this.fb.group({
-			professores: [this.professoresFilter],
-			diasSemana: [this.diasSemanaFilter],
-			pagina: [this.paginaAtual],
-			tamanho: [this.itensPage],
-		});
-		return this.filterForm.value;
-	}
-
-	buscar() {
-		this.adminService.fetchHoraioProfessor(this.filterGet()).subscribe({
-			next: (response) => {
-				this.professores = response;
+				this.professoresObj = response;
 			},
 			error: (err) => {
 				console.log(err, { color: "red" });
@@ -192,28 +151,55 @@ export class HorariosAdminPageComponent {
 		});
 	}
 
-	closeModal() {
-		this.isModalOpen = false;
+	onDiaChange(selected: number[]) {
+		this.diasSemanaFilter = selected;
 	}
 
-	openAddModal() {
+	onProfessorChange(selected: number[]){
+		this.professoresFilter = selected;
+	}
+
+	filterGet(){
+		this.filterForm = this.fb.group({
+			professores: [this.professoresFilter],
+			diasSemana: [this.diasSemanaFilter],
+			pagina: [this.paginaAtual],
+		  	tamanho: [this.itensPage]
+		  });
+		return this.filterForm.value;
+	}
+
+	buscar(){
+		this.adminService.fetchHoraioProfessor(this.filterGet()).subscribe({
+			next: (response) => {
+				this.professores = response
+			},
+			error: (err) => {
+				console.log(err, { color: "red" });
+			},
+		});
+	}
+
+	closeModal(){
+		this.isModalOpen = false;	
+	}
+
+	openAddModal(){
 		this.isModalOpen = true;
 		this.isEdit = false;
 		this.resetHorarioForm();
 	}
 
-	salvar() {
-		this.adminService
-			.salvarHorarioProfessor(this.getHorarioFormvalue())
-			.subscribe({
-				next: (response) => {
-					this.closeModal();
-					this.buscar();
-				},
-				error: (err) => {
-					console.log(err, { color: "red" });
-				},
-			});
+	salvar(){
+		this.adminService.salvarHorarioProfessor(this.getHorarioFormvalue()).subscribe({
+			next: (response) =>{
+				this.closeModal();
+				this.buscar();
+			},
+			error: (err) => {
+				console.log(err, { color: "red" });
+			},
+		});
 	}
 
 	editar(item: any) {
@@ -222,30 +208,27 @@ export class HorariosAdminPageComponent {
 		this.preencherHorarioForm(item);
 	}
 
-	onConfirmDelete(choice: boolean | void) {
-		if (choice) {
+	onConfirmDelete(choice: boolean | void){
+		if(choice){
 			this.adminService.excluirHorarioProfessor(this.idDelete).subscribe({
-				next: () => {
-					console.log("next completa");
+				next: () =>{
+					console.log('next completa');
 					this.isModalConfirm = false;
 					this.buscar();
 				},
 				error: (err) => {
 					console.log(err, { color: "red" });
 				},
-			});
+			})
 		}
 	}
-
+	  
 	excluir(item: any) {
 		this.idDelete = item.id;
 		this.isModalConfirm = true;
 	}
 
-	onPaginacaoChange(event: {
-		paginaSelecionada: number;
-		itensPage: ItensPorPagina;
-	}) {
+	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }){
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();

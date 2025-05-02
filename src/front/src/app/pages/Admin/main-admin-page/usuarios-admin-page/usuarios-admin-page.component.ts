@@ -2,12 +2,12 @@ import { Component, inject, OnInit, ViewChild } from "@angular/core";
 import { FormsModule, NgForm } from "@angular/forms";
 import { BotaoComponent } from "../../../../components/botao/botao.component";
 import { ModalComponent } from "../../../../components/modal/modal.component";
-import { Aluno, AlunoFiltro } from "../../../../models/aluno.model";
+import { Aluno } from "../../../../models/aluno.model";
 import {
 	Modalidade,
 	ModalidadeAlunoNivel,
 } from "../../../../models/modalidade.model";
-import { Professor, ProfessorFiltro } from "../../../../models/professor.model";
+import { Professor } from "../../../../models/professor.model";
 import { UsuarioFiltro, UsuarioTipos } from "../../../../models/usuario.model";
 import { StatusUsuarioPipe } from "../../../../pipes/status-usuario.pipe";
 import { TipoAlunoPipe } from "../../../../pipes/tipo-aluno.pipe";
@@ -17,10 +17,6 @@ import {
 	ProfessorResponse,
 } from "../../../../services/admin.service";
 import { ModalidadesService } from "../../../../services/modalidades.service";
-import {
-	ItensPorPagina,
-	SimpleTableComponent,
-} from "../../../../components/simple-table/simple-table.component";
 
 export type FormAlunoValue = {
 	nome: string;
@@ -71,7 +67,6 @@ const myCss =
 		ModalComponent,
 		FormsModule,
 		TipoAlunoPipe,
-		SimpleTableComponent,
 		StatusUsuarioPipe,
 	],
 	templateUrl: "./usuarios-admin-page.component.html",
@@ -86,8 +81,6 @@ export class UsuariosAdminPageComponent implements OnInit {
 	alunos: Aluno[] = [];
 	professores: Professor[] = [];
 	modalidades: Modalidade[] = [];
-	totalAlunos: number = 0;
-	totalProf: number = 0;
 
 	isModalOpen:
 		| "addAluno"
@@ -104,71 +97,6 @@ export class UsuariosAdminPageComponent implements OnInit {
 	isShowingAlunoTable: boolean = true;
 	modalidadesAlunoArr: ModalidadeAlunoNivel[] = [];
 	modalidadesProfArr: number[] = [];
-
-	colunasAluno = [
-		{ chave: "usuario.nome", titulo: "Nome" },
-		{ chave: "usuario.email", titulo: "E-Mail" },
-		{ chave: "usuario.numero", titulo: "Telefone" },
-		{
-			chave: "tipo",
-			titulo: "Tipo",
-			formatar: (valor: 1 | 2) => (valor == 1 ? "Fixo" : "Flexível"),
-		},
-		{
-			chave: "usuario.status",
-			titulo: "Status",
-			formatar: (valor: 0 | 1) => (!valor ? "Inativo" : "Ativo"),
-		},
-		{
-			chave: "usuario.dataNascimento",
-			titulo: "Data de Nascimento",
-			formatar: (valor: Date) => {
-				const dataNascimento = new Date(valor);
-				dataNascimento.setDate(dataNascimento.getDate() + 1);
-				return dataNascimento.toLocaleDateString("pt-BR");
-			},
-		},
-	];
-	colunasProf = [
-		{ chave: "usuario.nome", titulo: "Nome" },
-		{ chave: "usuario.email", titulo: "E-Mail" },
-		{ chave: "usuario.numero", titulo: "Telefone" },
-		{
-			chave: "usuario.status",
-			titulo: "Status",
-			formatar: (valor: 0 | 1) => (!valor ? "Inativo" : "Ativo"),
-		},
-		{
-			chave: "usuario.dataNascimento",
-			titulo: "Data de Nascimento",
-			formatar: (valor: Date) => {
-				const dataNascimento = new Date(valor);
-				dataNascimento.setDate(dataNascimento.getDate() + 1);
-				return dataNascimento.toLocaleDateString("pt-BR");
-			},
-		},
-	];
-	acoes = [
-		{
-			icon: "edit",
-			title: "Editar",
-			cor: "dark",
-			callback: (item: Aluno | Professor) => this.openEditModal(item.id),
-		},
-		{
-			icon: "",
-			title: (item: any) =>
-				item.usuario.status ? "Ativar" : "Desativar",
-			cor: "dark",
-			callback: (item: any) =>
-				this.toggleUserStatus(item.id, item.usuario.status),
-		},
-	];
-
-	paginaAtualAluno: number = 0;
-	itensPageAluno: ItensPorPagina = 10;
-	paginaAtualProf: number = 0;
-	itensPageProf: ItensPorPagina = 10;
 
 	toggleUserStatusMessages = ToggleUserStatusMessages;
 
@@ -187,37 +115,22 @@ export class UsuariosAdminPageComponent implements OnInit {
 
 	reloadUsers() {
 		this.isLoading = true;
-		const emptyFilter = {
-			nome: "",
-			email: "",
-			cpf: "",
-			status: null,
-		};
-		this.adminService
-			.filtrarAlunos({
-				...emptyFilter,
-				tipo: null,
-				tamanho: this.itensPageAluno,
-				pagina: this.paginaAtualAluno,
-			})
-			.subscribe({
-				next: (response) => {
-					this.handleAlunoResponse(response.conteudo);
-					this.totalAlunos = response.total;
-				},
-			});
-		this.adminService
-			.filtrarProfessores({
-				...emptyFilter,
-				tamanho: this.itensPageProf,
-				pagina: this.paginaAtualProf,
-			})
-			.subscribe({
-				next: (response) => {
-					this.handleProfessorResponse(response.conteudo);
-					this.totalProf = response.total;
-				},
-			});
+		this.adminService.fetchAlunos().subscribe({
+			next: (response) => {
+				this.handleAlunoResponse(response);
+			},
+			error: (err) => {
+				console.log(err, { color: "red" });
+			},
+		});
+		this.adminService.fetchProfessores().subscribe({
+			next: (response) => {
+				this.handleProfessorResponse(response);
+			},
+			error: (err) => {
+				console.log(err);
+			},
+		});
 	}
 
 	private handleAlunoResponse(response: AlunoResponse[]) {
@@ -509,36 +422,16 @@ export class UsuariosAdminPageComponent implements OnInit {
 	}
 
 	filterFormSubmit() {
-		if (this.isShowingAlunoTable) {
-			const filtro: AlunoFiltro = {
-				nome: this.filterForm.value.nomeFilter || "",
-				email: this.filterForm.value.emailFilter || "",
-				cpf: this.filterForm.value.cpfFilter || "",
-				tipo: this.filterForm.value.tipoFilter || null,
-				status: this.filterForm.value.statusFilter || null,
-				tamanho: this.itensPageAluno,
-				pagina: this.paginaAtualAluno,
-			};
-			console.log(filtro);
-			this.adminService.filtrarAlunos(filtro).subscribe({
-				next: (response) => {
-					this.handleAlunoResponse(response.conteudo);
-				},
-			});
-			return;
-		}
-		const filtro: ProfessorFiltro = {
+		const filtro: UsuarioFiltro = {
 			nome: this.filterForm.value.nomeFilter || "",
 			email: this.filterForm.value.emailFilter || "",
 			cpf: this.filterForm.value.cpfFilter || "",
-			status: this.filterForm.value.statusFilter || null,
-			tamanho: this.itensPageProf,
-			pagina: this.paginaAtualProf,
+			tipo: this.filterForm.value.tipoFilter || "",
+			status: this.filterForm.value.statusFilter || "",
 		};
-		console.log(filtro);
-		this.adminService.filtrarProfessores(filtro).subscribe({
+		this.adminService.filterUsuarios(filtro).subscribe({
 			next: (response) => {
-				this.handleProfessorResponse(response.conteudo);
+				this.handleAlunoResponse(response);
 			},
 		});
 	}
@@ -561,22 +454,5 @@ export class UsuariosAdminPageComponent implements OnInit {
 		this.idToggleStatusUser = id;
 		this.isActivatingUser = !status;
 		this.openToggleConfirmAlunoModal();
-	}
-
-	onPaginacaoChangeAluno(event: {
-		paginaSelecionada: number;
-		itensPage: ItensPorPagina;
-	}) {
-		this.paginaAtualAluno = --event.paginaSelecionada;
-		this.itensPageAluno = event.itensPage;
-		this.reloadUsers();
-	}
-	onPaginacaoChangeProf(event: {
-		paginaSelecionada: number;
-		itensPage: ItensPorPagina;
-	}) {
-		this.paginaAtualProf = --event.paginaSelecionada;
-		this.itensPageProf = event.itensPage;
-		this.reloadUsers();
 	}
 }

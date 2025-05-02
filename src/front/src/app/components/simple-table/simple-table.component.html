@@ -37,14 +37,10 @@
 								appButton
 								[icon]="botao.icon"
 								icon-slot="icon-only"
-								[title]="getBotaoTitulo(botao.title, item)"
+								[title]="botao.title"
 								[color]="botao.cor"
 								(click)="botao.callback(item)"
-							>
-								@if (botao.icon.length <= 0) {
-									{{ getBotaoTitulo(botao.title, item) }}
-								}
-							</button>
+							></button>
 						</div>
 					</td>
 				}

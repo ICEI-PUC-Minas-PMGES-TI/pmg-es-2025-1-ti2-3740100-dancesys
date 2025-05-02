@@ -2,7 +2,7 @@
 	@if (iconSlot == "left" && iconName) {
 		<app-icon [name]="iconName" [size]="iconSize"></app-icon>
 	}
-	@if (iconSlot != "icon-only" || iconName.length <= 0) {
+	@if (iconSlot != "icon-only") {
 		<span>
 			<ng-content />
 		</span>
