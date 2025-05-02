@@ -10,7 +10,7 @@ import {
 	FormProfessorValue,
 } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
 import { Aluno } from "../models/aluno.model";
-import { Professor } from "../models/professor.model";
+import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 
 export type AlunoResponse = {
@@ -120,10 +120,18 @@ export class AdminService {
 			fromObject: { ...filtro },
 		});
 		return this.http.get<AlunoResponse[]>(
-			`${
-				environment.API_URL
+			`${environment.API_URL
 			}usuario/aluno/buscar?${params.toString()}`,
 		) as Observable<AlunoResponse[]>;
+	}
+	public filterProfessores(filtro: ProfessorFiltro): Observable<ProfessorResponse[]> {
+		const params = new HttpParams({
+			fromObject: { ...filtro },
+		});
+		return this.http.get<ProfessorResponse[]>(
+			`${environment.API_URL
+			}usuario/professor/buscar?${params.toString()}`,
+		) as Observable<ProfessorResponse[]>;
 	}
 
 	// deve ser o ID da tabela Usuarios
@@ -151,7 +159,7 @@ export class AdminService {
 		);
 	}
 
-	public fetchHoraioProfessor(filtro: horarioProfessorFilter){
+	public fetchHoraioProfessor(filtro: horarioProfessorFilter) {
 		return this.http.post(`${environment.API_URL}horario/buscar`,
 			{
 				...filtro,
@@ -159,15 +167,15 @@ export class AdminService {
 
 	}
 
-	public excluirHorarioProfessor(id: number){
+	public excluirHorarioProfessor(id: number) {
 		return this.http.delete(`${environment.API_URL}horario/excluir/${id}`, { responseType: 'text' });
-	}	  
-
-	public salvarHorarioProfessor(item: HorarioProfessor){
-		return this.http.post(`${environment.API_URL}horario`,{...item});
 	}
 
-	public filterDividendos(filtro: DividendoFilter){
+	public salvarHorarioProfessor(item: HorarioProfessor) {
+		return this.http.post(`${environment.API_URL}horario`, { ...item });
+	}
+
+	public filterDividendos(filtro: DividendoFilter) {
 		return this.http.post(`${environment.API_URL}dividendo/buscar`,
 			{
 				...filtro,

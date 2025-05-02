@@ -7,7 +7,7 @@ import {
 	Modalidade,
 	ModalidadeAlunoNivel,
 } from "../../../../models/modalidade.model";
-import { Professor } from "../../../../models/professor.model";
+import { Professor, ProfessorFiltro } from "../../../../models/professor.model";
 import { UsuarioFiltro, UsuarioTipos } from "../../../../models/usuario.model";
 import { StatusUsuarioPipe } from "../../../../pipes/status-usuario.pipe";
 import { TipoAlunoPipe } from "../../../../pipes/tipo-aluno.pipe";
@@ -422,23 +422,52 @@ export class UsuariosAdminPageComponent implements OnInit {
 	}
 
 	filterFormSubmit() {
-		const filtro: UsuarioFiltro = {
+		let filtro: UsuarioFiltro | ProfessorFiltro = {
 			nome: this.filterForm.value.nomeFilter || "",
 			email: this.filterForm.value.emailFilter || "",
 			cpf: this.filterForm.value.cpfFilter || "",
-			tipo: this.filterForm.value.tipoFilter || "",
 			status: this.filterForm.value.statusFilter || "",
 		};
-		this.adminService.filterUsuarios(filtro).subscribe({
+		if (this.isShowingAlunoTable) {
+			filtro = { ...filtro, tipo: this.filterForm.value.tipoFilter || "" }
+			this.adminService.filterUsuarios(filtro).subscribe({
+				next: (response) => {
+					this.handleAlunoResponse(response);
+				},
+			});
+			return;
+		}
+		this.adminService.filterProfessores(filtro as ProfessorFiltro).subscribe({
+			next: (response) => {
+				this.handleProfessorResponse(response);
+			}
+		})
+	}
+
+	resetAllFilters() {
+		let filtro: UsuarioFiltro | ProfessorFiltro = {
+			nome: "",
+			email: "",
+			cpf: "",
+			status: "",
+		};
+		this.adminService.filterProfessores(filtro as ProfessorFiltro).subscribe({
+			next: (response) => {
+				this.handleProfessorResponse(response);
+			}
+		})
+		const filtro2 = { ...filtro, tipo: this.filterForm.value.tipoFilter || "" }
+		this.adminService.filterUsuarios(filtro2).subscribe({
 			next: (response) => {
 				this.handleAlunoResponse(response);
 			},
 		});
+
 	}
 
 	limparFiltros() {
 		this.filterForm.reset();
-		this.filterFormSubmit();
+		this.resetAllFilters()
 	}
 
 	get hasFormValues(): boolean {
