@@ -9,8 +9,8 @@ import {
 	FormAlunoValue,
 	FormProfessorValue,
 } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
-import { Aluno } from "../models/aluno.model";
-import { Professor } from "../models/professor.model";
+import { Aluno, AlunoFiltro } from "../models/aluno.model";
+import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 
 export type AlunoResponse = {
@@ -80,18 +80,6 @@ export type ProfessorResponse = {
 export class AdminService {
 	http = inject(HttpClient);
 
-	public fetchAlunos(): Observable<AlunoResponse[]> {
-		return this.http.get(
-			`${environment.API_URL}usuario/aluno/buscar`,
-		) as Observable<AlunoResponse[]>;
-	}
-
-	public fetchProfessores(): Observable<ProfessorResponse[]> {
-		return this.http.get(
-			`${environment.API_URL}usuario/professor/buscar`,
-		) as Observable<ProfessorResponse[]>;
-	}
-
 	public addUsuarioAluno(aluno: FormAlunoValue) {
 		return this.http.post(`${environment.API_URL}usuario/aluno`, aluno);
 	}
@@ -115,15 +103,22 @@ export class AdminService {
 		});
 	}
 
-	public filterUsuarios(filtro: UsuarioFiltro): Observable<AlunoResponse[]> {
-		const params = new HttpParams({
-			fromObject: { ...filtro },
-		});
-		return this.http.get<AlunoResponse[]>(
-			`${
-				environment.API_URL
-			}usuario/aluno/buscar?${params.toString()}`,
-		) as Observable<AlunoResponse[]>;
+	public filtrarAlunos(
+		filtro: AlunoFiltro,
+	): Observable<{ total: number; conteudo: AlunoResponse[] }> {
+		return this.http.post<{ total: number; conteudo: AlunoResponse[] }>(
+			`${environment.API_URL}usuario/aluno/buscar`,
+			{ ...filtro },
+		) as Observable<{ total: number; conteudo: AlunoResponse[] }>;
+	}
+
+	public filtrarProfessores(
+		filtro: ProfessorFiltro,
+	): Observable<{ total: number; conteudo: ProfessorResponse[] }> {
+		return this.http.post<{ total: number; conteudo: ProfessorResponse[] }>(
+			`${environment.API_URL}usuario/professor/buscar`,
+			{ ...filtro },
+		) as Observable<{ total: number; conteudo: ProfessorResponse[] }>;
 	}
 
 	// deve ser o ID da tabela Usuarios
@@ -151,26 +146,25 @@ export class AdminService {
 		);
 	}
 
-	public fetchHoraioProfessor(filtro: horarioProfessorFilter){
-		return this.http.post(`${environment.API_URL}horario/buscar`,
-			{
-				...filtro,
-			},);
-
+	public fetchHoraioProfessor(filtro: horarioProfessorFilter) {
+		return this.http.post(`${environment.API_URL}horario/buscar`, {
+			...filtro,
+		});
 	}
 
-	public excluirHorarioProfessor(id: number){
-		return this.http.delete(`${environment.API_URL}horario/excluir/${id}`, { responseType: 'text' });
-	}	  
-
-	public salvarHorarioProfessor(item: HorarioProfessor){
-		return this.http.post(`${environment.API_URL}horario`,{...item});
+	public excluirHorarioProfessor(id: number) {
+		return this.http.delete(`${environment.API_URL}horario/excluir/${id}`, {
+			responseType: "text",
+		});
 	}
 
-	public filterDividendos(filtro: DividendoFilter){
-		return this.http.post(`${environment.API_URL}dividendo/buscar`,
-			{
-				...filtro,
-			},);
+	public salvarHorarioProfessor(item: HorarioProfessor) {
+		return this.http.post(`${environment.API_URL}horario`, { ...item });
+	}
+
+	public filterDividendos(filtro: DividendoFilter) {
+		return this.http.post(`${environment.API_URL}dividendo/buscar`, {
+			...filtro,
+		});
 	}
 }

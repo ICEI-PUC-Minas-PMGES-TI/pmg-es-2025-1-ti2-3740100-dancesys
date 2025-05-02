@@ -906,7 +906,7 @@
 		</div>
 	</app-modal>
 }
-<main class="py-4 max-w-full max-h-full h-full">
+<main class="py-2 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
 		<div class="flex flex-row space-x-4">
 			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
@@ -1063,66 +1063,24 @@
 		</div>
 	</section>
 	@if (alunos.length > 0 && !isLoading) {
-		<section class="tabela">
-			<table class="">
-				<thead [class]="isModalOpen ? '' : 'sticky'">
-					<tr>
-						<th>Nome</th>
-						<th>E-mail</th>
-						<th>Telefone</th>
-						@if (isShowingAlunoTable) {
-							<th>Tipo</th>
-						}
-						<th>Status</th>
-						<th>Data de Nascimento</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody class="">
-					@for (user of usersTabela; track user.id) {
-						<tr>
-							<td>{{ user.nome }}</td>
-							<td>{{ user.email }}</td>
-							<td>{{ user.telefone }}</td>
-							@if (isShowingAlunoTable) {
-								<td>{{ user.tipo | tipoAluno }}</td>
-							}
-							<td>{{ user.status | statusUsuario }}</td>
-							<td>{{ user.dataNasc }}</td>
-							<td>
-								<div
-									class="flex flex-row space-x-3 px-3 justify-center"
-								>
-									<button
-										appButton
-										icon="edit"
-										title="Editar"
-										(click)="openEditModal(user.id)"
-										icon-slot="icon-only"
-										color="dark"
-									></button>
-									<button
-										appButton
-										(click)="
-											toggleUserStatus(
-												user.usuario.id,
-												user.status
-											)
-										"
-										title="Ativar/Desativar conta"
-										color="dark"
-										class="w-24"
-									>
-										{{
-											user.status ? "Desativar" : "Ativar"
-										}}
-									</button>
-								</div>
-							</td>
-						</tr>
-					}
-				</tbody>
-			</table>
+		<section>
+			@if (isShowingAlunoTable) {
+				<app-simple-table
+					[colunas]="colunasAluno"
+					[dados]="alunos"
+					[botoesAcoes]="acoes"
+					[totalItens]="totalAlunos"
+					(paginacaoChange)="onPaginacaoChangeAluno($event)"
+				></app-simple-table>
+			} @else {
+				<app-simple-table
+					[colunas]="colunasProf"
+					[dados]="professores"
+					[botoesAcoes]="acoes"
+					[totalItens]="totalProf"
+					(paginacaoChange)="onPaginacaoChangeProf($event)"
+				></app-simple-table>
+			}
 		</section>
 	}
 </main>
