@@ -117,7 +117,6 @@ export class UsuariosAdminPageComponent implements OnInit {
 		this.isLoading = true;
 		this.adminService.fetchAlunos().subscribe({
 			next: (response) => {
-				// console.log("%c chegou aqui %s", myCss, "ebaaaa");
 				this.handleAlunoResponse(response);
 			},
 			error: (err) => {

@@ -143,16 +143,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status) {
-        return alunoServiceImpl.buscarAlunos(nome, cpf, email, tipo, status);
-    }
-
-    @Override
-    public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status){
-        return professorServiceImpl.buscarProfessores(nome, cpf, email, status);
-    }
-
-    @Override
     public List<Usuario> buscar(){
         return usuarioRepository.findAll();
     }
@@ -170,12 +160,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public PaginatedResponse<Aluno> buscarAlunosTeste(AlunoFilter filtro){
+    public PaginatedResponse<Aluno> buscarAlunos(AlunoFilter filtro){
         return alunoServiceImpl.buscar(filtro);
     }
 
     @Override
-    public PaginatedResponse<Professor> buscarProfessorTeste(ProfessorFilter filtro){
+    public PaginatedResponse<Professor> buscarProfessor(ProfessorFilter filtro){
         return professorServiceImpl.buscar(filtro);
     }
 }
