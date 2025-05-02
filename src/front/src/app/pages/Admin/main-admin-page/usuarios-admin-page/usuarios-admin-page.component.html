@@ -1063,7 +1063,7 @@
 		</div>
 	</section>
 	@if (alunos.length > 0 && !isLoading) {
-		<section>
+		
 			@if (isShowingAlunoTable) {
 				<app-simple-table
 					[colunas]="colunasAluno"
@@ -1081,6 +1081,6 @@
 					(paginacaoChange)="onPaginacaoChangeProf($event)"
 				></app-simple-table>
 			}
-		</section>
+		
 	}
 </main>

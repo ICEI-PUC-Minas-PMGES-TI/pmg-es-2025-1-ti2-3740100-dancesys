@@ -159,10 +159,11 @@ export class HorariosAdminPageComponent {
 		};
 		this.adminService.filtrarProfessores({ ...emptyFilter }).subscribe({
 			next: (response) => {
-				this.professores = response.conteudo;
+				this.professoresObj = response.conteudo;
 			},
 		});
 	}
+
 	onDiaChange(selected: number[]) {
 		this.diasSemanaFilter = selected;
 	}
@@ -182,6 +183,7 @@ export class HorariosAdminPageComponent {
 	}
 
 	buscar() {
+		console.log("teste entrou: ",this.itensPage, this.paginaAtual)
 		this.adminService.fetchHoraioProfessor(this.filterGet()).subscribe({
 			next: (response) => {
 				this.professores = response;

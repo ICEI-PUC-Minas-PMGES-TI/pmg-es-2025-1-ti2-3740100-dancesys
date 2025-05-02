@@ -567,6 +567,7 @@ export class UsuariosAdminPageComponent implements OnInit {
 		paginaSelecionada: number;
 		itensPage: ItensPorPagina;
 	}) {
+		console.log("entrou no aluno");
 		this.paginaAtualAluno = --event.paginaSelecionada;
 		this.itensPageAluno = event.itensPage;
 		this.reloadUsers();
@@ -575,6 +576,7 @@ export class UsuariosAdminPageComponent implements OnInit {
 		paginaSelecionada: number;
 		itensPage: ItensPorPagina;
 	}) {
+		console.log("entrou no professor");
 		this.paginaAtualProf = --event.paginaSelecionada;
 		this.itensPageProf = event.itensPage;
 		this.reloadUsers();

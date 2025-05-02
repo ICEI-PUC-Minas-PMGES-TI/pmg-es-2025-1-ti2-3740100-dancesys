@@ -50,7 +50,7 @@
 					</div>
 					<div class="flex flex-1 flex-col">
 						<app-search-box-multi
-						[options]="alunosFilterLs"
+						[options]="alunosFilterLs?.conteudo || []"
 						optionLabel="idUsuario.nome"
 						optionValue="id"
 						[label]="'Aluno: '"

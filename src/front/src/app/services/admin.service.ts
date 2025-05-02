@@ -112,6 +112,10 @@ export class AdminService {
 		) as Observable<{ total: number; conteudo: AlunoResponse[] }>;
 	}
 
+	public filtrarAlunosNT(filtro: AlunoFiltro) {
+		return this.http.post(`${environment.API_URL}usuario/aluno/buscar`,{ ...filtro },);
+	}
+
 	public filtrarProfessores(
 		filtro: ProfessorFiltro,
 	): Observable<{ total: number; conteudo: ProfessorResponse[] }> {

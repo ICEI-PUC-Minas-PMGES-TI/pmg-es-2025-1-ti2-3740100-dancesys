@@ -111,6 +111,7 @@ export class SimpleTableComponent implements OnChanges {
 	}
 
 	anteriorPagina() {
+    console.log("entrou1",this.paginaSelecionada, this.paginaIn)
 		if (this.paginaSelecionada !== this.paginaIn) {
 			this.paginaSelecionada--;
 			this.emitirPaginacao();
@@ -175,6 +176,7 @@ export class SimpleTableComponent implements OnChanges {
 			paginaSelecionada: this.paginaSelecionada,
 			itensPage: this.itensPage,
 		});
+    console.log("passou: ", this.paginaSelecionada)
 	}
 
 	getValor(item: any, chave: string): any {
