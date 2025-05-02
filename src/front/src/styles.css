@@ -57,5 +57,10 @@ body {
 			border-color: var(--color-main-500);
 			border-style: solid;
 		}
+
+		td.dontHaveButtons {
+			padding-top: 0.85rem;
+			padding-bottom: 0.85rem;
+		}
 	}
 }
