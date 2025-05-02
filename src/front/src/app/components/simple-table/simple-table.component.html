@@ -1,70 +1,113 @@
 <section class="tabela">
-  <table class="w-full">
-    <thead>
-      <tr>
-        <th *ngFor="let coluna of colunas" [style.width]="coluna.width">{{ coluna.titulo }}</th>
-        @if(botoesAcoes && botoesAcoes.length > 0){
-          <th>Ações</th>
-        }
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of dados">
-        <td *ngFor="let coluna of colunas">{{ coluna.formatar ? coluna.formatar(getValor(item, coluna.chave), item) : getValor(item, coluna.chave) }}</td>
-        @if(botoesAcoes && botoesAcoes.length > 0){
-          <td style="width: 20%;">
-            <div class="flex justify-center items-center space-x-3">
-              <button
-                *ngFor="let botao of botoesAcoes"
-                appButton
-                [icon]="botao.icon"
-                icon-slot="icon-only"
-                [title]="botao.title"
-                [color]="botao.cor"
-                (click)="botao.callback(item)">
-              </button>
-            </div>
-          </td>
-        }
-      </tr>
-    </tbody>
-  </table>
+	<table class="w-full">
+		<thead>
+			<tr>
+				<th *ngFor="let coluna of colunas" [style.width]="coluna.width">
+					{{ coluna.titulo }}
+				</th>
+				@if (botoesAcoes && botoesAcoes.length > 0) {
+					<th>Ações</th>
+				}
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of dados">
+				<td
+					*ngFor="let coluna of colunas"
+					[class]="
+						!(botoesAcoes && botoesAcoes.length > 0)
+							? 'dontHaveButtons'
+							: ''
+					"
+				>
+					{{
+						coluna.formatar
+							? coluna.formatar(
+									getValor(item, coluna.chave),
+									item
+								)
+							: getValor(item, coluna.chave)
+					}}
+				</td>
+				@if (botoesAcoes && botoesAcoes.length > 0) {
+					<td style="width: 20%">
+						<div class="flex justify-center items-center space-x-3">
+							<button
+								*ngFor="let botao of botoesAcoes"
+								appButton
+								[icon]="botao.icon"
+								icon-slot="icon-only"
+								[title]="botao.title"
+								[color]="botao.cor"
+								(click)="botao.callback(item)"
+							></button>
+						</div>
+					</td>
+				}
+			</tr>
+		</tbody>
+	</table>
 </section>
-@if(paged){
-  <div class="flex justify-end items-center mt-4 space-x-1">
-    <section class="flex flex-row">
-      <button class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer" (click)="primeiraPagina()"><<</button>
-      <button class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-3 cursor-pointer" (click)="anteriorPagina()"><</button>
+@if (paged) {
+	<div class="flex justify-end items-center mt-4 space-x-1">
+		<section class="flex flex-row">
+			<button
+				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer"
+				(click)="primeiraPagina()"
+			>
+				<<
+			</button>
+			<button
+				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-3 cursor-pointer"
+				(click)="anteriorPagina()"
+			>
+				<
+			</button>
 
-      <div class="flex">
-        <button
-          *ngFor="let pg of pgsLs"
-          (click)="selecionarPagina(pg)"
-          [ngClass]="{
-            'bg-main-500 text-white': pg === paginaSelecionada,
-            'bg-main-400 text-main-500': pg !== paginaSelecionada
-          }"
-          class="flex items-center justify-center w-8 h-8 p-1 rounded-lg mr-1 border-2 border-main-500 transition-all cursor-pointer"
-        >
-          {{ pg }}
-        </button>
-      </div>
+			<div class="flex">
+				<button
+					*ngFor="let pg of pgsLs"
+					(click)="selecionarPagina(pg)"
+					[ngClass]="{
+						'bg-main-500 text-white': pg === paginaSelecionada,
+						'bg-main-400 text-main-500': pg !== paginaSelecionada,
+					}"
+					class="flex items-center justify-center w-8 h-8 p-1 rounded-lg mr-1 border-2 border-main-500 transition-all cursor-pointer"
+				>
+					{{ pg }}
+				</button>
+			</div>
 
-      <button class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 ml-2 cursor-pointer" (click)="proximaPagina()">></button>
-      <button class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer" (click)="ultimaPagina()">>></button>
-      <div class="flex items-center justify-center bg-main-500 text-white decoration-double h-8 p-1 rounded-lg ml-2 cursor-pointer">
-        <form [formGroup]="itensForm">
-          <select name="itensPage" id="itensPage" formControlName="itensPage">
-            <option [ngValue]="5">5</option>
-            <option [ngValue]="10">10</option>
-            <option [ngValue]="25">25</option>
-            <option [ngValue]="50">50</option>
-            <option [ngValue]="100">100</option>
-            <option [ngValue]="0">Todos</option>
-          </select>
-        </form>
-      </div>
-    </section>
-  </div>
+			<button
+				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 ml-2 cursor-pointer"
+				(click)="proximaPagina()"
+			>
+				>
+			</button>
+			<button
+				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer"
+				(click)="ultimaPagina()"
+			>
+				>>
+			</button>
+			<div
+				class="flex items-center justify-center bg-main-500 text-white decoration-double h-8 p-1 rounded-lg ml-2 cursor-pointer"
+			>
+				<form [formGroup]="itensForm">
+					<select
+						name="itensPage"
+						id="itensPage"
+						formControlName="itensPage"
+					>
+						<option [ngValue]="5">5</option>
+						<option [ngValue]="10">10</option>
+						<option [ngValue]="25">25</option>
+						<option [ngValue]="50">50</option>
+						<option [ngValue]="100">100</option>
+						<option [ngValue]="0">Todos</option>
+					</select>
+				</form>
+			</div>
+		</section>
+	</div>
 }
-
