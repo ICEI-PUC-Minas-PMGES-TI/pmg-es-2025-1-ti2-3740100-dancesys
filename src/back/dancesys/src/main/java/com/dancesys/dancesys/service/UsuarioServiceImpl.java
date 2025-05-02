@@ -175,7 +175,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    PaginatedResponse<Professor> buscarProfessorTeste(ProfessorFilter filtro){
+    public PaginatedResponse<Professor> buscarProfessorTeste(ProfessorFilter filtro){
         return professorServiceImpl.buscar(filtro);
     }
 }
