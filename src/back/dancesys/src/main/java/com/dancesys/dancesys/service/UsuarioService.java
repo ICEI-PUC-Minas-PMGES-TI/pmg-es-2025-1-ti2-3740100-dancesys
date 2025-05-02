@@ -26,4 +26,6 @@ public interface UsuarioService{
     public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status);
 
     public PaginatedResponse<Aluno> buscarAlunosTeste(AlunoFilter filtro);
+
+    PaginatedResponse<Professor> buscarProfessorTeste(ProfessorFilter filtro);
 }

@@ -64,6 +64,11 @@ public class UsuarioController {
         return usuarioService.buscarAlunosTeste(filtro);
     }
 
+    @PostMapping(value = "professor/buscar/teste")
+    public PaginatedResponse<Professor> buscarProfessorTeste(@RequestBody ProfessorFilter filtro){
+        return usuarioService.buscarProfessorTeste(filtro);
+    }
+
     @GetMapping(value = "buscar")
     public List<Usuario> buscar(){
         return usuarioService.buscar();
