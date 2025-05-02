@@ -209,16 +209,18 @@ export class HorariosAdminPageComponent {
 	}
 
 	onConfirmDelete(choice: boolean | void){
-		this.adminService.excluirHorarioProfessor(this.idDelete).subscribe({
-			next: () =>{
-				console.log('next completa');
-				this.isModalConfirm = false;
-				this.buscar();
-			},
-			error: (err) => {
-				console.log(err, { color: "red" });
-			},
-		})
+		if(choice){
+			this.adminService.excluirHorarioProfessor(this.idDelete).subscribe({
+				next: () =>{
+					console.log('next completa');
+					this.isModalConfirm = false;
+					this.buscar();
+				},
+				error: (err) => {
+					console.log(err, { color: "red" });
+				},
+			})
+		}
 	}
 	  
 	excluir(item: any) {
