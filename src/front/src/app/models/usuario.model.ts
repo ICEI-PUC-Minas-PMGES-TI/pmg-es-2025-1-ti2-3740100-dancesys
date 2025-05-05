@@ -44,8 +44,8 @@ export interface UsuarioCookie {
 export interface UsuarioFiltro {
 	nome?: string;
 	email: string;
-	tipo: UsuarioTipos;
-	status: 0 | 1;
+	tipo?: UsuarioTipos;
+	status: 0 | 1 | "";
 	cpf: string;
 }
 
