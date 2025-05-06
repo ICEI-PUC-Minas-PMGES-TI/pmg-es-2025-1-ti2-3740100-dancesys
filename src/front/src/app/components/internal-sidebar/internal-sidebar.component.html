@@ -1,0 +1,10 @@
+<section class="w-48 h-full bg-main-500 p-3 py-5 flex flex-col space-y-5">
+	@for (route of routes; track route.route) {
+		<a
+			[routerLink]="route.route"
+			routerLinkActive="text-main-400 border-b-main-400"
+			class="text-main-100 border-b-4 border-b-main-100 font-semibold"
+			>{{ route.label }}</a
+		>
+	}
+</section>
