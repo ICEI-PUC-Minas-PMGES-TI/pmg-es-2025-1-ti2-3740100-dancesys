@@ -1,12 +1,15 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.AulaDTO;
+import com.dancesys.dancesys.dto.AulaFilter;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaAluno;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.entity.Chamada;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.AulaMapper;
 import com.dancesys.dancesys.repository.AulaRepository;
+import com.dancesys.dancesys.repository.AulaRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,17 +24,20 @@ public class AulaServiceImpl implements  AulaService {
     private final AulaAlunoServiceImpl aulaAlunoServiceImpl;
     private final AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl;
     private final ChamadaServiceImpl chamadaServiceImpl;
+    private final AulaRepositoryCustom aulaRepositoryCustom;
 
     public AulaServiceImpl(
             AulaRepository aulaRepository,
             AulaAlunoServiceImpl aulaAlunoServiceImpl,
             AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl,
-            ChamadaServiceImpl chamadaServiceImpl
-    ) {
+            ChamadaServiceImpl chamadaServiceImpl,
+            AulaRepositoryCustom aulaRepositoryCustom
+    ){
         this.aulaRepository = aulaRepository;
         this.aulaAlunoServiceImpl = aulaAlunoServiceImpl;
         this.aulaOcorrenciaServiceImpl = aulaOcorrenciaServiceImpl;
         this.chamadaServiceImpl = chamadaServiceImpl;
+        this.aulaRepositoryCustom = aulaRepositoryCustom;
     }
 
     @Override
@@ -85,5 +91,10 @@ public class AulaServiceImpl implements  AulaService {
                    .collect(Collectors.toList());
            aulaOcorrenciaServiceImpl.gerarOcrrenciaAulaJob(idsAlunos, a);
        }
+    }
+
+    @Override
+    public PaginatedResponse<Aula> buscar(AulaFilter filter){
+        return aulaRepositoryCustom.buscarAulas(filter);
     }
 }

@@ -85,4 +85,19 @@ export class SearchBoxMultiComponent {
 			this.searchChange.emit(this.searchText.trim());
 		}, 1000); // 1 segundo
 	}
+
+	filteredOptions(): any[] {
+		if (!this.searchText?.trim()) {
+		  return this.options.filter(option =>
+			this.selectedValues.includes(this.getPropByPath(option, this.optionValue))
+		  );
+		}
+	  
+		const lowerSearch = this.searchText.toLowerCase();
+	  
+		return this.options.filter(option =>
+		  this.getPropByPath(option, this.optionLabel).toLowerCase().includes(lowerSearch)
+		);
+	  }
+	  
 }

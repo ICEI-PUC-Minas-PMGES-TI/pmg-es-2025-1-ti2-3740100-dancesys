@@ -39,15 +39,15 @@ public class Aula {
     public static final Integer desativo = 0;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_Sala", nullable = false)
     private Sala idSala;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_Modalidade", nullable = false)
     private Modalidade idModalidade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_Professor", nullable = false)
     private Professor idProfessor;
 
