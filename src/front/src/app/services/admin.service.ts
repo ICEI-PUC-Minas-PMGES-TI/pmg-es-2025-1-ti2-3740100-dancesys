@@ -12,6 +12,7 @@ import {
 import { Aluno } from "../models/aluno.model";
 import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
+import { AulaFilter } from "../models/Aula.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -177,6 +178,13 @@ export class AdminService {
 
 	public filterDividendos(filtro: DividendoFilter) {
 		return this.http.post(`${environment.API_URL}dividendo/buscar`,
+			{
+				...filtro,
+			},);
+	}
+
+	public filterAulas(filtro: AulaFilter) {
+		return this.http.post(`${environment.API_URL}aula/buscar`,
 			{
 				...filtro,
 			},);

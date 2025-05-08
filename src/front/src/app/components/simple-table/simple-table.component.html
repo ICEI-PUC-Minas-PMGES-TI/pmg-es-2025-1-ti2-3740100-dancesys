@@ -30,7 +30,7 @@
 					}}
 				</td>
 				@if (botoesAcoes && botoesAcoes.length > 0) {
-					<td style="width: 20%">
+					<td [style.width]="actionsWidth">
 						<div class="flex justify-center items-center space-x-3">
 							<button
 								*ngFor="let botao of botoesAcoes"

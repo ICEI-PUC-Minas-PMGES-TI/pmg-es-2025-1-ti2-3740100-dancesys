@@ -22,13 +22,11 @@ public class Chamada {
     @ManyToOne
     @MapsId("idAulaOcorrencia")
     @JoinColumn(name = "id_Aula_Ocorrencia", nullable = false)
-    @JsonBackReference
     private AulaOcorrencia idAulaOcorrencia;
 
     @ManyToOne
     @MapsId("idAluno")
     @JoinColumn(name = "id_Aluno", nullable = false)
-    @JsonBackReference
     private Aluno idAluno;
 
     @Column(name = "presenca")

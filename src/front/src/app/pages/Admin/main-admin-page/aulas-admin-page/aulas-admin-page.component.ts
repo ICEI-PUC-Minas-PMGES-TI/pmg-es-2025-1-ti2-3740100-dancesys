@@ -3,10 +3,11 @@ import {
 	InternalSidebarComponent,
 	InternalSidebarRoute,
 } from "../../../../components/internal-sidebar/internal-sidebar.component";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
 	selector: "app-aulas-admin-page",
-	imports: [InternalSidebarComponent],
+	imports: [InternalSidebarComponent, RouterOutlet],
 	templateUrl: "./aulas-admin-page.component.html",
 	styleUrl: "./aulas-admin-page.component.css",
 })

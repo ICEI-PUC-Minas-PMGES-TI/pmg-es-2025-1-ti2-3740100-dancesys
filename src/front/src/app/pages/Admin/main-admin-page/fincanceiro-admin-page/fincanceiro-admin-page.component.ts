@@ -119,7 +119,6 @@ export class FincanceiroAdminPageComponent {
     this.adminService.filterUsuarios(filtro).subscribe({
 			next: (response) => {
 				this.alunosFilterLs = response
-        console.log(this.alunosFilterLs)
 			},
 		});
   }

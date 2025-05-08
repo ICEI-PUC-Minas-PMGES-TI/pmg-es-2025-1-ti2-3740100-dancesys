@@ -37,6 +37,5 @@ public class AulaOcorrencia {
     private Aula idAula;
 
     @OneToMany(mappedBy = "idAulaOcorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Chamada> chamada;
 }

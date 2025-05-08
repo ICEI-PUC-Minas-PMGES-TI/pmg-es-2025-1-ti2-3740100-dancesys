@@ -17,6 +17,7 @@ export class SimpleTableComponent implements OnChanges {
   @Input() botoesAcoes: { icon: string; title: string; cor: string; callback: (item: any) => void }[] = [];
   @Input() totalItens: number = 0;
   @Input() paged: boolean = true;
+  @Input() actionsWidth: String = '20%'
 
   @Output() paginacaoChange = new EventEmitter<{ paginaSelecionada: number; itensPage: number }>();
 
