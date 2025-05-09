@@ -11,10 +11,12 @@ import { ModalidadesService } from '../../../../../services/modalidades.service'
 import { BotaoComponent } from '../../../../../components/botao/botao.component';
 import { CommonModule } from '@angular/common';
 import { UsuarioFiltro } from '../../../../../models/usuario.model';
+import { SalaService } from '../../../../../services/sala.service';
+import { Sala } from '../../../../../models/Sala.model';
 
 enum ToggleModal {
-	NEW = "Cria Horario",
-	EDIT = "Editar Horario",
+	NEW = "Criar Aula",
+	EDIT = "Editar Aula",
 }
 
 @Component({
@@ -38,7 +40,8 @@ export class AulasFixasAdminPageComponent {
   aulaForm: FormGroup
 
 	adminService = inject(AdminService);
-  modalidadeService = inject(ModalidadesService)
+  modalidadeService = inject(ModalidadesService);
+  salaService = inject(SalaService)
   
 	ToggleModal = ToggleModal;
   paginaAtual: number = 0;
@@ -95,7 +98,19 @@ export class AulasFixasAdminPageComponent {
       pagina: [this.paginaAtual]
 		});
 
-    this.aulaForm = this.fb.group({})
+    this.aulaForm = this.fb.group({
+      id: [],
+      diaSemana: [],
+      horarioInicio: [],
+      horarioFim: [],
+      maxAlunos: [],
+      nivel: [],
+      status: [],
+      idSala: [],
+      idModalidade: [],
+      idProfessor: [],
+      alunos: [[]]
+    })
 	}
 
   diasObj = [
@@ -113,6 +128,7 @@ export class AulasFixasAdminPageComponent {
   professorFilter: number[] = []
   modalidadesObj: Modalidade[] = []
   professoresObj: ProfessorResponse[] = []
+  salasObj: Sala[] = []
   alunosFilterLs: any = []
   aulaObj: any = []
   selectAlunos: number[] = []
@@ -120,6 +136,7 @@ export class AulasFixasAdminPageComponent {
   ngOnInit(){
     this.carregarModalidade();
     this.carregarProfessores();
+    this.carregarSalas()
     this.buscar();
   }
 
@@ -146,6 +163,56 @@ export class AulasFixasAdminPageComponent {
     })
   }
 
+  carregarSalas(){
+    this.salaService.fetchSalas().subscribe({
+      next: (response) =>{
+        this.salasObj = response
+      }
+    })
+  }
+
+  getFormValue(){
+    const item = this.aulaForm.value;
+    const aulaItem: Aula = item;
+    return aulaItem;
+  }
+
+  preencherFormValue(item: any){
+    console.log("teste1: ", this.alunosFilterLs)
+    this.alunosFilterLs = this.getAlunos(item.alunos)
+    console.log("teste2: ", this.alunosFilterLs)
+
+    this.aulaForm = this.fb.group({
+      id: [item.id],
+      diaSemana: [item.diaSemana],
+      horarioInicio: [item.horarioInicio],
+      horarioFim: [item.horarioFim],
+      maxAlunos: [item.maxAlunos],
+      nivel: [item.nivel],
+      status: [item.status],
+      idSala: [item.idSala.id],
+      idModalidade: [item.idModalidade.id],
+      idProfessor: [item.idProfessor.id],
+      alunos: [this.getAlunosIds(item.alunos)]
+    })
+  }
+
+  resertFormValue(){
+    this.aulaForm = this.fb.group({
+      id: [],
+      diaSemana: [],
+      horarioInicio: [],
+      horarioFim: [],
+      maxAlunos: [],
+      nivel: [],
+      status: [],
+      idSala: [],
+      idModalidade: [],
+      idProfessor: [],
+      alunos: [[]]
+    })
+  }
+
   getfilter(){
     this.filterForm = this.fb.group({
 		  dias: [this.diasFilter],
@@ -160,7 +227,6 @@ export class AulasFixasAdminPageComponent {
 
   buscar(){
     this.adminService.filterAulas(this.getfilter()).subscribe({
-      
       next: (response) =>{
         this.aulaObj = response;
       },
@@ -171,15 +237,42 @@ export class AulasFixasAdminPageComponent {
   }
 
   salvar(){
-
+    console.log(this.getFormValue())
+    this.adminService.addAula(this.getFormValue()).subscribe({
+      next: (response) =>{
+        this.buscar()
+        this.resertFormValue()
+        this.closeModal()
+      }
+    })
   }
 
   editar(item: any){
-
+    this.preencherFormValue(item)
+    this.openModal()
+    console.log("teste", this.getFormValue())
   }
 
   excluir(item: any){
 
+  }
+
+  getAlunosIds(item: any){
+    const ids: any[] = []
+    item.forEach((i: any) => {
+      ids.push(i.idAluno.id)
+    });
+
+    return ids;
+  }
+
+  getAlunos(item: any){
+    const alunos: any = []
+    item.forEach((i: any) =>{
+      alunos.push(i.idAluno)
+    })
+
+    return alunos;
   }
 
   closeModal(){

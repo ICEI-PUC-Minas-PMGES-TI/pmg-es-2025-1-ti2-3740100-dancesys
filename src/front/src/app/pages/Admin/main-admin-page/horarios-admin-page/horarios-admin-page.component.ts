@@ -9,7 +9,7 @@ import { HorarioProfessor } from "../../../../models/horarioProfessor.model";
 import { ModalComponent } from "../../../../components/modal/modal.component";
 
 enum ToggleModal {
-	NEW = "Cria Horario",
+	NEW = "Criar Horario",
 	EDIT = "Editar Horario",
 }
 

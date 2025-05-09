@@ -28,7 +28,7 @@
 							<option *ngFor="let criado of datesfilter" [ngValue]="criado.value">{{ criado.text }}</option>
 						</select>
 					</div>
-					<div class="flex flex-1 flex-col">
+					<div class="flex flex-col">
 						<app-multi-select-input
 						[label]="'Tipo:'"
 						[options]="tipos"
@@ -38,7 +38,7 @@
 						nullLabel="Todos">
 						</app-multi-select-input>
 					</div>
-					<div class="flex flex-1 flex-col">
+					<div class="flex flex-col">
 						<app-multi-select-input
 						[label]="'Status:'"
 						[options]="status"
@@ -48,7 +48,7 @@
 						nullLabel="Todos">
 						</app-multi-select-input>
 					</div>
-					<div class="flex flex-1 flex-col">
+					<div class="flex flex-col">
 						<app-search-box-multi
 						[options]="alunosFilterLs"
 						optionLabel="idUsuario.nome"
