@@ -13,7 +13,6 @@ import { CommonModule } from '@angular/common';
 import { UsuarioFiltro } from '../../../../../models/usuario.model';
 import { SalaService } from '../../../../../services/sala.service';
 import { Sala } from '../../../../../models/Sala.model';
-import { PopupAlertService } from '../../../../../services/popupalert.service';
 
 enum ToggleModal {
 	NEW = "Criar Aula",
@@ -43,7 +42,6 @@ export class AulasFixasAdminPageComponent {
 	adminService = inject(AdminService);
   modalidadeService = inject(ModalidadesService);
   salaService = inject(SalaService)
-  popUp = inject(PopupAlertService)
   
 	ToggleModal = ToggleModal;
   paginaAtual: number = 0;
@@ -245,7 +243,6 @@ export class AulasFixasAdminPageComponent {
         this.buscar()
         this.resertFormValue()
         this.closeModal()
-        this.popUp.gerarSucesso("Aula gerada com sucesso!")
       }
     })
   }
