@@ -52,6 +52,5 @@ public class Aula {
     private Professor idProfessor;
 
     @OneToMany(mappedBy = "idAula", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<AulaAluno> alunos;
 }

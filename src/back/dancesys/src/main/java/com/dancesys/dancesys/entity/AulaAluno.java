@@ -28,6 +28,5 @@ public class AulaAluno {
     @ManyToOne
     @MapsId("idAluno")
     @JoinColumn(name = "id_Aluno", nullable = false)
-    @JsonBackReference
     private Aluno idAluno;
 }

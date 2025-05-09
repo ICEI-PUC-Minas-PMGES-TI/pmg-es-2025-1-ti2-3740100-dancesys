@@ -12,7 +12,7 @@ import {
 import { Aluno } from "../models/aluno.model";
 import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
-import { AulaFilter } from "../models/Aula.model";
+import { Aula, AulaFilter } from "../models/Aula.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -188,5 +188,9 @@ export class AdminService {
 			{
 				...filtro,
 			},);
+	}
+
+	public addAula(item: Aula){
+		return this.http.post(`${environment.API_URL}aula`,{...item});
 	}
 }
