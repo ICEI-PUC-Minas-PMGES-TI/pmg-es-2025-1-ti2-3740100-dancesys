@@ -199,7 +199,7 @@ export class AulasFixasAdminPageComponent {
             nome: termo,
             email:  "",
             cpf:  "",
-            tipo: 2,
+            tipo: 1,
             status: 1,
           };
       this.adminService.filterUsuarios(filtro).subscribe({

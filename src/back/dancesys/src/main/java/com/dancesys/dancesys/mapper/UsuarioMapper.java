@@ -72,8 +72,9 @@ public class UsuarioMapper {
             if (Adto == null) return null;
 
             UsuarioDTO dto = new UsuarioDTO();
-
-            dto.setId(Adto.getUsuario().getId());
+            if(Adto.getUsuario() != null){
+                dto.setId(Adto.getUsuario().getId());
+            }
             dto.setNome(Adto.getNome());
             dto.setCpf(Adto.getCpf());
             dto.setNumero(Adto.getNumero());
