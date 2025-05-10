@@ -6,6 +6,9 @@ import com.dancesys.dancesys.mapper.EnsaioApresentacaoMapper;
 import com.dancesys.dancesys.repository.EnsaioApresentacaoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
 
@@ -25,5 +28,15 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
         catch(Exception e){
             throw new Exception("Erro ao salvar ensaio apresentacao");
         }
+    }
+
+    @Override
+    public List<EnsaioApresentacaoDTO> buscar(){
+        List<EnsaioApresentacaoDTO> dtos = new ArrayList<>();
+        List<EnsaioApresentacao> ensaioApresentacaoList = ensaioApresentacaoRepository.findAll();
+        for (EnsaioApresentacao entity : ensaioApresentacaoList) {
+            dtos.add(EnsaioApresentacaoMapper.toDto(entity));
+        }
+        return dtos;
     }
 }

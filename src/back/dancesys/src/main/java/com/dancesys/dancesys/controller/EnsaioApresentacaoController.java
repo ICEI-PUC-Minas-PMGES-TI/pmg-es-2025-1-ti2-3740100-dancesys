@@ -6,12 +6,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,5 +23,10 @@ public class EnsaioApresentacaoController {
     public ResponseEntity<EnsaioApresentacaoDTO> salvar(@RequestBody EnsaioApresentacaoDTO dto) throws Exception {
         final EnsaioApresentacaoDTO salvo = ensaioApresentacaoService.salvar(dto);
         return ResponseEntity.ok(salvo);
+    }
+
+    @GetMapping(value = "buscar")
+    public List<EnsaioApresentacaoDTO> buscarEnsaioApresentacao() {
+        return ensaioApresentacaoService.buscar();
     }
 }
