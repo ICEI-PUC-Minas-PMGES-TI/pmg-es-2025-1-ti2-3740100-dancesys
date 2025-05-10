@@ -8,4 +8,6 @@ public interface EnsaioApresentacaoService {
     public EnsaioApresentacaoDTO salvar(EnsaioApresentacaoDTO dto) throws Exception;
 
     public List<EnsaioApresentacaoDTO> buscar();
+
+    public void deletar (Long id);
 }

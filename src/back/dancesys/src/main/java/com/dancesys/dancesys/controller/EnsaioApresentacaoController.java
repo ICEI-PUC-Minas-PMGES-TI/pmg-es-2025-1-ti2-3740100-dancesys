@@ -29,4 +29,9 @@ public class EnsaioApresentacaoController {
     public List<EnsaioApresentacaoDTO> buscarEnsaioApresentacao() {
         return ensaioApresentacaoService.buscar();
     }
+
+    @DeleteMapping(value = "excluir/{id}")
+    public void excluir(@PathVariable Long id) {
+        ensaioApresentacaoService.deletar(id);
+    }
 }

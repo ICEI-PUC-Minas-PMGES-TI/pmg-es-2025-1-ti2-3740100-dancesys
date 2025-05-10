@@ -39,4 +39,9 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
         }
         return dtos;
     }
+
+    @Override
+    public void deletar (Long id){
+        ensaioApresentacaoRepository.deleteById(id);
+    }
 }
