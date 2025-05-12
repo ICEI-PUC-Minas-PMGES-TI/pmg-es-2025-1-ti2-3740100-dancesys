@@ -15,6 +15,7 @@ public class EnsaioApresentacaoMapper {
         entity.setDataHoraInicio(dto.getDataHoraInicio());
         entity.setDataHoraFim(dto.getDataHoraFim());
         entity.setIdProfessor(dto.getIdProfessor());
+        entity.setIdApresentacaoEvento(dto.getIdApresentacaoEvento());
 
         return entity;
     }
@@ -30,6 +31,7 @@ public class EnsaioApresentacaoMapper {
         dto.setDataHoraInicio(entity.getDataHoraInicio());
         dto.setDataHoraFim(entity.getDataHoraFim());
         dto.setIdProfessor(entity.getIdProfessor());
+        dto.setIdApresentacaoEvento(entity.getIdApresentacaoEvento());
 
         return dto;
     }

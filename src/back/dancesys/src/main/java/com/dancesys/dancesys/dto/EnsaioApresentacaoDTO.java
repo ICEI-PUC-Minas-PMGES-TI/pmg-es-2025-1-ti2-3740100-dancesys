@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.dto;
 
+import com.dancesys.dancesys.entity.ApresentacaoEvento;
 import com.dancesys.dancesys.entity.Professor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,4 +14,5 @@ public class EnsaioApresentacaoDTO {
     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraFim;
     private Professor idProfessor;
+    private ApresentacaoEvento idApresentacaoEvento;
 }
