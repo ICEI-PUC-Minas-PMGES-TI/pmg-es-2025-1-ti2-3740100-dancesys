@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { lastValueFrom, Observable, take } from "rxjs";
 import { environment } from "../../environment/environment";
 import { UsuarioFiltro } from "../models/usuario.model";
 import { horarioProfessorFilter } from "../models/horarioProfessorFilter.model";
@@ -14,6 +14,7 @@ import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
+import { Evento } from "../models/evento.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -195,21 +196,35 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula`, { ...item });
 	}
 
-	public uploadFileAzure(file: File) {
-	const formData = new FormData();
-	formData.append("file", file);
-	return this.http.post<string>(
-		`${environment.API_URL}file/upload`,
-		formData
-	);
-}
-
-
-	public toogleStatusAula(id: number){
-		return this.http.get(`${environment.API_URL}aula/status/${id}`)
+	public fetchEventos(): Observable<Evento[]> {
+		return this.http.get<Evento[]>(`${environment.API_URL}evento/buscar`);
 	}
 
-	public fetchAulasOcorrentes(filtro: AulaOcorrenciaFilter){
-		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`,{...filtro})
+	public criarEvento(evento: Evento) {
+		return this.http.post(`${environment.API_URL}evento`, evento);
+	}
+
+	public uploadFileAzure(file: File) {
+		const formData = new FormData();
+		formData.append("file", file);
+		const $res = this.http
+			.post<string>(`${environment.API_URL}file/upload`, formData)
+			.pipe(take(1));
+		console.log("socorro 2");
+		return lastValueFrom($res);
+	}
+
+	public excluirEvento(id: number) {
+		return this.http.delete(`${environment.API_URL}evento/excluir/${id}`);
+	}
+
+	public toogleStatusAula(id: number) {
+		return this.http.get(`${environment.API_URL}aula/status/${id}`);
+	}
+
+	public fetchAulasOcorrentes(filtro: AulaOcorrenciaFilter) {
+		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`, {
+			...filtro,
+		});
 	}
 }

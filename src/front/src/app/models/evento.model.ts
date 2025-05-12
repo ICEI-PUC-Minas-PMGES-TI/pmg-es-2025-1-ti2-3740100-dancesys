@@ -5,5 +5,5 @@ export type Evento = {
 	dataHoraInicio: Date;
 	dataHoraFim: Date;
 	valor: number;
-	urlFoto: string;
+	urlFoto?: string;
 };
