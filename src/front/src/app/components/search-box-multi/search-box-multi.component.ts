@@ -75,18 +75,21 @@ import {
 	}
   
 	onCheckboxChange(option: any) {
-	  const value = this.getPropByPath(option, this.optionValue);
-	  const index = this.selectedValues.indexOf(value);
-  
-	  if (index > -1) {
-		this.selectedValues.splice(index, 1);
-	  } else {
-		this.selectedValues.push(value);
-	  }
-  
-	  this.selectionChange.emit(this.selectedValues);
-	  this.onChange(this.selectedValues);
+		const value = this.getPropByPath(option, this.optionValue);
+		const index = this.selectedValues.indexOf(value);
+
+		if (index > -1) {
+			this.selectedValues.splice(index, 1);
+		} else {
+			this.selectedValues.push(value);
+		}
+
+
+		const newSelectedValues = [...this.selectedValues];
+		this.selectionChange.emit(newSelectedValues);
+		this.onChange(newSelectedValues);
 	}
+
   
 	get selectedLabels(): string[] {
 	  return this.options

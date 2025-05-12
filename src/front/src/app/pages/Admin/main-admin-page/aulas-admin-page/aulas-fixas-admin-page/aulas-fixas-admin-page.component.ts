@@ -190,9 +190,7 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	preencherFormValue(item: any) {
-		console.log("teste1: ", this.alunosFilterLs);
 		this.alunosFilterLs = this.getAlunos(item.alunos);
-		console.log("teste2: ", this.alunosFilterLs);
 
 		this.aulaForm = this.fb.group({
 			id: [item.id],
@@ -260,7 +258,6 @@ export class AulasFixasAdminPageComponent {
 	editar(item: any) {
 		this.preencherFormValue(item);
 		this.openModal();
-		console.log("teste", this.getFormValue());
 	}
 
 	excluir(item: any) {}
