@@ -1,0 +1,7 @@
+:host {
+	width: 100%;
+}
+
+.cropper {
+	--cropper-border: var(--color-main-100);
+}

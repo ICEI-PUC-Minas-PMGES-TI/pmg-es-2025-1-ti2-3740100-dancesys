@@ -19,6 +19,7 @@
     "@angular/router": "^19.2.0",
     "@tailwindcss/postcss": "^4.0.17",
     "ngx-cookie-service": "^19.1.2",
+    "ngx-image-cropper": "^9.1.5",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.0.17",

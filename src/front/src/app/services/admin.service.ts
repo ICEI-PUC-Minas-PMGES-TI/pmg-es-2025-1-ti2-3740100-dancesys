@@ -121,16 +121,18 @@ export class AdminService {
 			fromObject: { ...filtro },
 		});
 		return this.http.get<AlunoResponse[]>(
-			`${environment.API_URL
-			}usuario/aluno/buscar?${params.toString()}`,
+			`${environment.API_URL}usuario/aluno/buscar?${params.toString()}`,
 		) as Observable<AlunoResponse[]>;
 	}
-	public filterProfessores(filtro: ProfessorFiltro): Observable<ProfessorResponse[]> {
+	public filterProfessores(
+		filtro: ProfessorFiltro,
+	): Observable<ProfessorResponse[]> {
 		const params = new HttpParams({
 			fromObject: { ...filtro },
 		});
 		return this.http.get<ProfessorResponse[]>(
-			`${environment.API_URL
+			`${
+				environment.API_URL
 			}usuario/professor/buscar?${params.toString()}`,
 		) as Observable<ProfessorResponse[]>;
 	}
@@ -161,15 +163,15 @@ export class AdminService {
 	}
 
 	public fetchHoraioProfessor(filtro: horarioProfessorFilter) {
-		return this.http.post(`${environment.API_URL}horario/buscar`,
-			{
-				...filtro,
-			},);
-
+		return this.http.post(`${environment.API_URL}horario/buscar`, {
+			...filtro,
+		});
 	}
 
 	public excluirHorarioProfessor(id: number) {
-		return this.http.delete(`${environment.API_URL}horario/excluir/${id}`, { responseType: 'text' });
+		return this.http.delete(`${environment.API_URL}horario/excluir/${id}`, {
+			responseType: "text",
+		});
 	}
 
 	public salvarHorarioProfessor(item: HorarioProfessor) {
@@ -177,20 +179,30 @@ export class AdminService {
 	}
 
 	public filterDividendos(filtro: DividendoFilter) {
-		return this.http.post(`${environment.API_URL}dividendo/buscar`,
-			{
-				...filtro,
-			},);
+		return this.http.post(`${environment.API_URL}dividendo/buscar`, {
+			...filtro,
+		});
 	}
 
 	public filterAulas(filtro: AulaFilter) {
-		return this.http.post(`${environment.API_URL}aula/buscar`,
-			{
-				...filtro,
-			},);
+		return this.http.post(`${environment.API_URL}aula/buscar`, {
+			...filtro,
+		});
 	}
 
-	public addAula(item: Aula){
-		return this.http.post(`${environment.API_URL}aula`,{...item});
+	public addAula(item: Aula) {
+		return this.http.post(`${environment.API_URL}aula`, { ...item });
+	}
+
+	public uploadFileAzure(file: File) {
+		const formData = new FormData();
+		formData.append("file", file);
+		return this.http.post<string>(
+			`${environment.API_URL}file/upload`,
+			formData,
+			{
+				headers: { "Content-Type": "multipart/form-data" },
+			},
+		);
 	}
 }

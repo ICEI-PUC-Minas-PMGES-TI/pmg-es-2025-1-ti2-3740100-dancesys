@@ -16,6 +16,12 @@ import { AulasAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-adm
 import { AulasExtrasAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-admin-page/aulas-extras-admin-page/aulas-extras-admin-page.component";
 import { AulasFixasAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-admin-page/aulas-fixas-admin-page/aulas-fixas-admin-page.component";
 import { AulasRecorrentesAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-admin-page/aulas-recorrentes-admin-page/aulas-recorrentes-admin-page.component";
+import { EventosMainAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/eventos-main-admin-page.component";
+import { EventosAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/eventos-admin-page/eventos-admin-page.component";
+import { FigurinosAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/figurinos-admin-page/figurinos-admin-page.component";
+import { FigurinosPorAlunoAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/figurinos-por-aluno-admin-page/figurinos-por-aluno-admin-page.component";
+import { ApresentacoesAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/apresentacoes-admin-page/apresentacoes-admin-page.component";
+import { EnsaiosAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/ensaios-admin-page/ensaios-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -55,7 +61,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: "",
-				redirectTo: "dashboard/main/aulas",
+				redirectTo: "dashboard/main/usuarios",
 				pathMatch: "full",
 			},
 			{
@@ -97,6 +103,34 @@ export const routes: Routes = [
 							{
 								path: "financeiro",
 								component: FincanceiroAdminPageComponent,
+							},
+							{
+								path: "eventos",
+								component: EventosMainAdminPageComponent,
+								children: [
+									{
+										path: "eventos",
+										component: EventosAdminPageComponent,
+									},
+									{
+										path: "figurinos",
+										component: FigurinosAdminPageComponent,
+									},
+									{
+										path: "figurinosPorAluno",
+										component:
+											FigurinosPorAlunoAdminPageComponent,
+									},
+									{
+										path: "apresentacoes",
+										component:
+											ApresentacoesAdminPageComponent,
+									},
+									{
+										path: "ensaios",
+										component: EnsaiosAdminPageComponent,
+									},
+								],
 							},
 						],
 					},

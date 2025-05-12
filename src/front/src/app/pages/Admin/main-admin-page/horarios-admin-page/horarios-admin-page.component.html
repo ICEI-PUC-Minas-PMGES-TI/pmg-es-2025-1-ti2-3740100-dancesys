@@ -5,81 +5,104 @@
 		(onClose)="onConfirmDelete($event)"
 	></app-modal>
 }
-@if (isModalOpen){
-	<app-modal
-		(onClose)="closeModal()"
-	>
-	<div class="w-full">
-		<header
-			class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
-		>
-			<h1 class="font-bold text-3xl">{{ isEdit? ToggleModal.EDIT : ToggleModal.NEW}}</h1>
-		</header>
-		<main>
-			<form [formGroup]="horarioForm" class="flex flex-col p-2 space-y-2">
-				<section class="flex flex-row space-x-3 flex-1">
-				  <div class="flex flex-col flex-2">
-					<label for="idProfessor">Professor: </label>
-					<select
-					class="p-1 bg-main-300 rounded-md"
-					name="idProfessor"
-					id="idProfessor"
-					formControlName="idProfessor"
-					required>
-						<option value="">Selecione...</option>	
-						<option *ngFor="let professor of professoresObj" [ngValue]="professor.id">{{ professor.idUsuario.nome }}</option>
-					</select>
-				  </div>
+@if (isModalOpen) {
+	<app-modal (onClose)="closeModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">
+					{{ isEdit ? ToggleModal.EDIT : ToggleModal.NEW }}
+				</h1>
+			</header>
+			<main>
+				<form
+					[formGroup]="horarioForm"
+					class="flex flex-col p-2 space-y-2"
+				>
+					<section class="flex flex-row space-x-3 flex-1">
+						<div class="flex flex-col flex-2">
+							<label for="idProfessor">Professor: </label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="idProfessor"
+								id="idProfessor"
+								formControlName="idProfessor"
+								required
+							>
+								<option value="">Selecione...</option>
+								<option
+									*ngFor="let professor of professoresObj"
+									[ngValue]="professor.id"
+								>
+									{{ professor.idUsuario.nome }}
+								</option>
+							</select>
+						</div>
 
-				  <div class="flex flex-col flex-1">
-					<label for="diaSemana">Dia semana: </label>
-					<select
-					class="p-1 bg-main-300 rounded-md"
-					name="diaSemana"
-					id="diaSemana"
-					formControlName="diaSemana"
-					required>
-						<option value="">Selecione...</option>	
-						<option *ngFor="let dias of diasObj" [ngValue]="dias.dia">{{ dias.nome }}</option>
-					</select>
-				  </div>
-				</section>
-				<section class="flex flex-row space-x-2 flex-1">
-					<div class="flex flex-col flex-1">
-						<label for="horarioEntrada">Horário de Entrada:</label>
-						<input
-						  class="p-1 bg-main-300 rounded-md"
-						  type="time"
-						  lang="pt-BR"
-						  name="horarioEntrada"
-						  id="horarioEntrada"
-						  formControlName="horarioEntrada"
-						  placeholder="..."
-						  required
-						/>
-					  </div>
-				  
-					  <div class="flex flex-col flex-1">
-						<label for="horarioSaida">Horário de Saída:</label>
-						<input
-						  class="p-1 bg-main-300 rounded-md"
-						  type="time"
-						  lang="pt-BR"
-						  name="horarioSaida"
-						  id="horarioSaida"
-						  formControlName="horarioSaida"
-						  placeholder="..."
-						  required
-						/>
-					  </div>
-				</section>
-			  
-				<button class="self-start mt-3" type="submit" [disabled]="!isFormValido()" (click)="salvar()" appButton>
-				  Adicionar
-				</button>
-			  </form>
-		</main>
-	</div>
+						<div class="flex flex-col flex-1">
+							<label for="diaSemana">Dia semana: </label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="diaSemana"
+								id="diaSemana"
+								formControlName="diaSemana"
+								required
+							>
+								<option value="">Selecione...</option>
+								<option
+									*ngFor="let dias of diasObj"
+									[ngValue]="dias.dia"
+								>
+									{{ dias.nome }}
+								</option>
+							</select>
+						</div>
+					</section>
+					<section class="flex flex-row space-x-2 flex-1">
+						<div class="flex flex-col flex-1">
+							<label for="horarioEntrada"
+								>Horário de Entrada:</label
+							>
+							<input
+								class="p-1 bg-main-300 rounded-md"
+								type="time"
+								lang="pt-BR"
+								name="horarioEntrada"
+								id="horarioEntrada"
+								formControlName="horarioEntrada"
+								placeholder="..."
+								required
+							/>
+						</div>
+
+						<div class="flex flex-col flex-1">
+							<label for="horarioSaida">Horário de Saída:</label>
+							<input
+								class="p-1 bg-main-300 rounded-md"
+								type="time"
+								lang="pt-BR"
+								name="horarioSaida"
+								id="horarioSaida"
+								formControlName="horarioSaida"
+								placeholder="..."
+								required
+							/>
+						</div>
+					</section>
+
+					<button
+						class="self-start mt-3"
+						type="submit"
+						[disabled]="!isFormValido()"
+						(click)="salvar()"
+						appButton
+					>
+						Adicionar
+					</button>
+				</form>
+			</main>
+		</div>
 	</app-modal>
 }
 
@@ -89,43 +112,62 @@
 		<form class="flex flex-col text-main-500 font-bold">
 			<div class="flex px-1 flex-row space-x-2">
 				<app-multi-select-input
-				[label]="'Professor:'"
-				[options]="professoresObj"
-				optionLabel="idUsuario.nome"
-				optionValue="id"
-				(selectionChange)="onProfessorChange($event)"
-				nullLabel="Todos"
+					[class]="isModalOpen || isModalConfirm ? '-z-10' : ''"
+					[label]="'Professor:'"
+					[options]="professoresObj"
+					optionLabel="idUsuario.nome"
+					optionValue="id"
+					(selectionChange)="onProfessorChange($event)"
+					nullLabel="Todos"
 				></app-multi-select-input>
 
 				<app-multi-select-input
-				[label]="'Dias:'"
-				[options]="diasObj"
-				optionLabel="nome"
-				optionValue="dia"
-				nullLabel="Todos"
-				(selectionChange)="onDiaChange($event)"
+					[label]="'Dias:'"
+					[options]="diasObj"
+					optionLabel="nome"
+					optionValue="dia"
+					nullLabel="Todos"
+					(selectionChange)="onDiaChange($event)"
 				></app-multi-select-input>
 			</div>
 		</form>
 	</section>
 	<section class="flex justify-between flex-row">
 		<div class="flex flex-row space-x-2">
-			<button icon="add_circle" icon-slot="right" appButton color="dark" (click)="openAddModal()">
+			<button
+				icon="add_circle"
+				icon-slot="right"
+				appButton
+				color="dark"
+				(click)="openAddModal()"
+			>
 				Novo
 			</button>
-			<button icon="search" icon-slot="right" appButton color="dark" (click)="buscar()">
+			<button
+				icon="search"
+				icon-slot="right"
+				appButton
+				color="dark"
+				(click)="buscar()"
+			>
 				Filtrar
 			</button>
 		</div>
 		<div>
-			<button icon="reload" icon-slot="icon-only" color="dark" appButton></button>
+			<button
+				icon="reload"
+				icon-slot="icon-only"
+				color="dark"
+				appButton
+			></button>
 		</div>
 	</section>
 	<app-simple-table
-	[colunas]="colunas"
-	[dados]="professores.conteudo"
-	[botoesAcoes]="acoes"
-	[totalItens]="professores.total"
-	(paginacaoChange)="onPaginacaoChange($event)">
+		[colunas]="colunas"
+		[dados]="professores.conteudo"
+		[botoesAcoes]="acoes"
+		[totalItens]="professores.total"
+		(paginacaoChange)="onPaginacaoChange($event)"
+	>
 	</app-simple-table>
 </main>
