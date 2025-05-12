@@ -1,130 +1,121 @@
+@if (isModalOpen){
+<app-modal (onClose)="closeModal()">
+    <div class="w-full">
+        <header class="border-b-4 border-b-main-500 w-full flex flex-row justify-start">
+            <h1 class="font-bold text-3xl">Aula codigo</h1>
+        </header>
+        <main>
+            <div class="flex flex-col space-y-6">
+                <div class="flex flex-row space-x-2 flex-1">
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Professor</label>
+                        <label class="font-bold">{{ selectedaula.professor }}</label>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Status</label>
+                        <label class="font-bold">{{ selectedaula.status }}</label>
+                    </div>
+                </div>
+                <div class="flex flex-row space-x-2 flex-1">
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Data</label>
+                        <label class="font-bold">{{ selectedaula.data }}</label>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Horarios</label>
+                        <label class="font-bold">{{ selectedaula.horario }}</label>
+                    </div>
+                </div>
+                <div class="flex flex-row space-x-2 flex-1">
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Modalidade</label>
+                        <label class="font-bold">{{ selectedaula.modalidade }}</label>
+                    </div>
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Nivel</label>
+                        <label class="font-bold">{{ selectedaula.nivel }}</label>
+                    </div>
+                </div>
+                <div class="flex flex-row space-x-1 flex-1">
+                    <div class="flex flex-col flex-1">
+                        <label class="font-black">Maximo de alunos:</label>
+                        <label class="font-bold">{{ selectedaula.maxAlunos }}</label>
+                    </div>
+                </div>
+                <div class="flex flex-row space-x-1 flex-1">
+                    <label class="font-black flex-1">Alunos:</label>
+                </div>
+                <div class="flex space-x-1 flex-1 w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar">
+                    <table class="w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar">
+                        <thead>
+                            <tr>
+                                <th class="font-black text-left" colspan="2">Nome</th>
+                                <th class="font-black text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of selectedaula.chamada">
+                                <td class="w-12 py-2">
+                                    <img [src]="item.idAluno?.idUsuario?.urlFoto?.length > 0 
+                                    ? item.idAluno.idUsuario.urlFoto 
+                                    : './account_icon_dark.svg'" class="w-10 rounded-full">
+                                </td>
+                                <td class="text-left py-2">{{ item.idAluno.idUsuario.nome }}</td>
+                                <td class="text-left py-2">{{ item.presenca == 0? 'Ausente' : 'Presente' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</app-modal>
+}
 <main class="py-4 max-w-full max-h-full h-full">
-	<section class="flex flex-col pb-4 max-w-full">
-		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
-		<form
-			class="flex flex-col space-y-4 text-main-500 font-bold"
-			#filterForm="ngForm"
-		>
-			<div class="flex flex-row space-x-4">
-				<div class="flex flex-col">
-					<p>Datas</p>
-					<div class="flex flex-row space-x-2">
-						<input
-							class="p-1 bg-main-300 w-36 rounded-md"
-							type="date"
-							name="dataInicio"
-							id="dataInicio"
-							ngModel
-							placeholder="..."
-							#dataInicio="ngModel"
-							required
-						/>
-						<span>-</span>
-						<input
-							class="p-1 bg-main-300 w-36 rounded-md"
-							type="date"
-							name="dataFinal"
-							id="dataFinal"
-							ngModel
-							placeholder="..."
-							#dataFinal="ngModel"
-							required
-						/>
-					</div>
-				</div>
-				<div class="flex flex-col">
-					<p>Professor</p>
-					<div class="flex flex-row space-x-2">
-						<input
-							class="p-1 bg-main-300 rounded-md"
-							type="text"
-							name="professor"
-							id="professor"
-							ngModel
-							placeholder="..."
-							#professorCtrl="ngModel"
-							required
-						/>
-					</div>
-				</div>
-				<div class="flex flex-col">
-					<p>Horários</p>
-					<div class="flex flex-row space-x-2">
-						<input
-							class="p-1 bg-main-300 w-36 rounded-md"
-							type="time"
-							name="horarioInicio"
-							id="horarioInicio"
-							ngModel
-							placeholder="..."
-							#horarioInicio="ngModel"
-							required
-						/>
-						<span>-</span>
-						<input
-							class="p-1 bg-main-300 w-36 rounded-md"
-							type="time"
-							name="horarioFinal"
-							id="horarioFinal"
-							ngModel
-							placeholder="..."
-							#horarioFinal="ngModel"
-							required
-						/>
-					</div>
-				</div>
-			</div>
-			<div class="flex flex-row space-x-4">
-				<div class="flex flex-col">
-					<label for="statusFilter">Status:</label>
-					<select
-						class="p-1 rounded-md w-36 bg-main-300"
-						ngModel
-						#statusSelect="ngModel"
-						type="text"
-						name="status"
-						placeholder="..."
-						id="status"
-						value=""
-					>
-						<option value="">Todos</option>
-						<option value="1">Ativo</option>
-						<option value="0">Inativo</option>
-					</select>
-				</div>
-				<div class="flex flex-col">
-					<label for="statusFilter">Código de Aula</label>
-					<input
-						class="p-1 bg-main-300 w-36 rounded-md"
-						type="text"
-						name="codigoDeAula"
-						id="codigoDeAula"
-						ngModel
-						placeholder="..."
-						#codigoDeAula="ngModel"
-						required
-					/>
-				</div>
-			</div>
-		</form>
-	</section>
-	<section class="flex justify-between flex-row">
-		<button
-			icon="search"
-			icon-slot="right"
-			appButton
-			color="dark"
-			(click)="onFiltrar()"
-		>
-			Filtrar
-		</button>
-	</section>
-	<app-simple-table
-		[colunas]="colunas"
-		[dados]="[]"
-		[botoesAcoes]="acoes"
-		[totalItens]="0"
-		(paginacaoChange)="onPaginacaoChange($event)"
-	>
-	</app-simple-table>
+    <section class="flex flex-col pb-4 max-w-full">
+        <h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+        <form class="flex flex-col text-main-500 font-bold" [formGroup]="filterForm">
+            <div class="flex px-1 flex-row space-x-2">
+                <section class="flex flex-row space-x-4">
+                    <div class="flex flex-1 flex-col">
+                        <app-search-box-multi [options]="alunosFilterLs" optionLabel="idUsuario.nome" optionValue="id"
+                            [label]="'Aluno: '" [nullLabel]="'Pesquisar...'" (searchChange)="buscarAlunos($event)"
+                            formControlName="alunos">
+                        </app-search-box-multi>
+                    </div>
+                    <div class="flex flex-1 flex-col">
+                        <app-search-box-multi [options]="professoresFilterLs" optionLabel="idUsuario.nome"
+                            optionValue="id" [label]="'Professor: '" [nullLabel]="'Pesquisar...'"
+                            (searchChange)="buscarProfessores($event)" formControlName="professores">
+                        </app-search-box-multi>
+                    </div>
+                    <div class="flex flex-col">
+                        <label>Datas:</label>
+                        <div class="flex flex-row">
+                            <input class="p-1 rounded-md bg-main-300" type="date" name="dataInicio" id="dataInicio"
+                                formControlName="dataInicio" />
+                            <span class="text-main-500 mx-1">-</span>
+                            <input class="p-1 rounded-md bg-main-300" type="date" name="dataFim" id="dataFim"
+                                formControlName="dataFim" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label>Codigo:</label>
+                        <input class="p-1 rounded-md bg-main-300" type="text" name="codigo" id="codigo"
+                            formControlName="codigo" />
+                    </div>
+                </section>
+            </div>
+        </form>
+    </section>
+    <section class="flex justify-between flex-row">
+        <div class="flex flex-row space-x-2">
+            <button icon="search" icon-slot="right" appButton color="dark" (click)="buscar()">
+                Filtrar
+            </button>
+        </div>
+    </section>
+    <app-simple-table [colunas]="colunas" [dados]="aulas.conteudo" [botoesAcoes]="acoes" [totalItens]="aulas.total"
+        (paginacaoChange)="onPaginacaoChange($event)">
+    </app-simple-table>
 </main>
