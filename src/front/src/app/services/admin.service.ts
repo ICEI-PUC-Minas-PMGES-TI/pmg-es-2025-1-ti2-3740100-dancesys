@@ -196,6 +196,10 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula`, { ...item });
 	}
 
+	public fetchEventos(): Observable<Evento[]> {
+		return this.http.get<Evento[]>(`${environment.API_URL}evento/buscar`);
+	}
+
 	public criarEvento(evento: Evento) {
 		return this.http.post(`${environment.API_URL}evento`, evento);
 	}
@@ -208,6 +212,10 @@ export class AdminService {
 			.pipe(take(1));
 		console.log("socorro 2");
 		return lastValueFrom($res);
+	}
+
+	public excluirEvento(id: number) {
+		return this.http.delete(`${environment.API_URL}evento/excluir/${id}`);
 	}
 
 	public toogleStatusAula(id: number) {

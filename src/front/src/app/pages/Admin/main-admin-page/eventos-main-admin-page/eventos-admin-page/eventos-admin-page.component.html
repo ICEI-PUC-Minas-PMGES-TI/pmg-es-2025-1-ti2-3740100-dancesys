@@ -1,3 +1,10 @@
+@if (isModalExcluirOpen) {
+	<app-modal
+		[confirmMode]="true"
+		[message]="'Tem certeza que deseja excluir o evento?'"
+		(onClose)="onToggleExcluirModal($event)"
+	></app-modal>
+}
 @if (isModalCriarOpen) {
 	<app-modal (onClose)="onToggleCriarModal()">
 		<div class="w-full">
@@ -113,7 +120,7 @@
 		</div>
 	</app-modal>
 }
-@if (isModalEditarOpen) {
+@if (isModalEditarOpen && currentEventoEditar) {
 	<app-modal (onClose)="onToggleEditarModal()">
 		<div class="w-full">
 			<header
@@ -136,20 +143,22 @@
 									type="text"
 									name="nome"
 									id="nomeCriarEvento"
-									ngModel
+									[ngModel]="currentEventoEditar.nome"
 									placeholder="..."
 									#nomeCriarEvento="ngModel"
 									required
 								/>
 							</div>
 							<div class="flex flex-col">
-								<label for="inicio">Início</label>
+								<label for="dataHoraInicio">Início</label>
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="datetime-local"
-									name="inicio"
+									name="dataHoraInicio"
 									id="inicioCriarEvento"
-									ngModel
+									[ngModel]="
+										currentEventoEditar.dataHoraInicio
+									"
 									placeholder="..."
 									#inicioCriarEvento="ngModel"
 									required
@@ -166,6 +175,7 @@
 								<image-cropper
 									class="bg-main-100 cropper"
 									[hidden]="!imageChangedEvent"
+									[imageBase64]="currentEventoImgBase64"
 									[imageChangedEvent]="imageChangedEvent"
 									[maintainAspectRatio]="true"
 									[aspectRatio]="1"
@@ -186,33 +196,33 @@
 									type="text"
 									name="local"
 									id="localCriarEvento"
-									ngModel
+									[ngModel]="currentEventoEditar.local"
 									placeholder="..."
 									#localCriarEvento="ngModel"
 									required
 								/>
 							</div>
 							<div class="flex flex-col">
-								<label for="fim">Fim:</label>
+								<label for="dataHoraFim">Fim:</label>
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="datetime-local"
-									name="fim"
+									name="dataHoraFim"
 									id="fimCriarEvento"
-									ngModel
+									[ngModel]="currentEventoEditar.dataHoraFim"
 									placeholder="..."
 									#fimCriarEvento="ngModel"
 									required
 								/>
 							</div>
 							<div class="flex flex-col">
-								<label for="preco">Preço:</label>
+								<label for="valor">Preço:</label>
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="number"
-									name="preco"
+									name="valor"
 									id="precoCriarEvento"
-									ngModel
+									[ngModel]="currentEventoEditar.valor"
 									placeholder="..."
 									#precoCriarEvento="ngModel"
 									required
@@ -298,12 +308,14 @@
 			Filtrar
 		</button>
 	</section>
-	<app-simple-table
-		[colunas]="colunas"
-		[dados]="[]"
-		[botoesAcoes]="acoes"
-		[totalItens]="0"
-		(paginacaoChange)="onPaginacaoChange($event)"
-	>
-	</app-simple-table>
+	@if (eventos && eventos.length > 0) {
+		<app-simple-table
+			[colunas]="colunas"
+			[dados]="eventos"
+			[botoesAcoes]="acoes"
+			[totalItens]="0"
+			(paginacaoChange)="onPaginacaoChange($event)"
+		>
+		</app-simple-table>
+	}
 </main>
