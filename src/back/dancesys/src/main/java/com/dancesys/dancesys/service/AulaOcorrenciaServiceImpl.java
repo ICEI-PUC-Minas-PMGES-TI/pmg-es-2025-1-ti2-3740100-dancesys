@@ -1,8 +1,11 @@
 package com.dancesys.dancesys.service;
 
+import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
+import com.dancesys.dancesys.repository.AulaOcorrenciaRepositoryCustom;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +17,15 @@ import java.util.List;
 public class AulaOcorrenciaServiceImpl {
     private final AulaOcorrenciaRepository aulaOcorrenciaRepository;
     private final ChamadaServiceImpl chamadaServiceImpl;
+    private final AulaOcorrenciaRepositoryCustom aulaOcorrenciaRepositoryCustom;
 
     public AulaOcorrenciaServiceImpl(
             AulaOcorrenciaRepository aulaOcorrenciaRepository,
-            @Lazy ChamadaServiceImpl chamadaServiceImpl
-    ) {
+            @Lazy ChamadaServiceImpl chamadaServiceImpl,
+            AulaOcorrenciaRepositoryCustom aulaOcorrenciaRepositoryCustom) {
         this.aulaOcorrenciaRepository = aulaOcorrenciaRepository;
         this.chamadaServiceImpl = chamadaServiceImpl;
+        this.aulaOcorrenciaRepositoryCustom = aulaOcorrenciaRepositoryCustom;
     }
 
     private void salvar(AulaOcorrencia ao, List<Long> alunos){
@@ -101,6 +106,10 @@ public class AulaOcorrenciaServiceImpl {
 
     public AulaOcorrencia buscarPorId(Long id){
         return aulaOcorrenciaRepository.findById(id).get();
+    }
+
+    public PaginatedResponse<AulaOcorrencia> buscar(AulaOcorrenciaFilter filtro){
+        return aulaOcorrenciaRepositoryCustom.buscar(filtro);
     }
 
 }

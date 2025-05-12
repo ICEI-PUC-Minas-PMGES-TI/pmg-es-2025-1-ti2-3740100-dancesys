@@ -13,6 +13,7 @@ import { Aluno } from "../models/aluno.model";
 import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
+import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -204,5 +205,13 @@ export class AdminService {
 				headers: { "Content-Type": "multipart/form-data" },
 			},
 		);
+	}
+
+	public toogleStatusAula(id: number){
+		return this.http.get(`${environment.API_URL}aula/status/${id}`)
+	}
+
+	public fetchAulasOcorrentes(filtro: AulaOcorrenciaFilter){
+		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`,{...filtro})
 	}
 }

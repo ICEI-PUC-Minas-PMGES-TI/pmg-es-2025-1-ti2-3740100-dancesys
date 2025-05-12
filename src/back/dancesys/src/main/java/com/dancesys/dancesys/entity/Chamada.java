@@ -2,6 +2,7 @@ package com.dancesys.dancesys.entity;
 
 import com.dancesys.dancesys.entity.IdsCompostos.ChamadaId;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Chamada {
     @ManyToOne
     @MapsId("idAulaOcorrencia")
     @JoinColumn(name = "id_Aula_Ocorrencia", nullable = false)
+    @JsonIgnore
     private AulaOcorrencia idAulaOcorrencia;
 
     @ManyToOne

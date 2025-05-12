@@ -2,6 +2,7 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.AulaDTO;
 import com.dancesys.dancesys.dto.AulaFilter;
+import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaAluno;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
@@ -51,6 +52,7 @@ public class AulaServiceImpl implements  AulaService {
             if(dto.getId()==null){
                 aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(dto.getAlunos(), entity);
             }
+
             return AulaMapper.toDto(entity);
         }catch(Exception e){
             throw new RuntimeException(e.getMessage());
@@ -96,5 +98,10 @@ public class AulaServiceImpl implements  AulaService {
     @Override
     public PaginatedResponse<Aula> buscar(AulaFilter filter){
         return aulaRepositoryCustom.buscarAulas(filter);
+    }
+
+    @Override
+    public PaginatedResponse<AulaOcorrencia> buscar(AulaOcorrenciaFilter filtro){
+        return aulaOcorrenciaServiceImpl.buscar(filtro);
     }
 }
