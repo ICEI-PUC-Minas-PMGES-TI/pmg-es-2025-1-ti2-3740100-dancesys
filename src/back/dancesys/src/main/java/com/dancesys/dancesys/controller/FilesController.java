@@ -15,8 +15,8 @@ public class FilesController {
     @Autowired
     private FilesService filesService;
 
-    @PostMapping
-    public ResponseEntity<String> uploadFile(@RequestParam("/upload") MultipartFile file) {
+    @PostMapping(value = "upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             String fileUrl = filesService.uploadFile(file);
             return ResponseEntity.ok(fileUrl);

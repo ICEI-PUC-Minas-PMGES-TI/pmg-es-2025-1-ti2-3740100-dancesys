@@ -196,16 +196,14 @@ export class AdminService {
 	}
 
 	public uploadFileAzure(file: File) {
-		const formData = new FormData();
-		formData.append("file", file);
-		return this.http.post<string>(
-			`${environment.API_URL}file/upload`,
-			formData,
-			{
-				headers: { "Content-Type": "multipart/form-data" },
-			},
-		);
-	}
+	const formData = new FormData();
+	formData.append("file", file);
+	return this.http.post<string>(
+		`${environment.API_URL}file/upload`,
+		formData
+	);
+}
+
 
 	public toogleStatusAula(id: number){
 		return this.http.get(`${environment.API_URL}aula/status/${id}`)
