@@ -85,7 +85,7 @@ export class AulasFixasAdminPageComponent {
 		  icon: 'warning',
 		  title: 'Status',
 		  cor: 'dark',
-		  callback: (item: any) => this.excluir(item)
+		  callback: (item: any) => this.status(item)
 		}
 	  ];
 
@@ -178,9 +178,7 @@ export class AulasFixasAdminPageComponent {
   }
 
   preencherFormValue(item: any){
-    console.log("teste1: ", this.alunosFilterLs)
     this.alunosFilterLs = this.getAlunos(item.alunos)
-    console.log("teste2: ", this.alunosFilterLs)
 
     this.aulaForm = this.fb.group({
       id: [item.id],
@@ -237,7 +235,6 @@ export class AulasFixasAdminPageComponent {
   }
 
   salvar(){
-    console.log(this.getFormValue())
     this.adminService.addAula(this.getFormValue()).subscribe({
       next: (response) =>{
         this.buscar()
@@ -248,13 +245,17 @@ export class AulasFixasAdminPageComponent {
   }
 
   editar(item: any){
+    this.isEdit = true;
     this.preencherFormValue(item)
     this.openModal()
-    console.log("teste", this.getFormValue())
   }
 
-  excluir(item: any){
-
+  status(item: any){
+    this.adminService.toogleStatusAula(item.id).subscribe({
+      next: (response) =>{
+        this.buscar();
+      }
+    })
   }
 
   getAlunosIds(item: any){
@@ -277,6 +278,8 @@ export class AulasFixasAdminPageComponent {
 
   closeModal(){
     this.isModalOpen = false
+    this.isEdit = false
+    this.resertFormValue()
   }
 
   openModal(){
