@@ -28,6 +28,121 @@
 								/>
 							</div>
 							<div class="flex flex-col">
+								<label for="dataHoraInicio">Início</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="datetime-local"
+									name="dataHoraInicio"
+									id="inicioCriarEvento"
+									ngModel
+									placeholder="..."
+									#inicioCriarEvento="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="foto">Foto:</label>
+								<input
+									placeholder="Escolha um arquivo..."
+									class="p-1 bg-main-500 text-main-100 rounded-md"
+									type="file"
+									(change)="fileChangeEvent($event)"
+								/>
+								<image-cropper
+									class="bg-main-100 cropper"
+									[hidden]="!imageChangedEvent"
+									[imageChangedEvent]="imageChangedEvent"
+									[maintainAspectRatio]="true"
+									[aspectRatio]="1"
+									format="png"
+									(imageCropped)="imageCropped($event)"
+									(imageLoaded)="imageLoaded($event)"
+									(cropperReady)="cropperReady()"
+									(loadImageFailed)="loadImageFailed()"
+								></image-cropper>
+								<button type="button"></button>
+							</div>
+						</section>
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="local">Local:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="local"
+									id="localCriarEvento"
+									ngModel
+									placeholder="..."
+									#localCriarEvento="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="dataHoraFim">Fim:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="datetime-local"
+									name="dataHoraFim"
+									id="fimCriarEvento"
+									ngModel
+									placeholder="..."
+									#fimCriarEvento="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="valor">Preço:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="number"
+									name="valor"
+									id="precoCriarEvento"
+									ngModel
+									placeholder="..."
+									#precoCriarEvento="ngModel"
+									required
+								/>
+							</div>
+						</section>
+					</section>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Criar
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+@if (isModalEditarOpen) {
+	<app-modal (onClose)="onToggleEditarModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Editar Evento</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#criarEventoForm="ngForm"
+					(ngSubmit)="submitCriarEventoForm(criarEventoForm)"
+				>
+					<section class="flex flex-row space-x-2 flex-1">
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="nome">Nome:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="nome"
+									id="nomeCriarEvento"
+									ngModel
+									placeholder="..."
+									#nomeCriarEvento="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
 								<label for="inicio">Início</label>
 								<input
 									class="p-1 bg-main-300 rounded-md"

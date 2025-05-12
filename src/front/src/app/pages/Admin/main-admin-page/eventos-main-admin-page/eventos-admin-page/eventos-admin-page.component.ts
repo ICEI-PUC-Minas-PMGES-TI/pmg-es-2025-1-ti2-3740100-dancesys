@@ -98,17 +98,29 @@ export class EventosAdminPageComponent {
 			[this.croppedImage],
 			this.imageChangedEvent?.target.files[0].name,
 		);
-		if (form.valid) {
-			console.log(form.value);
-			this.adminService.uploadFileAzure(imgFile).subscribe({
-				next: (imgUrl: string) => {
-					console.log(imgUrl);
-				},
-				error: (err) => {
-					console.log(err);
-				},
-			});
-			this.onToggleCriarModal();
+		if (form.valid && this.croppedImage) {
+			this.adminService
+				.uploadFileAzure(imgFile)
+				.then((res) => {
+					// nunca chega aqui por algum motivo
+					// retorna um Erro com código 200
+					console.log(res);
+				})
+				.catch((err) => {
+					// infelizmente foi necessario, desculpa
+					// tava dando erro com a infomraçao que eu precisava
+					// ent só deu pra colocar a logica no catch e pedir perdão
+					console.log(err.error.text);
+					const evento: Evento = {
+						...(form.value as Evento),
+						urlFoto: err.error.text,
+					};
+					this.adminService.criarEvento(evento).subscribe({
+						next: () => {
+							this.onToggleCriarModal();
+						},
+					});
+				});
 		}
 	}
 
