@@ -16,10 +16,10 @@ public class EnsaioApresentacao {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "data_hora_inicio", nullable = false)
+    @Column(name = "horario_inicio", nullable = false)
     private LocalDateTime dataHoraInicio;
 
-    @Column(name = "data_hora_fim", nullable = false)
+    @Column(name = "horario_fim", nullable = false)
     private LocalDateTime dataHoraFim;
 
     @ManyToOne
