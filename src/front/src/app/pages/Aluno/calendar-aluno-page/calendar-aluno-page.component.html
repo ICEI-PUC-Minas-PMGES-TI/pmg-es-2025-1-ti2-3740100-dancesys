@@ -1,1 +1,67 @@
-<p>calendar-aluno-page works!</p>
+<main class="bg-main-100 flex flex-1 flex-col h-full w-full p-8">
+	<div class="flex items-center space-x-6">
+		<h1 class="text-3xl sm:text-5xl text-main-500 py-2 font-bold">
+			Meu Calendário
+		</h1>
+
+		<button
+			id="mes-anterior"
+			class="rounded-full bg-main-200 hover:bg-main-300 text-main-600 hover:text-main-800 transition p-2"
+			aria-label="Mês anterior"
+		>
+			<span class="text-2xl">←</span>
+		</button>
+
+		<h1 class="text-3xl sm:text-5xl text-main-500 py-2 font-bold">
+			<span id="mes-atual"></span>
+		</h1>
+
+		<button
+			id="mes-proximo"
+			class="rounded-full bg-main-200 hover:bg-main-300 text-main-600 hover:text-main-800 transition p-2"
+			aria-label="Próximo mês"
+		>
+			<span class="text-2xl">→</span>
+		</button>
+	</div>
+
+	<div class="container mx-auto p-8">
+		<section class="flex flex-col pb-4 max-w-full">
+			<h1 class="text-main-500 text-xl font-bold">Aulas marcadas</h1>
+		</section>
+
+		<app-other-card title="Aula 01">
+			<div class="flex-container">
+				<section class="data">
+					<p>
+						23/03 - Dia da semana<br />
+						14:00 às 16:00
+					</p>
+				</section>
+				<section class="t_aula">
+					<p>
+						Professor: <br />
+						Local:
+					</p>
+				</section>
+			</div>
+		</app-other-card>
+
+		<app-other-card title="Aula 02">
+			<div class="flex-container">
+				<section class="data">
+					<p>
+						23/03 - Dia da semana<br />
+						18:00 às 20:00
+					</p>
+				</section>
+				<section class="t_aula">
+					<p>
+						Professor: <br />
+						Local:
+					</p>
+				</section>
+			</div>
+		</app-other-card>
+	</div>
+</main>
