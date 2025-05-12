@@ -7,6 +7,7 @@ import com.dancesys.dancesys.repository.EventoRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class EventoServiceImpl implements EventoService {
@@ -28,5 +29,10 @@ public class EventoServiceImpl implements EventoService {
         }catch(Exception e){
             throw new IOException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Evento> buscar(){
+        return eventoRepository.findAll();
     }
 }
