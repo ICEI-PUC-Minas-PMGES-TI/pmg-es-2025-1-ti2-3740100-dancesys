@@ -3,6 +3,7 @@ package com.dancesys.dancesys.service;
 import com.dancesys.dancesys.dto.AulaDTO;
 import com.dancesys.dancesys.dto.AulaFilter;
 import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
+import com.dancesys.dancesys.dto.MensagemDTO;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaAluno;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
@@ -103,5 +104,10 @@ public class AulaServiceImpl implements  AulaService {
     @Override
     public PaginatedResponse<AulaOcorrencia> buscar(AulaOcorrenciaFilter filtro){
         return aulaOcorrenciaServiceImpl.buscar(filtro);
+    }
+
+    @Override
+    public void cancelar(Long id, MensagemDTO mensagem){
+        aulaOcorrenciaServiceImpl.cancelar(id, mensagem);
     }
 }

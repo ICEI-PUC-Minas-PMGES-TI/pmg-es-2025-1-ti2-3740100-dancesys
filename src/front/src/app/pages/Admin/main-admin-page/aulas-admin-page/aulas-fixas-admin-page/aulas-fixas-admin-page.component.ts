@@ -245,7 +245,6 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	salvar() {
-		console.log(this.getFormValue());
 		this.adminService.addAula(this.getFormValue()).subscribe({
 			next: (response) => {
 				this.buscar();

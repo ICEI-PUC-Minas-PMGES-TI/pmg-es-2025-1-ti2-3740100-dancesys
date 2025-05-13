@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { UsuarioFiltro } from '../../../../../models/usuario.model';
 import { ProfessorFiltro } from '../../../../../models/professor.model';
 import { AulaOcorrenciaFilter } from '../../../../../models/AulaOcorrencia.model';
+import { Mensagem } from '../../../../../models/Mensagem.model';
 
 @Component({
   selector: "app-aulas-recorrentes-admin-page",
@@ -29,6 +30,12 @@ export class AulasRecorrentesAdminPageComponent {
   adminService = inject(AdminService);
 
   filterForm: FormGroup
+  mensagemForm: FormGroup
+
+  statusMap: Record<number, string> = {
+		0: "Cancelada",
+		1: "Ativa",
+	};
 
   colunas = [
     { chave: 'codigo', titulo: 'Codigo' },
@@ -37,18 +44,18 @@ export class AulasRecorrentesAdminPageComponent {
     { chave: 'idAula.horarioInicio', titulo: 'Inico', formatar: (valor: any) => valor != null ? this.formatarHorario(valor) : '' },
     { chave: 'idAula.horarioFim', titulo: 'Fim', formatar: (valor: any) => valor != null ? this.formatarHorario(valor) : '' },
     { chave: 'idAula.idModalidade.nome', titulo: 'Modalidade' },
-    { chave: 'status', titulo: 'Status', width: '10%' }
+    { chave: 'status', titulo: 'Status', width: '10%', formatar: (valor: number) => this.statusMap[valor] ?? String(valor) }
   ];
 
   acoes = [
     {
-      icon: 'edit',
+      icon: 'warning',
       title: 'Status',
       cor: 'dark',
       callback: (item: any) => this.status(item)
     },
     {
-      icon: 'warning',
+      icon: 'edit',
       title: 'Visualizar',
       cor: 'dark',
       callback: (item: any) => this.visualizar(item)
@@ -64,6 +71,10 @@ export class AulasRecorrentesAdminPageComponent {
       tamanho: [this.itensPage],
       pagina: [this.paginaAtual]
     });
+
+    this.mensagemForm = this.fb.group({
+      mensagem: ['']
+    })
   }
 
   paginaAtual: number = 0;
@@ -75,6 +86,9 @@ export class AulasRecorrentesAdminPageComponent {
   selectedaula: any = {}
 
   isModalOpen: boolean = false
+  isCancelModalOpen: boolean = false
+
+  idAula!: number;
 
   ngOnInit() {
     this.buscar()
@@ -121,6 +135,13 @@ export class AulasRecorrentesAdminPageComponent {
     return AulaFilter;
   }
 
+  getMensagemForm(){
+    const item = this.mensagemForm.value
+    const mensagem: Mensagem = item
+
+    return mensagem;
+  }
+
   buscar() {
     this.adminService.fetchAulasOcorrentes(this.getFilterForm()).subscribe({
       next: (response) => {
@@ -131,8 +152,8 @@ export class AulasRecorrentesAdminPageComponent {
 
   visualizar(item: any) {
     this.isModalOpen = true;
-
     this.selectedaula = {
+      codigo: item.codigo,
       professor: item.idAula.idProfessor.idUsuario.nome,
       status: item.status == 1 ? 'Ativa' : 'Cancelada',
       data: `${this.formatardata(item.data)}`,
@@ -140,7 +161,8 @@ export class AulasRecorrentesAdminPageComponent {
       modalidade: item.idAula.idModalidade.nome,
       nivel: item.idAula.nivel == 1 ? 'Basico' : item.idAula.nivel == 2 ? 'Intermediario' : 'Avaçado',
       maxAlunos: item.idAula.maxAlunos,
-      chamada: item.chamada
+      chamada: item.chamada,
+      mensagem: item.motivoCancelamento
     }
   }
 
@@ -158,13 +180,38 @@ export class AulasRecorrentesAdminPageComponent {
   }
 
   status(item: any) {
+    this.isCancelModalOpen = true
+    this.idAula = item.id
+  }
 
+  cancelar(){
+    this.adminService.cancelarAulaOcorrente(this.getMensagemForm(), this.idAula).subscribe({
+      next: (reponse) =>{
+        this.closeMensagemModal()
+        this.buscar()
+      }
+    })
   }
 
 
   closeModal() {
     this.isModalOpen = false
   }
+
+  closeMensagemModal(){
+    this.isCancelModalOpen = false;
+    this.resetMensagemForm()
+  }
+
+  resetMensagemForm(){
+    this.mensagemForm = this.fb.group({
+      mensagem: ['']
+    })
+  }
+
+  isFormValido(): boolean {
+		return this.mensagemForm.valid;
+	}
 
   onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
     this.paginaAtual = --event.paginaSelecionada;

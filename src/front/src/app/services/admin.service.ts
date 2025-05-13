@@ -15,6 +15,7 @@ import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
 import { Evento } from "../models/evento.model";
+import { Mensagem } from "../models/Mensagem.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -226,5 +227,9 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`, {
 			...filtro,
 		});
+	}
+
+	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number){
+		return this.http.post(`${environment.API_URL}aula/ocorrencia/cancelar/${id}`, {...mensgaem})
 	}
 }

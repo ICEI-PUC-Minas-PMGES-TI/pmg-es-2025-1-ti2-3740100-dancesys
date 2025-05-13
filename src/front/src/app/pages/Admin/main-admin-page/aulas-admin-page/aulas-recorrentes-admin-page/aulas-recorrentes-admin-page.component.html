@@ -2,7 +2,7 @@
 <app-modal (onClose)="closeModal()">
     <div class="w-full">
         <header class="border-b-4 border-b-main-500 w-full flex flex-row justify-start">
-            <h1 class="font-bold text-3xl">Aula codigo</h1>
+            <h1 class="font-bold text-3xl">Aula {{ selectedaula.codigo }}</h1>
         </header>
         <main>
             <div class="flex flex-col space-y-6">
@@ -42,32 +42,72 @@
                         <label class="font-bold">{{ selectedaula.maxAlunos }}</label>
                     </div>
                 </div>
-                <div class="flex flex-row space-x-1 flex-1">
-                    <label class="font-black flex-1">Alunos:</label>
-                </div>
-                <div class="flex space-x-1 flex-1 w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar">
-                    <table class="w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar">
-                        <thead>
-                            <tr>
-                                <th class="font-black text-left" colspan="2">Nome</th>
-                                <th class="font-black text-left">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of selectedaula.chamada">
-                                <td class="w-12 py-2">
-                                    <img [src]="item.idAluno?.idUsuario?.urlFoto?.length > 0 
-                                    ? item.idAluno.idUsuario.urlFoto 
-                                    : './account_icon_dark.svg'" class="w-10 rounded-full">
-                                </td>
-                                <td class="text-left py-2">{{ item.idAluno.idUsuario.nome }}</td>
-                                <td class="text-left py-2">{{ item.presenca == 0? 'Ausente' : 'Presente' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                @if(selectedaula.status == 'Ativa'){
+                    <div class="flex flex-row space-x-1 flex-1">
+                        <label class="font-black flex-1">Alunos:</label>
+                    </div>
+                    <div class="flex space-x-1 flex-1 w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar">
+                        <table class="w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar">
+                            <thead>
+                                <tr>
+                                    <th class="font-black text-left" colspan="2">Nome</th>
+                                    <th class="font-black text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of selectedaula.chamada">
+                                    <td class="w-12 py-2">
+                                        <img [src]="item.idAluno?.idUsuario?.urlFoto?.length > 0 
+                                        ? item.idAluno.idUsuario.urlFoto 
+                                        : './account_icon_dark.svg'" class="w-10 rounded-full">
+                                    </td>
+                                    <td class="text-left py-2">{{ item.idAluno.idUsuario.nome }}</td>
+                                    <td class="text-left py-2">{{ item.presenca == 0? 'Ausente' : 'Presente' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                @if(selectedaula.status == 'Cancelada'){
+                    <div class="flex flex-col space-y-2 flex-1">
+                        <label class="font-black flex-1">Motivo do cancelamento:</label>
+                        <label class="font-black flex-1">{{ selectedaula.mensagem }}</label>
+                    </div>
+                }
             </div>
         </main>
+    </div>
+</app-modal>
+}
+
+@if(isCancelModalOpen){
+    <app-modal (onClose)="closeMensagemModal()">
+    <div class="w-full">
+        <header class="border-b-4 border-b-main-500 w-full flex flex-row justify-start">
+            <h1 class="font-bold text-3xl">Deseja mesmo cancelar essa aula?</h1>
+        </header>
+        <main>
+            <form class="flex flex-col text-main-500 font-bold" [formGroup]="mensagemForm">
+                <section class="flex flex-col space-y-2 w-full">
+						<label for="informacoesProfissionais"
+							>Motivo cancelamento:</label
+						>
+						<textarea
+							class="p-1 bg-main-300 rounded-md resize-none"
+							name="mensagem"
+							id="mensagem"
+							rows="4"
+							maxlength="255"
+							placeholder="..."
+                            formControlName="mensagem"
+						></textarea>
+					</section>
+                    <button class="self-start mt-3" type="submit" [disabled]="!isFormValido()" (click)="cancelar()" appButton>
+				  Confirmar
+				</button>
+            </form>
+        </main>
+            
     </div>
 </app-modal>
 }

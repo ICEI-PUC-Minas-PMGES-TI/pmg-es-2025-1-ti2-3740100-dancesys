@@ -3,6 +3,7 @@ package com.dancesys.dancesys.controller;
 import com.dancesys.dancesys.dto.AulaDTO;
 import com.dancesys.dancesys.dto.AulaFilter;
 import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
+import com.dancesys.dancesys.dto.MensagemDTO;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.entity.Chamada;
@@ -58,6 +59,11 @@ public class AulaController {
     @PostMapping(value = "ocorrencia/buscar")
     public PaginatedResponse<AulaOcorrencia> buscarOcorrencias(@RequestBody AulaOcorrenciaFilter filter){
         return aulaService.buscar(filter);
+    }
+
+    @PostMapping(value = "ocorrencia/cancelar/{id}")
+    public void cancelar(@PathVariable Long id, @RequestBody MensagemDTO mensagem){
+        aulaService.cancelar(id, mensagem);
     }
 
 }

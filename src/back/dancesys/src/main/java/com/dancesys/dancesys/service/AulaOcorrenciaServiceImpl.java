@@ -1,8 +1,10 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
+import com.dancesys.dancesys.dto.MensagemDTO;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
+import com.dancesys.dancesys.entity.Chamada;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepositoryCustom;
@@ -110,6 +112,17 @@ public class AulaOcorrenciaServiceImpl {
 
     public PaginatedResponse<AulaOcorrencia> buscar(AulaOcorrenciaFilter filtro){
         return aulaOcorrenciaRepositoryCustom.buscar(filtro);
+    }
+
+    public void cancelar(Long id, MensagemDTO mensagem){
+        AulaOcorrencia ao = buscarPorId(id);
+        ao.setMotivoCancelamento(mensagem.getMensagem());
+        ao.setStatus(AulaOcorrencia.INATIVO);
+        List<Chamada> chamada = chamadaServiceImpl.buscarPorAula(id);
+        if(!chamada.isEmpty()){
+            chamadaServiceImpl.deletarAll(chamada);
+        }
+        aulaOcorrenciaRepository.save(ao);
     }
 
 }

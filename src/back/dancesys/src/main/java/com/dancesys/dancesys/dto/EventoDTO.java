@@ -16,4 +16,6 @@ public class EventoDTO {
     private LocalDateTime dataHoraFim;
     private BigDecimal valor;
     private String urlFoto;
+    private String base64;
+    private String nomeArquivo;
 }
