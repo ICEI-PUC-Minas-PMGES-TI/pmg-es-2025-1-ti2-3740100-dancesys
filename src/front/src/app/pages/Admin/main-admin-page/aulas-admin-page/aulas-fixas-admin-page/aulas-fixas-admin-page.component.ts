@@ -21,6 +21,7 @@ import { CommonModule } from "@angular/common";
 import { UsuarioFiltro } from "../../../../../models/usuario.model";
 import { SalaService } from "../../../../../services/sala.service";
 import { Sala } from "../../../../../models/Sala.model";
+import { AlertService } from "../../../../../services/Alert.service";
 
 enum ToggleModal {
 	NEW = "Criar Aula",
@@ -49,6 +50,8 @@ export class AulasFixasAdminPageComponent {
 	adminService = inject(AdminService);
 	modalidadeService = inject(ModalidadesService);
 	salaService = inject(SalaService);
+	alertService = inject(AlertService);
+	
 
 	ToggleModal = ToggleModal;
 	paginaAtual: number = 0;
@@ -237,8 +240,12 @@ export class AulasFixasAdminPageComponent {
 
 	buscar() {
 		this.adminService.filterAulas(this.getfilter()).subscribe({
-			next: (response) => {
-				this.aulaObj = response;
+			next: (response: any) => {
+				if(response.total == 0){
+					this.alertService.info("Nenhum registro encontrado!")
+				}else{
+					this.aulaObj = response;
+				}
 			},
 			error: (err: any) => {},
 		});

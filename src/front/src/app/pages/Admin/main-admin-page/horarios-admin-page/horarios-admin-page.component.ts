@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AdminService } from "../../../../services/admin.service";
 import { HorarioProfessor } from "../../../../models/horarioProfessor.model";
 import { ModalComponent } from "../../../../components/modal/modal.component";
+import { AlertService } from "../../../../services/Alert.service";
 
 enum ToggleModal {
 	NEW = "Criar Horario",
@@ -30,7 +31,8 @@ enum ToggleModal {
 
 export class HorariosAdminPageComponent {
 	adminService = inject(AdminService);
-
+	alertService = inject(AlertService);
+	
 	filterForm: FormGroup;
 	horarioForm: FormGroup;
 	ToggleModal = ToggleModal;
@@ -171,8 +173,12 @@ export class HorariosAdminPageComponent {
 
 	buscar(){
 		this.adminService.fetchHoraioProfessor(this.filterGet()).subscribe({
-			next: (response) => {
-				this.professores = response
+			next: (response: any) => {
+				if(response.total == 0){
+					this.alertService.info("Nenhum registro encontrado!")
+				}else{
+					this.professores = response
+				}
 			},
 			error: (err) => {
 				console.log(err, { color: "red" });
@@ -195,6 +201,7 @@ export class HorariosAdminPageComponent {
 			next: (response) =>{
 				this.closeModal();
 				this.buscar();
+				this.alertService.sucesso("Registro salvo!")
 			},
 			error: (err) => {
 				console.log(err, { color: "red" });

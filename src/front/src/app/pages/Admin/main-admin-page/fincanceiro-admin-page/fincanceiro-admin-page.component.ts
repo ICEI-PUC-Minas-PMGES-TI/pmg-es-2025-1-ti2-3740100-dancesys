@@ -13,6 +13,7 @@ import {
 import { AdminService } from "../../../../services/admin.service";
 import { SearchBoxMultiComponent } from "../../../../components/search-box-multi/search-box-multi.component";
 import { UsuarioFiltro } from "../../../../models/usuario.model";
+import { AlertService } from "../../../../services/Alert.service";
 
 @Component({
 	selector: "app-fincanceiro-admin-page",
@@ -32,6 +33,7 @@ import { UsuarioFiltro } from "../../../../models/usuario.model";
 export class FincanceiroAdminPageComponent {
 	filterForm: FormGroup;
 	adminService = inject(AdminService);
+	alertService = inject(AlertService);
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
@@ -141,12 +143,15 @@ export class FincanceiroAdminPageComponent {
 	}
 	buscar() {
 		this.adminService.filterDividendos(this.getFilter()).subscribe({
-			next: (response) => {
-				this.dividendos = response;
+			next: (response: any) => {
+				if(response.total == 0){
+					this.alertService.info("Nenhum registro encontrado!")
+				}else{
+					this.dividendos = response;
+				}
 			},
 			error: (err: any) => {},
 		});
-		console.log(this.getFilter());
 	}
 
 	buscarAluno(termo: any) {

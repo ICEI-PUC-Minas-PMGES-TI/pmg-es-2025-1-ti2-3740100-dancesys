@@ -21,5 +21,5 @@ public interface AulaService {
 
     public PaginatedResponse<AulaOcorrencia> buscar(AulaOcorrenciaFilter filtro);
 
-    public void cancelar(Long id, MensagemDTO mensagem);
+    public void cancelar(Long id, MensagemDTO mensagem) throws RuntimeException;
 }

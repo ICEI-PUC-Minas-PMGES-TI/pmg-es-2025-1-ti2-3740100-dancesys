@@ -107,7 +107,7 @@ public class AulaServiceImpl implements  AulaService {
     }
 
     @Override
-    public void cancelar(Long id, MensagemDTO mensagem){
+    public void cancelar(Long id, MensagemDTO mensagem) throws RuntimeException{
         aulaOcorrenciaServiceImpl.cancelar(id, mensagem);
     }
 }

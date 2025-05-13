@@ -62,7 +62,7 @@ public class AulaController {
     }
 
     @PostMapping(value = "ocorrencia/cancelar/{id}")
-    public void cancelar(@PathVariable Long id, @RequestBody MensagemDTO mensagem){
+    public void cancelar(@PathVariable Long id, @RequestBody MensagemDTO mensagem) throws RuntimeException{
         aulaService.cancelar(id, mensagem);
     }
 

@@ -11,6 +11,7 @@ import { UsuarioFiltro } from '../../../../../models/usuario.model';
 import { ProfessorFiltro } from '../../../../../models/professor.model';
 import { AulaOcorrenciaFilter } from '../../../../../models/AulaOcorrencia.model';
 import { Mensagem } from '../../../../../models/Mensagem.model';
+import { AlertService } from '../../../../../services/Alert.service';
 
 @Component({
   selector: "app-aulas-recorrentes-admin-page",
@@ -28,6 +29,7 @@ import { Mensagem } from '../../../../../models/Mensagem.model';
 })
 export class AulasRecorrentesAdminPageComponent {
   adminService = inject(AdminService);
+  alertService = inject(AlertService)
 
   filterForm: FormGroup
   mensagemForm: FormGroup
@@ -189,6 +191,12 @@ export class AulasRecorrentesAdminPageComponent {
       next: (reponse) =>{
         this.closeMensagemModal()
         this.buscar()
+        this.alertService.sucesso("Aula cancelada com sucesso!")
+      },
+      error: (err) =>{
+        const msg = err?.error?.mensagem || 'Erro inesperado';
+        this.closeMensagemModal()
+        this.alertService.erro(msg);
       }
     })
   }

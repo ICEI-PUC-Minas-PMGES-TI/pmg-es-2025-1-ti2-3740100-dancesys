@@ -114,8 +114,11 @@ public class AulaOcorrenciaServiceImpl {
         return aulaOcorrenciaRepositoryCustom.buscar(filtro);
     }
 
-    public void cancelar(Long id, MensagemDTO mensagem){
+    public void cancelar(Long id, MensagemDTO mensagem) throws RuntimeException{
         AulaOcorrencia ao = buscarPorId(id);
+        if(ao.getStatus().equals(AulaOcorrencia.INATIVO)){
+            throw new RuntimeException("Aula ja cancelada");
+        }
         ao.setMotivoCancelamento(mensagem.getMensagem());
         ao.setStatus(AulaOcorrencia.INATIVO);
         List<Chamada> chamada = chamadaServiceImpl.buscarPorAula(id);
