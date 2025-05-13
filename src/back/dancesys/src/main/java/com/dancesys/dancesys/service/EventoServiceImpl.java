@@ -26,8 +26,8 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public EventoDTO salvar(EventoDTO dto) throws IOException {
         try{
-            if(dto.getBase64() != null && !dto.getBase64().equals("")){
-                MultipartFile foto = filesServiceImpl.convertBase64ToMultipartFile(dto.getBase64(), dto.getNomeArquivo());
+            if(dto.getImgBase64() != null && !dto.getImgBase64().equals("")){
+                MultipartFile foto = filesServiceImpl.convertBase64ToMultipartFile(dto.getImgBase64(), dto.getNomeArquivo());
                 String newUrl = filesServiceImpl.uploadFile(foto);
                 if(dto.getUrlFoto() != null && !dto.getUrlFoto().equals("")){
                     filesServiceImpl.deleteFileByUrl(dto.getUrlFoto());
