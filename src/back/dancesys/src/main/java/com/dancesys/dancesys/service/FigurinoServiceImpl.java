@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FigurinoImpl implements FigurinoService {
+public class FigurinoServiceImpl implements FigurinoService {
 
     private final FigurinoRepository figurinoRepository;
 
-    public FigurinoImpl(FigurinoRepository figurinoRepository) {
+    public FigurinoServiceImpl(FigurinoRepository figurinoRepository) {
         this.figurinoRepository = figurinoRepository;
     }
 
