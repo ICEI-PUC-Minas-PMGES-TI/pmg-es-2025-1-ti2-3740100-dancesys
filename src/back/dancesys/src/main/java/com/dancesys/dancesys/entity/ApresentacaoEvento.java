@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Table(name = "Apresentacao_Evento")
 @Entity(name = "Apresentacao_Evento")
@@ -25,4 +26,8 @@ public class ApresentacaoEvento {
     @ManyToOne
     @JoinColumn(name = "id_Evento", nullable = false)
     private Evento idEvento;
+
+
+    @OneToMany(mappedBy = "idApresentacao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ApresentacaoAluno> alunos;
 }

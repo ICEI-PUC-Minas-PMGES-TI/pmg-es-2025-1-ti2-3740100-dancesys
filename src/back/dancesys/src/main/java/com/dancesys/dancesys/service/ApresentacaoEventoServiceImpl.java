@@ -52,4 +52,6 @@ public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService
     public boolean existsByEvento(Long idEvento){
         return apresentacaoEventoRepository.existsByIdEvento_Id(idEvento);
     }
+
+
 }
