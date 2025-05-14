@@ -27,6 +27,8 @@ public class ApresentacaoEvento {
     @JoinColumn(name = "id_Evento", nullable = false)
     private Evento idEvento;
 
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
     @OneToMany(mappedBy = "idApresentacao", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ApresentacaoAluno> alunos;

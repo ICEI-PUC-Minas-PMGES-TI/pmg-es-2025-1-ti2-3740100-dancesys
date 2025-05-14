@@ -15,6 +15,7 @@ public class ApresentacaoEventoMapper {
         entity.setId(dto.getId());
         entity.setHoraInicio(dto.getHoraInicio());
         entity.setHoraFim(dto.getHoraFim());
+        entity.setNome(dto.getNome());
         Evento evento = new Evento();
         evento.setId(dto.getIdEvento());
         entity.setIdEvento(evento);
@@ -32,6 +33,7 @@ public class ApresentacaoEventoMapper {
         dto.setId(entity.getId());
         dto.setHoraInicio(entity.getHoraInicio());
         dto.setHoraFim(entity.getHoraFim());
+        dto.setNome(entity.getNome());
         dto.setIdEvento(entity.getIdEvento().getId());
 
         return dto;

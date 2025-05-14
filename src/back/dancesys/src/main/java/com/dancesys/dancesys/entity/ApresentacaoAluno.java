@@ -21,7 +21,7 @@ public class ApresentacaoAluno {
     private ApresentacaoEvento idApresentacao;
 
     @ManyToOne
-    @MapsId("idALuno")
+    @MapsId("idAluno")
     @JoinColumn(name = "id_Aluno")
     private Aluno idAluno;
 

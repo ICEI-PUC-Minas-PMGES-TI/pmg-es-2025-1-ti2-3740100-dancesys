@@ -16,9 +16,11 @@ import java.util.List;
 
 public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService {
     private final ApresentacaoEventoRepository apresentacaoEventoRepository;
+    private final ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl;
 
-    public ApresentacaoEventoServiceImpl(ApresentacaoEventoRepository apresentacaoEventoRepository) {
+    public ApresentacaoEventoServiceImpl(ApresentacaoEventoRepository apresentacaoEventoRepository, ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl) {
         this.apresentacaoEventoRepository = apresentacaoEventoRepository;
+        this.apresentacaoAlunoServiceImpl = apresentacaoAlunoServiceImpl;
     }
 
     @Override
@@ -26,6 +28,11 @@ public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService
         ApresentacaoEvento entity = new ApresentacaoEvento();
         try{
             entity = apresentacaoEventoRepository.save(ApresentacaoEventoMapper.toEntity(dto));
+            if(dto.getAlunos()!=null){
+                for(Long idAluno: dto.getAlunos()){
+                    apresentacaoAlunoServiceImpl.salvar(entity.getId(),idAluno);
+                }
+            }
             return ApresentacaoEventoMapper.toDto(entity);
         }
         catch(Exception e){

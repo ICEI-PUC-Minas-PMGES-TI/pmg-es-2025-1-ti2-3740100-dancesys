@@ -1,0 +1,2 @@
+ALTER TABLE Apresentacao_Evento
+ADD nome VARCHAR(100) NOT NULL DEFAULT ''
