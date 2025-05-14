@@ -1,12 +1,16 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.ApresentacaoEventoDTO;
+import com.dancesys.dancesys.dto.ApresentacaoFilter;
 import com.dancesys.dancesys.dto.IngressoEventoDTO;
 import com.dancesys.dancesys.entity.ApresentacaoEvento;
 import com.dancesys.dancesys.entity.IngressoEvento;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.ApresentacaoEventoMapper;
 import com.dancesys.dancesys.mapper.IngressoEventoMapper;
 import com.dancesys.dancesys.repository.ApresentacaoEventoRepository;
+import com.dancesys.dancesys.repository.ApresentacaoEventoRepositoryCustom;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +21,12 @@ import java.util.List;
 public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService {
     private final ApresentacaoEventoRepository apresentacaoEventoRepository;
     private final ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl;
+    private final ApresentacaoEventoRepositoryCustom apresentacaoEventoRepositoryCustom;
 
-    public ApresentacaoEventoServiceImpl(ApresentacaoEventoRepository apresentacaoEventoRepository, ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl) {
+    public ApresentacaoEventoServiceImpl(ApresentacaoEventoRepository apresentacaoEventoRepository, ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl, ApresentacaoEventoRepositoryCustom apresentacaoEventoRepositoryCustom) {
         this.apresentacaoEventoRepository = apresentacaoEventoRepository;
         this.apresentacaoAlunoServiceImpl = apresentacaoAlunoServiceImpl;
+        this.apresentacaoEventoRepositoryCustom = apresentacaoEventoRepositoryCustom;
     }
 
     @Override
@@ -41,13 +47,8 @@ public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService
     }
 
     @Override
-    public List<ApresentacaoEventoDTO> buscar(){
-        List<ApresentacaoEventoDTO> dtos = new ArrayList<>();
-        List<ApresentacaoEvento> apresentacaoEventoList = apresentacaoEventoRepository.findAll();
-        for (ApresentacaoEvento entity : apresentacaoEventoList) {
-            dtos.add(ApresentacaoEventoMapper.toDto(entity));
-        }
-        return dtos;
+    public PaginatedResponse<ApresentacaoEvento> buscar(ApresentacaoFilter filtro){
+        return apresentacaoEventoRepositoryCustom.buscar(filtro);
     }
 
     @Override

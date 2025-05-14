@@ -1,6 +1,9 @@
 package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.ApresentacaoEventoDTO;
+import com.dancesys.dancesys.dto.ApresentacaoFilter;
+import com.dancesys.dancesys.entity.ApresentacaoEvento;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.ApresentacaoEventoService;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,8 +32,8 @@ public class ApresentacaoEventoController {
         apresentacaoEventoService.deletar(id);
     }
 
-    @GetMapping(value = "buscar")
-    public List<ApresentacaoEventoDTO> buscarApresentacaoEvento() {
-        return apresentacaoEventoService.buscar();
+    @PostMapping(value = "buscar")
+    public PaginatedResponse<ApresentacaoEvento> buscar(@RequestBody ApresentacaoFilter filtro) {
+        return apresentacaoEventoService.buscar(filtro);
     }
 }
