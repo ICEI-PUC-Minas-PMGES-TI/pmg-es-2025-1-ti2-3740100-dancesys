@@ -13,9 +13,11 @@ import java.util.List;
 public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
 
     private final EnsaioApresentacaoRepository ensaioApresentacaoRepository;
+    private final EnsaioAlunoServiceImpl ensaioAlunoServiceImpl;
 
-    public EnsaioApresentacaoServiceImpl(EnsaioApresentacaoRepository ensaioApresentacaoRepository) {
+    public EnsaioApresentacaoServiceImpl(EnsaioApresentacaoRepository ensaioApresentacaoRepository, EnsaioAlunoServiceImpl ensaioAlunoServiceImpl) {
         this.ensaioApresentacaoRepository = ensaioApresentacaoRepository;
+        this.ensaioAlunoServiceImpl = ensaioAlunoServiceImpl;
     }
 
     @Override
@@ -23,6 +25,9 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
         EnsaioApresentacao entity = new EnsaioApresentacao();
         try{
             entity = ensaioApresentacaoRepository.save(EnsaioApresentacaoMapper.toEntity(dto));
+            for(Long idAluno : dto.getAlunos()){
+                ensaioAlunoServiceImpl.salvar(entity.getId(),idAluno);
+            }
             return EnsaioApresentacaoMapper.toDto(entity);
         }
         catch(Exception e){
