@@ -1,7 +1,9 @@
 package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.EventoDTO;
+import com.dancesys.dancesys.dto.EventoFilter;
 import com.dancesys.dancesys.entity.Evento;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.EventoService;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @Getter
 @Setter
@@ -26,9 +27,9 @@ public class EventoController {
         return ResponseEntity.ok(salvo);
     }
 
-    @GetMapping(value = "buscar")
-    public List<Evento> buscar(){
-        return eventoService.buscar();
+    @PostMapping(value = "buscar")
+    public PaginatedResponse<Evento> buscar(@RequestBody EventoFilter filtro){
+        return eventoService.buscar(filtro);
     }
 
     @DeleteMapping(value = "excluir")

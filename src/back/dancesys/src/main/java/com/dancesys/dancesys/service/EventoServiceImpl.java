@@ -1,9 +1,12 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.EventoDTO;
+import com.dancesys.dancesys.dto.EventoFilter;
 import com.dancesys.dancesys.entity.Evento;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.EventoMapper;
 import com.dancesys.dancesys.repository.EventoRepository;
+import com.dancesys.dancesys.repository.EventoRepositoryCustom;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,14 +18,16 @@ public class EventoServiceImpl implements EventoService {
     private final EventoRepository eventoRepository;
     private final FilesServiceImpl filesServiceImpl;
     private final ApresentacaoEventoServiceImpl apresentacaoEventoServiceImpl;
+    private final EventoRepositoryCustom eventoRepositoryCustom;
 
     public EventoServiceImpl(
             EventoRepository eventoRepository,
             FilesServiceImpl filesServiceImpl,
-            ApresentacaoEventoServiceImpl apresentacaoEventoServiceImpl) {
+            ApresentacaoEventoServiceImpl apresentacaoEventoServiceImpl, EventoRepositoryCustom eventoRepositoryCustom) {
         this.eventoRepository = eventoRepository;
         this.filesServiceImpl = filesServiceImpl;
         this.apresentacaoEventoServiceImpl = apresentacaoEventoServiceImpl;
+        this.eventoRepositoryCustom = eventoRepositoryCustom;
     }
 
     @Override
@@ -43,8 +48,8 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public List<Evento> buscar(){
-        return eventoRepository.findAll();
+    public PaginatedResponse<Evento> buscar(EventoFilter filtro){
+        return eventoRepositoryCustom.buscar(filtro);
     }
 
     @Override

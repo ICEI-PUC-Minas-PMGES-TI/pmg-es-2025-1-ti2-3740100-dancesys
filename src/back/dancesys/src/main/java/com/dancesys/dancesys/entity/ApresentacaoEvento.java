@@ -1,5 +1,7 @@
 package com.dancesys.dancesys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +27,13 @@ public class ApresentacaoEvento {
 
     @ManyToOne
     @JoinColumn(name = "id_Evento", nullable = false)
+    @JsonIgnore
     private Evento idEvento;
+
+    @JsonProperty("idEvento")
+    public Long getIdEventoOnly() {
+        return idEvento != null ? idEvento.getId() : null;
+    }
 
     @Column(name = "nome", nullable = false)
     private String nome;
