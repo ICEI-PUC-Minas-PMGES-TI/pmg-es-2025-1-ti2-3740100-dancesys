@@ -30,4 +30,9 @@ public class EventoController {
     public List<Evento> buscar(){
         return eventoService.buscar();
     }
+
+    @DeleteMapping(value = "excluir")
+    public void excluir(@PathVariable Long idEvento) throws RuntimeException {
+        eventoService.excluir(idEvento);
+    }
 }

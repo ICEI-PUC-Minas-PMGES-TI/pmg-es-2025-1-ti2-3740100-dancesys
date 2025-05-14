@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 public interface ApresentacaoEventoRepository extends JpaRepository<ApresentacaoEvento,Long> {
     ApresentacaoEvento findById(long id);
+
+    boolean existsByIdEvento_Id(Long id);
 }

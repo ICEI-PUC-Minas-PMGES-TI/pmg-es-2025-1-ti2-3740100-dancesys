@@ -10,4 +10,6 @@ public interface EventoService {
     public EventoDTO salvar(EventoDTO dto) throws IOException;
 
     public List<Evento> buscar();
+
+    public void excluir(Long idEvento) throws RuntimeException;
 }

@@ -14,13 +14,15 @@ import java.util.List;
 public class EventoServiceImpl implements EventoService {
     private final EventoRepository eventoRepository;
     private final FilesServiceImpl filesServiceImpl;
+    private final ApresentacaoEventoServiceImpl apresentacaoEventoServiceImpl;
 
     public EventoServiceImpl(
             EventoRepository eventoRepository,
-            FilesServiceImpl filesServiceImpl
-    ) {
+            FilesServiceImpl filesServiceImpl,
+            ApresentacaoEventoServiceImpl apresentacaoEventoServiceImpl) {
         this.eventoRepository = eventoRepository;
         this.filesServiceImpl = filesServiceImpl;
+        this.apresentacaoEventoServiceImpl = apresentacaoEventoServiceImpl;
     }
 
     @Override
@@ -43,5 +45,13 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public List<Evento> buscar(){
         return eventoRepository.findAll();
+    }
+
+    @Override
+    public void excluir(Long idEvento) throws RuntimeException {
+        if(apresentacaoEventoServiceImpl.existsByEvento(idEvento)){
+            throw new RuntimeException("Existem apresentações cadastardas para esse evento!");
+        }
+        eventoRepository.deleteById(idEvento);
     }
 }
