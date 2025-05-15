@@ -1,21 +1,20 @@
+import { CommonModule, DatePipe } from "@angular/common";
+import { Component, inject, OnInit } from "@angular/core";
+import { FormsModule, NgForm } from "@angular/forms";
 import {
-	ImageCropperComponent,
 	ImageCroppedEvent,
+	ImageCropperComponent,
 	LoadedImage,
 } from "ngx-image-cropper";
-import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import { BotaoComponent } from "../../../../../components/botao/botao.component";
-import { CommonModule, DatePipe } from "@angular/common";
-import { FormsModule, NgForm } from "@angular/forms";
+import { ModalComponent } from "../../../../../components/modal/modal.component";
+import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import {
 	Evento,
 	EventoFilter,
 	EventoResponse,
 } from "../../../../../models/evento.model";
-import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { AdminService } from "../../../../../services/admin.service";
-import { Subscription } from "rxjs";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -72,7 +71,8 @@ export class EventosAdminPageComponent implements OnInit {
 			icon: "delete",
 			title: "Excluir",
 			cor: "dark",
-			callback: (item: Evento) => this.onOpenExcluirModal(item.id),
+			callback: (item: Evento) =>
+				this.onOpenExcluirModal(item.id as number),
 		},
 	];
 
@@ -80,6 +80,7 @@ export class EventosAdminPageComponent implements OnInit {
 
 	imageChangedEvent: any = null;
 	croppedImage: any = "";
+	nomeArquivoFoto: string = "";
 
 	constructor() {}
 
@@ -87,11 +88,13 @@ export class EventosAdminPageComponent implements OnInit {
 		this.onFiltrar();
 	}
 
-	fileChangeEvent(event: Event): void {
+	fileChangeEvent(event: any): void {
 		this.imageChangedEvent = event;
+		this.nomeArquivoFoto = event.target!.files[0].name;
+		console.log(event);
 	}
 	imageCropped(event: ImageCroppedEvent) {
-		this.croppedImage = event!.blob;
+		this.croppedImage = event!.base64;
 	}
 	imageLoaded(image: LoadedImage) {}
 	cropperReady() {}
@@ -110,7 +113,6 @@ export class EventosAdminPageComponent implements OnInit {
 		this.isModalEditarOpen = !this.isModalEditarOpen;
 		if (this.isModalEditarOpen) {
 			this.currentEventoEditar = item;
-			return;
 		}
 		this.imageChangedEvent = null;
 	}
@@ -124,39 +126,45 @@ export class EventosAdminPageComponent implements OnInit {
 		}
 	}
 
+	limparFiltros(form: NgForm) {
+		form.reset();
+		this.onFiltrar();
+	}
+
 	onOpenExcluirModal(id: number) {
 		this.onToggleExcluirModal();
 		this.excluirEventoId = id;
 	}
 
 	submitCriarEventoForm(form: NgForm) {
-		const imgFile = new File(
-			[this.croppedImage],
-			this.imageChangedEvent?.target.files[0].name,
-		);
 		if (form.valid && this.croppedImage) {
-			this.adminService
-				.uploadFileAzure(imgFile)
-				.then((res) => {
-					// nunca chega aqui por algum motivo
-					// retorna um Erro com código 200
-					console.log(res);
-				})
-				.catch((err) => {
-					// infelizmente foi necessario, desculpa
-					// tava dando erro com a infomraçao que eu precisava
-					// ent só deu pra colocar a logica no catch e pedir perdão
-					console.log(err.error.text);
-					const evento: Evento = {
-						...(form.value as Evento),
-						urlFoto: err.error.text,
-					};
-					this.adminService.criarEvento(evento).subscribe({
-						next: () => {
-							this.onToggleCriarModal();
-						},
-					});
-				});
+			const ev: Evento = {
+				...form.value,
+				imgBase64: this.croppedImage,
+				nomeArquivo: this.nomeArquivoFoto,
+			};
+			this.adminService.updateEvento(ev).subscribe({
+				next: () => {
+					this.onToggleCriarModal();
+					this.onFiltrar();
+				},
+			});
+		}
+	}
+
+	submitEditarEventoForm(form: NgForm) {
+		if (form.valid && this.croppedImage) {
+			const ev: Evento = {
+				...this.currentEventoEditar!,
+				imgBase64: this.croppedImage as string,
+				nomeArquivo: this.nomeArquivoFoto,
+			};
+			this.adminService.updateEvento(ev).subscribe({
+				next: () => {
+					this.onToggleCriarModal();
+					this.onFiltrar();
+				},
+			});
 		}
 	}
 
@@ -182,5 +190,12 @@ export class EventosAdminPageComponent implements OnInit {
 					this.eventos = { ...ev };
 				},
 			});
+	}
+
+	hasFormValues(form: NgForm): boolean {
+		if (form) {
+			return Object.keys(form.value).some((k) => !!form.value[k]);
+		}
+		return false;
 	}
 }
