@@ -29,7 +29,7 @@ import { AlertService } from '../../../../../services/Alert.service';
 })
 export class AulasRecorrentesAdminPageComponent {
   adminService = inject(AdminService);
-  alertService = inject(AlertService)
+  alertService = inject(AlertService);
 
   filterForm: FormGroup
   mensagemForm: FormGroup

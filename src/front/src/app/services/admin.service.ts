@@ -20,6 +20,7 @@ import {
 	ApresentacaoEventoFilter,
 	ApresentacaoEventoResponse,
 } from "../models/apresentacao_evento.model";
+import { Ensaio, EnsaioFilter } from "../models/Ensaio.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -245,5 +246,17 @@ export class AdminService {
 			`${environment.API_URL}aula/ocorrencia/cancelar/${id}`,
 			{ ...mensgaem },
 		);
+	}
+
+	public filterEnsaio(filtro: EnsaioFilter){
+		return this.http.post(`${environment.API_URL}ensaioApresentacao/buscar`,{...filtro,},)
+	}
+
+	public addEnsaio(item: Ensaio){
+		return this.http.post(`${environment.API_URL}ensaioApresentacao`,{...item,},)
+	}
+
+	public deleteEnsaio(id: number){
+		return this.http.delete(`${environment.API_URL}ensaioApresentacao/excluir/${id}`)
 	}
 }

@@ -47,7 +47,7 @@ public class EnsaioRepositoryCustom {
         }
 
         if(filtro.getApresentacoes() != null && !filtro.getApresentacoes().isEmpty()){
-            predicates.add(root.get("idApresentacao").get("id").in(filtro.getApresentacoes()));
+            predicates.add(root.get("idApresentacaoEvento").get("id").in(filtro.getApresentacoes()));
         }
 
         if(filtro.getAlunos() != null && !filtro.getAlunos().isEmpty()){
@@ -84,7 +84,7 @@ public class EnsaioRepositoryCustom {
         }
 
         if(filtro.getApresentacoes() != null && !filtro.getApresentacoes().isEmpty()){
-            countPredicates.add(countRoot.get("idApresentacao").get("id").in(filtro.getApresentacoes()));
+            countPredicates.add(countRoot.get("idApresentacaoEvento").get("id").in(filtro.getApresentacoes()));
         }
 
         if(filtro.getAlunos() != null && !filtro.getAlunos().isEmpty()){
