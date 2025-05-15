@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "Evento")
 @Table(name = "Evento")
@@ -34,4 +35,7 @@ public class Evento {
 
     @Column(name = "url_foto", nullable = true)
     private String urlFoto;
+
+    @OneToMany(mappedBy = "idEvento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ApresentacaoEvento> apresentacoes;
 }

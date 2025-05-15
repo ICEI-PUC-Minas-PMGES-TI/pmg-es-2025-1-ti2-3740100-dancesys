@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environment/environment";
 import { Router } from "@angular/router";
 
-const USER_INFO_EXPIRE_DAYS: number = 1; // em dias
+const USER_INFO_EXPIRE_DAYS: number = 10; // em dias
 
 @Injectable({
 	providedIn: "root",

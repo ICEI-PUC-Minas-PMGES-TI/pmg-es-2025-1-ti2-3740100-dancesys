@@ -1,10 +1,13 @@
 package com.dancesys.dancesys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Table(name = "Apresentacao_Evento")
 @Entity(name = "Apresentacao_Evento")
@@ -24,5 +27,17 @@ public class ApresentacaoEvento {
 
     @ManyToOne
     @JoinColumn(name = "id_Evento", nullable = false)
+    @JsonIgnore
     private Evento idEvento;
+
+    @JsonProperty("idEvento")
+    public Long getIdEventoOnly() {
+        return idEvento != null ? idEvento.getId() : null;
+    }
+
+    @Column(name = "nome", nullable = false)
+    private String nome;
+
+    @OneToMany(mappedBy = "idApresentacao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ApresentacaoAluno> alunos;
 }

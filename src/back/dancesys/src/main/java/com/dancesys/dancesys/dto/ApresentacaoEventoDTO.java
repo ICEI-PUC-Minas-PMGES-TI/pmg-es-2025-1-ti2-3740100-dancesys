@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,5 +14,7 @@ public class ApresentacaoEventoDTO {
     private Long id;
     private LocalTime horaInicio;
     private LocalTime horaFim;
-    private Evento idEvento;
+    private Long idEvento;
+    private String nome;
+    private List<Long> alunos;
 }
