@@ -11,6 +11,7 @@ import java.util.List;
 public class EnsaioFilter {
     private Long idProfessor;
     private List<Long> apresentacoes;
+    private List<Long> alunos;
     private LocalDate data;
     private Integer pagina;
     private Integer tamanho;

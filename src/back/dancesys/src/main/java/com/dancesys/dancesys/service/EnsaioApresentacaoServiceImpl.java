@@ -1,9 +1,12 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.EnsaioApresentacaoDTO;
+import com.dancesys.dancesys.dto.EnsaioFilter;
 import com.dancesys.dancesys.entity.EnsaioApresentacao;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.EnsaioApresentacaoMapper;
 import com.dancesys.dancesys.repository.EnsaioApresentacaoRepository;
+import com.dancesys.dancesys.repository.EnsaioRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,10 +17,12 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
 
     private final EnsaioApresentacaoRepository ensaioApresentacaoRepository;
     private final EnsaioAlunoServiceImpl ensaioAlunoServiceImpl;
+    private final EnsaioRepositoryCustom ensaioRepositoryCustom;
 
-    public EnsaioApresentacaoServiceImpl(EnsaioApresentacaoRepository ensaioApresentacaoRepository, EnsaioAlunoServiceImpl ensaioAlunoServiceImpl) {
+    public EnsaioApresentacaoServiceImpl(EnsaioApresentacaoRepository ensaioApresentacaoRepository, EnsaioAlunoServiceImpl ensaioAlunoServiceImpl, EnsaioRepositoryCustom ensaioRepositoryCustom) {
         this.ensaioApresentacaoRepository = ensaioApresentacaoRepository;
         this.ensaioAlunoServiceImpl = ensaioAlunoServiceImpl;
+        this.ensaioRepositoryCustom = ensaioRepositoryCustom;
     }
 
     @Override
@@ -36,13 +41,8 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
     }
 
     @Override
-    public List<EnsaioApresentacaoDTO> buscar(){
-        List<EnsaioApresentacaoDTO> dtos = new ArrayList<>();
-        List<EnsaioApresentacao> ensaioApresentacaoList = ensaioApresentacaoRepository.findAll();
-        for (EnsaioApresentacao entity : ensaioApresentacaoList) {
-            dtos.add(EnsaioApresentacaoMapper.toDto(entity));
-        }
-        return dtos;
+    public PaginatedResponse<EnsaioApresentacao> buscar(EnsaioFilter filtro){
+       return ensaioRepositoryCustom.buscar(filtro);
     }
 
     @Override
