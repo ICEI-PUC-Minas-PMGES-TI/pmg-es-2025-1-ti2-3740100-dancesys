@@ -6,4 +6,6 @@ export type Evento = {
 	dataHoraFim: Date;
 	valor: number;
 	urlFoto?: string;
+	imgBase64: string;
+	nomeArquivo: string;
 };

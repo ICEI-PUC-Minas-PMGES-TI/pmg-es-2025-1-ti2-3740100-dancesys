@@ -3,7 +3,6 @@ import {
 	ImageCroppedEvent,
 	LoadedImage,
 } from "ngx-image-cropper";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import { BotaoComponent } from "../../../../../components/botao/botao.component";
@@ -36,7 +35,6 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	itensPage: number = 10;
 
 	currentEventoEditar: Evento | undefined = undefined;
-	currentEventoImgBase64?: string;
 
 	excluirEventoId: number | undefined = undefined;
 
@@ -81,7 +79,7 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	imageChangedEvent: any = null;
 	croppedImage: any = "";
 
-	constructor() {}
+	constructor() { }
 
 	ngOnInit(): void {
 		this.eventosSub = this.adminService.fetchEventos().subscribe({
@@ -101,9 +99,9 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	imageCropped(event: ImageCroppedEvent) {
 		this.croppedImage = event!.blob;
 	}
-	imageLoaded(image: LoadedImage) {}
-	cropperReady() {}
-	loadImageFailed() {}
+	imageLoaded(image: LoadedImage) { }
+	cropperReady() { }
+	loadImageFailed() { }
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
 		this.paginaAtual = --event.paginaSelecionada;
@@ -118,24 +116,13 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		this.isModalEditarOpen = !this.isModalEditarOpen;
 		if (this.isModalEditarOpen) {
 			this.currentEventoEditar = item;
-			fetch(item?.urlFoto as string, { mode: "no-cors" })
-				.then((res) => res.blob())
-				.then((blob) => {
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						this.currentEventoImgBase64 = reader.result as string;
-					};
-					reader.readAsDataURL(blob);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			return;
 		}
+		this.imageChangedEvent = null;
 	}
 	onToggleExcluirModal(confirmed?: boolean | void) {
 		this.isModalExcluirOpen = !this.isModalExcluirOpen;
 		if (confirmed) {
-			console.log(`Excluindo ${this.excluirEventoId}...`);
 			this.adminService.excluirEvento(this.excluirEventoId!).subscribe();
 		}
 		if (!this.isModalEditarOpen) {
@@ -149,8 +136,6 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	}
 
 	submitCriarEventoForm(form: NgForm) {
-		console.log(form);
-		console.log(this.croppedImage);
 		const imgFile = new File(
 			[this.croppedImage],
 			this.imageChangedEvent?.target.files[0].name,
@@ -188,5 +173,5 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		return `${strD[2]}/${strD[1]}/${strD[0]} - ${strarr[1]}`;
 	}
 
-	onFiltrar() {}
+	onFiltrar() { }
 }
