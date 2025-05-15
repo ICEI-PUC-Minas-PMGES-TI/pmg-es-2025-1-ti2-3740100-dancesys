@@ -143,30 +143,38 @@
 		>
 			<div class="flex flex-row space-x-4">
 				<div class="flex flex-col">
-					<p>Horário de Início</p>
+					<p>Nome</p>
 					<input
 						class="p-1 bg-main-300 w-36 rounded-md"
-						type="time"
-						name="horaInicio"
-						id="horaInicioFilter"
+						type="text"
+						name="nome"
+						id="nomeFilter"
 						ngModel
 						placeholder="..."
-						#horaInicioFilter="ngModel"
+						#nomeFilter="ngModel"
 						required
 					/>
 				</div>
 				<div class="flex flex-col">
-					<p>Horário de Fim:</p>
-					<input
+					<p>Evento</p>
+					<select
 						class="p-1 bg-main-300 w-36 rounded-md"
 						type="time"
-						name="horaFim"
-						id="horaFimFilter"
+						name="idEvento"
+						id="idEventoFilter"
 						ngModel
 						placeholder="..."
-						#horaFimFilter="ngModel"
+						#idEventoFilter="ngModel"
 						required
-					/>
+					>
+						@if (eventos) {
+							@for (evento of eventos.conteudo; track evento.id) {
+								<option [value]="evento.id">
+									{{ evento.nome }}
+								</option>
+							}
+						}
+					</select>
 				</div>
 			</div>
 		</form>
@@ -196,7 +204,7 @@
 			[colunas]="colunas"
 			[dados]="apresentacoes.conteudo"
 			[botoesAcoes]="acoes"
-			[totalItens]="0"
+			[totalItens]="apresentacoes.total"
 			(paginacaoChange)="onPaginacaoChange($event)"
 		>
 		</app-simple-table>

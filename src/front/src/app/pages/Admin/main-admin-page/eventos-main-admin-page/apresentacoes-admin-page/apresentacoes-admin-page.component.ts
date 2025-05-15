@@ -48,14 +48,10 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 		{
 			chave: "horaInicio",
 			titulo: "Horário de Início",
-			formatar: (valor: Time) =>
-				valor != null ? `${valor.hours}:${valor.minutes}` : "",
 		},
 		{
 			chave: "horaFim",
 			titulo: "Horário Final",
-			formatar: (valor: Time) =>
-				valor != null ? `${valor.hours}:${valor.minutes}` : "",
 		},
 	];
 	acoes = [
@@ -168,6 +164,7 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 			})
 			.subscribe({
 				next: (apRes: ApresentacaoEventoResponse) => {
+					console.log(apRes.conteudo);
 					this.apresentacoes = apRes;
 				},
 			});
