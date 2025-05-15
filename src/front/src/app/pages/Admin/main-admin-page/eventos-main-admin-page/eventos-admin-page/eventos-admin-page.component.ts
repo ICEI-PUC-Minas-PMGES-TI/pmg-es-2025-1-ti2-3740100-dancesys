@@ -8,7 +8,11 @@ import { SimpleTableComponent } from "../../../../../components/simple-table/sim
 import { BotaoComponent } from "../../../../../components/botao/botao.component";
 import { CommonModule, DatePipe } from "@angular/common";
 import { FormsModule, NgForm } from "@angular/forms";
-import { Evento } from "../../../../../models/evento.model";
+import {
+	Evento,
+	EventoFilter,
+	EventoResponse,
+} from "../../../../../models/evento.model";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { AdminService } from "../../../../../services/admin.service";
 import { Subscription } from "rxjs";
@@ -27,8 +31,7 @@ import { Subscription } from "rxjs";
 	templateUrl: "./eventos-admin-page.component.html",
 	styleUrl: "./eventos-admin-page.component.css",
 })
-export class EventosAdminPageComponent implements OnInit, OnDestroy {
-	@ViewChild("filterForm") filterForm!: NgForm;
+export class EventosAdminPageComponent implements OnInit {
 	private adminService = inject(AdminService);
 
 	paginaAtual: number = 0;
@@ -73,24 +76,15 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		},
 	];
 
-	eventos: Evento[] = [];
-	eventosSub?: Subscription;
+	eventos: EventoResponse | undefined = undefined;
 
 	imageChangedEvent: any = null;
 	croppedImage: any = "";
 
-	constructor() { }
+	constructor() {}
 
 	ngOnInit(): void {
-		this.eventosSub = this.adminService.fetchEventos().subscribe({
-			next: (ev: Evento[]) => {
-				this.eventos = [...ev];
-			},
-		});
-	}
-
-	ngOnDestroy(): void {
-		this.eventosSub?.unsubscribe();
+		this.onFiltrar();
 	}
 
 	fileChangeEvent(event: Event): void {
@@ -99,9 +93,9 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	imageCropped(event: ImageCroppedEvent) {
 		this.croppedImage = event!.blob;
 	}
-	imageLoaded(image: LoadedImage) { }
-	cropperReady() { }
-	loadImageFailed() { }
+	imageLoaded(image: LoadedImage) {}
+	cropperReady() {}
+	loadImageFailed() {}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
 		this.paginaAtual = --event.paginaSelecionada;
@@ -173,5 +167,20 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		return `${strD[2]}/${strD[1]}/${strD[0]} - ${strarr[1]}`;
 	}
 
-	onFiltrar() { }
+	onFiltrar(form?: NgForm) {
+		this.adminService
+			.fetchEventos({
+				nome: form?.value.nome as string | "",
+				local: form?.value.local as string | "",
+				data: form?.value.data as Date | null,
+				alunos: null,
+				pagina: this.paginaAtual,
+				tamanho: this.itensPage,
+			} as EventoFilter)
+			.subscribe({
+				next: (ev: EventoResponse) => {
+					this.eventos = { ...ev };
+				},
+			});
+	}
 }

@@ -14,7 +14,7 @@ import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
-import { Evento } from "../models/evento.model";
+import { Evento, EventoFilter, EventoResponse } from "../models/evento.model";
 import { Mensagem } from "../models/Mensagem.model";
 
 export type AlunoResponse = {
@@ -197,8 +197,13 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula`, { ...item });
 	}
 
-	public fetchEventos(): Observable<Evento[]> {
-		return this.http.get<Evento[]>(`${environment.API_URL}evento/buscar`);
+	public fetchEventos(filtro: EventoFilter): Observable<EventoResponse> {
+		return this.http.post<EventoResponse>(
+			`${environment.API_URL}evento/buscar`,
+			{
+				...filtro,
+			},
+		);
 	}
 
 	public criarEvento(evento: Evento) {
@@ -229,7 +234,10 @@ export class AdminService {
 		});
 	}
 
-	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number){
-		return this.http.post(`${environment.API_URL}aula/ocorrencia/cancelar/${id}`, {...mensgaem})
+	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number) {
+		return this.http.post(
+			`${environment.API_URL}aula/ocorrencia/cancelar/${id}`,
+			{ ...mensgaem },
+		);
 	}
 }
