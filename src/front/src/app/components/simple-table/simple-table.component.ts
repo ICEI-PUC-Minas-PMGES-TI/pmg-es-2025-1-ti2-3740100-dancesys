@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './simple-table.component.css'
 })
 export class SimpleTableComponent implements OnChanges {
-  @Input() colunas: { chave: string; titulo: string; width?: string, formatar?: (valor: any, item?: any) => string;}[] = [];
+  @Input() colunas: { chave: string; titulo: string; order?: boolean; width?: string, formatar?: (valor: any, item?: any) => string;}[] = [];
   @Input() dados: any[] = [];
   @Input() botoesAcoes: { icon: string; title: string; cor: string; callback: (item: any) => void }[] = [];
   @Input() totalItens: number = 0;
@@ -20,7 +20,7 @@ export class SimpleTableComponent implements OnChanges {
   @Input() actionsWidth: String = '20%'
 
   @Output() paginacaoChange = new EventEmitter<{ paginaSelecionada: number; itensPage: number }>();
-
+  @Output() orderChange = new EventEmitter<{ chave: string, direcao: 'asc' | 'desc' }>();
 
   itensForm: FormGroup;
   pgsLs: number[] = [];
@@ -28,6 +28,9 @@ export class SimpleTableComponent implements OnChanges {
   paginaIn: number = 1;
   totalPaginas!: number;
   itensPage: number = 10;
+
+  ordenacao: { chave: string; direcao: 'asc' | 'desc' } | null = null;
+
 
   constructor(private fb: FormBuilder) {
 		this.itensForm = this.fb.group({
@@ -159,5 +162,47 @@ export class SimpleTableComponent implements OnChanges {
 
     return valor;
   }
+
+  ordenarPor(chave: string) {
+  const coluna = this.colunas.find(c => c.chave === chave);
+  if (!coluna || coluna.order === false) return;
+
+  if (this.ordenacao?.chave === chave) {
+    this.ordenacao.direcao = this.ordenacao.direcao === 'asc' ? 'desc' : 'asc';
+  } else {
+    this.ordenacao = { chave, direcao: 'asc' };
+  }
+
+  if (!this.paged) {
+    this.ordenarDados();
+  } else {
+    this.orderChange.emit(this.ordenacao);
+  }
+}
+
+
+ordenarDados() {
+  const { chave, direcao } = this.ordenacao!;
+  const direcaoMultiplicador = direcao === 'asc' ? 1 : -1;
+
+  this.dados.sort((a, b) => {
+    const valorA = this.getValor(a, chave);
+    const valorB = this.getValor(b, chave);
+
+    if (valorA == null) return -1 * direcaoMultiplicador;
+    if (valorB == null) return 1 * direcaoMultiplicador;
+
+    if (typeof valorA === 'string') {
+      return valorA.localeCompare(valorB) * direcaoMultiplicador;
+    }
+
+    if (typeof valorA === 'number' || valorA instanceof Date) {
+      return (valorA > valorB ? 1 : valorA < valorB ? -1 : 0) * direcaoMultiplicador;
+    }
+
+    return 0;
+  });
+}
+
 
 }
