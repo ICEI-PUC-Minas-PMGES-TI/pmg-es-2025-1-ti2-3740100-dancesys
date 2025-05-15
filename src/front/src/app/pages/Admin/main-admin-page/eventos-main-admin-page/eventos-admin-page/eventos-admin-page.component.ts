@@ -3,13 +3,16 @@ import {
 	ImageCroppedEvent,
 	LoadedImage,
 } from "ngx-image-cropper";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import { BotaoComponent } from "../../../../../components/botao/botao.component";
 import { CommonModule, DatePipe } from "@angular/common";
 import { FormsModule, NgForm } from "@angular/forms";
-import { Evento } from "../../../../../models/evento.model";
+import {
+	Evento,
+	EventoFilter,
+	EventoResponse,
+} from "../../../../../models/evento.model";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { AdminService } from "../../../../../services/admin.service";
 import { Subscription } from "rxjs";
@@ -28,15 +31,13 @@ import { Subscription } from "rxjs";
 	templateUrl: "./eventos-admin-page.component.html",
 	styleUrl: "./eventos-admin-page.component.css",
 })
-export class EventosAdminPageComponent implements OnInit, OnDestroy {
-	@ViewChild("filterForm") filterForm!: NgForm;
+export class EventosAdminPageComponent implements OnInit {
 	private adminService = inject(AdminService);
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
 
 	currentEventoEditar: Evento | undefined = undefined;
-	currentEventoImgBase64?: string;
 
 	excluirEventoId: number | undefined = undefined;
 
@@ -75,8 +76,7 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		},
 	];
 
-	eventos: Evento[] = [];
-	eventosSub?: Subscription;
+	eventos: EventoResponse | undefined = undefined;
 
 	imageChangedEvent: any = null;
 	croppedImage: any = "";
@@ -84,15 +84,7 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	constructor() {}
 
 	ngOnInit(): void {
-		this.eventosSub = this.adminService.fetchEventos().subscribe({
-			next: (ev: Evento[]) => {
-				this.eventos = [...ev];
-			},
-		});
-	}
-
-	ngOnDestroy(): void {
-		this.eventosSub?.unsubscribe();
+		this.onFiltrar();
 	}
 
 	fileChangeEvent(event: Event): void {
@@ -118,24 +110,13 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		this.isModalEditarOpen = !this.isModalEditarOpen;
 		if (this.isModalEditarOpen) {
 			this.currentEventoEditar = item;
-			fetch(item?.urlFoto as string, { mode: "no-cors" })
-				.then((res) => res.blob())
-				.then((blob) => {
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						this.currentEventoImgBase64 = reader.result as string;
-					};
-					reader.readAsDataURL(blob);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			return;
 		}
+		this.imageChangedEvent = null;
 	}
 	onToggleExcluirModal(confirmed?: boolean | void) {
 		this.isModalExcluirOpen = !this.isModalExcluirOpen;
 		if (confirmed) {
-			console.log(`Excluindo ${this.excluirEventoId}...`);
 			this.adminService.excluirEvento(this.excluirEventoId!).subscribe();
 		}
 		if (!this.isModalEditarOpen) {
@@ -149,8 +130,6 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 	}
 
 	submitCriarEventoForm(form: NgForm) {
-		console.log(form);
-		console.log(this.croppedImage);
 		const imgFile = new File(
 			[this.croppedImage],
 			this.imageChangedEvent?.target.files[0].name,
@@ -188,5 +167,20 @@ export class EventosAdminPageComponent implements OnInit, OnDestroy {
 		return `${strD[2]}/${strD[1]}/${strD[0]} - ${strarr[1]}`;
 	}
 
-	onFiltrar() {}
+	onFiltrar(form?: NgForm) {
+		this.adminService
+			.fetchEventos({
+				nome: form?.value.nome as string | "",
+				local: form?.value.local as string | "",
+				data: form?.value.data as Date | null,
+				alunos: null,
+				pagina: this.paginaAtual,
+				tamanho: this.itensPage,
+			} as EventoFilter)
+			.subscribe({
+				next: (ev: EventoResponse) => {
+					this.eventos = { ...ev };
+				},
+			});
+	}
 }
