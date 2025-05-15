@@ -16,6 +16,10 @@ import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
 import { Evento, EventoFilter, EventoResponse } from "../models/evento.model";
 import { Mensagem } from "../models/Mensagem.model";
+import {
+	ApresentacaoEventoFilter,
+	ApresentacaoEventoResponse,
+} from "../models/apresentacao_evento.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -211,16 +215,6 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}evento`, evento);
 	}
 
-	// public uploadFileAzure(file: File) {
-	// 	const formData = new FormData();
-	// 	formData.append("file", file);
-	// 	const $res = this.http
-	// 		.post<string>(`${environment.API_URL}file/upload`, formData)
-	// 		.pipe(take(1));
-	// 	console.log("socorro 2");
-	// 	return lastValueFrom($res);
-	// }
-
 	public excluirEvento(id: number) {
 		return this.http.delete(`${environment.API_URL}evento/excluir/${id}`);
 	}
@@ -233,6 +227,17 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`, {
 			...filtro,
 		});
+	}
+
+	public fetchApresentacoes(
+		filtro: ApresentacaoEventoFilter,
+	): Observable<ApresentacaoEventoResponse> {
+		return this.http.post<ApresentacaoEventoResponse>(
+			`${environment.API_URL}apresentacaoEvento/buscar`,
+			{
+				...filtro,
+			},
+		);
 	}
 
 	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number) {

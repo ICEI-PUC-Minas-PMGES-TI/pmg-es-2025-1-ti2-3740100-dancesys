@@ -15,6 +15,7 @@ import {
 	EventoResponse,
 } from "../../../../../models/evento.model";
 import { AdminService } from "../../../../../services/admin.service";
+import { AlertService } from "../../../../../services/Alert.service";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -32,6 +33,7 @@ import { AdminService } from "../../../../../services/admin.service";
 })
 export class EventosAdminPageComponent implements OnInit {
 	private adminService = inject(AdminService);
+	private alertService = inject(AlertService);
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
@@ -119,7 +121,17 @@ export class EventosAdminPageComponent implements OnInit {
 	onToggleExcluirModal(confirmed?: boolean | void) {
 		this.isModalExcluirOpen = !this.isModalExcluirOpen;
 		if (confirmed) {
-			this.adminService.excluirEvento(this.excluirEventoId!).subscribe();
+			this.adminService.excluirEvento(this.excluirEventoId!).subscribe({
+				next: () => {
+					this.onFiltrar();
+				},
+				error: (err: any) => {
+					console.log(err);
+					this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+				},
+			});
 		}
 		if (!this.isModalEditarOpen) {
 			this.excluirEventoId = undefined;
@@ -146,6 +158,7 @@ export class EventosAdminPageComponent implements OnInit {
 			this.adminService.updateEvento(ev).subscribe({
 				next: () => {
 					this.onToggleCriarModal();
+					this.alertService.sucesso("Evento criado com sucesso!");
 					this.onFiltrar();
 				},
 			});
@@ -153,16 +166,25 @@ export class EventosAdminPageComponent implements OnInit {
 	}
 
 	submitEditarEventoForm(form: NgForm) {
-		if (form.valid && this.croppedImage) {
+		if (form.valid) {
 			const ev: Evento = {
-				...this.currentEventoEditar!,
+				...this.currentEventoEditar,
+				...form.value,
 				imgBase64: this.croppedImage as string,
 				nomeArquivo: this.nomeArquivoFoto,
 			};
+			console.log(ev);
 			this.adminService.updateEvento(ev).subscribe({
 				next: () => {
-					this.onToggleCriarModal();
+					this.onToggleEditarModal();
+					this.alertService.sucesso("Evento editado com sucesso!");
 					this.onFiltrar();
+				},
+				error: (err: any) => {
+					this.onToggleEditarModal();
+					this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado",
+					);
 				},
 			});
 		}

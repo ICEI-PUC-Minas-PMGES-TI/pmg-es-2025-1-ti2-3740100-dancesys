@@ -18,7 +18,7 @@ export type EventoResponse = {
 export type EventoFilter = {
 	nome: string;
 	local: string;
-	data: Date;
+	data: Date | null;
 	alunos: number[] | null;
 	pagina: number;
 	tamanho: number;

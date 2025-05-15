@@ -34,6 +34,6 @@ public class EventoController {
 
     @DeleteMapping(value = "excluir/{id}")
     public void excluir(@PathVariable Long id) throws RuntimeException {
-        eventoService.excluir(idEvento);
+        eventoService.excluir(id);
     }
 }

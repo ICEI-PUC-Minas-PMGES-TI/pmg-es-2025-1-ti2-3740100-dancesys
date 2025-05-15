@@ -6,7 +6,14 @@ import { FormsModule, NgForm } from "@angular/forms";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { AdminService } from "../../../../../services/admin.service";
 import { Subscription } from "rxjs";
-import { ApresentacaoEvento } from "../../../../../models/apresentacao_evento.model";
+import {
+	ApresentacaoEvento,
+	ApresentacaoEventoResponse,
+} from "../../../../../models/apresentacao_evento.model";
+import {
+	EventoFilter,
+	EventoResponse,
+} from "../../../../../models/evento.model";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -42,13 +49,13 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 			chave: "horaInicio",
 			titulo: "Horário de Início",
 			formatar: (valor: Time) =>
-				valor != null ? `${valor.hours}:${valor.minutes}` : '',
+				valor != null ? `${valor.hours}:${valor.minutes}` : "",
 		},
 		{
 			chave: "horaFim",
 			titulo: "Horário Final",
 			formatar: (valor: Time) =>
-				valor != null ? `${valor.hours}:${valor.minutes}` : '',
+				valor != null ? `${valor.hours}:${valor.minutes}` : "",
 		},
 	];
 	acoes = [
@@ -56,25 +63,44 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 			icon: "edit",
 			title: "Editar",
 			cor: "dark",
-			callback: (item: ApresentacaoEvento) => this.onToggleEditarModal(item),
+			callback: (item: ApresentacaoEvento) =>
+				this.onToggleEditarModal(item),
 		},
 		{
 			icon: "delete",
 			title: "Excluir",
 			cor: "dark",
-			callback: (item: ApresentacaoEvento) => this.onOpenExcluirModal(item.id),
+			callback: (item: ApresentacaoEvento) =>
+				this.onOpenExcluirModal(item.id),
 		},
 	];
 
-	apresentacoes: ApresentacaoEvento[] = [];
-	apresentacoesSub?: Subscription;
+	apresentacoes: ApresentacaoEventoResponse | undefined = undefined;
+	eventos: EventoResponse | undefined = undefined;
 
 	ngOnInit(): void {
 		// codigo da subscription de apresentacao aqui
+		this.onFiltrar();
+		this.fetchEventos();
 	}
 
-	ngOnDestroy(): void {
-		this.apresentacoesSub?.unsubscribe();
+	ngOnDestroy(): void {}
+
+	private fetchEventos() {
+		this.adminService
+			.fetchEventos({
+				nome: "",
+				local: "",
+				data: null,
+				alunos: null,
+				tamanho: 0,
+				pagina: 0,
+			} as EventoFilter)
+			.subscribe({
+				next: (ev: EventoResponse) => {
+					this.eventos = ev;
+				},
+			});
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
@@ -115,5 +141,35 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	onFiltrar() { }
+	submitEditarApresentacaoForm(form: NgForm) {
+		if (form.valid) {
+			// codigo para editar a apresentacao pelo adminService
+		}
+	}
+
+	onFiltrar() {
+		if (this.filterForm) {
+			this.adminService
+				.fetchApresentacoes({ ...this.filterForm.value })
+				.subscribe({
+					next: (apRes: ApresentacaoEventoResponse) => {
+						this.apresentacoes = apRes;
+					},
+				});
+			return;
+		}
+		this.adminService
+			.fetchApresentacoes({
+				nome: null,
+				alunos: null,
+				idEvento: null,
+				tamanho: 0,
+				pagina: 0,
+			})
+			.subscribe({
+				next: (apRes: ApresentacaoEventoResponse) => {
+					this.apresentacoes = apRes;
+				},
+			});
+	}
 }
