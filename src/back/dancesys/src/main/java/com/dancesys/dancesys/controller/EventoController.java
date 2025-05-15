@@ -32,7 +32,7 @@ public class EventoController {
         return eventoService.buscar(filtro);
     }
 
-    @DeleteMapping(value = "excluir")
+    @DeleteMapping(value = "excluir/{id}")
     public void excluir(@PathVariable Long idEvento) throws RuntimeException {
         eventoService.excluir(idEvento);
     }

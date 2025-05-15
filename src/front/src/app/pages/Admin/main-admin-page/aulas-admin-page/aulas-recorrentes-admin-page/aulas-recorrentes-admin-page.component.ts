@@ -226,4 +226,8 @@ export class AulasRecorrentesAdminPageComponent {
     this.itensPage = event.itensPage;
     this.buscar();
   }
+
+  orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
+    console.log(event.chave,"-",event.direcao)
+  }
 }
