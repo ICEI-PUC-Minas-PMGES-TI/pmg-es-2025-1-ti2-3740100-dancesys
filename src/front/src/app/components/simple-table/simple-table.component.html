@@ -9,10 +9,12 @@
 				[class.cursor-pointer]="coluna.order ?? true"
 				class="select-none"
 				>
-					{{ coluna.titulo }}
-					<span *ngIf="ordenacao?.chave === coluna.chave">
-						{{ ordenacao?.direcao === 'asc' ? '▲' : '▼' }}
-					</span>
+					<div class="w-full flex flex-row justify-between px-6">
+						{{ coluna.titulo }}
+						<span [ngClass]="{ 'visivel': ordenacao?.chave === coluna.chave, 'invisivel': ordenacao?.chave !== coluna.chave }">
+							{{ ordenacao?.direcao === 'asc' ? '▲' : '▼' }}
+						</span>
+					</div>
 				</th>
 
 
@@ -30,6 +32,7 @@
 							? 'dontHaveButtons'
 							: ''
 					"
+					class="text-center"
 				>
 					{{
 						coluna.formatar
