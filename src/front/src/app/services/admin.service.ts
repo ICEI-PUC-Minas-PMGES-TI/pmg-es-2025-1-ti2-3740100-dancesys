@@ -206,19 +206,20 @@ export class AdminService {
 		);
 	}
 
-	public criarEvento(evento: Evento) {
+	// caso nao exista ele cria um
+	public updateEvento(evento: Evento) {
 		return this.http.post(`${environment.API_URL}evento`, evento);
 	}
 
-	public uploadFileAzure(file: File) {
-		const formData = new FormData();
-		formData.append("file", file);
-		const $res = this.http
-			.post<string>(`${environment.API_URL}file/upload`, formData)
-			.pipe(take(1));
-		console.log("socorro 2");
-		return lastValueFrom($res);
-	}
+	// public uploadFileAzure(file: File) {
+	// 	const formData = new FormData();
+	// 	formData.append("file", file);
+	// 	const $res = this.http
+	// 		.post<string>(`${environment.API_URL}file/upload`, formData)
+	// 		.pipe(take(1));
+	// 	console.log("socorro 2");
+	// 	return lastValueFrom($res);
+	// }
 
 	public excluirEvento(id: number) {
 		return this.http.delete(`${environment.API_URL}evento/excluir/${id}`);

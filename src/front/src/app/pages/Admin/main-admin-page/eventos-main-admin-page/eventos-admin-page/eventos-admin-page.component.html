@@ -67,6 +67,7 @@
 									(imageLoaded)="imageLoaded($event)"
 									(cropperReady)="cropperReady()"
 									(loadImageFailed)="loadImageFailed()"
+									output="base64"
 								></image-cropper>
 								<button type="button"></button>
 							</div>
@@ -185,6 +186,7 @@
 									(imageLoaded)="imageLoaded($event)"
 									(cropperReady)="cropperReady()"
 									(loadImageFailed)="loadImageFailed()"
+									output="base64"
 								></image-cropper>
 								@if (
 									!imageChangedEvent &&
@@ -250,7 +252,20 @@
 }
 <main class="py-4 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
-		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				[class]="{
+					hidden: !hasFormValues(filterForm),
+				}"
+				(click)="limparFiltros(filterForm)"
+			>
+				Limpar filtros
+			</button>
+		</div>
 		<form
 			class="flex flex-col space-y-4 text-main-500 font-bold"
 			#filterForm="ngForm"
@@ -314,7 +329,7 @@
 			icon-slot="right"
 			appButton
 			color="dark"
-			(click)="onFiltrar()"
+			(click)="filterForm.ngSubmit.emit()"
 		>
 			Filtrar
 		</button>

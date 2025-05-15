@@ -1,5 +1,5 @@
 export type Evento = {
-	id: number;
+	id?: number;
 	nome: string;
 	local: string;
 	dataHoraInicio: Date;
