@@ -57,7 +57,7 @@ export class AulasRecorrentesAdminPageComponent {
       callback: (item: any) => this.status(item)
     },
     {
-      icon: 'edit',
+      icon: 'view',
       title: 'Visualizar',
       cor: 'dark',
       callback: (item: any) => this.visualizar(item)
