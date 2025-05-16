@@ -2,7 +2,6 @@ package com.dancesys.dancesys.repository;
 
 import com.dancesys.dancesys.dto.ApresentacaoFilter;
 import com.dancesys.dancesys.entity.ApresentacaoEvento;
-import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
