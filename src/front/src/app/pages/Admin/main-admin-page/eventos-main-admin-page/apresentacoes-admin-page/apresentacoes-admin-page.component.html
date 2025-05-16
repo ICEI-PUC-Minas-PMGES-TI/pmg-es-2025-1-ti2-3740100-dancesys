@@ -1,1 +1,307 @@
-<p>apresentacoes-admin-page works!</p>
+@if (isModalExcluirOpen) {
+	<app-modal
+		[confirmMode]="true"
+		[message]="'Tem certeza que deseja excluir a apresentação?'"
+		(onClose)="onToggleExcluirModal($event)"
+	></app-modal>
+}
+@if (isModalCriarOpen) {
+	<app-modal (onClose)="onToggleCriarModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Criar Evento</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#criarApresentacaoForm="ngForm"
+					(ngSubmit)="
+						submitCriarApresentacaoForm(criarApresentacaoForm)
+					"
+				>
+					<section class="flex flex-col space-y-2">
+						<div class="flex flex-col">
+							<label for="nome">Nome da Apresentação</label>
+							<input
+								type="text"
+								name="nome"
+								ngModel
+								id="nomeFilter"
+								#nomeFilter="ngModel"
+								placeholder="..."
+								class="p-1 bg-main-300 rounded-md"
+							/>
+						</div>
+						<div class="flex flex-row space-x-2 items-center">
+							<div class="flex flex-col">
+								<label for="horaInicio"
+									>Horário de Início</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="time"
+									name="horaInicio"
+									id="inicioCriarApresentacao"
+									ngModel
+									placeholder="..."
+									#inicioCriarApresentacao="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="horaFim">Horário de Fim</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="time"
+									name="horaFim"
+									id="fimCriarApresentacao"
+									ngModel
+									placeholder="..."
+									#fimCriarApresentacao="ngModel"
+									required
+								/>
+							</div>
+						</div>
+						<div class="flex flex-col">
+							<label for="idEvento">Evento:</label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="idEvento"
+								id="idEventoFilter"
+								ngModel
+								placeholder="..."
+								#idEventoFilter="ngModel"
+								required
+							>
+								@if (eventos) {
+									@for (
+										evento of eventos.conteudo;
+										track evento.id
+									) {
+										<option [value]="evento.id">
+											{{ evento.nome }}
+										</option>
+									}
+								}
+							</select>
+						</div>
+						<div>
+							<app-search-box-multi
+								[options]="alunosLs"
+								optionLabel="idUsuario.nome"
+								optionValue="id"
+								[label]="'Aluno: '"
+								[nullLabel]="'Pesquisar...'"
+								(searchChange)="buscarAlunos($event)"
+								name="alunos"
+								ngModel
+							>
+							</app-search-box-multi>
+						</div>
+					</section>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Criar
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+@if (isModalEditarOpen && currentApresentacaoEditar) {
+	<app-modal (onClose)="onToggleEditarModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Editar Apresentação</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#editarApresentacaoForm="ngForm"
+					(ngSubmit)="
+						submitEditarApresentacaoForm(editarApresentacaoForm)
+					"
+				>
+					<section class="flex flex-col space-y-2 flex-1">
+						<div class="flex flex-col">
+							<label for="nome">Nome da Apresentação</label>
+							<input
+								type="text"
+								name="nome"
+								[ngModel]="currentApresentacaoEditar.nome"
+								id="nomeFilter"
+								#nomeFilter="ngModel"
+								placeholder="..."
+								class="p-1 bg-main-300 rounded-md"
+							/>
+						</div>
+						<div class="flex flex-row space-x-2 items-center">
+							<div class="flex flex-col">
+								<label for="horaInicio"
+									>Horário de Início</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="time"
+									name="horaInicio"
+									id="inicioCriarApresentacao"
+									[ngModel]="
+										currentApresentacaoEditar.horaInicio
+									"
+									placeholder="..."
+									#inicioCriarApresentacao="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="horaFim">Horário de Fim</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="time"
+									name="horaFim"
+									id="fimCriarApresentacao"
+									[ngModel]="
+										currentApresentacaoEditar.horaFim
+									"
+									placeholder="..."
+									#fimCriarApresentacao="ngModel"
+									required
+								/>
+							</div>
+						</div>
+						<div class="flex flex-col">
+							<label for="idEvento">Evento:</label>
+							<select
+								class="p-1 bg-main-300 rounded-md"
+								name="idEvento"
+								id="idEventoFilter"
+								[ngModel]="currentApresentacaoEditar.idEvento"
+								placeholder="..."
+								#idEventoFilter="ngModel"
+								required
+							>
+								@if (eventos) {
+									@for (
+										evento of eventos.conteudo;
+										track evento.id
+									) {
+										<option [value]="evento.id">
+											{{ evento.nome }}
+										</option>
+									}
+								}
+							</select>
+						</div>
+						<div class="flex flex-col">
+							<app-search-box-multi
+								[options]="alunosLs"
+								optionLabel="idUsuario.nome"
+								optionValue="id"
+								[label]="'Aluno: '"
+								[nullLabel]="'Pesquisar...'"
+								(searchChange)="buscarAlunos($event)"
+								name="alunos"
+								[ngModel]="alunosEditar"
+							>
+							</app-search-box-multi>
+						</div>
+					</section>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Salvar Edições
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+<main class="py-4 max-w-full max-h-full h-full">
+	<section class="flex flex-col pb-4 max-w-full">
+		<div class="flex space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				[class]="{
+					hidden: !hasFormValues(filterForm),
+				}"
+				(click)="limparFiltros(filterForm)"
+			>
+				Limpar filtros
+			</button>
+		</div>
+		<form
+			class="flex flex-col space-y-4 text-main-500 font-bold"
+			#filterForm="ngForm"
+		>
+			<div class="flex flex-row space-x-4">
+				<div class="flex flex-col">
+					<p>Nome</p>
+					<input
+						class="p-1 bg-main-300 w-36 rounded-md"
+						type="text"
+						name="nome"
+						id="nomeFilter"
+						ngModel
+						placeholder="..."
+						#nomeFilter="ngModel"
+						required
+					/>
+				</div>
+				<div class="flex flex-col">
+					<p>Evento</p>
+					<select
+						class="p-1 bg-main-300 rounded-md"
+						name="idEvento"
+						id="idEventoFilter"
+						ngModel
+						placeholder="..."
+						#idEventoFilter="ngModel"
+						required
+					>
+						@if (eventos) {
+							@for (evento of eventos.conteudo; track evento.id) {
+								<option [value]="evento.id">
+									{{ evento.nome }}
+								</option>
+							}
+						}
+					</select>
+				</div>
+			</div>
+		</form>
+	</section>
+	<section class="flex justify-start space-x-2 flex-row">
+		<button
+			(click)="onToggleCriarModal()"
+			icon="add_circle"
+			icon-slot="right"
+			appButton
+			color="dark"
+		>
+			Novo
+		</button>
+		<button
+			icon="search"
+			icon-slot="right"
+			appButton
+			color="dark"
+			(click)="onFiltrar()"
+		>
+			Filtrar
+		</button>
+	</section>
+	@if (apresentacoes && apresentacoes.conteudo.length > 0) {
+		<app-simple-table
+			[colunas]="colunas"
+			[dados]="apresentacoes.conteudo"
+			[botoesAcoes]="acoes"
+			[totalItens]="apresentacoes.total"
+			(paginacaoChange)="onPaginacaoChange($event)"
+		>
+		</app-simple-table>
+	}
+</main>

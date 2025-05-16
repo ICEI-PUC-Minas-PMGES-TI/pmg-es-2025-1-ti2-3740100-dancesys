@@ -9,4 +9,6 @@ public interface EnsaioApresentacaoRepository extends JpaRepository<EnsaioAprese
 
     EnsaioApresentacao findById(long id);
 
+    boolean existsByIdApresentacaoEventoId(Long id);
+
 }

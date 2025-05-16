@@ -1,5 +1,6 @@
 @if (isModalExcluirOpen) {
 	<app-modal
+		class="w-full"
 		[confirmMode]="true"
 		[message]="'Tem certeza que deseja excluir o evento?'"
 		(onClose)="onToggleExcluirModal($event)"
@@ -66,6 +67,7 @@
 									(imageLoaded)="imageLoaded($event)"
 									(cropperReady)="cropperReady()"
 									(loadImageFailed)="loadImageFailed()"
+									output="base64"
 								></image-cropper>
 								<button type="button"></button>
 							</div>
@@ -129,10 +131,11 @@
 				<h1 class="font-bold text-3xl">Editar Evento</h1>
 			</header>
 			<main>
+				<!-- Mudar a funçao do form de edição (esta com a mesma de criar) -->
 				<form
 					class="flex flex-1 space-y-2 flex-col p-2"
-					#criarEventoForm="ngForm"
-					(ngSubmit)="submitCriarEventoForm(criarEventoForm)"
+					#editarEventoForm="ngForm"
+					(ngSubmit)="submitEditarEventoForm(editarEventoForm)"
 				>
 					<section class="flex flex-row space-x-2 flex-1">
 						<section class="flex flex-col space-y-2 flex-1">
@@ -175,7 +178,6 @@
 								<image-cropper
 									class="bg-main-100 cropper"
 									[hidden]="!imageChangedEvent"
-									[imageBase64]="currentEventoImgBase64"
 									[imageChangedEvent]="imageChangedEvent"
 									[maintainAspectRatio]="true"
 									[aspectRatio]="1"
@@ -184,8 +186,18 @@
 									(imageLoaded)="imageLoaded($event)"
 									(cropperReady)="cropperReady()"
 									(loadImageFailed)="loadImageFailed()"
+									output="base64"
 								></image-cropper>
-								<button type="button"></button>
+								@if (
+									!imageChangedEvent &&
+									currentEventoEditar.urlFoto
+								) {
+									<img
+										class="object-contain w-40 h-40 mt-2"
+										[src]="currentEventoEditar.urlFoto"
+										alt=""
+									/>
+								}
 							</div>
 						</section>
 						<section class="flex flex-col space-y-2 flex-1">
@@ -231,7 +243,7 @@
 						</section>
 					</section>
 					<button class="flex flex-0 mt-3" type="submit" appButton>
-						Criar
+						Salvar Edições
 					</button>
 				</form>
 			</main>
@@ -240,10 +252,24 @@
 }
 <main class="py-4 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
-		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				[class]="{
+					hidden: !hasFormValues(filterForm),
+				}"
+				(click)="limparFiltros(filterForm)"
+			>
+				Limpar filtros
+			</button>
+		</div>
 		<form
 			class="flex flex-col space-y-4 text-main-500 font-bold"
 			#filterForm="ngForm"
+			(ngSubmit)="onFiltrar(filterForm)"
 		>
 			<div class="flex flex-row space-x-4">
 				<div class="flex flex-col">
@@ -303,17 +329,17 @@
 			icon-slot="right"
 			appButton
 			color="dark"
-			(click)="onFiltrar()"
+			(click)="filterForm.ngSubmit.emit()"
 		>
 			Filtrar
 		</button>
 	</section>
-	@if (eventos && eventos.length > 0) {
+	@if (eventos && eventos.conteudo.length > 0) {
 		<app-simple-table
 			[colunas]="colunas"
-			[dados]="eventos"
+			[dados]="eventos.conteudo"
 			[botoesAcoes]="acoes"
-			[totalItens]="0"
+			[totalItens]="eventos.total"
 			(paginacaoChange)="onPaginacaoChange($event)"
 		>
 		</app-simple-table>

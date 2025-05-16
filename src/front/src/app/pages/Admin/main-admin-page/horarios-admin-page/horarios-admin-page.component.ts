@@ -219,15 +219,16 @@ export class HorariosAdminPageComponent {
 		if(choice){
 			this.adminService.excluirHorarioProfessor(this.idDelete).subscribe({
 				next: () =>{
-					console.log('next completa');
-					this.isModalConfirm = false;
 					this.buscar();
+					this.alertService.exclusao("Horario excluid com sucesso!")
 				},
 				error: (err) => {
 					console.log(err, { color: "red" });
 				},
 			})
 		}
+		this.idDelete = 0
+		this.isModalConfirm = false;
 	}
 	  
 	excluir(item: any) {

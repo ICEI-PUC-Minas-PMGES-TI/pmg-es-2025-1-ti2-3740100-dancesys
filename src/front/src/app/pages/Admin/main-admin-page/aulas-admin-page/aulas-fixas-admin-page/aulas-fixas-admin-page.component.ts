@@ -57,7 +57,10 @@ export class AulasFixasAdminPageComponent {
 	paginaAtual: number = 0;
 	itensPage: number = 10;
 	isModalOpen: boolean = false;
+	isModalConfirm: boolean = false;
 	isEdit: boolean = false;
+
+	statusId!: number
 
 	diaSemanaMap: Record<number, string> = {
 		1: "Segunda",
@@ -105,7 +108,7 @@ export class AulasFixasAdminPageComponent {
 			icon: "warning",
 			title: "Status",
 			cor: "dark",
-			callback: (item: any) => this.excluir(item),
+			callback: (item: any) => this.status(item),
 		},
 	];
 
@@ -189,6 +192,7 @@ export class AulasFixasAdminPageComponent {
 	getFormValue() {
 		const item = this.aulaForm.value;
 		const aulaItem: Aula = item;
+		
 		return aulaItem;
 	}
 
@@ -252,11 +256,19 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	salvar() {
-		this.adminService.addAula(this.getFormValue()).subscribe({
+
+		const formValue : Aula = this.getFormValue()
+		if(formValue.maxAlunos < formValue.alunos.length){
+			this.alertService.info("Maximo de alunos ultrapassado!")
+			return;
+		}
+
+		this.adminService.addAula(formValue).subscribe({
 			next: (response) => {
 				this.buscar();
 				this.resertFormValue();
 				this.closeModal();
+				this.alertService.sucesso(this.isEdit? "Aula editada com sucesso": "Aula criada com sucesso")
 			},
 		});
 	}
@@ -266,7 +278,26 @@ export class AulasFixasAdminPageComponent {
 		this.openModal();
 	}
 
-	excluir(item: any) {}
+	status(item: any) {
+		this.statusId = item.id
+		this.isModalConfirm = true
+	}
+
+	onConfirmStatus(choice: boolean | void){
+		if (choice) {
+			this.adminService.alterarStatusAula(this.statusId).subscribe({
+				next: () => {
+					this.buscar();
+					this.alertService.info("Status da aula alterado!");
+				},
+				error: (err) => {
+					console.log(err, { color: "red" });
+				},
+			});
+		}
+		this.statusId = 0;
+		this.isModalConfirm = false;
+	}
 
 	getAlunosIds(item: any) {
 		const ids: any[] = [];

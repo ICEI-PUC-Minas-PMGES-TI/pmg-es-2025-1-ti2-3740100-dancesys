@@ -52,8 +52,8 @@ public class AulaController {
     }
 
     @GetMapping(value = "status/{id}")
-    public String mudarStatus(@PathVariable Long id) throws Exception {
-        return aulaService.mudarStatus(id);
+    public void mudarStatus(@PathVariable Long id) throws Exception {
+        aulaService.mudarStatus(id);
     }
 
     @PostMapping(value = "ocorrencia/buscar")

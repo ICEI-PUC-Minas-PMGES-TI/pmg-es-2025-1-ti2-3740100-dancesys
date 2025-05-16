@@ -45,7 +45,18 @@ public class AulaServiceImpl implements  AulaService {
     @Override
     public AulaDTO salvar(AulaDTO dto) throws Exception{
         try{
-            if(dto.getId()==null) dto.setStatus(Aula.ativo);
+            if(dto.getId()==null){
+                dto.setStatus(Aula.ativo);
+            }else{
+                List<AulaAluno> alunosNotIn = aulaAlunoServiceImpl.alunosNotIn(dto.getId(), dto.getAlunos());
+                if(!alunosNotIn.isEmpty()){
+                    List<Long> idsNotIn = alunosNotIn.stream()
+                            .map(aulaAluno -> aulaAluno.getIdAluno().getId())
+                            .collect(Collectors.toList());
+
+                    chamadaServiceImpl.deletarAll(chamadaServiceImpl.findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(dto.getId(), idsNotIn));
+                }
+            }
 
             Aula entity = aulaRepository.save(AulaMapper.toEntity(dto));
             aulaAlunoServiceImpl.salvar(dto.getAlunos(),entity.getId());
@@ -61,7 +72,7 @@ public class AulaServiceImpl implements  AulaService {
     }
 
     @Override
-    public String mudarStatus(Long id) throws Exception{
+    public void mudarStatus(Long id) throws Exception{
         Aula aula = aulaRepository.findById(id).get();
         if(aula.getStatus().equals(Aula.ativo)){
             aula.setStatus(Aula.desativo);
@@ -81,7 +92,6 @@ public class AulaServiceImpl implements  AulaService {
             aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(idsAlunos, aula);
         }
         aulaRepository.save(aula);
-        return "Status alterado com sucesso";
     }
 
     @Override

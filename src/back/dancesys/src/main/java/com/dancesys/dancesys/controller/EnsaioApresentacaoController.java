@@ -1,6 +1,9 @@
 package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.EnsaioApresentacaoDTO;
+import com.dancesys.dancesys.dto.EnsaioFilter;
+import com.dancesys.dancesys.entity.EnsaioApresentacao;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.EnsaioApresentacaoService;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,9 +28,9 @@ public class EnsaioApresentacaoController {
         return ResponseEntity.ok(salvo);
     }
 
-    @GetMapping(value = "buscar")
-    public List<EnsaioApresentacaoDTO> buscarEnsaioApresentacao() {
-        return ensaioApresentacaoService.buscar();
+    @PostMapping(value = "buscar")
+    public PaginatedResponse<EnsaioApresentacao> buscar(@RequestBody EnsaioFilter filtro) {
+        return ensaioApresentacaoService.buscar(filtro);
     }
 
     @DeleteMapping(value = "excluir/{id}")

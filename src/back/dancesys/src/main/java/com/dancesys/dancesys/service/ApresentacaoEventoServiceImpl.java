@@ -22,11 +22,13 @@ public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService
     private final ApresentacaoEventoRepository apresentacaoEventoRepository;
     private final ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl;
     private final ApresentacaoEventoRepositoryCustom apresentacaoEventoRepositoryCustom;
+    private final EnsaioApresentacaoServiceImpl ensaioApresentacaoServiceImpl;
 
-    public ApresentacaoEventoServiceImpl(ApresentacaoEventoRepository apresentacaoEventoRepository, ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl, ApresentacaoEventoRepositoryCustom apresentacaoEventoRepositoryCustom) {
+    public ApresentacaoEventoServiceImpl(ApresentacaoEventoRepository apresentacaoEventoRepository, ApresentacaoAlunoServiceImpl apresentacaoAlunoServiceImpl, ApresentacaoEventoRepositoryCustom apresentacaoEventoRepositoryCustom, EnsaioApresentacaoServiceImpl ensaioApresentacaoServiceImpl) {
         this.apresentacaoEventoRepository = apresentacaoEventoRepository;
         this.apresentacaoAlunoServiceImpl = apresentacaoAlunoServiceImpl;
         this.apresentacaoEventoRepositoryCustom = apresentacaoEventoRepositoryCustom;
+        this.ensaioApresentacaoServiceImpl = ensaioApresentacaoServiceImpl;
     }
 
     @Override
@@ -52,7 +54,10 @@ public class ApresentacaoEventoServiceImpl implements  ApresentacaoEventoService
     }
 
     @Override
-    public void deletar (Long id){
+    public void deletar (Long id) throws RuntimeException{
+        if(ensaioApresentacaoServiceImpl.existsByApresentacaoId(id)){
+            throw new RuntimeException("Existem ensaios cadastrados para esta apresentação!");
+        }
         apresentacaoEventoRepository.deleteById(id);
     }
 

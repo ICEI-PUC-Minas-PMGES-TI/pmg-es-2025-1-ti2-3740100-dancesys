@@ -1,0 +1,10 @@
+.visivel {
+	/* opacity: 80%; */
+	display: inline;
+}
+
+.invisivel {
+	/* opacity: 0%; */
+	display: none;
+}
+

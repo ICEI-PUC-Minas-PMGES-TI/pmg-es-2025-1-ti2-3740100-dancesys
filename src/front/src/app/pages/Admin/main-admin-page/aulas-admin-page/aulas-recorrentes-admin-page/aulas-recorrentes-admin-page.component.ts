@@ -29,7 +29,7 @@ import { AlertService } from '../../../../../services/Alert.service';
 })
 export class AulasRecorrentesAdminPageComponent {
   adminService = inject(AdminService);
-  alertService = inject(AlertService)
+  alertService = inject(AlertService);
 
   filterForm: FormGroup
   mensagemForm: FormGroup
@@ -57,7 +57,7 @@ export class AulasRecorrentesAdminPageComponent {
       callback: (item: any) => this.status(item)
     },
     {
-      icon: 'edit',
+      icon: 'view',
       title: 'Visualizar',
       cor: 'dark',
       callback: (item: any) => this.visualizar(item)
@@ -71,7 +71,9 @@ export class AulasRecorrentesAdminPageComponent {
       dataFim: [],
       codigo: [],
       tamanho: [this.itensPage],
-      pagina: [this.paginaAtual]
+      pagina: [this.paginaAtual],
+      orderBy: [this.orderByValue],
+      order: [this.orderValue]
     });
 
     this.mensagemForm = this.fb.group({
@@ -81,6 +83,8 @@ export class AulasRecorrentesAdminPageComponent {
 
   paginaAtual: number = 0;
   itensPage: number = 10;
+  orderByValue!: string;
+  orderValue!: string
 
   alunosFilterLs: any = []
   professoresFilterLs: any = []
@@ -130,6 +134,8 @@ export class AulasRecorrentesAdminPageComponent {
   getFilterForm() {
     this.filterForm.get('tamanho')?.setValue(this.itensPage);
     this.filterForm.get('pagina')?.setValue(this.paginaAtual);
+    this.filterForm.get('orderBy')?.setValue(this.orderByValue);
+    this.filterForm.get('order')?.setValue(this.orderValue);
 
     const item = this.filterForm.value;
     const AulaFilter: AulaOcorrenciaFilter = item;
@@ -146,8 +152,12 @@ export class AulasRecorrentesAdminPageComponent {
 
   buscar() {
     this.adminService.fetchAulasOcorrentes(this.getFilterForm()).subscribe({
-      next: (response) => {
-        this.aulas = response
+      next: (response: any) => {
+        if(response.total == 0){
+          this.alertService.info("Nenhum registro encontrado!")
+        }else{
+          this.aulas = response
+        }
       }
     })
   }
@@ -225,5 +235,11 @@ export class AulasRecorrentesAdminPageComponent {
     this.paginaAtual = --event.paginaSelecionada;
     this.itensPage = event.itensPage;
     this.buscar();
+  }
+
+  orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
+    this.orderByValue = event.chave;
+    this.orderValue = event.direcao;
+    this.buscar()
   }
 }

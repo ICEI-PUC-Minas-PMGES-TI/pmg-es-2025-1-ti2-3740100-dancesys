@@ -14,9 +14,9 @@ import { RouterOutlet } from "@angular/router";
 export class EventosMainAdminPageComponent {
 	sidebarRoutes: InternalSidebarRoute[] = [
 		{ label: "Eventos", route: "eventos" },
-		{ label: "Figurinos", route: "figurinos" },
-		{ label: "Figurinos por Aluno", route: "figurinosPorAluno" },
 		{ label: "Apresentações", route: "apresentacoes" },
 		{ label: "Ensaios", route: "ensaios" },
+		{ label: "Figurinos", route: "figurinos" },
+		{ label: "Figurinos por Aluno", route: "figurinosPorAluno" },
 	];
 }

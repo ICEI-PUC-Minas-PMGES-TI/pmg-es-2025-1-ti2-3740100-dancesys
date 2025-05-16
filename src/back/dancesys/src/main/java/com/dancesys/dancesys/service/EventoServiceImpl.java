@@ -57,6 +57,8 @@ public class EventoServiceImpl implements EventoService {
         if(apresentacaoEventoServiceImpl.existsByEvento(idEvento)){
             throw new RuntimeException("Existem apresentações cadastardas para esse evento!");
         }
+        Evento evento = eventoRepository.findById(idEvento).get();
+        filesServiceImpl.deleteFileByUrl(evento.getUrlFoto());
         eventoRepository.deleteById(idEvento);
     }
 }

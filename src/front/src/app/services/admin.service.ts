@@ -14,8 +14,14 @@ import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
-import { Evento } from "../models/evento.model";
+import { Evento, EventoFilter, EventoResponse } from "../models/evento.model";
 import { Mensagem } from "../models/Mensagem.model";
+import {
+	ApresentacaoEvento,
+	ApresentacaoEventoFilter,
+	ApresentacaoEventoResponse,
+} from "../models/apresentacao_evento.model";
+import { Ensaio, EnsaioFilter } from "../models/Ensaio.model";
 
 export type AlunoResponse = {
 	id: number;
@@ -197,22 +203,22 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula`, { ...item });
 	}
 
-	public fetchEventos(): Observable<Evento[]> {
-		return this.http.get<Evento[]>(`${environment.API_URL}evento/buscar`);
+	public alterarStatusAula(id: number){
+		return this.http.get(`${environment.API_URL}aula/status/${id}`)
 	}
 
-	public criarEvento(evento: Evento) {
-		return this.http.post(`${environment.API_URL}evento`, evento);
+	public fetchEventos(filtro: EventoFilter): Observable<EventoResponse> {
+		return this.http.post<EventoResponse>(
+			`${environment.API_URL}evento/buscar`,
+			{
+				...filtro,
+			},
+		);
 	}
 
-	public uploadFileAzure(file: File) {
-		const formData = new FormData();
-		formData.append("file", file);
-		const $res = this.http
-			.post<string>(`${environment.API_URL}file/upload`, formData)
-			.pipe(take(1));
-		console.log("socorro 2");
-		return lastValueFrom($res);
+	// caso nao exista ele cria um
+	public updateEvento(evento: Evento) {
+		return this.http.post(`${environment.API_URL}evento`, { ...evento });
 	}
 
 	public excluirEvento(id: number) {
@@ -229,7 +235,53 @@ export class AdminService {
 		});
 	}
 
-	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number){
-		return this.http.post(`${environment.API_URL}aula/ocorrencia/cancelar/${id}`, {...mensgaem})
+	public fetchApresentacoes(
+		filtro: ApresentacaoEventoFilter,
+	): Observable<ApresentacaoEventoResponse> {
+		return this.http.post<ApresentacaoEventoResponse>(
+			`${environment.API_URL}apresentacaoEvento/buscar`,
+			{
+				...filtro,
+			},
+		);
+	}
+
+	// cria caso não exista, editar caso exista
+	public updateApresentacaoEvento(apresentacao: ApresentacaoEvento) {
+		return this.http.post(`${environment.API_URL}apresentacaoEvento`, {
+			...apresentacao,
+		});
+	}
+
+	public deleteApresentacaoEvento(id: number) {
+		return this.http.delete(
+			`${environment.API_URL}apresentacaoEvento/excluir/${id}`,
+		);
+	}
+
+	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number) {
+		return this.http.post(
+			`${environment.API_URL}aula/ocorrencia/cancelar/${id}`,
+			{ ...mensgaem },
+		);
+	}
+
+	public filterEnsaio(filtro: EnsaioFilter) {
+		return this.http.post(
+			`${environment.API_URL}ensaioApresentacao/buscar`,
+			{ ...filtro },
+		);
+	}
+
+	public addEnsaio(item: Ensaio) {
+		return this.http.post(`${environment.API_URL}ensaioApresentacao`, {
+			...item,
+		});
+	}
+
+	public deleteEnsaio(id: number) {
+		return this.http.delete(
+			`${environment.API_URL}ensaioApresentacao/excluir/${id}`,
+		);
 	}
 }

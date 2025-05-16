@@ -36,6 +36,6 @@ public class Evento {
     @Column(name = "url_foto", nullable = true)
     private String urlFoto;
 
-    @OneToMany(mappedBy = "idEvento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "idEvento")
     private List<ApresentacaoEvento> apresentacoes;
 }

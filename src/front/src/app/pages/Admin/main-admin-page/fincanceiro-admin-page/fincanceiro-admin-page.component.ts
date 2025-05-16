@@ -86,7 +86,7 @@ export class FincanceiroAdminPageComponent {
 		{
 			chave: "mesesAtrasos",
 			titulo: "Meses Atrasados",
-			width: "12%",
+			width: "15%",
 			formatar: (valor: number) =>
 				valor != null ? this.formatarAtraso(valor) : "",
 		},

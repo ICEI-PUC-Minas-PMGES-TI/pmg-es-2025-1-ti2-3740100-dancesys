@@ -2,9 +2,28 @@
 	<table class="w-full">
 		<thead>
 			<tr>
-				<th *ngFor="let coluna of colunas" [style.width]="coluna.width">
-					{{ coluna.titulo }}
+				<th
+					*ngFor="let coluna of colunas"
+					[style.width]="coluna.width"
+					(click)="(coluna.order ?? true) && ordenarPor(coluna.chave)"
+					[class.cursor-pointer]="coluna.order ?? true"
+					class="select-none"
+				>
+					<div
+						class="w-full flex flex-row justify-center space-x-2 px-6"
+					>
+						<span>{{ coluna.titulo }}</span>
+						<span
+							[ngClass]="{
+								visivel: ordenacao?.chave === coluna.chave,
+								invisivel: ordenacao?.chave !== coluna.chave,
+							}"
+						>
+							{{ ordenacao?.direcao === "asc" ? "▲" : "▼" }}
+						</span>
+					</div>
 				</th>
+
 				@if (botoesAcoes && botoesAcoes.length > 0) {
 					<th>Ações</th>
 				}
@@ -19,6 +38,7 @@
 							? 'dontHaveButtons'
 							: ''
 					"
+					class="text-center"
 				>
 					{{
 						coluna.formatar

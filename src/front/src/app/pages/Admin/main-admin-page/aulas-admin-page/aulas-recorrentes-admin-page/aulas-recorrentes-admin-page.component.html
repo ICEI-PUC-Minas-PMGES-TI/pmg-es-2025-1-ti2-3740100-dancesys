@@ -135,13 +135,13 @@
                             <input class="p-1 rounded-md bg-main-300" type="date" name="dataInicio" id="dataInicio"
                                 formControlName="dataInicio" />
                             <span class="text-main-500 mx-1">-</span>
-                            <input class="p-1 rounded-md bg-main-300" type="date" name="dataFim" id="dataFim"
+                            <input class="p-1 rounded-md bg-main-300 h-8.5" type="date" name="dataFim" id="dataFim"
                                 formControlName="dataFim" />
                         </div>
                     </div>
                     <div class="flex flex-col">
                         <label>Codigo:</label>
-                        <input class="p-1 rounded-md bg-main-300" type="text" name="codigo" id="codigo"
+                        <input class="p-1 rounded-md bg-main-300 h-8.5" type="text" name="codigo" id="codigo"
                             formControlName="codigo" />
                     </div>
                 </section>
@@ -156,6 +156,6 @@
         </div>
     </section>
     <app-simple-table [colunas]="colunas" [dados]="aulas.conteudo" [botoesAcoes]="acoes" [totalItens]="aulas.total"
-        (paginacaoChange)="onPaginacaoChange($event)">
+        (paginacaoChange)="onPaginacaoChange($event)" (orderChange)="orderBy($event)">
     </app-simple-table>
 </main>
