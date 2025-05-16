@@ -57,7 +57,10 @@ export class AulasFixasAdminPageComponent {
 	paginaAtual: number = 0;
 	itensPage: number = 10;
 	isModalOpen: boolean = false;
+	isModalConfirm: boolean = false;
 	isEdit: boolean = false;
+
+	statusId!: number
 
 	diaSemanaMap: Record<number, string> = {
 		1: "Segunda",
@@ -105,7 +108,7 @@ export class AulasFixasAdminPageComponent {
 			icon: "warning",
 			title: "Status",
 			cor: "dark",
-			callback: (item: any) => this.excluir(item),
+			callback: (item: any) => this.status(item),
 		},
 	];
 
@@ -267,7 +270,26 @@ export class AulasFixasAdminPageComponent {
 		this.openModal();
 	}
 
-	excluir(item: any) {}
+	status(item: any) {
+		this.statusId = item.id
+		this.isModalConfirm = true
+	}
+
+	onConfirmStatus(choice: boolean | void){
+		if (choice) {
+			this.adminService.alterarStatusAula(this.statusId).subscribe({
+				next: () => {
+					this.buscar();
+					this.alertService.info("Status da aula alterado!");
+				},
+				error: (err) => {
+					console.log(err, { color: "red" });
+				},
+			});
+		}
+		this.statusId = 0;
+		this.isModalConfirm = false;
+	}
 
 	getAlunosIds(item: any) {
 		const ids: any[] = [];

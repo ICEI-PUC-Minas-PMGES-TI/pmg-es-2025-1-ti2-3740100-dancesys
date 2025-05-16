@@ -13,7 +13,7 @@ import java.util.List;
 public interface AulaService {
     public AulaDTO salvar(AulaDTO dto) throws Exception;
 
-    public String mudarStatus(Long id) throws Exception;
+    public void mudarStatus(Long id) throws Exception;
 
     public void gerarAulasJobMensal() throws Exception;
 

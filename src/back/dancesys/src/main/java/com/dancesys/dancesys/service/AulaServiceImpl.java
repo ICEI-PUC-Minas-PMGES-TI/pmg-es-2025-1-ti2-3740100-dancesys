@@ -72,7 +72,7 @@ public class AulaServiceImpl implements  AulaService {
     }
 
     @Override
-    public String mudarStatus(Long id) throws Exception{
+    public void mudarStatus(Long id) throws Exception{
         Aula aula = aulaRepository.findById(id).get();
         if(aula.getStatus().equals(Aula.ativo)){
             aula.setStatus(Aula.desativo);
@@ -92,7 +92,6 @@ public class AulaServiceImpl implements  AulaService {
             aulaOcorrenciaServiceImpl.gerarOcorrenciasAula(idsAlunos, aula);
         }
         aulaRepository.save(aula);
-        return "Status alterado com sucesso";
     }
 
     @Override

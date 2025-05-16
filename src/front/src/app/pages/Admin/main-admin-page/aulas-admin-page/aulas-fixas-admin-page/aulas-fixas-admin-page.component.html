@@ -1,3 +1,11 @@
+@if (isModalConfirm) {
+	<app-modal
+		[confirmMode]="true"
+		message="Deseja desativar essa aula?"
+		(onClose)="onConfirmStatus($event)"
+	></app-modal>
+}
+
 @if (isModalOpen){
 	<app-modal
 		(onClose)="closeModal()"
