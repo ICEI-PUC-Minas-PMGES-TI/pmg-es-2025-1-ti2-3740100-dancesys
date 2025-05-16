@@ -192,6 +192,7 @@ export class AulasFixasAdminPageComponent {
 	getFormValue() {
 		const item = this.aulaForm.value;
 		const aulaItem: Aula = item;
+		
 		return aulaItem;
 	}
 
@@ -255,7 +256,14 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	salvar() {
-		this.adminService.addAula(this.getFormValue()).subscribe({
+
+		const formValue : Aula = this.getFormValue()
+		if(formValue.maxAlunos < formValue.alunos.length){
+			this.alertService.info("Maximo de alunos ultrapassado!")
+			return;
+		}
+
+		this.adminService.addAula(formValue).subscribe({
 			next: (response) => {
 				this.buscar();
 				this.resertFormValue();
