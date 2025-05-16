@@ -17,6 +17,7 @@ import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
 import { Evento, EventoFilter, EventoResponse } from "../models/evento.model";
 import { Mensagem } from "../models/Mensagem.model";
 import {
+	ApresentacaoEvento,
 	ApresentacaoEventoFilter,
 	ApresentacaoEventoResponse,
 } from "../models/apresentacao_evento.model";
@@ -213,7 +214,7 @@ export class AdminService {
 
 	// caso nao exista ele cria um
 	public updateEvento(evento: Evento) {
-		return this.http.post(`${environment.API_URL}evento`, evento);
+		return this.http.post(`${environment.API_URL}evento`, { ...evento });
 	}
 
 	public excluirEvento(id: number) {
@@ -241,6 +242,19 @@ export class AdminService {
 		);
 	}
 
+	// cria caso não exista, editar caso exista
+	public updateApresentacaoEvento(apresentacao: ApresentacaoEvento) {
+		return this.http.post(`${environment.API_URL}apresentacaoEvento`, {
+			...apresentacao,
+		});
+	}
+
+	public deleteApresentacaoEvento(id: number) {
+		return this.http.delete(
+			`${environment.API_URL}apresentacaoEvento/excluir/${id}`,
+		);
+	}
+
 	public cancelarAulaOcorrente(mensgaem: Mensagem, id: number) {
 		return this.http.post(
 			`${environment.API_URL}aula/ocorrencia/cancelar/${id}`,
@@ -248,15 +262,22 @@ export class AdminService {
 		);
 	}
 
-	public filterEnsaio(filtro: EnsaioFilter){
-		return this.http.post(`${environment.API_URL}ensaioApresentacao/buscar`,{...filtro,},)
+	public filterEnsaio(filtro: EnsaioFilter) {
+		return this.http.post(
+			`${environment.API_URL}ensaioApresentacao/buscar`,
+			{ ...filtro },
+		);
 	}
 
-	public addEnsaio(item: Ensaio){
-		return this.http.post(`${environment.API_URL}ensaioApresentacao`,{...item,},)
+	public addEnsaio(item: Ensaio) {
+		return this.http.post(`${environment.API_URL}ensaioApresentacao`, {
+			...item,
+		});
 	}
 
-	public deleteEnsaio(id: number){
-		return this.http.delete(`${environment.API_URL}ensaioApresentacao/excluir/${id}`)
+	public deleteEnsaio(id: number) {
+		return this.http.delete(
+			`${environment.API_URL}ensaioApresentacao/excluir/${id}`,
+		);
 	}
 }

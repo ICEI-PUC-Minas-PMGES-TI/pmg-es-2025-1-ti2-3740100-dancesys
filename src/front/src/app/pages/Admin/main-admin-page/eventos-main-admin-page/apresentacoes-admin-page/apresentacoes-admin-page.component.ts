@@ -1,11 +1,10 @@
-import { Component, inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, inject, OnInit, ViewChild } from "@angular/core";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import { BotaoComponent } from "../../../../../components/botao/botao.component";
 import { CommonModule, DatePipe, Time } from "@angular/common";
 import { FormsModule, NgForm } from "@angular/forms";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { AdminService } from "../../../../../services/admin.service";
-import { Subscription } from "rxjs";
 import {
 	ApresentacaoEvento,
 	ApresentacaoEventoResponse,
@@ -14,6 +13,8 @@ import {
 	EventoFilter,
 	EventoResponse,
 } from "../../../../../models/evento.model";
+import { SearchBoxMultiComponent } from "../../../../../components/search-box-multi/search-box-multi.component";
+import { UsuarioFiltro } from "../../../../../models/usuario.model";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -21,6 +22,7 @@ import {
 		SimpleTableComponent,
 		BotaoComponent,
 		CommonModule,
+		SearchBoxMultiComponent,
 		DatePipe,
 		FormsModule,
 		ModalComponent,
@@ -28,7 +30,7 @@ import {
 	templateUrl: "./apresentacoes-admin-page.component.html",
 	styleUrl: "./apresentacoes-admin-page.component.css",
 })
-export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
+export class ApresentacoesAdminPageComponent implements OnInit {
 	@ViewChild("filterForm") filterForm!: NgForm;
 	private adminService = inject(AdminService);
 
@@ -74,14 +76,27 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 	apresentacoes: ApresentacaoEventoResponse | undefined = undefined;
 	eventos: EventoResponse | undefined = undefined;
 
+	alunosLs: any = [];
+	alunosEditar: any = [];
+
 	ngOnInit(): void {
-		// codigo da subscription de apresentacao aqui
-		this.onFiltrar();
+		this.onFiltrar(); // esse método é o equivalente ao fetchApresentacoes
 		this.fetchEventos();
 	}
 
-	ngOnDestroy(): void {}
+	limparFiltros(form: NgForm) {
+		form.reset();
+		this.onFiltrar();
+	}
 
+	hasFormValues(form: NgForm): boolean {
+		if (form) {
+			return Object.keys(form.value).some((k) => !!form.value[k]);
+		}
+		return false;
+	}
+
+	// puxa todos os eventos sem nenhum filtro
 	private fetchEventos() {
 		this.adminService
 			.fetchEventos({
@@ -99,51 +114,108 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 			});
 	}
 
+	buscarAlunos(termo: any) {
+		const filtro: UsuarioFiltro = {
+			nome: termo,
+			email: "",
+			cpf: "",
+			tipo: 2,
+			status: 1,
+		};
+
+		this.adminService.filterUsuarios(filtro).subscribe({
+			next: (response) => {
+				this.alunosLs = response;
+			},
+		});
+	}
+
+	// necessário para a tabela
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.onFiltrar();
 	}
 
+	// habilita ou desabilita os modais
 	onToggleCriarModal() {
 		this.isModalCriarOpen = !this.isModalCriarOpen;
+		if (!this.isModalCriarOpen) {
+			this.alunosLs = [];
+		}
 	}
 
 	onToggleEditarModal(item?: ApresentacaoEvento) {
 		this.isModalEditarOpen = !this.isModalEditarOpen;
 		if (this.isModalEditarOpen) {
 			this.currentApresentacaoEditar = item;
+			this.alunosLs = this.getAlunos(item!.alunos);
+			this.alunosEditar = this.getAlunosIds(item!.alunos);
 			return;
 		}
+		this.alunosLs = [];
 	}
 	onToggleExcluirModal(confirmed?: boolean | void) {
 		this.isModalExcluirOpen = !this.isModalExcluirOpen;
 		if (confirmed) {
 			// codigo de deletar uma apresentacao pelo adminService
+			this.adminService
+				.deleteApresentacaoEvento(this.excluirApresentacaoId!)
+				.subscribe({
+					next: () => {
+						this.onFiltrar();
+					},
+				});
 		}
 		if (!this.isModalEditarOpen) {
 			this.excluirApresentacaoId = undefined;
 		}
 	}
 
+	// abre o modal de excluir
 	onOpenExcluirModal(id: number) {
 		this.onToggleExcluirModal();
 		this.excluirApresentacaoId = id;
 	}
 
+	// envia os form de criação e edição
 	submitCriarApresentacaoForm(form: NgForm) {
 		if (form.valid) {
 			// codigo para criar a apresentacao pelo adminService
+			console.log(form.value);
+			this.adminService
+				.updateApresentacaoEvento({
+					...form.value,
+				} as ApresentacaoEvento)
+				.subscribe({
+					next: () => {
+						this.onToggleCriarModal();
+						this.onFiltrar();
+					},
+				});
 		}
 	}
 
 	submitEditarApresentacaoForm(form: NgForm) {
 		if (form.valid) {
 			// codigo para editar a apresentacao pelo adminService
+			this.adminService
+				.updateApresentacaoEvento({
+					...this.currentApresentacaoEditar,
+					...form.value,
+				} as ApresentacaoEvento)
+				.subscribe({
+					next: () => {
+						this.onToggleEditarModal();
+						this.onFiltrar();
+					},
+				});
 		}
 	}
 
+	// como se fosse o fetchApresentacoes
 	onFiltrar() {
+		// verifica se tem filtro
 		if (this.filterForm) {
 			this.adminService
 				.fetchApresentacoes({ ...this.filterForm.value })
@@ -154,6 +226,7 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 				});
 			return;
 		}
+		// aqui nao tem filtro
 		this.adminService
 			.fetchApresentacoes({
 				nome: null,
@@ -168,5 +241,17 @@ export class ApresentacoesAdminPageComponent implements OnInit, OnDestroy {
 					this.apresentacoes = apRes;
 				},
 			});
+	}
+
+	getAlunosIds(item: any) {
+		return item.map((i: any) => {
+			return i.idAluno.id;
+		});
+	}
+
+	getAlunos(item: any) {
+		return item.map((i: any) => {
+			return i.idAluno;
+		});
 	}
 }

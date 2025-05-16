@@ -3,20 +3,26 @@
 		<thead>
 			<tr>
 				<th
-				*ngFor="let coluna of colunas"
-				[style.width]="coluna.width"
-				(click)="(coluna.order ?? true) && ordenarPor(coluna.chave)"
-				[class.cursor-pointer]="coluna.order ?? true"
-				class="select-none"
+					*ngFor="let coluna of colunas"
+					[style.width]="coluna.width"
+					(click)="(coluna.order ?? true) && ordenarPor(coluna.chave)"
+					[class.cursor-pointer]="coluna.order ?? true"
+					class="select-none"
 				>
-					<div class="w-full flex flex-row justify-between px-6">
-						{{ coluna.titulo }}
-						<span [ngClass]="{ 'visivel': ordenacao?.chave === coluna.chave, 'invisivel': ordenacao?.chave !== coluna.chave }">
-							{{ ordenacao?.direcao === 'asc' ? '▲' : '▼' }}
+					<div
+						class="w-full flex flex-row justify-center space-x-2 px-6"
+					>
+						<span>{{ coluna.titulo }}</span>
+						<span
+							[ngClass]="{
+								visivel: ordenacao?.chave === coluna.chave,
+								invisivel: ordenacao?.chave !== coluna.chave,
+							}"
+						>
+							{{ ordenacao?.direcao === "asc" ? "▲" : "▼" }}
 						</span>
 					</div>
 				</th>
-
 
 				@if (botoesAcoes && botoesAcoes.length > 0) {
 					<th>Ações</th>

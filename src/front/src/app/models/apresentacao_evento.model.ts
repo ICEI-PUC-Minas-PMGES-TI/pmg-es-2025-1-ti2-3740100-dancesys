@@ -4,6 +4,7 @@ export class ApresentacaoEvento {
 	horaInicio!: Date;
 	horaFim!: Date;
 	idEvento!: number;
+	alunos!: number[];
 }
 
 export type ApresentacaoEventoResponse = {
