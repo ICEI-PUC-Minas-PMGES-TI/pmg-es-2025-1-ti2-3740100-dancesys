@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface AulaAlunoRepository extends JpaRepository<AulaAluno, AulaAlunoId> {
     List<AulaAluno> findByIdAula_Id(Long id);
+
+    List<AulaAluno> findByIdAulaIdAndIdAlunoIdNotIn(Long idAula, List<Long> idsAlunos);
 }

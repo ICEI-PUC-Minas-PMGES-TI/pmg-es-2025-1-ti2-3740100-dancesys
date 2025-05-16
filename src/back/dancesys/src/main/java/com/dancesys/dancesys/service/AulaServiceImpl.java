@@ -45,7 +45,18 @@ public class AulaServiceImpl implements  AulaService {
     @Override
     public AulaDTO salvar(AulaDTO dto) throws Exception{
         try{
-            if(dto.getId()==null) dto.setStatus(Aula.ativo);
+            if(dto.getId()==null){
+                dto.setStatus(Aula.ativo);
+            }else{
+                List<AulaAluno> alunosNotIn = aulaAlunoServiceImpl.alunosNotIn(dto.getId(), dto.getAlunos());
+                if(!alunosNotIn.isEmpty()){
+                    List<Long> idsNotIn = alunosNotIn.stream()
+                            .map(aulaAluno -> aulaAluno.getIdAluno().getId())
+                            .collect(Collectors.toList());
+
+                    chamadaServiceImpl.deletarAll(chamadaServiceImpl.findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(dto.getId(), idsNotIn));
+                }
+            }
 
             Aula entity = aulaRepository.save(AulaMapper.toEntity(dto));
             aulaAlunoServiceImpl.salvar(dto.getAlunos(),entity.getId());

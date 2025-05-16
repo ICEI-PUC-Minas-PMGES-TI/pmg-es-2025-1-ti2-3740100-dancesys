@@ -87,4 +87,8 @@ public class ChamadaServiceImpl implements ChamadaService {
         chamadaRepository.deleteAll(chamadas);
     }
 
+    public List<Chamada> findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(Long idAula, List<Long> idsAlunos){
+        return chamadaRepository.findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(idAula,idsAlunos);
+    }
+
 }

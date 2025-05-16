@@ -34,6 +34,10 @@ public class ApresentacaoEvento {
     public Long getIdEventoOnly() {
         return idEvento != null ? idEvento.getId() : null;
     }
+    @JsonProperty("eventoNome")
+    public String getNomeEventoOnly() {
+        return idEvento != null ? idEvento.getNome() : null;
+    }
 
     @Column(name = "nome", nullable = false)
     private String nome;

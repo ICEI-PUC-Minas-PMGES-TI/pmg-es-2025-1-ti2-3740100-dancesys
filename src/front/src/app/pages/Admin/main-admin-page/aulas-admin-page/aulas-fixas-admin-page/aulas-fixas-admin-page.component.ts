@@ -257,6 +257,7 @@ export class AulasFixasAdminPageComponent {
 				this.buscar();
 				this.resertFormValue();
 				this.closeModal();
+				this.alertService.sucesso(this.isEdit? "Aula editada com sucesso": "Aula criada com sucesso")
 			},
 		});
 	}

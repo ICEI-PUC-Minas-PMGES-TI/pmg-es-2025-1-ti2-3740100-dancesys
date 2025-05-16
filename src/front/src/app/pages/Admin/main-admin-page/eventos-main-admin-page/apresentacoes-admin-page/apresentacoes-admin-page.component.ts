@@ -15,6 +15,7 @@ import {
 } from "../../../../../models/evento.model";
 import { SearchBoxMultiComponent } from "../../../../../components/search-box-multi/search-box-multi.component";
 import { UsuarioFiltro } from "../../../../../models/usuario.model";
+import { AlertService } from "../../../../../services/Alert.service";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -33,6 +34,7 @@ import { UsuarioFiltro } from "../../../../../models/usuario.model";
 export class ApresentacoesAdminPageComponent implements OnInit {
 	@ViewChild("filterForm") filterForm!: NgForm;
 	private adminService = inject(AdminService);
+	private alertService = inject(AlertService);
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
@@ -55,6 +57,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 			chave: "horaFim",
 			titulo: "Horário Final",
 		},
+		{chave: "eventoNome", titulo: "Evento"}
 	];
 	acoes = [
 		{
@@ -163,8 +166,14 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.deleteApresentacaoEvento(this.excluirApresentacaoId!)
 				.subscribe({
 					next: () => {
+						this.alertService.exclusao("Apresentação excluida com sucesso!")
 						this.onFiltrar();
 					},
+					error: (err: any) =>{
+						this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+					}
 				});
 		}
 		if (!this.isModalEditarOpen) {
@@ -190,6 +199,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.subscribe({
 					next: () => {
 						this.onToggleCriarModal();
+						this.alertService.sucesso("Apresentação criada com sucesso!")
 						this.onFiltrar();
 					},
 				});
@@ -207,6 +217,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.subscribe({
 					next: () => {
 						this.onToggleEditarModal();
+						this.alertService.sucesso("Apresentação editada com sucesso!")
 						this.onFiltrar();
 					},
 				});
@@ -221,7 +232,11 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.fetchApresentacoes({ ...this.filterForm.value })
 				.subscribe({
 					next: (apRes: ApresentacaoEventoResponse) => {
-						this.apresentacoes = apRes;
+						if(apRes.total == 0){
+							this.alertService.info("Nenhum registro encontrado!")
+						}else{
+							this.apresentacoes = apRes;
+						}
 					},
 				});
 			return;

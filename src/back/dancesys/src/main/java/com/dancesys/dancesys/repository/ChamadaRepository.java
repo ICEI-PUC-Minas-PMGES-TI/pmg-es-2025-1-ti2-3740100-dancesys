@@ -12,4 +12,6 @@ public interface ChamadaRepository extends CrudRepository<Chamada, ChamadaId> {
     Chamada findByIdAluno_Id(Long idAluno);
 
     List<Chamada> findByIdAulaOcorrencia_Id(Long id);
+
+    List<Chamada> findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(Long idAula, List<Long> idAlunos);
 }

@@ -26,4 +26,8 @@ public class AulaAlunoServiceImpl {
     public List<AulaAluno> buscarPorAula(Long idAula) {
         return aulaAlunoRepository.findByIdAula_Id(idAula);
     }
+
+    public List<AulaAluno> alunosNotIn(Long idAula, List<Long> idsAlunos) {
+        return aulaAlunoRepository.findByIdAulaIdAndIdAlunoIdNotIn(idAula, idsAlunos);
+    }
 }

@@ -126,7 +126,6 @@ export class EventosAdminPageComponent implements OnInit {
 					this.onFiltrar();
 				},
 				error: (err: any) => {
-					console.log(err);
 					this.alertService.erro(
 						err?.error?.mensagem || "Erro inesperado!",
 					);
@@ -209,7 +208,11 @@ export class EventosAdminPageComponent implements OnInit {
 			} as EventoFilter)
 			.subscribe({
 				next: (ev: EventoResponse) => {
-					this.eventos = { ...ev };
+					if(ev.total == 0){
+						this.alertService.info("Nenhum registro encontrado!")
+					}else{
+						this.eventos = { ...ev };
+					}
 				},
 			});
 	}

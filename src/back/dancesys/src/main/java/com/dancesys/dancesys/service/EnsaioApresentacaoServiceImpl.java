@@ -49,4 +49,8 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
     public void deletar (Long id){
         ensaioApresentacaoRepository.deleteById(id);
     }
+
+    public boolean existsByApresentacaoId(Long id){
+        return ensaioApresentacaoRepository.existsByIdApresentacaoEventoId(id);
+    }
 }
