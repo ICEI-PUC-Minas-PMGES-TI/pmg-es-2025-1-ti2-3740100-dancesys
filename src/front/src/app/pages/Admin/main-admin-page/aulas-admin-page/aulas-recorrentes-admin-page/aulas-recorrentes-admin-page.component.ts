@@ -71,7 +71,9 @@ export class AulasRecorrentesAdminPageComponent {
       dataFim: [],
       codigo: [],
       tamanho: [this.itensPage],
-      pagina: [this.paginaAtual]
+      pagina: [this.paginaAtual],
+      orderBy: [this.orderByValue],
+      order: [this.orderValue]
     });
 
     this.mensagemForm = this.fb.group({
@@ -81,6 +83,8 @@ export class AulasRecorrentesAdminPageComponent {
 
   paginaAtual: number = 0;
   itensPage: number = 10;
+  orderByValue!: string;
+  orderValue!: string
 
   alunosFilterLs: any = []
   professoresFilterLs: any = []
@@ -130,6 +134,8 @@ export class AulasRecorrentesAdminPageComponent {
   getFilterForm() {
     this.filterForm.get('tamanho')?.setValue(this.itensPage);
     this.filterForm.get('pagina')?.setValue(this.paginaAtual);
+    this.filterForm.get('orderBy')?.setValue(this.orderByValue);
+    this.filterForm.get('order')?.setValue(this.orderValue);
 
     const item = this.filterForm.value;
     const AulaFilter: AulaOcorrenciaFilter = item;
@@ -232,6 +238,8 @@ export class AulasRecorrentesAdminPageComponent {
   }
 
   orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
-    console.log(event.chave,"-",event.direcao)
+    this.orderByValue = event.chave;
+    this.orderValue = event.direcao;
+    this.buscar()
   }
 }

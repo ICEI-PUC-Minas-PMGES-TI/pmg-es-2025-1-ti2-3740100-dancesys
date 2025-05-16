@@ -16,4 +16,6 @@ public class AulaOcorrenciaFilter {
     private String codigo;
     private Integer tamanho;
     private Integer pagina;
+    private String orderBy;
+    private String order;
 }

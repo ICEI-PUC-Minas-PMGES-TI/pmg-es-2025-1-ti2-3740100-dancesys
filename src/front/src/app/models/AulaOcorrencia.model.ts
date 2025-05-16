@@ -5,5 +5,6 @@ export class AulaOcorrenciaFilter{
     dataFim!: Date;
     codigo!: string;
     tamanho!: number;
-    
+    orderBy!: string;
+    order!: string
 }
