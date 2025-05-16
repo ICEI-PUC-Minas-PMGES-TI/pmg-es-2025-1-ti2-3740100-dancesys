@@ -36,7 +36,7 @@ public class ApresentacaoEventoRepositoryCustom {
         }
 
         if(filtro.getIdEvento() != null) {
-            predicates.add(cb.equal(root.get("idEvento"), filtro.getIdEvento()));
+            predicates.add(cb.equal(root.get("idEvento").get("id"), filtro.getIdEvento()));
         }
 
         if(filtro.getAlunos() != null && !filtro.getAlunos().isEmpty()) {
@@ -65,7 +65,7 @@ public class ApresentacaoEventoRepositoryCustom {
         }
 
         if(filtro.getIdEvento() != null) {
-            countPredicates.add(cb.equal(countRoot.get("idEvento"), filtro.getIdEvento()));
+            countPredicates.add(cb.equal(countRoot.get("idEvento").get("id"), filtro.getIdEvento()));
         }
 
         if(filtro.getAlunos() != null && !filtro.getAlunos().isEmpty()) {
