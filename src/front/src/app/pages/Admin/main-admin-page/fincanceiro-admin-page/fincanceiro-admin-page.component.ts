@@ -143,6 +143,8 @@ export class FincanceiroAdminPageComponent {
 			status: [this.statusFilter],
 			tipos: [this.tiposFilter],
 			alunos: [this.alunosFilter],
+			tamanho: [this.itensPage],
+			pagina: [this.paginaAtual],
 			orderBy: [this.orderByValue],
 			order: [this.orderValue]
 		});

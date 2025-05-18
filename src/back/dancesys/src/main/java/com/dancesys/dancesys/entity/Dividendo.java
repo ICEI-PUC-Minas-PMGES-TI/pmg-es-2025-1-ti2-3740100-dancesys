@@ -23,7 +23,8 @@ public class Dividendo {
     @Column(name = "valor", nullable = false)
     private BigDecimal valor;
     public static final BigDecimal VALOR_MATRICULA = BigDecimal.valueOf(150.00);
-    public static final BigDecimal VALOR_MENSALIDADE = BigDecimal.valueOf(350.00);
+    public static final BigDecimal VALOR_MENSALIDADE_FIXO = BigDecimal.valueOf(350.00);
+    public static final BigDecimal VALOR_MENSALIDADE_FLEXIVEL = BigDecimal.valueOf(425.00);
 
     @Column(name = "criado_em", nullable = false)
     private LocalDate criadoEm;

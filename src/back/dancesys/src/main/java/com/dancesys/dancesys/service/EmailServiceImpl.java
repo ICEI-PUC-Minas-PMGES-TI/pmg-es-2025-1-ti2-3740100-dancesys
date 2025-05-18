@@ -42,12 +42,42 @@ public class EmailServiceImpl {
         }
     }
 
+    public String enviarEmailHtml(String destinatario, String tipo, String valor) {
+        try {
+            String htmlContent = carregarTemplateEmailDividendo(tipo, valor);
+
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setFrom(remetente);
+            helper.setTo(destinatario);
+            helper.setSubject("Bem-vindo ao Dancesys!");
+            helper.setText(htmlContent, true);
+
+            javaMailSender.send(mimeMessage);
+            return "Email enviado com sucesso";
+
+        } catch (MessagingException | IOException e) {
+            return "Erro ao tentar enviar email: " + e.getLocalizedMessage();
+        }
+    }
+
     private String carregarTemplateEmail(String usuario, String senha) throws IOException {
         Path path = Paths.get(new ClassPathResource("templates/newuser.html").getURI());
         String content = new String(Files.readAllBytes(path));
 
         content = content.replace("${user}", usuario)
                 .replace("${pass}", senha);
+
+        return content;
+    }
+
+    private String carregarTemplateEmailDividendo (String tipo, String valor) throws IOException {
+        Path path = Paths.get(new ClassPathResource("templates/newdividendo.html").getURI());
+        String content = new String(Files.readAllBytes(path));
+
+        content = content.replace("${type}", tipo)
+                .replace("${valor}", valor);
 
         return content;
     }
