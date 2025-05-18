@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from "@angular/common";
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject, OnInit, ViewChild } from "@angular/core";
 import { FormsModule, NgForm } from "@angular/forms";
 import {
 	ImageCroppedEvent,
@@ -32,6 +32,8 @@ import { AlertService } from "../../../../../services/Alert.service";
 	styleUrl: "./eventos-admin-page.component.css",
 })
 export class EventosAdminPageComponent implements OnInit {
+  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
 	private adminService = inject(AdminService);
 	private alertService = inject(AlertService);
 
@@ -195,6 +197,12 @@ export class EventosAdminPageComponent implements OnInit {
 		const strD = strarr[0].split("-");
 		return `${strD[2]}/${strD[1]}/${strD[0]} - ${strarr[1]}`;
 	}
+
+	onFilter(form?: NgForm){
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.onFiltrar(form)
+  	}
 
 	onFiltrar(form?: NgForm) {
 		this.adminService

@@ -204,5 +204,10 @@ ordenarDados() {
   });
 }
 
+resetPage(){
+  this.paginaSelecionada = 1;
+  this.paginaIn = 1;
+}
+
 
 }

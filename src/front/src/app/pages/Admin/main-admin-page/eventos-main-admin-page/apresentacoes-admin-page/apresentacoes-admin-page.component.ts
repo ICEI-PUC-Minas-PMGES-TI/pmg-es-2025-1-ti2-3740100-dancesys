@@ -33,6 +33,8 @@ import { AlertService } from "../../../../../services/Alert.service";
 })
 export class ApresentacoesAdminPageComponent implements OnInit {
 	@ViewChild("filterForm") filterForm!: NgForm;
+  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
 	private adminService = inject(AdminService);
 	private alertService = inject(AlertService);
 
@@ -223,6 +225,12 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				});
 		}
 	}
+
+	onFilter(){
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.onFiltrar()
+  	}
 
 	// como se fosse o fetchApresentacoes
 	onFiltrar() {

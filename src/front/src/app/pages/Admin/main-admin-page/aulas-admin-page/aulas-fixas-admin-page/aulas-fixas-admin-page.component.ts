@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
 import { Aula, AulaFilter } from "../../../../../models/Aula.model";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
@@ -44,6 +44,8 @@ enum ToggleModal {
 	styleUrl: "./aulas-fixas-admin-page.component.css",
 })
 export class AulasFixasAdminPageComponent {
+  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
 	filterForm: FormGroup;
 	aulaForm: FormGroup;
 
@@ -241,6 +243,12 @@ export class AulasFixasAdminPageComponent {
 
 		return this.filterForm.value;
 	}
+
+	onFilter(){
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.buscar()
+  	}
 
 	buscar() {
 		this.adminService.filterAulas(this.getfilter()).subscribe({

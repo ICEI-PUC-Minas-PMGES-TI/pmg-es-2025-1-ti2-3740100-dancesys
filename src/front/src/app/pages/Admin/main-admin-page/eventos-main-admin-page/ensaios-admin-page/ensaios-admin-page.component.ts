@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import { SearchBoxMultiComponent } from "../../../../../components/search-box-multi/search-box-multi.component";
@@ -46,6 +46,8 @@ enum ToggleModal {
 	styleUrl: "./ensaios-admin-page.component.css",
 })
 export class EnsaiosAdminPageComponent {
+  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
 	adminService = inject(AdminService);
 	alertService = inject(AlertService);
 
@@ -224,6 +226,12 @@ export class EnsaiosAdminPageComponent {
 		this.resetEnsaioForm();
 		this.isEdit = false;
 	}
+
+	onFilter(){
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.buscar()
+  	}
 
 	buscar() {
 		this.adminService.filterEnsaio(this.getFilterForm()).subscribe({

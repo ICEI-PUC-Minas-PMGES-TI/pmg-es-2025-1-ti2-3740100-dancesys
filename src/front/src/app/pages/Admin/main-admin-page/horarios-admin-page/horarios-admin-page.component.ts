@@ -1,4 +1,4 @@
-import { Component, NgModule, inject } from "@angular/core";
+import { Component, NgModule, ViewChild, inject } from "@angular/core";
 import { BotaoComponent } from "../../../../components/botao/botao.component";
 import { SimpleTableComponent } from "../../../../components/simple-table/simple-table.component"
 import { MultiSelectInputComponent } from "../../../../components/multi-select-input/multi-select-input.component"
@@ -30,6 +30,8 @@ enum ToggleModal {
 })
 
 export class HorariosAdminPageComponent {
+  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
 	adminService = inject(AdminService);
 	alertService = inject(AlertService);
 	
@@ -170,6 +172,12 @@ export class HorariosAdminPageComponent {
 		  });
 		return this.filterForm.value;
 	}
+
+	onFilter(){
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.buscar()
+  	}
 
 	buscar(){
 		this.adminService.fetchHoraioProfessor(this.filterGet()).subscribe({

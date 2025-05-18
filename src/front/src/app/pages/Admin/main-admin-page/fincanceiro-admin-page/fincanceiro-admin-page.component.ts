@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
 import { ModalComponent } from "../../../../components/modal/modal.component";
 import { BotaoComponent } from "../../../../components/botao/botao.component";
 import { SimpleTableComponent } from "../../../../components/simple-table/simple-table.component";
@@ -31,6 +31,8 @@ import { AlertService } from "../../../../services/Alert.service";
 	styleUrl: "./fincanceiro-admin-page.component.css",
 })
 export class FincanceiroAdminPageComponent {
+  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
 	filterForm: FormGroup;
 	adminService = inject(AdminService);
 	alertService = inject(AlertService);
@@ -147,6 +149,13 @@ export class FincanceiroAdminPageComponent {
 
 		return this.filterForm.value;
 	}
+
+	onFilter(){
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.buscar()
+  	}
+	
 	buscar() {
 		this.adminService.filterDividendos(this.getFilter()).subscribe({
 			next: (response: any) => {

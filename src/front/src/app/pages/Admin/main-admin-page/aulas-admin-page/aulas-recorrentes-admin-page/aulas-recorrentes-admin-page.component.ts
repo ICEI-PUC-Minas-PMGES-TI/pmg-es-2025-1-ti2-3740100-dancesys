@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ModalComponent } from '../../../../../components/modal/modal.component';
 import { SimpleTableComponent } from '../../../../../components/simple-table/simple-table.component';
 import { SearchBoxMultiComponent } from '../../../../../components/search-box-multi/search-box-multi.component'
@@ -28,6 +28,8 @@ import { AlertService } from '../../../../../services/Alert.service';
   styleUrl: "./aulas-recorrentes-admin-page.component.css",
 })
 export class AulasRecorrentesAdminPageComponent {
+  @ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+
   adminService = inject(AdminService);
   alertService = inject(AlertService);
 
@@ -148,6 +150,12 @@ export class AulasRecorrentesAdminPageComponent {
     const mensagem: Mensagem = item
 
     return mensagem;
+  }
+
+  onFilter(){
+    this.paginaAtual = 0;
+    this.tabela.resetPage()
+    this.buscar()
   }
 
   buscar() {
