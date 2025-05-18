@@ -66,7 +66,7 @@ public class DividendoServiceImpl implements DividendoService {
     }
 
     @Override
-    public PaginatedResponse<DividendoDTO> buscar(DividendoFilter filtro){
+    public PaginatedResponse<Dividendo> buscar(DividendoFilter filtro){
         return dividendoRepositoryCustom.buscar(filtro);
     }
 

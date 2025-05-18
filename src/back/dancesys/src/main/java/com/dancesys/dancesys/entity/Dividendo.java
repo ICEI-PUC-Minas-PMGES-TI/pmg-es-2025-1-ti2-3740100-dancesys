@@ -1,12 +1,14 @@
 package com.dancesys.dancesys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Table(name = "Dividendo")
 @Entity(name = "Dividendo")
@@ -46,6 +48,10 @@ public class Dividendo {
     @Column(name = "codigo", nullable = false)
     private String codigo;
 
+    @JsonProperty("mesesAtraso")
+    public Long getMesesAtraso() {
+        return status.equals(atrasado) ?  ChronoUnit.MONTHS.between(criadoEm, LocalDate.now()) : 0;
+    }
 
     @ManyToOne
     @JoinColumn(name = "id_Aluno", nullable = false)

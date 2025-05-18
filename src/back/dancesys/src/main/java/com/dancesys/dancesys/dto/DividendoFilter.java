@@ -14,4 +14,6 @@ import java.util.List;
     private List<Integer> tipos;
     private Integer tamanho;
     private Integer pagina;
+    private String orderBy;
+    private String order;
 }

@@ -65,6 +65,7 @@ export class FincanceiroAdminPageComponent {
 	};
 
 	colunas = [
+		{ chave: "codigo", titulo: "Codigo"},
 		{ chave: "idAluno.idUsuario.nome", titulo: "Aluno" },
 		{
 			chave: "tipo",
@@ -84,7 +85,7 @@ export class FincanceiroAdminPageComponent {
 				valor != null ? this.formartarData(valor) : "",
 		},
 		{
-			chave: "mesesAtrasos",
+			chave: "mesesAtraso",
 			titulo: "Meses Atrasados",
 			width: "15%",
 			formatar: (valor: number) =>
@@ -123,6 +124,9 @@ export class FincanceiroAdminPageComponent {
 		{ value: 3, text: "Atrasado" },
 	];
 
+	orderByValue: string = "";
+	orderValue: string = "";
+
 	datesfilter: { value: string; text: string }[] = [];
 
 	ngOnInit(): void {
@@ -137,6 +141,8 @@ export class FincanceiroAdminPageComponent {
 			status: [this.statusFilter],
 			tipos: [this.tiposFilter],
 			alunos: [this.alunosFilter],
+			orderBy: [this.orderByValue],
+			order: [this.orderValue]
 		});
 
 		return this.filterForm.value;
@@ -180,6 +186,7 @@ export class FincanceiroAdminPageComponent {
 	}
 
 	formatarAtraso(valor: number) {
+		if (valor == 0) return "";
 		if (valor == 1) return `${valor} mês`;
 		return `${valor} meses`;
 	}
@@ -244,4 +251,10 @@ export class FincanceiroAdminPageComponent {
 		this.itensPage = event.itensPage;
 		this.buscar();
 	}
+
+	orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
+		this.buscar()
+  }
 }

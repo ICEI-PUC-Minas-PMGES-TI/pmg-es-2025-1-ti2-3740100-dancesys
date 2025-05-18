@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.controller;
 
 import com.dancesys.dancesys.dto.*;
+import com.dancesys.dancesys.entity.Dividendo;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.DividendoService;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class DividendoController {
     }
 
     @PostMapping(value = "buscar")
-    public PaginatedResponse<DividendoDTO> buscarTeste(@RequestBody DividendoFilter filtro){
+    public PaginatedResponse<Dividendo> buscarTeste(@RequestBody DividendoFilter filtro){
         return dividendoService.buscar(filtro);
     }
 }

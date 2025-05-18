@@ -6,6 +6,8 @@ export class DividendoFilter{
     tipos!: number[];
     tamanho!: number;
     pagina!: number;
+    orderBy!: string;
+    order!: string;
 }
 
 export class DividendoResponse{

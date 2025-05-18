@@ -2,6 +2,7 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.DividendoDTO;
 import com.dancesys.dancesys.dto.DividendoFilter;
+import com.dancesys.dancesys.entity.Dividendo;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface DividendoService {
 
     public DividendoDTO pagar(Long id) throws Exception;
 
-    public PaginatedResponse<DividendoDTO> buscar(DividendoFilter filtro);
+    public PaginatedResponse<Dividendo> buscar(DividendoFilter filtro);
 }

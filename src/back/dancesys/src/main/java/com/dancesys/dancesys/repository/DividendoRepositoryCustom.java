@@ -4,6 +4,7 @@ import com.dancesys.dancesys.dto.DividendoDTO;
 import com.dancesys.dancesys.dto.DividendoFilter;
 import com.dancesys.dancesys.entity.Dividendo;
 import com.dancesys.dancesys.entity.HorarioProfessor;
+import com.dancesys.dancesys.infra.CriterialUtils;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.DividendoMapper;
 import jakarta.persistence.EntityManager;
@@ -12,6 +13,7 @@ import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -20,7 +22,7 @@ public class DividendoRepositoryCustom {
 
     public DividendoRepositoryCustom(EntityManager em) { this.em = em; }
 
-    public PaginatedResponse<DividendoDTO> buscar(DividendoFilter filtro) {
+    public PaginatedResponse<Dividendo> buscar(DividendoFilter filtro) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
 
         CriteriaQuery<Dividendo> query = cb.createQuery(Dividendo.class);
@@ -64,6 +66,16 @@ public class DividendoRepositoryCustom {
             predicates.add(root.get("tipo").in(filtro.getTipos()));
         }
 
+        if (filtro.getOrderBy() != null && !filtro.getOrderBy().isEmpty() && !filtro.getOrderBy().equals("mesesAtraso")) {
+            Path<?> campoOrdenacao = CriterialUtils.getPath(root, filtro.getOrderBy());
+
+            if (filtro.getOrder().equalsIgnoreCase("asc")) {
+                query.orderBy(cb.asc(campoOrdenacao));
+            } else {
+                query.orderBy(cb.desc(campoOrdenacao));
+            }
+        }
+
         query.where(cb.and(predicates.toArray(new Predicate[0])));
         TypedQuery<Dividendo> typedQuery = em.createQuery(query);
 
@@ -74,6 +86,14 @@ public class DividendoRepositoryCustom {
         }
 
         List<Dividendo> resultado = typedQuery.getResultList();
+
+        if ("mesesAtraso".equals(filtro.getOrderBy())) {
+            Comparator<Dividendo> comparator = Comparator.comparing(Dividendo::getMesesAtraso);
+            if (filtro.getOrder().equalsIgnoreCase("desc")) {
+                comparator = comparator.reversed();
+            }
+            resultado.sort(comparator);
+        }
 
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         Root<Dividendo> countRoot = countQuery.from(Dividendo.class);
@@ -120,8 +140,6 @@ public class DividendoRepositoryCustom {
         countQuery.where(cb.and(countPredicates.toArray(new Predicate[0])));
         Long total = em.createQuery(countQuery).getSingleResult();
 
-        List<DividendoDTO>  resultadoDto = DividendoMapper.toDto(resultado);
-
-        return new PaginatedResponse<>(resultadoDto, total);
+        return new PaginatedResponse<>(resultado, total);
     }
 }

@@ -74,6 +74,7 @@
 	[colunas]="colunas"
 	[dados]="dividendos.conteudo"
 	[totalItens]="dividendos.total"
-	(paginacaoChange)="onPaginacaoChange($event)">
+	(paginacaoChange)="onPaginacaoChange($event)"
+	(orderChange)="orderBy($event)">
 	</app-simple-table>
 </main>
