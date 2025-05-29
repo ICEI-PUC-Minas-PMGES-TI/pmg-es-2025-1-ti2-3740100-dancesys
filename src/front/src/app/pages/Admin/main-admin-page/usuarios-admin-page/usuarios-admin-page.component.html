@@ -73,12 +73,11 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="text"
-									maxlength="11"
-									minlength="11"
+									mask="000.000.000-00"
 									name="cpf"
 									id="cpf"
 									ngModel
-									placeholder="..."
+									placeholder="...."
 									#cpfCtrl="ngModel"
 									required
 								/>
@@ -89,6 +88,7 @@
 									class="p-1 bg-main-300 rounded-md"
 									type="tel"
 									name="numero"
+									mask="(00) 00000-0000"
 									id="numero"
 									ngModel
 									placeholder="..."
@@ -309,8 +309,7 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="text"
-									maxlength="11"
-									minlength="11"
+									mask="000.000.000-00"
 									name="cpf"
 									id="cpf"
 									ngModel
@@ -324,6 +323,7 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="tel"
+									mask="(00) 00000-0000"
 									name="numero"
 									id="numero"
 									ngModel
@@ -521,8 +521,7 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="text"
-									maxlength="11"
-									minlength="11"
+									mask="000.000.000-00"
 									name="cpf"
 									id="cpf"
 									[(ngModel)]="tempEditAluno.usuario.cpf"
@@ -536,6 +535,7 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="tel"
+									mask="(00) 00000-0000"
 									name="numero"
 									id="numero"
 									[(ngModel)]="tempEditAluno.usuario.numero"
@@ -759,8 +759,7 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="text"
-									maxlength="11"
-									minlength="11"
+									mask="000.000.000-00"
 									name="cpf"
 									id="cpf"
 									[(ngModel)]="tempEditProf.usuario.cpf"
@@ -774,6 +773,7 @@
 								<input
 									class="p-1 bg-main-300 rounded-md"
 									type="tel"
+									mask="(00) 00000-0000"
 									name="numero"
 									id="numero"
 									[(ngModel)]="tempEditProf.usuario.numero"
@@ -946,10 +946,9 @@
 						class="p-1 rounded-md bg-main-300"
 						type="text"
 						ngModel
+						mask="000.000.000-00"
 						name="cpfFilter"
 						placeholder="..."
-						maxlength="11"
-						minlength="11"
 						id="cpfFilter"
 						value=""
 					/>
@@ -1083,7 +1082,7 @@
 						<tr>
 							<td>{{ user.nome }}</td>
 							<td>{{ user.email }}</td>
-							<td>{{ user.telefone }}</td>
+							<td>{{ user.telefone | mask: '(00) 00000-0000' }}</td>
 							@if (isShowingAlunoTable) {
 								<td>{{ user.tipo | tipoAluno }}</td>
 							}

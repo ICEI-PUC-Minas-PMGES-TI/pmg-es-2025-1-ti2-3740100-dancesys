@@ -17,6 +17,7 @@ import {
 	ProfessorResponse,
 } from "../../../../services/admin.service";
 import { ModalidadesService } from "../../../../services/modalidades.service";
+import { provideNgxMask, NgxMaskPipe, NgxMaskDirective } from "ngx-mask";
 
 export type FormAlunoValue = {
 	nome: string;
@@ -67,6 +68,8 @@ const myCss =
 		ModalComponent,
 		FormsModule,
 		TipoAlunoPipe,
+		NgxMaskDirective,
+		NgxMaskPipe,
 		StatusUsuarioPipe,
 	],
 	templateUrl: "./usuarios-admin-page.component.html",
