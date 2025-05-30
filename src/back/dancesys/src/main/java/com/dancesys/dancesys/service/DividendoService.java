@@ -15,4 +15,6 @@ public interface DividendoService {
     public DividendoDTO pagar(Long id) throws Exception;
 
     public PaginatedResponse<Dividendo> buscar(DividendoFilter filtro);
+
+    public void jobDividendosDiario();
 }

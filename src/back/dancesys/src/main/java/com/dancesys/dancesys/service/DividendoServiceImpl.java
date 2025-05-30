@@ -124,4 +124,16 @@ public class DividendoServiceImpl implements DividendoService {
         dividendoRepository.deleteById(id);
         return "Dividendo excluida com Sucesso!";
     }
+
+    @Override
+    public void jobDividendosDiario(){
+        LocalDate data = LocalDate.now();
+        LocalDate date = data.minusMonths(1);
+        List<Dividendo> dividendosAtrasados = dividendoRepository.findByCriadoEmLessThanEqualAndStatusEquals(date, Dividendo.pendente);
+
+        for(Dividendo d : dividendosAtrasados){
+            d.setStatus(Dividendo.atrasado);
+            dividendoRepository.save(d);
+        }
+    }
 }
