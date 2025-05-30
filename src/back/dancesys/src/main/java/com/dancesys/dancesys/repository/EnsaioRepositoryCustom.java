@@ -51,7 +51,7 @@ public class EnsaioRepositoryCustom {
         }
 
         if(filtro.getAlunos() != null && !filtro.getAlunos().isEmpty()){
-            predicates.add(root.get("idAluno").get("id").in(filtro.getAlunos()));
+            predicates.add(root.get("alunos").get("idAluno").get("id").in(filtro.getAlunos()));
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));
@@ -88,7 +88,7 @@ public class EnsaioRepositoryCustom {
         }
 
         if(filtro.getAlunos() != null && !filtro.getAlunos().isEmpty()){
-            countPredicates.add(countRoot.get("idAluno").get("id").in(filtro.getAlunos()));
+            countPredicates.add(countRoot.get("alunos").get("idAluno").get("id").in(filtro.getAlunos()));
         }
         countQuery.where(cb.and(countPredicates.toArray(new Predicate[0])));
         Long total = em.createQuery(countQuery).getSingleResult();
