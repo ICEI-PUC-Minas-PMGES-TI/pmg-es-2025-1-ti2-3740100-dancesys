@@ -1,0 +1,43 @@
+.calendario {
+  background-color: #ffeedd;
+  padding: 16px;
+  border-radius: 8px;
+  width: 280px;
+  font-family: sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.dias-semana, .semana {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dias-semana div, .dia {
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  line-height: 36px;
+}
+
+button.dia {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+button.dia:hover {
+  background-color: #ddd;
+}
+
+button.dia.selecionado {
+  background-color: #333;
+  color: #fff;
+}

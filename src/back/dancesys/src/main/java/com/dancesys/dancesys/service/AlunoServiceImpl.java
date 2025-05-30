@@ -56,4 +56,8 @@ public class AlunoServiceImpl{
     public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status){
         return alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
     }
+
+    public Aluno findByIdUsuario(Long idUsuario){
+        return alunoRepository.findByIdUsuarioId(idUsuario);
+    }
 }

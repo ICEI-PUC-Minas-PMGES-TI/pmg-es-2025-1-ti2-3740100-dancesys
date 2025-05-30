@@ -77,4 +77,9 @@ public class UsuarioController {
             @RequestParam(required = false) Integer status) {
         return ResponseEntity.ok(usuarioService.buscarProfessores(nome,cpf,email,status));
     }
+
+    @GetMapping(value = "aluno/achar/{id}")
+    public Long acharAluno(@PathVariable Long id){
+        return usuarioService.acharIdAlunoUsuario(id);
+    }
 }

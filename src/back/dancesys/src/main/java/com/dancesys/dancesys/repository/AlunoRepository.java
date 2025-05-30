@@ -14,6 +14,8 @@ public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
 
         Aluno findById(Long id);
 
+        Aluno findByIdUsuarioId(Long idUsuario);
+
         @Query("SELECT a FROM Aluno a JOIN a.idUsuario u " +
                 "WHERE (:nome IS NULL OR LOWER(u.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) " +
                 "AND (:cpf IS NULL OR LOWER(u.cpf) LIKE LOWER(CONCAT('%', :cpf ,'%'))) " +

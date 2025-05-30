@@ -167,4 +167,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.save(u);
         return u;
     }
+
+    @Override
+    public Long acharIdAlunoUsuario(Long id){
+        Aluno aluno = alunoServiceImpl.findByIdUsuario(id);
+        return aluno.getId();
+    }
 }
