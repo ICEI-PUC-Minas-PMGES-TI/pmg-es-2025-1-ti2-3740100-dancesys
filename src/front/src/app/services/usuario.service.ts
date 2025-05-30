@@ -4,6 +4,8 @@ import { Usuario, UsuarioCookie, UsuarioTipos } from "../models/usuario.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environment/environment";
 import { Router } from "@angular/router";
+import { AlunoResponse } from "./admin.service";
+import { Observable } from "rxjs";
 
 const USER_INFO_EXPIRE_DAYS: number = 10; // em dias
 
@@ -79,5 +81,11 @@ export class UsuarioService {
 				console.log(err);
 			},
 		});
+	}
+
+	public getAlunoIdByUserId(uid: number): Observable<number> {
+		return this.http.get<number>(
+			`${environment.API_URL}usuario/aluno/achar/${uid}`,
+		);
 	}
 }

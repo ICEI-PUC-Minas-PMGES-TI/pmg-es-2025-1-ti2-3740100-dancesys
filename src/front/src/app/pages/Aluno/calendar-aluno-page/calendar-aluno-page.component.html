@@ -1,1 +1,18 @@
-<p>calendar-aluno-page works!</p>
+<main
+	class="bg-main-100 flex flex-1 space-y-4 flex-col h-full w-full p-8 text-main-500"
+>
+	<h1 class="text-5xl font-bold">Meu Calendário</h1>
+	<div class="flex flex-row flex-1">
+		<div class="flex flex-col w-3/5 justify-center space-y-4 max-h-max">
+			@for (item of showCalItems[currPag]; track item.dataHorario) {
+				<app-calendario-item [item]="item"></app-calendario-item>
+			}
+		</div>
+		<div class="flex flex-col px-10">
+			<div class="flex flex-row space-x-4">
+				<button appButton (click)="nextPage()">Próxima página</button>
+				<button appButton (click)="previousPage()">Página Anterior</button>
+			</div>
+		</div>
+	</div>
+</main>

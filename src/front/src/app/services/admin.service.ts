@@ -203,8 +203,8 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}aula`, { ...item });
 	}
 
-	public alterarStatusAula(id: number){
-		return this.http.get(`${environment.API_URL}aula/status/${id}`)
+	public alterarStatusAula(id: number) {
+		return this.http.get(`${environment.API_URL}aula/status/${id}`);
 	}
 
 	public fetchEventos(filtro: EventoFilter): Observable<EventoResponse> {
