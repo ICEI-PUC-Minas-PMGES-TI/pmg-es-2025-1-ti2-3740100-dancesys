@@ -73,5 +73,7 @@ public class AlunoServiceImpl{
         for(Aluno a : alunos){
             dividendoService.gerarMensalidade(a);
         }
+
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\nFinalizando job de boletos mensalidade\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 }

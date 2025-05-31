@@ -13,7 +13,7 @@ public class AulaOcorrenciaJobMensal {
 
     @Scheduled(cron = "0 0 1 1 * *", zone = "America/Sao_Paulo")
     public void gerarAulasJobMensal() throws Exception{
-        System.out.println("AulaOcorrenciaJob executando\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n ");
+        System.out.println("\n\n\n\n\n\n\n\n\n\nAulaOcorrenciaJob executando\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         aulaService.gerarAulasJobMensal();
     }
 }

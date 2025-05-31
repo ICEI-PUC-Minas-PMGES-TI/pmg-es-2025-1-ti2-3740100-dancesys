@@ -96,6 +96,8 @@ public class AulaOcorrenciaServiceImpl {
             }
             dataAtual = dataAtual.plusDays(1);
         }
+
+        System.out.println("\n\n\n\n\n\n\nFinalizando job mensal de aulas\n\n\n\n\n\n\n");
     }
 
     public List<AulaOcorrencia> buscarAulasPosData(LocalDate data, Long idAula){
