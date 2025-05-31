@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AulaOcorrenciaJob {
+public class AulaOcorrenciaJobMensal {
 
     @Autowired
     private AulaService aulaService;

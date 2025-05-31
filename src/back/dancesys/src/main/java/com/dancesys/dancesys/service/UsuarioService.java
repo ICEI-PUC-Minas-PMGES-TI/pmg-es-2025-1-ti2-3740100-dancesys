@@ -25,4 +25,6 @@ public interface UsuarioService{
     public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status);
 
     public Long acharIdAlunoUsuario(Long id);
+
+    public void gerarBoletosMensalJob() throws Exception;
 }

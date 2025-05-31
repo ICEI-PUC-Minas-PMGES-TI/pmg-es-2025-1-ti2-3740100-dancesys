@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.entity.Aluno;
+import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,14 @@ import java.util.List;
 @Service
 public class AlunoServiceImpl{
     private final AlunoRepository alunoRepository;
+    private final DividendoServiceImpl dividendoService;
 
-    public AlunoServiceImpl(AlunoRepository alunoRepository) {
+    public AlunoServiceImpl(
+            AlunoRepository alunoRepository,
+            DividendoServiceImpl dividendoService
+    ) {
         this.alunoRepository = alunoRepository;
+        this.dividendoService = dividendoService;
     }
 
     public Aluno salvar(Aluno entity) throws Exception{
@@ -59,5 +65,13 @@ public class AlunoServiceImpl{
 
     public Aluno findByIdUsuario(Long idUsuario){
         return alunoRepository.findByIdUsuarioId(idUsuario);
+    }
+
+    public void gerarBoletosMenslaidadeJob() throws Exception {
+        List<Aluno> alunos = alunoRepository.findByIdUsuarioStatus(Usuario.ativo);
+
+        for(Aluno a : alunos){
+            dividendoService.gerarMensalidade(a);
+        }
     }
 }

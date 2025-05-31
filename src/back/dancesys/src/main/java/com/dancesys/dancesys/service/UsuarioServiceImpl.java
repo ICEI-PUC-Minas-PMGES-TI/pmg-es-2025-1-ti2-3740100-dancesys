@@ -173,4 +173,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         Aluno aluno = alunoServiceImpl.findByIdUsuario(id);
         return aluno.getId();
     }
+
+    @Override
+    public void gerarBoletosMensalJob() throws Exception{
+        alunoServiceImpl.gerarBoletosMenslaidadeJob();
+    }
 }
