@@ -22,6 +22,9 @@ import { FigurinosAdminPageComponent } from "./pages/Admin/main-admin-page/event
 import { FigurinosPorAlunoAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/figurinos-por-aluno-admin-page/figurinos-por-aluno-admin-page.component";
 import { ApresentacoesAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/apresentacoes-admin-page/apresentacoes-admin-page.component";
 import { EnsaiosAdminPageComponent } from "./pages/Admin/main-admin-page/eventos-main-admin-page/ensaios-admin-page/ensaios-admin-page.component";
+import { OutrosAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/outros-admin-page.component";
+import { ModalidadeAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/modalidade-admin-page/modalidade-admin-page.component";
+import { SalaAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/sala-admin-page/sala-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -132,6 +135,20 @@ export const routes: Routes = [
 									},
 								],
 							},
+							{
+								path: "outros",
+								component: OutrosAdminPageComponent,
+								children: [
+									{
+										path: "modalidade",
+										component: ModalidadeAdminPageComponent,
+									},
+									{
+										path: "sala",
+										component: SalaAdminPageComponent,
+									}
+								]
+							}
 						],
 					},
 					{ path: "calendar", component: CalendarAdminPageComponent },

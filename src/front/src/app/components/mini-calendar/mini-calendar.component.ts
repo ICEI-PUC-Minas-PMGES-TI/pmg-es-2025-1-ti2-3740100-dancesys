@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-mini-calendar',
@@ -11,9 +11,12 @@ import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 export class MiniCalendarComponent implements OnInit {
   currentDate: Date = new Date();
   weeks: (Date | null)[][] = [];
-  selectedDate: Date | null = null;
+  selectedDate: Date = new Date();
+
+  @Input() eventsDays: Date[] = []
 
   @Output() diaSelecionado = new EventEmitter<Date>();
+  @Output() mesCarregado = new EventEmitter<{ firstDay: Date; lastDay: Date }>();
 
   ngOnInit() {
     this.generateCalendar();
@@ -36,7 +39,6 @@ export class MiniCalendarComponent implements OnInit {
     const weeks: (Date | null)[][] = [];
     let week: (Date | null)[] = [];
 
-    // Dias vazios no início do mês
     for (let i = 0; i < firstDayOfMonth.getDay(); i++) {
       week.push(null);
     }
@@ -59,6 +61,8 @@ export class MiniCalendarComponent implements OnInit {
     }
 
     this.weeks = weeks;
+    
+    this.mesCarregado.emit({ firstDay: firstDayOfMonth, lastDay: lastDayOfMonth });
   }
 
   onSelectDay(date: Date | null) {
@@ -75,6 +79,12 @@ export class MiniCalendarComponent implements OnInit {
     return this.currentDate.toLocaleDateString('default', { month: 'long', year: 'numeric' });
   }
 
-  
-
+  hasEvento(date: Date): boolean {
+    return this.eventsDays.some(eventDate =>
+      date &&
+      eventDate.getDate() === date.getDate() &&
+      eventDate.getMonth() === date.getMonth() &&
+      eventDate.getFullYear() === date.getFullYear()
+    );
+  }
 }

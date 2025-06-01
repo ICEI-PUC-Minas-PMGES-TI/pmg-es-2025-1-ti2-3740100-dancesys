@@ -38,10 +38,19 @@ public class EnsaioRepositoryCustom {
             predicates.add(cb.equal(root.get("idProfessor").get("id"), filtro.getIdProfessor()));
         }
 
-        if(filtro.getData() != null){
-            LocalDate data = filtro.getData();
+        if(filtro.getDataInicio() != null && filtro.getDataFim() == null){
+            LocalDate data = filtro.getDataInicio();
             LocalDateTime startOfDay = data.atStartOfDay();
             LocalDateTime endOfDay = data.atTime(LocalTime.MAX);
+
+            predicates.add(cb.between(root.get("dataHoraInicio"), startOfDay, endOfDay));
+        }
+
+        if(filtro.getDataInicio() != null && filtro.getDataFim() != null){
+            LocalDate dataIn = filtro.getDataInicio();
+            LocalDate dataFim = filtro.getDataFim();
+            LocalDateTime startOfDay = dataIn.atStartOfDay();
+            LocalDateTime endOfDay = dataFim.atTime(LocalTime.MAX);
 
             predicates.add(cb.between(root.get("dataHoraInicio"), startOfDay, endOfDay));
         }
@@ -75,10 +84,19 @@ public class EnsaioRepositoryCustom {
             countPredicates.add(cb.equal(countRoot.get("idProfessor").get("id"), filtro.getIdProfessor()));
         }
 
-        if(filtro.getData() != null){
-            LocalDate data = filtro.getData();
+        if(filtro.getDataInicio() != null && filtro.getDataFim() == null){
+            LocalDate data = filtro.getDataInicio();
             LocalDateTime startOfDay = data.atStartOfDay();
             LocalDateTime endOfDay = data.atTime(LocalTime.MAX);
+
+            countPredicates.add(cb.between(countRoot.get("dataHoraInicio"), startOfDay, endOfDay));
+        }
+
+        if(filtro.getDataInicio() != null && filtro.getDataFim() != null){
+            LocalDate dataIn = filtro.getDataInicio();
+            LocalDate dataFim = filtro.getDataFim();
+            LocalDateTime startOfDay = dataIn.atStartOfDay();
+            LocalDateTime endOfDay = dataFim.atTime(LocalTime.MAX);
 
             countPredicates.add(cb.between(countRoot.get("dataHoraInicio"), startOfDay, endOfDay));
         }

@@ -1,2 +1,2 @@
-<app-mini-calendar (diaSelecionado)="handleDiaSelecionado($event)"></app-mini-calendar>
+<app-mini-calendar [eventsDays]="diasComEvento" (diaSelecionado)="handleDiaSelecionado($event)" (mesCarregado)="onMesCarregado($event)"></app-mini-calendar>
 

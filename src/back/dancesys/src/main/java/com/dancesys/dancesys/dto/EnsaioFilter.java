@@ -12,7 +12,8 @@ public class EnsaioFilter {
     private Long idProfessor;
     private List<Long> apresentacoes;
     private List<Long> alunos;
-    private LocalDate data;
+    private LocalDate dataInicio;
+    private LocalDate dataFim;
     private Integer pagina;
     private Integer tamanho;
 }

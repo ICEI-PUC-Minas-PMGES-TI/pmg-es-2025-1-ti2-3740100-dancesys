@@ -1,5 +1,5 @@
 <div class="calendario">
-  <div class="header">
+  <div class="header bg-main-500">
     <button (click)="previousMonth()">◀</button>
     <span>{{ getMonthYear() }}</span>
     <button (click)="nextMonth()">▶</button>
@@ -13,15 +13,16 @@
 
   <div class="dias">
     <div *ngFor="let semana of weeks" class="semana">
-      <button
+        <button
         *ngFor="let dia of semana"
         class="dia"
         [class.selecionado]="dia && isSelected(dia)"
+        [class.com-evento]="dia && hasEvento(dia)"
         [disabled]="!dia"
         (click)="onSelectDay(dia)"
-      >
-        {{ dia?.getDate() }}
-      </button>
+        >
+          {{ dia?.getDate() }}
+        </button>
     </div>
   </div>
 </div>

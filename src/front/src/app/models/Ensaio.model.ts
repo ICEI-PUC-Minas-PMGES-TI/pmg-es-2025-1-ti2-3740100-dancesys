@@ -11,7 +11,8 @@ export class EnsaioFilter{
     idProfessor!: number;
     apresentacoes!: number[];
     alunos!: number[];
-    data!: Date;
+    dataInicio!: Date;
+    dataFim!: Date;
     pagina!: number;
     tamanho!: number;
 }

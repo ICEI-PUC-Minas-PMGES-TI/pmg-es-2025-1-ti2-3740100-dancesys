@@ -102,7 +102,8 @@ export class EnsaiosAdminPageComponent {
 			idProfessor: [],
 			alunos: [[]],
 			apresentacoes: [[]],
-			data: [],
+			dataInicio: [],
+			dataFim: [],
 			tamanho: [this.itensPage],
 			pagina: [this.paginaAtual],
 		});
