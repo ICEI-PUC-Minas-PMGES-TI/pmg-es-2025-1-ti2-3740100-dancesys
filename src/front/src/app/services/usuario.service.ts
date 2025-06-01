@@ -14,7 +14,7 @@ const USER_INFO_EXPIRE_DAYS: number = 10; // em dias
 })
 export class UsuarioService {
 	// atributos
-	private currentUsuario = signal<Usuario>(new Usuario());
+	private currentUsuario = signal<Usuario | null>(null);
 	public usuario = this.currentUsuario.asReadonly();
 
 	// injeções
@@ -30,6 +30,7 @@ export class UsuarioService {
 		const cookie = this.cookieService.get("user_cookie");
 		if (cookie) {
 			// coloca o usuário no signal
+			console.log(cookie);
 			const userCookie: UsuarioCookie = JSON.parse(cookie);
 			const newUser: Usuario = new Usuario();
 			newUser.id = userCookie.id;
@@ -45,11 +46,15 @@ export class UsuarioService {
 
 	private redirecionarUsuario() {
 		// redireciona baseado no tipo do usuário
-		if (this.currentUsuario().tipo == UsuarioTipos.ADMIN) {
+		if (this.currentUsuario() === null) {
+			this.router.navigate(["login"]);
+			return;
+		}
+		if (this.currentUsuario()!.tipo == UsuarioTipos.ADMIN) {
 			this.router.navigate(["admin"]);
-		} else if (this.currentUsuario().tipo == UsuarioTipos.FUNCIONARIO) {
+		} else if (this.currentUsuario()!.tipo == UsuarioTipos.FUNCIONARIO) {
 			this.router.navigate(["funcionario"]);
-		} else if (this.currentUsuario().tipo == UsuarioTipos.ALUNO) {
+		} else if (this.currentUsuario()!.tipo == UsuarioTipos.ALUNO) {
 			this.router.navigate(["aluno"]);
 		}
 	}
@@ -81,6 +86,12 @@ export class UsuarioService {
 				console.log(err);
 			},
 		});
+	}
+
+	public deslogar() {
+		this.cookieService.delete("user_cookie", "/");
+		this.currentUsuario.set(null);
+		this.redirecionarUsuario();
 	}
 
 	public getAlunoIdByUserId(uid: number): Observable<number> {
