@@ -1,6 +1,33 @@
 <main class="py-4 max-w-full max-h-full h-full">
+    <section class="flex py-5">
+        <h1 class="text-main-500 text-xl font-bold">Geral de</h1>
+    </section>
     <section>
-        <div class="padrao w-full h-40"></div>
+        <div class="padrao w-full h-150 flex justify-center items-center">
+            <app-graphic-line 
+            #graficoLinha
+            [labels]="labelsGL" 
+            [data]="dataGL">
+            </app-graphic-line>
+        </div>
+    </section>
+    <section class="flex flex-row space-x-4 py-5">
+        <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+            <h1 class="text-main-500 text-xl font-bold">{{ totalBoletosPagosNoPrazo }}</h1>
+            <span class="text-main-500 text-base font-normal">Boletos pagos no prazo</span>
+        </div>
+        <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+            <h1 class="text-main-500 text-xl font-bold">{{ totalBoletosPagosAtrasado }}</h1>
+            <span class="text-main-500 text-base font-normal">Boletos pagos atrasados</span>
+        </div>
+        <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+            <h1 class="text-main-500 text-xl font-bold">R${{ totalValorPagoNoPrazo }}</h1>
+            <span class="text-main-500 text-base font-normal">Valor pago no prazo</span>
+        </div>
+        <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+            <h1 class="text-main-500 text-xl font-bold">R${{ totalValorPagoAtrasado }}</h1>
+            <span class="text-main-500 text-base font-normal">Valor pago com atraso</span>
+        </div>
     </section>
 </main>
 
