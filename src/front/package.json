@@ -18,6 +18,8 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@tailwindcss/postcss": "^4.0.17",
+    "chart.js": "^4.4.0",
+    "ng2-charts": "^4.0.1",
     "ngx-cookie-service": "^19.1.2",
     "ngx-image-cropper": "^9.1.5",
     "ngx-mask": "^19.0.7",
