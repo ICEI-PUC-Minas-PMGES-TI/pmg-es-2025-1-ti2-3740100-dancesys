@@ -44,7 +44,7 @@ export class CalendarAlunoPageComponent {
 
 	private carregarItens() {
 		this.userService
-			.getAlunoIdByUserId(this.userService.usuario().id)
+			.getAlunoIdByUserId(this.userService.usuario()!.id)
 			.subscribe({
 				next: (alunoId) => {
 					this.adminService
@@ -72,7 +72,8 @@ export class CalendarAlunoPageComponent {
 												)[1],
 											),
 											tipoUsuario:
-												this.userService.usuario().tipo,
+												this.userService.usuario()!
+													.tipo,
 											TipoAluno: TipoAluno.FLEXIVEL,
 										} as ItemDeCalendario;
 									},
@@ -98,7 +99,8 @@ export class CalendarAlunoPageComponent {
 												ensaio.dataHoraInicio,
 											),
 											tipoUsuario:
-												this.userService.usuario().tipo,
+												this.userService.usuario()!
+													.tipo,
 											TipoAluno: TipoAluno.FLEXIVEL,
 										} as ItemDeCalendario;
 									},
