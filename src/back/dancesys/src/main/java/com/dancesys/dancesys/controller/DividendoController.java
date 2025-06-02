@@ -35,4 +35,9 @@ public class DividendoController {
     public PaginatedResponse<Dividendo> buscarTeste(@RequestBody DividendoFilter filtro){
         return dividendoService.buscar(filtro);
     }
+
+    @GetMapping(value = "pagar/{id}")
+    public void pagar(@PathVariable Long id) throws Exception{
+        dividendoService.pagar(id);
+    }
 }

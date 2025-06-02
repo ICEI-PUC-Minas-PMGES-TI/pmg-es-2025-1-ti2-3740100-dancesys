@@ -25,6 +25,8 @@ import { EnsaiosAdminPageComponent } from "./pages/Admin/main-admin-page/eventos
 import { OutrosAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/outros-admin-page.component";
 import { ModalidadeAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/modalidade-admin-page/modalidade-admin-page.component";
 import { SalaAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/sala-admin-page/sala-admin-page.component";
+import { IndicadoresAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicadores-admin-page.component";
+import { IndicadorFinanceiroAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-financeiro-admin-page/indicador-financeiro-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -152,6 +154,16 @@ export const routes: Routes = [
 						],
 					},
 					{ path: "calendar", component: CalendarAdminPageComponent },
+					{ 
+						path: "indicadores", 
+						component: IndicadoresAdminPageComponent,
+						children: [
+							{
+								path: "financeiro",
+								component: IndicadorFinanceiroAdminPageComponent
+							}
+						]
+					}
 				],
 			},
 		],

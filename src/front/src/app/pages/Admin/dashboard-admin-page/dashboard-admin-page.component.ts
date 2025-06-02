@@ -8,6 +8,7 @@ enum PossibleRoutes {
 	MAIN = "main",
 	CALENDAR = "calendar",
 	PROFILE = "profile",
+	INDICADORES = "indicadores"
 }
 
 @Component({

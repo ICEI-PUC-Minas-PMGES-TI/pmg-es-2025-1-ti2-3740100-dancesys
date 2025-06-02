@@ -15,6 +15,13 @@
 			<app-icon name="calendar"></app-icon>
 		</app-navbar-button>
 		<app-navbar-button
+			[route]="possibleRoutes.INDICADORES"
+			[active]="possibleRoutes.INDICADORES === currentSelectedRoute"
+			(selected)="handleSelectRoute($event)"
+		>
+			<app-icon name="indicadores"></app-icon>
+		</app-navbar-button>
+		<app-navbar-button
 			bottom
 			[route]="possibleRoutes.PROFILE"
 			[active]="possibleRoutes.PROFILE === currentSelectedRoute"

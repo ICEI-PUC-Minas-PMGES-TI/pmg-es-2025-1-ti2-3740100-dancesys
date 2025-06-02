@@ -15,7 +15,8 @@ enum Icons {
 	delete = "delete_icon.svg",
 	menu = "menu_icon.svg",
 	check = "check_icon.svg",
-	view = "view_icon.svg"
+	view = "view_icon.svg",
+	indicadores = "indicadores_icon.svg"
 }
 
 enum Sizes {
