@@ -30,7 +30,6 @@ export class UsuarioService {
 		const cookie = this.cookieService.get("user_cookie");
 		if (cookie) {
 			// coloca o usuário no signal
-			console.log(cookie);
 			const userCookie: UsuarioCookie = JSON.parse(cookie);
 			const newUser: Usuario = new Usuario();
 			newUser.id = userCookie.id;
@@ -83,7 +82,6 @@ export class UsuarioService {
 				this.redirecionarUsuario();
 			},
 			error: (err) => {
-				console.log(err);
 			},
 		});
 	}

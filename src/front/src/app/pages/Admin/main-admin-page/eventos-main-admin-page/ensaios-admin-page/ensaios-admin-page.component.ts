@@ -206,7 +206,6 @@ export class EnsaiosAdminPageComponent {
 					this.alertService.exclusao("Ensaio excluido com sucesso");
 				},
 				error: (err) => {
-					console.log(err, { color: "red" });
 				},
 			});
 		}

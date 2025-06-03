@@ -123,7 +123,6 @@ export class UsuariosAdminPageComponent implements OnInit {
 				this.handleAlunoResponse(response);
 			},
 			error: (err) => {
-				console.log(err, { color: "red" });
 			},
 		});
 		this.adminService.fetchProfessores().subscribe({
@@ -131,7 +130,6 @@ export class UsuariosAdminPageComponent implements OnInit {
 				this.handleProfessorResponse(response);
 			},
 			error: (err) => {
-				console.log(err);
 			},
 		});
 	}
@@ -187,7 +185,6 @@ export class UsuariosAdminPageComponent implements OnInit {
 				this.isLoading = false;
 			},
 			error: (err) => {
-				console.log(err);
 			},
 		});
 	}

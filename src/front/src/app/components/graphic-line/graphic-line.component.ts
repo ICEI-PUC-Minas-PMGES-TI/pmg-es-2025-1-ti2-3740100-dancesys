@@ -16,9 +16,15 @@ export class GraphicLineComponent {
   @Input() labels: string[] = []
   @Input() data: ChartDataset [] = []
 
+  delayed = false;
+
   @ViewChild('graficoLinha') canvasRef!: ElementRef<HTMLCanvasElement>;
   graficoLinha: Chart | undefined;
   gerarGraficoLinha(){
+    if (this.graficoLinha) {
+      this.graficoLinha.destroy();
+    }
+    
     const ctx = this.canvasRef.nativeElement.getContext('2d');
     if (ctx) {
       this.graficoLinha = new Chart(ctx, {
@@ -29,6 +35,19 @@ export class GraphicLineComponent {
         },
         options: {
           responsive: true,
+          animation: {
+          onComplete: () => {
+            this.delayed = true;
+          },
+          delay: (context) => {
+            return context.type === 'data' &&
+                   context.mode === 'default' &&
+                   !this.delayed
+              ? context.dataIndex * 100
+              : 0;
+          }
+
+        },
           plugins: {
             legend: {
               position: 'top',

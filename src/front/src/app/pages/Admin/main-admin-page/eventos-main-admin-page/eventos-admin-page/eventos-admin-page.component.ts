@@ -95,7 +95,6 @@ export class EventosAdminPageComponent implements OnInit {
 	fileChangeEvent(event: any): void {
 		this.imageChangedEvent = event;
 		this.nomeArquivoFoto = event.target!.files[0].name;
-		console.log(event);
 	}
 	imageCropped(event: ImageCroppedEvent) {
 		this.croppedImage = event!.base64;
@@ -174,7 +173,6 @@ export class EventosAdminPageComponent implements OnInit {
 				imgBase64: this.croppedImage as string,
 				nomeArquivo: this.nomeArquivoFoto,
 			};
-			console.log(ev);
 			this.adminService.updateEvento(ev).subscribe({
 				next: () => {
 					this.onToggleEditarModal();

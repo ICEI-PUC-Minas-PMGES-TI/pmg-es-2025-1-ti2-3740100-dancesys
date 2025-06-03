@@ -91,7 +91,6 @@ export class CalendarAlunoPageComponent {
 							next: (ensaios: any) => {
 								const arr = ensaios?.conteudo.map(
 									(ensaio: any) => {
-										console.log(ensaio);
 										return {
 											title: `Ensaio de ${ensaio.idApresentacaoEvento.nome}`,
 											subtitle: `Professor: ${ensaio.idProfessor.idUsuario.nome}`,
@@ -116,12 +115,10 @@ export class CalendarAlunoPageComponent {
 										: -1,
 								);
 								this.paginarItens();
-								console.log(this.showCalItems);
 							},
 						});
 				},
 				error: (erro) => {
-					console.log(erro);
 				},
 			});
 	}

@@ -193,7 +193,6 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 	submitCriarApresentacaoForm(form: NgForm) {
 		if (form.valid) {
 			// codigo para criar a apresentacao pelo adminService
-			console.log(form.value);
 			this.adminService
 				.updateApresentacaoEvento({
 					...form.value,
@@ -260,7 +259,6 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 			})
 			.subscribe({
 				next: (apRes: ApresentacaoEventoResponse) => {
-					console.log(apRes.conteudo);
 					this.apresentacoes = apRes;
 				},
 			});

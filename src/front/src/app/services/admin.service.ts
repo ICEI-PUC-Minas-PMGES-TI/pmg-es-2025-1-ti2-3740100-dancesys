@@ -107,7 +107,6 @@ export class AdminService {
 	}
 
 	public addUsuarioProfessor(professor: FormProfessorValue) {
-		console.log(professor);
 		return this.http.post(`${environment.API_URL}usuario/professor`, {
 			valorHoraExtra: professor.valorHoraExtra,
 			informacoesProfissionais: professor.informacoesProfissionais,

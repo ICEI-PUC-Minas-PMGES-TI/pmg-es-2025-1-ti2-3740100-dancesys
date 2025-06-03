@@ -299,7 +299,6 @@ export class AulasFixasAdminPageComponent {
 					this.alertService.info("Status da aula alterado!");
 				},
 				error: (err) => {
-					console.log(err, { color: "red" });
 				},
 			});
 		}

@@ -150,7 +150,6 @@ export class HorariosAdminPageComponent {
 				this.professoresObj = response;
 			},
 			error: (err) => {
-				console.log(err, { color: "red" });
 			},
 		});
 	}
@@ -189,7 +188,6 @@ export class HorariosAdminPageComponent {
 				}
 			},
 			error: (err) => {
-				console.log(err, { color: "red" });
 			},
 		});
 	}
@@ -212,7 +210,6 @@ export class HorariosAdminPageComponent {
 				this.alertService.sucesso("Registro salvo!")
 			},
 			error: (err) => {
-				console.log(err, { color: "red" });
 			},
 		});
 	}
@@ -231,7 +228,6 @@ export class HorariosAdminPageComponent {
 					this.alertService.exclusao("Horario excluid com sucesso!")
 				},
 				error: (err) => {
-					console.log(err, { color: "red" });
 				},
 			})
 		}
