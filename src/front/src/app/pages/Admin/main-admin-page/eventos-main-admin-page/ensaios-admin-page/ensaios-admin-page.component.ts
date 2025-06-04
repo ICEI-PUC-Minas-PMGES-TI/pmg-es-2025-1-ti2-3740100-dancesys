@@ -228,6 +228,7 @@ export class EnsaiosAdminPageComponent {
 	}
 
 	onFilter(){
+		this.tabela.isLoad(true)
 		this.paginaAtual = 0;
 		this.tabela.resetPage()
 		this.buscar()
@@ -241,6 +242,7 @@ export class EnsaiosAdminPageComponent {
 				} else {
 					this.ensaios = response;
 				}
+				this.tabela.isLoad(false)
 			},
 		});
 	}
@@ -344,6 +346,7 @@ export class EnsaiosAdminPageComponent {
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();

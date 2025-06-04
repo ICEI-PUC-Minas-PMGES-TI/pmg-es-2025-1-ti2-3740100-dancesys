@@ -173,6 +173,7 @@ export class HorariosAdminPageComponent {
 	}
 
 	onFilter(){
+		this.tabela.isLoad(true)
 		this.paginaAtual = 0;
 		this.tabela.resetPage()
 		this.buscar()
@@ -186,6 +187,7 @@ export class HorariosAdminPageComponent {
 				}else{
 					this.professores = response
 				}
+				this.tabela.isLoad(false)
 			},
 			error: (err) => {
 			},
@@ -241,6 +243,7 @@ export class HorariosAdminPageComponent {
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }){
+		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();

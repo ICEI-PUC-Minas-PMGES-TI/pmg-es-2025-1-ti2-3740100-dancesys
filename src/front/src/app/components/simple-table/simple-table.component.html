@@ -1,72 +1,76 @@
-<section class="tabela">
-	<table class="w-full">
-		<thead>
-			<tr>
-				<th
-					*ngFor="let coluna of colunas"
-					[style.width]="coluna.width"
-					(click)="(coluna.order ?? true) && ordenarPor(coluna.chave)"
-					[class.cursor-pointer]="coluna.order ?? true"
-					class="select-none"
-				>
-					<div
-						class="w-full flex flex-row justify-center space-x-2 px-6"
+<section class="tabela relative">
+	<div class="tabela-wrapper relative">
+		<table class="w-full">
+			<thead>
+				<tr>
+					<th
+						*ngFor="let coluna of colunas"
+						[style.width]="coluna.width"
+						(click)="(coluna.order ?? true) && ordenarPor(coluna.chave)"
+						[class.cursor-pointer]="coluna.order ?? true"
+						class="select-none"
 					>
-						<span>{{ coluna.titulo }}</span>
-						<span
-							[ngClass]="{
-								visivel: ordenacao?.chave === coluna.chave,
-								invisivel: ordenacao?.chave !== coluna.chave,
-							}"
-						>
-							{{ ordenacao?.direcao === "asc" ? "▲" : "▼" }}
-						</span>
-					</div>
-				</th>
+						<div class="w-full flex flex-row justify-center space-x-2 px-6">
+							<span>{{ coluna.titulo }}</span>
+							<span
+								[ngClass]="{
+									visivel: ordenacao?.chave === coluna.chave,
+									invisivel: ordenacao?.chave !== coluna.chave,
+								}"
+							>
+								{{ ordenacao?.direcao === "asc" ? "▲" : "▼" }}
+							</span>
+						</div>
+					</th>
 
-				@if (botoesAcoes && botoesAcoes.length > 0) {
-					<th>Ações</th>
-				}
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let item of dados">
-				<td
-					*ngFor="let coluna of colunas"
-					[class]="
-						!(botoesAcoes && botoesAcoes.length > 0)
-							? 'dontHaveButtons'
-							: ''
-					"
-					class="text-center"
-				>
-					{{
-						coluna.formatar
-							? coluna.formatar(
-									getValor(item, coluna.chave),
-									item
-								)
-							: getValor(item, coluna.chave)
-					}}
-				</td>
-				@if (botoesAcoes && botoesAcoes.length > 0) {
-					<td [style.width]="actionsWidth">
-						<div class="flex justify-center items-center space-x-3">
-							<button
-								*ngFor="let botao of botoesAcoes"
-								appButton
-								[icon]="botao.icon"
-								icon-slot="icon-only"
-								[title]="botao.title"
-								[color]="botao.cor"
-								(click)="botao.callback(item)"
-							></button>
+					@if (botoesAcoes && botoesAcoes.length > 0) {
+						<th>Ações</th>
+					}
+				</tr>
+			</thead>
+			<tbody class="relative">
+				<tr *ngIf="isLoading" class="absolute inset-0 bg-black/80 z-10">
+					<td [attr.colspan]="colunas.length + (botoesAcoes?.length ? 1 : 0)" class="load">
+						<div class="flex justify-center items-center h-full">
+							<div class="loader"></div>
 						</div>
 					</td>
-				}
-			</tr>
-		</tbody>
-	</table>
+				</tr>
+				<tr *ngFor="let item of dados">
+					<td
+						*ngFor="let coluna of colunas"
+						[class]="
+							!(botoesAcoes && botoesAcoes.length > 0)
+								? 'dontHaveButtons'
+								: ''
+						"
+						class="text-center"
+					>
+						{{
+							coluna.formatar
+								? coluna.formatar(getValor(item, coluna.chave), item)
+								: getValor(item, coluna.chave)
+						}}
+					</td>
+					@if (botoesAcoes && botoesAcoes.length > 0) {
+						<td [style.width]="actionsWidth">
+							<div class="flex justify-center items-center space-x-3">
+								<button
+									*ngFor="let botao of botoesAcoes"
+									appButton
+									[icon]="botao.icon"
+									icon-slot="icon-only"
+									[title]="botao.title"
+									[color]="botao.cor"
+									(click)="botao.callback(item)"
+								></button>
+							</div>
+						</td>
+					}
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>
 @if (paged) {
 	<div class="flex justify-end items-center mt-4 space-x-1">

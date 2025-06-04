@@ -31,6 +31,7 @@ export class SimpleTableComponent implements OnChanges {
 
   ordenacao: { chave: string; direcao: 'asc' | 'desc' } | null = null;
 
+  isLoading: boolean = false
 
   constructor(private fb: FormBuilder) {
 		this.itensForm = this.fb.group({
@@ -164,50 +165,52 @@ export class SimpleTableComponent implements OnChanges {
   }
 
   ordenarPor(chave: string) {
-  const coluna = this.colunas.find(c => c.chave === chave);
-  if (!coluna || coluna.order === false) return;
+    const coluna = this.colunas.find(c => c.chave === chave);
+    if (!coluna || coluna.order === false) return;
 
-  if (this.ordenacao?.chave === chave) {
-    this.ordenacao.direcao = this.ordenacao.direcao === 'asc' ? 'desc' : 'asc';
-  } else {
-    this.ordenacao = { chave, direcao: 'asc' };
-  }
-
-  if (!this.paged) {
-    this.ordenarDados();
-  } else {
-    this.orderChange.emit(this.ordenacao);
-  }
-}
-
-
-ordenarDados() {
-  const { chave, direcao } = this.ordenacao!;
-  const direcaoMultiplicador = direcao === 'asc' ? 1 : -1;
-
-  this.dados.sort((a, b) => {
-    const valorA = this.getValor(a, chave);
-    const valorB = this.getValor(b, chave);
-
-    if (valorA == null) return -1 * direcaoMultiplicador;
-    if (valorB == null) return 1 * direcaoMultiplicador;
-
-    if (typeof valorA === 'string') {
-      return valorA.localeCompare(valorB) * direcaoMultiplicador;
+    if (this.ordenacao?.chave === chave) {
+      this.ordenacao.direcao = this.ordenacao.direcao === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.ordenacao = { chave, direcao: 'asc' };
     }
 
-    if (typeof valorA === 'number' || valorA instanceof Date) {
-      return (valorA > valorB ? 1 : valorA < valorB ? -1 : 0) * direcaoMultiplicador;
+    if (!this.paged) {
+      this.ordenarDados();
+    } else {
+      this.orderChange.emit(this.ordenacao);
     }
-
-    return 0;
-  });
-}
-
-resetPage(){
-  this.paginaSelecionada = 1;
-  this.paginaIn = 1;
-}
+  }
 
 
+  ordenarDados() {
+    const { chave, direcao } = this.ordenacao!;
+    const direcaoMultiplicador = direcao === 'asc' ? 1 : -1;
+
+    this.dados.sort((a, b) => {
+      const valorA = this.getValor(a, chave);
+      const valorB = this.getValor(b, chave);
+
+      if (valorA == null) return -1 * direcaoMultiplicador;
+      if (valorB == null) return 1 * direcaoMultiplicador;
+
+      if (typeof valorA === 'string') {
+        return valorA.localeCompare(valorB) * direcaoMultiplicador;
+      }
+
+      if (typeof valorA === 'number' || valorA instanceof Date) {
+        return (valorA > valorB ? 1 : valorA < valorB ? -1 : 0) * direcaoMultiplicador;
+      }
+
+      return 0;
+    });
+  }
+
+  resetPage(){
+    this.paginaSelecionada = 1;
+    this.paginaIn = 1;
+  }
+
+  isLoad(bool: boolean){
+    this.isLoading = bool
+  }
 }

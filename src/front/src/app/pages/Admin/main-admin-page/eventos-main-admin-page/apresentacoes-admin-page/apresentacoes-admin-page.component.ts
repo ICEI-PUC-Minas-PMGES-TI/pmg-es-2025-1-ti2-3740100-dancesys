@@ -137,6 +137,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 
 	// necessário para a tabela
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.onFiltrar();
@@ -226,6 +227,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 	}
 
 	onFilter(){
+		this.tabela.isLoad(true)
 		this.paginaAtual = 0;
 		this.tabela.resetPage()
 		this.onFiltrar()
@@ -244,6 +246,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 						}else{
 							this.apresentacoes = apRes;
 						}
+						this.tabela.isLoad(false)
 					},
 				});
 			return;

@@ -104,6 +104,7 @@ export class EventosAdminPageComponent implements OnInit {
 	loadImageFailed() {}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.onFiltrar();
@@ -197,6 +198,7 @@ export class EventosAdminPageComponent implements OnInit {
 	}
 
 	onFilter(form?: NgForm){
+		this.tabela.isLoad(true)
 		this.paginaAtual = 0;
 		this.tabela.resetPage()
 		this.onFiltrar(form)
@@ -219,6 +221,7 @@ export class EventosAdminPageComponent implements OnInit {
 					}else{
 						this.eventos = { ...ev };
 					}
+					this.tabela.isLoad(false)
 				},
 			});
 	}

@@ -245,6 +245,7 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	onFilter(){
+		this.tabela.isLoad(true)
 		this.paginaAtual = 0;
 		this.tabela.resetPage()
 		this.buscar()
@@ -258,13 +259,13 @@ export class AulasFixasAdminPageComponent {
 				}else{
 					this.aulaObj = response;
 				}
+				this.tabela.isLoad(false)
 			},
 			error: (err: any) => {},
 		});
 	}
 
 	salvar() {
-
 		const formValue : Aula = this.getFormValue()
 		if(formValue.maxAlunos < formValue.alunos.length){
 			this.alertService.info("Maximo de alunos ultrapassado!")
@@ -352,6 +353,7 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();

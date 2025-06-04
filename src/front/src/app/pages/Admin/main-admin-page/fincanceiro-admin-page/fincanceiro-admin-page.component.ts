@@ -153,6 +153,7 @@ export class FincanceiroAdminPageComponent {
 	}
 
 	onFilter(){
+		this.tabela.isLoad(true)
 		this.paginaAtual = 0;
 		this.tabela.resetPage()
 		this.buscar()
@@ -166,6 +167,7 @@ export class FincanceiroAdminPageComponent {
 				}else{
 					this.dividendos = response;
 				}
+				this.tabela.isLoad(false)
 			},
 			error: (err: any) => {},
 		});
@@ -258,12 +260,14 @@ export class FincanceiroAdminPageComponent {
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();
 	}
 
 	orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
+		this.tabela.isLoad(true)
 		this.orderByValue = event.chave;
 		this.orderValue = event.direcao;
 		this.buscar()

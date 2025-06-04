@@ -153,6 +153,7 @@ export class AulasRecorrentesAdminPageComponent {
   }
 
   onFilter(){
+    this.tabela.isLoad(true)
     this.paginaAtual = 0;
     this.tabela.resetPage()
     this.buscar()
@@ -166,6 +167,7 @@ export class AulasRecorrentesAdminPageComponent {
         }else{
           this.aulas = response
         }
+        this.tabela.isLoad(false)
       }
     })
   }
@@ -240,12 +242,14 @@ export class AulasRecorrentesAdminPageComponent {
 	}
 
   onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+    this.tabela.isLoad(true)
     this.paginaAtual = --event.paginaSelecionada;
     this.itensPage = event.itensPage;
     this.buscar();
   }
 
   orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
+    this.tabela.isLoad(true)
     this.orderByValue = event.chave;
     this.orderValue = event.direcao;
     this.buscar()
