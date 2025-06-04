@@ -1,11 +1,18 @@
-import { Component, Input, Output, EventEmitter, NgModule, HostListener, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, NgModule, HostListener, ElementRef, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'; 
 
 @Component({
   selector: 'app-multi-select-input',
   standalone: true,
   imports: [ CommonModule, FormsModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MultiSelectInputComponent),
+      multi: true
+    }
+  ],
   templateUrl: './multi-select-input.component.html',
   styleUrl: './multi-select-input.component.css'
 })
@@ -22,7 +29,21 @@ export class MultiSelectInputComponent {
 
   constructor(private elementRef: ElementRef) {}
 
-  
+  private onChange = (_: any) => {};
+  private onTouched = () => {};
+
+  writeValue(value: any[]): void {
+    this.selectedValues = value || [];
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
   getPropByPath(obj: any, path: string): any {
     return path.split('.').reduce((acc, part) => acc?.[part], obj);
   }
@@ -45,6 +66,7 @@ export class MultiSelectInputComponent {
       this.selectedValues.push(value);
     }
   
+    this.onChange(this.selectedValues);
     this.selectionChange.emit(this.selectedValues);
   }
   

@@ -24,13 +24,12 @@ export class IndicadorFinanceiroAdminPageComponent {
   labelsGL: string[] = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
   labelsGP: string[] = ['Matricula', 'Mensalidade', 'Aula', 'Evento', 'Figurino']
   colorsGP: string[] = ['rgb(34, 94, 169)', 'rgb(79, 183, 31)', 'rgb(178, 43, 43)', 'rgb(95, 26, 141)', 'rgb(221, 158, 41)']
+
   dataGL: ChartDataset[] = []
   dataGP1: ChartDataset[] = []
   dataGP2: ChartDataset[] = []
   dataGP3: ChartDataset[] = []
   dataGP4: ChartDataset[] = []
-
-
 
   service = inject(IndicadoresService);
 

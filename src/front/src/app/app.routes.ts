@@ -78,6 +78,11 @@ export const routes: Routes = [
 						component: MainAdminPageComponent,
 						children: [
 							{
+								path: "",
+								redirectTo: "usuarios",
+								pathMatch: "full"
+							},
+							{
 								path: "usuarios",
 								component: UsuariosAdminPageComponent,
 							},
@@ -85,6 +90,11 @@ export const routes: Routes = [
 								path: "aulas",
 								component: AulasAdminPageComponent,
 								children: [
+									{
+										path: "",
+										redirectTo: "fixas",
+										pathMatch: "full"
+									},
 									{
 										path: "fixas",
 										component: AulasFixasAdminPageComponent,
@@ -114,6 +124,11 @@ export const routes: Routes = [
 								component: EventosMainAdminPageComponent,
 								children: [
 									{
+										path: "",
+										redirectTo: "eventos",
+										pathMatch: "full"
+									},
+									{
 										path: "eventos",
 										component: EventosAdminPageComponent,
 									},
@@ -142,6 +157,11 @@ export const routes: Routes = [
 								component: OutrosAdminPageComponent,
 								children: [
 									{
+										path: "",
+										redirectTo: "modalidade",
+										pathMatch: "full"
+									},
+									{
 										path: "modalidade",
 										component: ModalidadeAdminPageComponent,
 									},
@@ -158,6 +178,11 @@ export const routes: Routes = [
 						path: "indicadores", 
 						component: IndicadoresAdminPageComponent,
 						children: [
+							{
+								path: "",
+								redirectTo: "financeiro",
+								pathMatch: "full"
+							},
 							{
 								path: "financeiro",
 								component: IndicadorFinanceiroAdminPageComponent
