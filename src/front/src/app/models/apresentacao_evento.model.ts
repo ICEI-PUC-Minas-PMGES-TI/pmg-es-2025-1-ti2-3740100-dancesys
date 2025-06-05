@@ -1,3 +1,5 @@
+import { Aluno } from "./aluno.model";
+
 export class ApresentacaoEvento {
 	id!: number;
 	nome!: string;

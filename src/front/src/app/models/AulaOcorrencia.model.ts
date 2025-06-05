@@ -1,6 +1,7 @@
 export class AulaOcorrenciaFilter {
 	professores!: number[];
 	alunos!: number[];
+	alunoNotIm!: number;
 	dataInicio!: Date;
 	dataFim!: Date;
 	codigo!: string;
@@ -8,4 +9,3 @@ export class AulaOcorrenciaFilter {
 	orderBy!: string;
 	order!: string;
 }
-

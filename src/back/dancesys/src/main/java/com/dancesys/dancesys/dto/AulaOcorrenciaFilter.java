@@ -11,6 +11,7 @@ import java.util.List;
 public class AulaOcorrenciaFilter {
     private List<Long> professores;
     private List<Long> alunos;
+    private Long alunoNotIn;
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private String codigo;
