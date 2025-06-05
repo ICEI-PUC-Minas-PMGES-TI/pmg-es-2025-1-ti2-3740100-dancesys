@@ -11,10 +11,11 @@ import { UsuarioService } from "../../../services/usuario.service";
 import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
 import { switchMap } from "rxjs";
 import { EnsaioFilter } from "../../../models/Ensaio.model";
+import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
 
 @Component({
 	selector: "app-calendar-aluno-page",
-	imports: [CalendarioItemComponent, BotaoComponent],
+	imports: [CalendarioItemComponent, MiniCalendarComponent, BotaoComponent],
 	templateUrl: "./calendar-aluno-page.component.html",
 	styleUrl: "./calendar-aluno-page.component.css",
 })
@@ -26,23 +27,52 @@ export class CalendarAlunoPageComponent {
 
 	calendarItems: ItemDeCalendario[] = [];
 	showCalItems: Array<ItemDeCalendario[]> = [];
+	selectedDay: Date = new Date();
+	dadosSobreMesSelecionado!: { firstDay: Date; lastDay: Date };
 	paginas = Math.ceil(this.calendarItems.length / 5);
 
 	ngOnInit(): void {
+		const currentDate = new Date();
+		const firstDayOfMonth = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth(),
+			1,
+		);
+		const lastDayOfMonth = new Date(
+			currentDate.getFullYear(),
+			currentDate.getMonth() + 1,
+			0,
+		);
+		this.dadosSobreMesSelecionado = {
+			firstDay: firstDayOfMonth,
+			lastDay: lastDayOfMonth,
+		};
 		this.carregarItens();
 	}
 
 	private paginarItens() {
-		this.paginas = Math.ceil(this.calendarItems.length / 5);
-		let oldArr = [...this.calendarItems];
+		let oldArr = [
+			...this.calendarItems.filter((item) => {
+				return (
+					item.dataHorario.getDate() === this.selectedDay.getDate() &&
+					item.dataHorario.getMonth() ===
+						this.selectedDay.getMonth() &&
+					item.dataHorario.getFullYear() ===
+						this.selectedDay.getFullYear()
+				);
+			}),
+		];
+		this.paginas = Math.ceil(oldArr.length / 5);
 		const arr = [];
 		for (let i = 0; i < this.paginas; i++) {
 			arr.push([...oldArr.splice(0, 5)]);
 		}
+		console.log(arr);
 		this.showCalItems = [...arr];
 	}
 
 	private carregarItens() {
+		this.calendarItems = [];
 		this.userService
 			.getAlunoIdByUserId(this.userService.usuario()!.id)
 			.subscribe({
@@ -50,6 +80,8 @@ export class CalendarAlunoPageComponent {
 					this.adminService
 						.fetchAulasOcorrentes({
 							alunos: [alunoId],
+							dataInicio: this.dadosSobreMesSelecionado.firstDay,
+							dataFim: this.dadosSobreMesSelecionado.lastDay,
 						} as AulaOcorrenciaFilter)
 						.pipe(
 							switchMap((aulasOcorrentes: any) => {
@@ -84,6 +116,10 @@ export class CalendarAlunoPageComponent {
 								];
 								return this.adminService.filterEnsaio({
 									alunos: [alunoId],
+									dataInicio:
+										this.dadosSobreMesSelecionado.firstDay,
+									dataFim:
+										this.dadosSobreMesSelecionado.lastDay,
 								} as EnsaioFilter);
 							}),
 						)
@@ -114,11 +150,13 @@ export class CalendarAlunoPageComponent {
 										? 1
 										: -1,
 								);
+								console.log(this.calendarItems);
 								this.paginarItens();
 							},
 						});
 				},
 				error: (erro) => {
+					console.log(erro);
 				},
 			});
 	}
@@ -137,5 +175,21 @@ export class CalendarAlunoPageComponent {
 			return;
 		}
 		this.currPag--;
+	}
+
+	selecionarDia(dia: Date) {
+		this.selectedDay = dia;
+		this.paginarItens();
+	}
+
+	mudarMes(dadosSobreMes: { firstDay: Date; lastDay: Date }) {
+		this.dadosSobreMesSelecionado = dadosSobreMes;
+		this.carregarItens();
+	}
+
+	get dateArrayFromItems() {
+		return this.calendarItems.map((item) => {
+			return item.dataHorario;
+		});
 	}
 }

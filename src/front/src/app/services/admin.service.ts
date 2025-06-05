@@ -231,6 +231,8 @@ export class AdminService {
 	public fetchAulasOcorrentes(filtro: AulaOcorrenciaFilter) {
 		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`, {
 			...filtro,
+			dataInicio: filtro.dataInicio.toISOString().substring(0, 10),
+			dataFim: filtro.dataFim.toISOString().substring(0, 10),
 		});
 	}
 
@@ -268,7 +270,11 @@ export class AdminService {
 	public filterEnsaio(filtro: EnsaioFilter) {
 		return this.http.post(
 			`${environment.API_URL}ensaioApresentacao/buscar`,
-			{ ...filtro },
+			{
+				...filtro,
+				dataInicio: filtro.dataInicio.toISOString().substring(0, 10),
+				dataFim: filtro.dataFim.toISOString().substring(0, 10),
+			},
 		);
 	}
 
