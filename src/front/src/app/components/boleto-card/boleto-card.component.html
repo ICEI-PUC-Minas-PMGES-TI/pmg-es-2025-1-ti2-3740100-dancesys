@@ -1,0 +1,10 @@
+<div class="boleto" [ngClass]="boleto.status">
+  <div>
+    <p><strong>Mensalidade {{ boleto.mesAno }}</strong></p>
+    <p>R$ {{ boleto.valor | number:'1.2-2' }}</p>
+    <span *ngIf="boleto.status === 'atrasado'" class="atrasado-texto">Atrasada!</span>
+  </div>
+  <button [ngStyle]="{ 'background-color': getCorBotao(boleto.status) }">
+    {{ boleto.status === 'pago' ? 'Paga!' : 'Gerar Boleto' }}
+  </button>
+</div>

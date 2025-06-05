@@ -1,0 +1,26 @@
+.boleto {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pendente {
+  background-color: #d9cfc4;
+}
+
+.atrasado {
+  background-color: #e8b5b5;
+}
+
+.pago {
+  background-color: #c9d8c4;
+}
+
+.atrasado-texto {
+  color: red;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
