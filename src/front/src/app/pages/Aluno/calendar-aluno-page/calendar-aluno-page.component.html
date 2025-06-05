@@ -7,12 +7,19 @@
 			@for (item of showCalItems[currPag]; track item.dataHorario) {
 				<app-calendario-item [item]="item"></app-calendario-item>
 			}
+			@if (showCalItems.length <= 0){
+				<h1 class="text-xl font-bold">Não há itens de calendário nessa data!</h1>
+				<h2 class="text-lg font-semibold">Tente com outra data 😎</h2>
+			}
 		</div>
-		<div class="flex flex-col px-10">
-			<div class="flex flex-row space-x-4">
-				<button appButton (click)="nextPage()">Próxima página</button>
-				<button appButton (click)="previousPage()">Página Anterior</button>
-			</div>
+		<div class="flex flex-col px-10 space-y-4">
+			@if (showCalItems.length > 1){
+				<div class="flex flex-row space-x-4">
+					<button appButton (click)="previousPage()">Página Anterior</button>
+					<button appButton (click)="nextPage()">Próxima página</button>
+				</div>
+			}
+			<app-mini-calendar [eventsDays]="dateArrayFromItems" (diaSelecionado)="selecionarDia($event)" (mesCarregado)="mudarMes($event)"></app-mini-calendar>
 		</div>
 	</div>
 </main>
