@@ -11,7 +11,7 @@ import {
 } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
 import { Aluno } from "../models/aluno.model";
 import { Professor, ProfessorFiltro } from "../models/professor.model";
-import { DividendoFilter, DividendoResponse } from "../models/Dividendo.model";
+import { DividendoFilter, Dividendo} from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
 import { Evento, EventoFilter, EventoResponse } from "../models/evento.model";
@@ -289,4 +289,6 @@ export class AdminService {
 			`${environment.API_URL}ensaioApresentacao/excluir/${id}`,
 		);
 	}
+
+	
 }

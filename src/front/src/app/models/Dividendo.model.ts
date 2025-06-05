@@ -1,3 +1,5 @@
+import { AlunoResponse } from "../services/admin.service";
+
 export class DividendoFilter{
     criadoEm!: string;
     pagoEm!: string;
@@ -10,7 +12,14 @@ export class DividendoFilter{
     order!: string;
 }
 
-export class DividendoResponse{
-    conteudo!: [];
-    total!: number;
+export type Dividendo = {
+    id: number;
+    valor: number;
+    criadoEm: Date;
+    pagoEm: Date;
+    tipo: number;
+    status: number;
+    codigo: string;
+    mesesAtrasado: number;
+    idAluno: AlunoResponse;
 }

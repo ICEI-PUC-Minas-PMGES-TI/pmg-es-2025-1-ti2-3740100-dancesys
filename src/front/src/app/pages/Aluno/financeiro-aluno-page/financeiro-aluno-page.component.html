@@ -1,1 +1,6 @@
-<p>financeiro-aluno-page works!</p>
+<div class="container-financeiro">
+  <h1 class="titulo">Financeiro</h1>
+  @for (boleto of boletos; track boleto.id) {
+    <app-boleto-card [boleto]="boleto"></app-boleto-card>
+  }
+</div>

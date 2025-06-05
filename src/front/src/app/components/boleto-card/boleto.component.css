@@ -5,23 +5,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #55371F;
 }
 
-.pendente {
-  background-color: #d9cfc4;
+.info p {
+  margin: 0;
 }
-
-.atrasado {
-  background-color: #e8b5b5;
-}
-
-.pago {
-  background-color: #c9d8c4;
-}
-
 
 .atrasado-texto {
-  color: red;
+  color: #8B1515;
   font-weight: bold;
   margin-top: 0.5rem;
 }
