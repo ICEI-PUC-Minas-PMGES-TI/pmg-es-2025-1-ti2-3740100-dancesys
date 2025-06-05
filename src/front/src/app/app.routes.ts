@@ -27,6 +27,7 @@ import { ModalidadeAdminPageComponent } from "./pages/Admin/main-admin-page/outr
 import { SalaAdminPageComponent } from "./pages/Admin/main-admin-page/outros-admin-page/sala-admin-page/sala-admin-page.component";
 import { IndicadoresAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicadores-admin-page.component";
 import { IndicadorFinanceiroAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-financeiro-admin-page/indicador-financeiro-admin-page.component";
+import { UsuarioPageComponent } from "./pages/usuario-page/usuario-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -56,6 +57,10 @@ export const routes: Routes = [
 						path: "eventos",
 						component: EventosAlunoPageComponent,
 					},
+					{
+						path: "profile",
+						component: UsuarioPageComponent,
+					},
 				],
 			},
 		],
@@ -80,7 +85,7 @@ export const routes: Routes = [
 							{
 								path: "",
 								redirectTo: "usuarios",
-								pathMatch: "full"
+								pathMatch: "full",
 							},
 							{
 								path: "usuarios",
@@ -93,7 +98,7 @@ export const routes: Routes = [
 									{
 										path: "",
 										redirectTo: "fixas",
-										pathMatch: "full"
+										pathMatch: "full",
 									},
 									{
 										path: "fixas",
@@ -126,7 +131,7 @@ export const routes: Routes = [
 									{
 										path: "",
 										redirectTo: "eventos",
-										pathMatch: "full"
+										pathMatch: "full",
 									},
 									{
 										path: "eventos",
@@ -159,7 +164,7 @@ export const routes: Routes = [
 									{
 										path: "",
 										redirectTo: "modalidade",
-										pathMatch: "full"
+										pathMatch: "full",
 									},
 									{
 										path: "modalidade",
@@ -168,27 +173,32 @@ export const routes: Routes = [
 									{
 										path: "sala",
 										component: SalaAdminPageComponent,
-									}
-								]
-							}
+									},
+								],
+							},
 						],
 					},
 					{ path: "calendar", component: CalendarAdminPageComponent },
-					{ 
-						path: "indicadores", 
+					{
+						path: "indicadores",
 						component: IndicadoresAdminPageComponent,
 						children: [
 							{
 								path: "",
 								redirectTo: "financeiro",
-								pathMatch: "full"
+								pathMatch: "full",
 							},
 							{
 								path: "financeiro",
-								component: IndicadorFinanceiroAdminPageComponent
-							}
-						]
-					}
+								component:
+									IndicadorFinanceiroAdminPageComponent,
+							},
+						],
+					},
+					{
+						path: "profile",
+						component: UsuarioPageComponent,
+					},
 				],
 			},
 		],
@@ -198,7 +208,16 @@ export const routes: Routes = [
 		canMatch: [AdminCanMatchFn],
 		children: [
 			{ path: "", redirectTo: "dashboard", pathMatch: "full" },
-			{ path: "dashboard", component: DashboardAdminPageComponent },
+			{
+				path: "dashboard",
+				component: DashboardAdminPageComponent,
+				children: [
+					{
+						path: "profile",
+						component: UsuarioPageComponent,
+					},
+				],
+			},
 		],
 	},
 ];
