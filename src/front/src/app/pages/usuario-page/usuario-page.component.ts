@@ -17,5 +17,4 @@ export class UsuarioPageComponent {
   deslogar() {
     this.usuarioService.deslogar();
   }
-
 }
