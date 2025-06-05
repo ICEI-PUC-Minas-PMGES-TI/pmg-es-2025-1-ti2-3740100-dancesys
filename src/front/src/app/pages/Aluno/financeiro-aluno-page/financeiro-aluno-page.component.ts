@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BoletoCardComponent } from '../../../components/boleto-card/boleto.component';
 import { AdminService } from '../../../services/admin.service';
 import { UsuarioService } from '../../../services/usuario.service';
-import { Dividendo } from '../../../models/Dividendo.model';
+import { Dividendo, DividendoFilter } from '../../../models/Dividendo.model';
 
 @Component({
   selector: 'app-financeiro-aluno-page',
@@ -19,11 +19,35 @@ export class FinanceiroAlunoPageComponent implements OnInit {
   boletos: Dividendo[] = [];
 
   ngOnInit(): void {
-  /*  const alunoId = this.usuarioService.usuario()?.id;
-    if (alunoId) {
-      this.adminService.getBoletosByAluno(alunoId).subscribe(response => {
-        this.boletos = response.conteudo;
-      });
-    }*/
+   this.buscar()
+  }
+
+  buscar(){
+    this.usuarioService.getAlunoIdByUserId(this.usuarioService.usuario()!.id).subscribe({
+      next: (id) =>{
+        const filtro: DividendoFilter = {
+          criadoEm: '',
+          pagoEm: '',
+          alunos: [id],
+          status: [],
+          tipos: [1,3],
+          tamanho: 0,
+          pagina: 0,
+          orderBy: '',
+          order: '',
+        }
+
+        this.adminService.filterDividendos(filtro).subscribe({
+          next: (response: any) =>{
+            this.boletos = response.conteudo
+            console.log(this.boletos)
+          }
+        })
+      }
+    })
+  }
+
+  pagar(id: number){
+    console.log("Pagando o boleto de id:", id)
   }
 }

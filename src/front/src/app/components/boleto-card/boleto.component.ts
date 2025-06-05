@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { BotaoComponent } from '../botao/botao.component';
 import { Dividendo } from '../../models/Dividendo.model';
@@ -12,6 +12,8 @@ import { Dividendo } from '../../models/Dividendo.model';
 })
 export class BoletoCardComponent {
   @Input() boleto!: Dividendo;
+
+  @Output() payEvent = new EventEmitter<number>();
 
   getCorFundo(): string {
     switch (this.boleto.status) {
@@ -47,6 +49,6 @@ export class BoletoCardComponent {
   }
 
   pagarBoleto() {
-    console.log('Pagando boleto:', this.boleto.codigo);
+    this.payEvent.emit(this.boleto.id)
   }
 }
