@@ -1,9 +1,12 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.FigurinoDTO;
+import com.dancesys.dancesys.dto.FigurinoFilter;
 import com.dancesys.dancesys.entity.Figurino;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.FigurinoMapper;
 import com.dancesys.dancesys.repository.FigurinoRepository;
+import com.dancesys.dancesys.repository.FigurinoRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +16,14 @@ import java.util.List;
 public class FigurinoServiceImpl implements FigurinoService {
 
     private final FigurinoRepository figurinoRepository;
+    private final FigurinoRepositoryCustom figurinoRepositoryCustom;
 
-    public FigurinoServiceImpl(FigurinoRepository figurinoRepository) {
+    public FigurinoServiceImpl(
+            FigurinoRepository figurinoRepository,
+            FigurinoRepositoryCustom figurinoRepositoryCustom
+    ) {
         this.figurinoRepository = figurinoRepository;
+        this.figurinoRepositoryCustom = figurinoRepositoryCustom;
     }
 
     @Override
@@ -31,13 +39,8 @@ public class FigurinoServiceImpl implements FigurinoService {
     }
 
     @Override
-    public List<FigurinoDTO> buscar() {
-        List<FigurinoDTO> dtos = new ArrayList<>();
-        List<Figurino> figurinos = figurinoRepository.findAll();
-        for (Figurino entity : figurinos) {
-            dtos.add(FigurinoMapper.toDto(entity));
-        }
-        return dtos;
+    public PaginatedResponse<Figurino> buscar(FigurinoFilter filtro) {
+        return figurinoRepositoryCustom.buscar(filtro);
     }
 
     @Override
