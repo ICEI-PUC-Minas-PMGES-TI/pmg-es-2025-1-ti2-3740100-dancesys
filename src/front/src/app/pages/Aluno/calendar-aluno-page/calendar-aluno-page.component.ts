@@ -12,10 +12,16 @@ import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
 import { switchMap } from "rxjs";
 import { EnsaioFilter } from "../../../models/Ensaio.model";
 import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
+import { DatePipe } from "@angular/common";
 
 @Component({
 	selector: "app-calendar-aluno-page",
-	imports: [CalendarioItemComponent, MiniCalendarComponent, BotaoComponent],
+	imports: [
+		CalendarioItemComponent,
+		MiniCalendarComponent,
+		BotaoComponent,
+		DatePipe,
+	],
 	templateUrl: "./calendar-aluno-page.component.html",
 	styleUrl: "./calendar-aluno-page.component.css",
 })
@@ -30,6 +36,8 @@ export class CalendarAlunoPageComponent {
 	selectedDay: Date = new Date();
 	dadosSobreMesSelecionado!: { firstDay: Date; lastDay: Date };
 	paginas = Math.ceil(this.calendarItems.length / 5);
+
+	vendoMeuCalendario: boolean = true;
 
 	ngOnInit(): void {
 		const currentDate = new Date();
@@ -67,7 +75,6 @@ export class CalendarAlunoPageComponent {
 		for (let i = 0; i < this.paginas; i++) {
 			arr.push([...oldArr.splice(0, 5)]);
 		}
-		console.log(arr);
 		this.showCalItems = [...arr];
 	}
 
@@ -79,9 +86,12 @@ export class CalendarAlunoPageComponent {
 				next: (alunoId) => {
 					this.adminService
 						.fetchAulasOcorrentes({
-							alunos: [alunoId],
+							alunos: this.vendoMeuCalendario ? [alunoId] : null,
 							dataInicio: this.dadosSobreMesSelecionado.firstDay,
 							dataFim: this.dadosSobreMesSelecionado.lastDay,
+							alunoNotIm: !this.vendoMeuCalendario
+								? alunoId
+								: null,
 						} as AulaOcorrenciaFilter)
 						.pipe(
 							switchMap((aulasOcorrentes: any) => {
@@ -150,7 +160,6 @@ export class CalendarAlunoPageComponent {
 										? 1
 										: -1,
 								);
-								console.log(this.calendarItems);
 								this.paginarItens();
 							},
 						});
@@ -185,6 +194,14 @@ export class CalendarAlunoPageComponent {
 	mudarMes(dadosSobreMes: { firstDay: Date; lastDay: Date }) {
 		this.dadosSobreMesSelecionado = dadosSobreMes;
 		this.carregarItens();
+	}
+
+	changeToMyCalendar(yes: boolean) {
+		const changed = this.vendoMeuCalendario !== yes;
+		this.vendoMeuCalendario = yes;
+		if (changed) {
+			this.carregarItens();
+		}
 	}
 
 	get dateArrayFromItems() {
