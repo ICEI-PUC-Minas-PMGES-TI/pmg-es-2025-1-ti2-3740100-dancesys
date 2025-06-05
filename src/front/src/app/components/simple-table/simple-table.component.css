@@ -1,4 +1,3 @@
-/* Visibilidade do ícone de ordenação */
 .visivel {
 	display: inline;
 }
@@ -6,18 +5,13 @@
 	display: none;
 }
 
-/* Container com posição relativa para suportar overlay absoluto */
 .tabela-wrapper {
 	position: relative;
-	/* REMOVE ou comente overflow/altura fixa se não for necessário */
-	/* overflow: auto; */
-	/* max-height: 400px; */
 }
 
-/* Cobre toda a área da tabela, inclusive tbody */
 .overlay {
 	position: absolute;
-	inset: 0; /* atalho para top: 0; left: 0; right: 0; bottom: 0; */
+	inset: 0;
 	background-color: rgba(0, 0, 0, 0.7);
 	z-index: 10;
 	display: flex;
@@ -25,7 +19,6 @@
 	align-items: center;
 }
 
-/* Loader centralizado */
 .loader {
 	position: absolute;
 	top: 0;

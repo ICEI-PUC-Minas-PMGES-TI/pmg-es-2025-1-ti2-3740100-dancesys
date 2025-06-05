@@ -18,6 +18,8 @@ export class MiniCalendarComponent implements OnInit {
   @Output() diaSelecionado = new EventEmitter<Date>();
   @Output() mesCarregado = new EventEmitter<{ firstDay: Date; lastDay: Date }>();
 
+  isLoading: boolean = false
+
   ngOnInit() {
     this.generateCalendar();
   }
@@ -86,5 +88,9 @@ export class MiniCalendarComponent implements OnInit {
       eventDate.getMonth() === date.getMonth() &&
       eventDate.getFullYear() === date.getFullYear()
     );
+  }
+
+  isLoad(bool: boolean){
+    this.isLoading = bool
   }
 }

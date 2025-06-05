@@ -5,24 +5,29 @@
     <button (click)="nextMonth()">▶</button>
   </div>
 
-  <div class="dias-semana">
-    <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">
-      {{ dia }}
+  <div class="relative">
+    <div *ngIf="isLoading" class="overlay">
+      <div class="loader"></div>
     </div>
-  </div>
+    <div class="dias-semana">
+      <div *ngFor="let dia of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']">
+        {{ dia }}
+      </div>
+    </div>
 
-  <div class="dias">
-    <div *ngFor="let semana of weeks" class="semana">
-        <button
-        *ngFor="let dia of semana"
-        class="dia"
-        [class.selecionado]="dia && isSelected(dia)"
-        [class.com-evento]="dia && hasEvento(dia)"
-        [disabled]="!dia"
-        (click)="onSelectDay(dia)"
-        >
-          {{ dia?.getDate() }}
-        </button>
+    <div class="dias">
+      <div *ngFor="let semana of weeks" class="semana">
+          <button
+          *ngFor="let dia of semana"
+          class="dia"
+          [class.selecionado]="dia && isSelected(dia)"
+          [class.com-evento]="dia && hasEvento(dia)"
+          [disabled]="!dia"
+          (click)="onSelectDay(dia)"
+          >
+            {{ dia?.getDate() }}
+          </button>
+      </div>
     </div>
   </div>
 </div>

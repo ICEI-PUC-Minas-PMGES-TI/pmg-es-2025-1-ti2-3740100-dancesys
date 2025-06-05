@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
 import {
 	CalendarioItemComponent,
 	ItemDeCalendario,
@@ -38,6 +38,8 @@ export class CalendarAlunoPageComponent {
 	paginas = Math.ceil(this.calendarItems.length / 5);
 
 	vendoMeuCalendario: boolean = true;
+
+	@ViewChild(MiniCalendarComponent) minicalendar!: MiniCalendarComponent;
 
 	ngOnInit(): void {
 		const currentDate = new Date();
@@ -161,6 +163,7 @@ export class CalendarAlunoPageComponent {
 										: -1,
 								);
 								this.paginarItens();
+								this.minicalendar.isLoad(false)
 							},
 						});
 				},
@@ -192,6 +195,7 @@ export class CalendarAlunoPageComponent {
 	}
 
 	mudarMes(dadosSobreMes: { firstDay: Date; lastDay: Date }) {
+		this.minicalendar.isLoad(true)
 		this.dadosSobreMesSelecionado = dadosSobreMes;
 		this.carregarItens();
 	}
