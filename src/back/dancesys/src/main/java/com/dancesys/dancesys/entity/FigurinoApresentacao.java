@@ -19,6 +19,9 @@ public class FigurinoApresentacao {
 
     @Column(name = "status", nullable = false)
     private Integer status;
+    public static final Integer ESTOQUE = 1;
+    public static final Integer ENTREGUE = 2;
+    public static final Integer DEVOLVIDO = 3;
 
     @Column(name = "tamanho", nullable = false)
     private String tamanho;

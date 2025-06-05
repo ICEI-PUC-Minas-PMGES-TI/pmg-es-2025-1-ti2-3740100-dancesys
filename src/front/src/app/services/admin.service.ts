@@ -278,6 +278,15 @@ export class AdminService {
 		);
 	}
 
+	public filterEnsaio2(filtro: EnsaioFilter) {
+		return this.http.post(
+			`${environment.API_URL}ensaioApresentacao/buscar`,
+			{
+				...filtro,
+			},
+		);
+	}
+
 	public addEnsaio(item: Ensaio) {
 		return this.http.post(`${environment.API_URL}ensaioApresentacao`, {
 			...item,

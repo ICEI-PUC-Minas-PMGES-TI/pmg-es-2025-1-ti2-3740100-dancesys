@@ -235,7 +235,7 @@ export class EnsaiosAdminPageComponent {
   	}
 
 	buscar() {
-		this.adminService.filterEnsaio(this.getFilterForm()).subscribe({
+		this.adminService.filterEnsaio2(this.getFilterForm()).subscribe({
 			next: (response: any) => {
 				if (response.total == 0) {
 					this.alertService.info("Nenhum registro encontrado!");

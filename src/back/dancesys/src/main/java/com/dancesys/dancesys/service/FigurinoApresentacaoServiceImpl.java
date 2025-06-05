@@ -1,11 +1,17 @@
 package com.dancesys.dancesys.service;
 
+import com.dancesys.dancesys.dto.DividendoDTO;
+import com.dancesys.dancesys.dto.FigurinoAlunoFilter;
 import com.dancesys.dancesys.dto.FigurinoApresentacaoDTO;
+import com.dancesys.dancesys.entity.Dividendo;
 import com.dancesys.dancesys.entity.FigurinoApresentacao;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.FigurinoApresentacaoMapper;
+import com.dancesys.dancesys.repository.FigurinoAlunoRepositoryCustom;
 import com.dancesys.dancesys.repository.FigurinoApresentacaoRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +19,33 @@ import java.util.List;
 public class FigurinoApresentacaoServiceImpl implements FigurinoApresentacaoService {
 
     private final FigurinoApresentacaoRepository figurinoApresentacaoRepository;
+    private final FigurinoAlunoRepositoryCustom  figurinoAlunoRepository;
+    private final DividendoServiceImpl dividendoService;
 
-    public FigurinoApresentacaoServiceImpl(FigurinoApresentacaoRepository figurinoApresentacaoRepository) {
+    public FigurinoApresentacaoServiceImpl(
+            FigurinoApresentacaoRepository figurinoApresentacaoRepository,
+            FigurinoAlunoRepositoryCustom figurinoAlunoRepository,
+            DividendoServiceImpl dividendoService
+    ) {
         this.figurinoApresentacaoRepository = figurinoApresentacaoRepository;
+        this.figurinoAlunoRepository = figurinoAlunoRepository;
+        this.dividendoService = dividendoService;
     }
 
     @Override
     public FigurinoApresentacaoDTO salvar (FigurinoApresentacaoDTO dto) throws Exception {
         FigurinoApresentacao entity = new FigurinoApresentacao();
         try {
-            entity = figurinoApresentacaoRepository.save(FigurinoApresentacaoMapper.toEntity(dto));
+            if(dto.getId() == null){
+                dto.setStatus(FigurinoApresentacao.ESTOQUE);
+                dto.setCodigo("a");
+                DividendoDTO dDto = dividendoService.gerarFigurino(figurinoApresentacaoRepository.save(FigurinoApresentacaoMapper.toEntity(dto)));
+                dto.setCodigo(dDto.getCodigo());
+                entity = figurinoApresentacaoRepository.save(FigurinoApresentacaoMapper.toEntity(dto));
+            }else{
+                entity = figurinoApresentacaoRepository.save(FigurinoApresentacaoMapper.toEntity(dto));
+            }
+
             return FigurinoApresentacaoMapper.toDto(entity);
         }
         catch (Exception e){
@@ -31,13 +54,8 @@ public class FigurinoApresentacaoServiceImpl implements FigurinoApresentacaoServ
     }
 
     @Override
-    public List<FigurinoApresentacaoDTO> buscar() {
-        List<FigurinoApresentacaoDTO> dtos = new ArrayList<>();
-        List<FigurinoApresentacao> figurinosApresentacao = figurinoApresentacaoRepository.findAll();
-        for (FigurinoApresentacao entity : figurinosApresentacao) {
-            dtos.add(FigurinoApresentacaoMapper.toDto(entity));
-        }
-        return dtos;
+    public PaginatedResponse<FigurinoApresentacao> buscar(FigurinoAlunoFilter filtro) {
+        return figurinoAlunoRepository.buscar(filtro);
     }
 
     @Override

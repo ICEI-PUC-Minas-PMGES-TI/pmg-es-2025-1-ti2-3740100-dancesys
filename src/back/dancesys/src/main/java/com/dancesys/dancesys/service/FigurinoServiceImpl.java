@@ -48,4 +48,8 @@ public class FigurinoServiceImpl implements FigurinoService {
         figurinoRepository.deleteById(id);
     }
 
+    public Figurino findById(Long id){
+        return figurinoRepository.findById(id).get();
+    }
+
 }

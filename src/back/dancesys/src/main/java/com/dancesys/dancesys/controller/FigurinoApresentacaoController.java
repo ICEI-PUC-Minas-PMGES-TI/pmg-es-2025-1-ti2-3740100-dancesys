@@ -1,6 +1,9 @@
 package com.dancesys.dancesys.controller;
 
+import com.dancesys.dancesys.dto.FigurinoAlunoFilter;
 import com.dancesys.dancesys.dto.FigurinoApresentacaoDTO;
+import com.dancesys.dancesys.entity.FigurinoApresentacao;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.service.FigurinoApresentacaoService;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/figurinoApresentacao")
+@RequestMapping("evento/figurino/aluno")
 public class FigurinoApresentacaoController {
     @Autowired
     FigurinoApresentacaoService figurinoApresentacaoService;
@@ -24,9 +27,9 @@ public class FigurinoApresentacaoController {
         return ResponseEntity.ok(salvo);
     }
 
-    @GetMapping(value = "buscar")
-    public List<FigurinoApresentacaoDTO> buscar() {
-        return figurinoApresentacaoService.buscar();
+    @PostMapping(value = "buscar")
+    public PaginatedResponse<FigurinoApresentacao> buscar(@RequestBody FigurinoAlunoFilter filtro) {
+        return figurinoApresentacaoService.buscar(filtro);
     }
 
     @DeleteMapping(value = "excluir/{id}")

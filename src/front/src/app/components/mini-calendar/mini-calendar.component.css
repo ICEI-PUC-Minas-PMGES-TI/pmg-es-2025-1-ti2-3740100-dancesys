@@ -23,6 +23,7 @@
   height: 36px;
   text-align: center;
   line-height: 36px;
+  margin: 1px 3px;
 }
 
 button.dia {
@@ -34,6 +35,7 @@ button.dia {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  margin: 1px 3px;
 }
 
 button.dia:hover {

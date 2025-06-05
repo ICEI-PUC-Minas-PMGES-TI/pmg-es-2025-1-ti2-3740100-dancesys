@@ -17,9 +17,9 @@
 			>Calendário Geral</a
 		>
 	</div>
-	<div class="flex flex-row flex-1">
+	<h1 class="text-xl font-bold">Dia {{ selectedDay | date }}</h1>
+	<div class="flex flex-row flex-1 justify-between">
 		<div class="flex flex-col w-3/5 justify-center space-y-4 max-h-max">
-			<h1 class="text-xl font-bold">Dia {{ selectedDay | date }}</h1>
 			@for (item of showCalItems[currPag]; track item.dataHorario) {
 				<app-calendario-item [item]="item"></app-calendario-item>
 			}

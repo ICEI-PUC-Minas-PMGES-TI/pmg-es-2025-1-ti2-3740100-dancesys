@@ -3,9 +3,7 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.DividendoDTO;
 import com.dancesys.dancesys.dto.DividendoFilter;
-import com.dancesys.dancesys.entity.Aluno;
-import com.dancesys.dancesys.entity.Dividendo;
-import com.dancesys.dancesys.entity.Evento;
+import com.dancesys.dancesys.entity.*;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.DividendoMapper;
 import com.dancesys.dancesys.repository.DividendoRepository;
@@ -21,15 +19,17 @@ public class DividendoServiceImpl implements DividendoService {
     private final DividendoRepository dividendoRepository;
     private final DividendoRepositoryCustom dividendoRepositoryCustom;
     private final EmailServiceImpl emailServiceImpl;
+    private final FigurinoServiceImpl figurinoServiceImpl;
 
-    public DividendoServiceImpl(DividendoRepository dividendoRepository, DividendoRepositoryCustom dividendoRepositoryCustom, EmailServiceImpl emailServiceImpl) {
+    public DividendoServiceImpl(DividendoRepository dividendoRepository, DividendoRepositoryCustom dividendoRepositoryCustom, EmailServiceImpl emailServiceImpl, FigurinoServiceImpl figurinoServiceImpl) {
         this.dividendoRepository = dividendoRepository;
         this.dividendoRepositoryCustom = dividendoRepositoryCustom;
         this.emailServiceImpl = emailServiceImpl;
+        this.figurinoServiceImpl = figurinoServiceImpl;
     }
 
     @Override
-    public DividendoDTO salvar(DividendoDTO dto) throws Exception{
+    public DividendoDTO salvar(DividendoDTO dto) throws RuntimeException{
         Dividendo entity = new Dividendo();
         try{
             if(dto.getId() == null){
@@ -41,7 +41,7 @@ public class DividendoServiceImpl implements DividendoService {
             emailServiceImpl.enviarEmailHtml(entity.getIdAluno().getIdUsuario().getEmail(), definirTipo(entity.getTipo()), entity.getValor().toString());
             return DividendoMapper.toDto(entity);
         }catch(Exception e){
-            throw new Exception(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public class DividendoServiceImpl implements DividendoService {
         return null;
     }
 
-    public DividendoDTO gerarMatricula(Aluno entity) throws Exception{
+    public DividendoDTO gerarMatricula(Aluno entity) throws RuntimeException{
         DividendoDTO dto = new DividendoDTO();
         dto.setIdAluno(entity);
         dto.setValor(Dividendo.VALOR_MATRICULA);
@@ -74,31 +74,44 @@ public class DividendoServiceImpl implements DividendoService {
         return salvar(dto);
     }
 
-    public DividendoDTO gerarMensalidadeFixo(Aluno entity) throws Exception{
+    public DividendoDTO gerarMensalidadeFixo(Aluno entity) throws RuntimeException{
         DividendoDTO dto = new DividendoDTO();
         dto.setIdAluno(entity);
         dto.setValor(Dividendo.VALOR_MENSALIDADE_FIXO);
         dto.setTipo(Dividendo.MENSALIDADE);
-        String codigo = String.format("%d.%.2f.%02d%02d%d",
-                Dividendo.MENSALIDADE, Dividendo.VALOR_MENSALIDADE_FIXO, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+        String codigo = String.format("%d.%d.%.2f.%02d%02d%d",
+                Dividendo.MENSALIDADE, entity.getId(), Dividendo.VALOR_MENSALIDADE_FIXO, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
         dto.setCodigo(codigo);
 
         return salvar(dto);
     }
 
-    public DividendoDTO gerarMensalidadeFlexivel(Aluno entity) throws Exception{
+    public DividendoDTO gerarMensalidadeFlexivel(Aluno entity) throws RuntimeException{
         DividendoDTO dto = new DividendoDTO();
         dto.setIdAluno(entity);
         dto.setValor(Dividendo.VALOR_MENSALIDADE_FLEXIVEL);
         dto.setTipo(Dividendo.MENSALIDADE);
-        String codigo = String.format("%d.%.2f.%02d%02d%d",
-                Dividendo.MENSALIDADE, Dividendo.VALOR_MENSALIDADE_FLEXIVEL, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+        String codigo = String.format("%d.%d.%.2f.%02d%02d%d",
+                Dividendo.MENSALIDADE,entity.getId() , Dividendo.VALOR_MENSALIDADE_FLEXIVEL, LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
         dto.setCodigo(codigo);
 
         return salvar(dto);
     }
 
-    public void gerarMensalidade(Aluno entity) throws Exception{
+    public DividendoDTO gerarFigurino(FigurinoApresentacao entity) throws RuntimeException{
+        DividendoDTO dto = new DividendoDTO();
+        dto.setIdAluno(entity.getIdAluno());
+        Figurino figurino = figurinoServiceImpl.findById(entity.getIdFigurino().getId());
+        dto.setValor(figurino.getValor());
+        dto.setTipo(Dividendo.FIGURINO);
+        String codigo = String.format("%d.%d.%d.%.2f.%02d%02d%d",
+                Dividendo.FIGURINO, entity.getIdAluno().getId(), entity.getIdFigurino().getId(), figurino.getValor(), LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+        dto.setCodigo(codigo);
+
+        return salvar(dto);
+    }
+
+    public void gerarMensalidade(Aluno entity) throws RuntimeException{
         if(entity.getTipo().equals(Aluno.fixo)){
             gerarMensalidadeFixo(entity);
         }else{
@@ -112,7 +125,7 @@ public class DividendoServiceImpl implements DividendoService {
     }
 
     @Override
-    public DividendoDTO pagar(Long id) throws Exception{
+    public DividendoDTO pagar(Long id) throws RuntimeException{
         Dividendo entity = dividendoRepository.findById(id).get();
         entity.setStatus(Dividendo.pago);
         entity.setPagoEm(LocalDate.now());

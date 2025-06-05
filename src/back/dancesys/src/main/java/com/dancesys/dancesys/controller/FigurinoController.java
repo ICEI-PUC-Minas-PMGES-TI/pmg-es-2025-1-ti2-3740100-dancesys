@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/figurino")
+@RequestMapping("evento/figurino")
 public class FigurinoController {
     @Autowired
     FigurinoService figurinoService;

@@ -13,7 +13,7 @@ public class FigurinoApresentacaoDTO {
     private Integer status;
     private String tamanho;
     private String codigo;
-    private Figurino idFigurino;
-    private Aluno idAluno;
-    private ApresentacaoEvento idApresentacaoEvento;
+    private Long idFigurino;
+    private Long idAluno;
+    private Long idApresentacaoEvento;
 }

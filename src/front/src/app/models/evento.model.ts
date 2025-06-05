@@ -16,8 +16,8 @@ export type EventoResponse = {
 };
 
 export type EventoFilter = {
-	nome: string;
-	local: string;
+	nome: string | null;
+	local: string | null;
 	data: Date | null;
 	alunos: number[] | null;
 	pagina: number;
