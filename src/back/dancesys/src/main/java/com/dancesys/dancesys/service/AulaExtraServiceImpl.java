@@ -109,6 +109,27 @@ public class AulaExtraServiceImpl implements AulaExtraService {
     }
 
     @Override
+    public void cancelar(Long id, MensagemDTO msg) throws RuntimeException{
+        AulaExtra entity = aulaExtraRepository.findById(id).get();
+        if(!entity.getSituacao().equals(AulaExtra.ACEITA)) {
+            throw new RuntimeException("Aula não foi aceita");
+        }
+
+        Dividendo dividendo = dividendoServiceImpl.findByCodigo(entity.getCodigo());
+
+        if(dividendo.getStatus().equals(Dividendo.pago)){
+            throw new RuntimeException("Boleto ja pago");
+        }
+
+        dividendoServiceImpl.deletar(dividendo.getId());
+
+        entity.setSituacao(AulaExtra.CANCELADA);
+        entity.setMotivo(msg.getMensagem());
+
+        aulaExtraRepository.save(entity);
+    }
+
+    @Override
     public PaginatedResponse<AulaExtra> buscar(AulaExtraFilter filtro){
         return aulaExtraRepositoryCustom.buscar(filtro);
     }

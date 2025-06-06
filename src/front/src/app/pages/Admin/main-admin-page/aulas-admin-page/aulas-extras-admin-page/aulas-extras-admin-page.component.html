@@ -30,7 +30,7 @@
 	</div>
 </app-modal>
 } @if (openModal == "cancelar") {
-<app-modal>
+<app-modal (onClose)="closeCancelarModal()">
 	<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
 		Deseja mesmo cancelar a aula?
 	</p>

@@ -32,4 +32,10 @@ export class AulaService {
             ...msg
         })
     }
+
+    public cancelarAulaextra(idAula: number, msg: Mensagem){
+        return this.http.post(`${this.url}extra/cancelar/${idAula}`, {
+            ...msg
+        })
+    }
 }

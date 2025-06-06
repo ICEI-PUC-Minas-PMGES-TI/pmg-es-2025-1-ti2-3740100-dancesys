@@ -14,4 +14,6 @@ public interface AulaExtraService {
     public void aceitar(Long id, Long idSala) throws RuntimeException;
 
     public void indeferir(Long id, MensagemDTO msg) throws RuntimeException;
+
+    public void cancelar(Long id, MensagemDTO msg) throws RuntimeException;
 }

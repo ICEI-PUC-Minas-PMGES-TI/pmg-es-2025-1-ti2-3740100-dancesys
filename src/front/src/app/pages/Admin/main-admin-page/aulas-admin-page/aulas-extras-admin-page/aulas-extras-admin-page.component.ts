@@ -223,15 +223,6 @@ export class AulasExtrasAdminPageComponent {
 		})
 	}
 
-	onAceitarAula(sim: boolean | void) {
-		this.openModal = null;
-		if (!sim) {
-			return;
-		}
-		// TODO: COLOCAR A LÓGICA DE ACEITAR A AULA
-		console.log("Aceitou a aula");
-	}
-
 	onCancelarAula(form: NgForm | false) {
 		if (form == false) {
 			this.openModal = null;
@@ -242,9 +233,26 @@ export class AulasExtrasAdminPageComponent {
 			return;
 		}
 		this.openModal = null;
-		// TODO:  COLOCAR LÓGICA DE CANCELAR AULA
-		console.log("Cancelou a aula");
-		console.log(`Motivo: ${form.value.motivoCancelar}`);
+		const item = form.value.motivoCancelar
+		const msg : Mensagem = {
+			mensagem: item
+		}
+
+		this.aulaService.cancelarAulaextra(this.selectId, msg).subscribe({
+			next: (response) =>{
+				this.alertService.sucesso("Aula cancelada com sucesso")
+				this.closeCancelarModal()
+				this.buscar()
+			},
+			error: (err) =>{
+				this.alertService.erro(
+					err?.error?.mensagem || "Erro inesperado!",
+				);
+				this.closeCancelarModal()
+			}
+		})
+		
+
 	}
 
 	onRecusarAula(form: NgForm | false) {
@@ -263,6 +271,7 @@ export class AulasExtrasAdminPageComponent {
 
 		this.aulaService.indeferirAulaExtra(this.selectId, msg).subscribe({
 			next: (response) =>{
+				this.alertService.sucesso("Aula indeferida com sucesso")
 				this.closeIndeferirModal()
 				this.buscar()
 			},
@@ -285,7 +294,15 @@ export class AulasExtrasAdminPageComponent {
 		this.selectId = 0;
 	}
 
-	cancelar(item: any) {}
+	cancelar(id: number) {
+		this.openModal = 'cancelar'
+		this.selectId = id
+	}
+
+	closeCancelarModal(){
+		this.openModal = null
+		this.selectId = 0;
+	}
 
 	onFilter() {
 		this.tabela.isLoad(true);

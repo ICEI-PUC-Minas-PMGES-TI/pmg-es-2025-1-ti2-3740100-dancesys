@@ -37,4 +37,9 @@ public class AulaExtraController {
     public void indeferir(@PathVariable Long id, @RequestBody MensagemDTO msg) throws RuntimeException {
         aulaExtraService.indeferir(id, msg);
     }
+
+    @PostMapping(value = "cancelar/{id}")
+    public void cancelar(@PathVariable Long id, @RequestBody MensagemDTO msg) throws RuntimeException {
+        aulaExtraService.cancelar(id, msg);
+    }
 }
