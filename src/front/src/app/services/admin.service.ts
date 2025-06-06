@@ -236,6 +236,12 @@ export class AdminService {
 		});
 	}
 
+	public fetchAulasOcorrentes2(filtro: AulaOcorrenciaFilter) {
+		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`, {
+			...filtro,
+		});
+	}
+
 	public fetchApresentacoes(
 		filtro: ApresentacaoEventoFilter,
 	): Observable<ApresentacaoEventoResponse> {
