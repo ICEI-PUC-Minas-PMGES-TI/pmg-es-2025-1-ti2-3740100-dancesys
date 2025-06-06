@@ -19,6 +19,7 @@ import { AdminService } from "../../../../../services/admin.service";
 import { AlertService } from "../../../../../services/Alert.service";
 import { AulaService } from "../../../../../services/aula.service";
 import { SalaService } from "../../../../../services/sala.service";
+import { Mensagem } from "../../../../../models/Mensagem.model";
 
 @Component({
 	selector: "app-aulas-extras-admin-page",
@@ -41,7 +42,7 @@ export class AulasExtrasAdminPageComponent {
 
 	adminService = inject(AdminService);
 	aulaService = inject(AulaService);
-	alertServie = inject(AlertService);
+	alertService = inject(AlertService);
 	salaService = inject(SalaService)
 
 	filterForm: FormGroup;
@@ -210,8 +211,15 @@ export class AulasExtrasAdminPageComponent {
 	aceitarConfirm(){
 		this.aulaService.acitarAulaExtra(this.selectId, this.getSalaForm()).subscribe({
 			next: (response) =>{
+				this.alertService.sucesso("Aula aceita com sucesso")
 				this.closeAceitarModal()
 				this.buscar()
+			},
+			error: (err) =>{
+				this.alertService.erro(
+					err?.error?.mensagem || "Erro inesperado!",
+				);
+				this.closeAceitarModal()
 			}
 		})
 	}
@@ -245,15 +253,35 @@ export class AulasExtrasAdminPageComponent {
 		if (form.invalid) {
 			return;
 		}
-		this.openModal = null;
-		// TODO:  COLOCAR LÓGICA DE CANCELAR AULA
-		console.log("Recusou a aula");
-		console.log(`Motivo: ${form.value.motivoRecusar}`);
+		const item = form.value.motivoRecusar
+
+		const msg : Mensagem = {
+			mensagem: item
+		}
+
+		this.aulaService.indeferirAulaExtra(this.selectId, msg).subscribe({
+			next: (response) =>{
+				this.closeIndeferirModal()
+				this.buscar()
+			},
+			error: (err) =>{
+				this.alertService.erro(
+					err?.error?.mensagem || "Erro inesperado!",
+				);
+				this.closeIndeferirModal()
+			}
+		})
 	}
 
-	onStatusChange(selected: number[]) {}
+	indeferir(id: number) {
+		this.openModal = 'recusar'
+		this.selectId = id
+	}
 
-	indeferir(item: any) {}
+	closeIndeferirModal(){
+		this.openModal = null
+		this.selectId = 0;
+	}
 
 	cancelar(item: any) {}
 
@@ -280,7 +308,7 @@ export class AulasExtrasAdminPageComponent {
 		this.aulaService.filterAulaExtra(this.getFilter()).subscribe({
 			next: (response: any) => {
 				if (response.total == 0) {
-					this.alertServie.info("Nenhum registro encontrado");
+					this.alertService.info("Nenhum registro encontrado");
 				} else {
 					this.aulaExtraObj = response;
 				}

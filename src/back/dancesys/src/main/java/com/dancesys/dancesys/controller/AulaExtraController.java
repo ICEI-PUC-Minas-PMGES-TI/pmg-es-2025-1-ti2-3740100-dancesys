@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.controller;
 
+import com.dancesys.dancesys.dto.MensagemDTO;
 import com.dancesys.dancesys.entity.AulaExtra;
 import com.dancesys.dancesys.dto.AulaExtraDTO;
 import com.dancesys.dancesys.dto.AulaExtraFilter;
@@ -30,5 +31,10 @@ public class AulaExtraController {
     @GetMapping(value = "aceitar/{id}/{idSala}")
     public void aceitar(@PathVariable Long id, @PathVariable Long idSala) throws RuntimeException {
         aulaExtraService.aceitar(id, idSala);
+    }
+
+    @PostMapping(value = "indeferir/{id}")
+    public void indeferir(@PathVariable Long id, @RequestBody MensagemDTO msg) throws RuntimeException {
+        aulaExtraService.indeferir(id, msg);
     }
 }
