@@ -1,7 +1,10 @@
 package com.dancesys.dancesys.mapper;
 
 import com.dancesys.dancesys.dto.AulaExtraDTO;
+import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.AulaExtra;
+import com.dancesys.dancesys.entity.Professor;
+import com.dancesys.dancesys.entity.Sala;
 
 public class AulaExtraMapper {
     public static AulaExtra toEntity(AulaExtraDTO dto) {
@@ -16,9 +19,23 @@ public class AulaExtraMapper {
         entity.setSituacao(dto.getSituacao());
         entity.setMotivo(dto.getMotivo());
         entity.setCodigo(dto.getCodigo());
-        entity.setIdProfessor(dto.getIdProfessor());
-        entity.setIdSala(dto.getIdSala());
-        entity.setIdAluno(dto.getIdAluno());
+
+        Professor professor = new Professor();
+        professor.setId(dto.getIdProfessor());
+        entity.setIdProfessor(professor);
+
+
+        if (dto.getIdSala() != null) {
+            Sala sala = new Sala();
+            sala.setId(dto.getIdSala());
+            entity.setIdSala(sala);
+        } else {
+            entity.setIdSala(null);
+        }
+
+        Aluno aluno = new Aluno();
+        aluno.setId(dto.getIdAluno());
+        entity.setIdAluno(aluno);
 
         return entity;
     }
@@ -35,9 +52,13 @@ public class AulaExtraMapper {
         dto.setSituacao(entity.getSituacao());
         dto.setMotivo(entity.getMotivo());
         dto.setCodigo(entity.getCodigo());
-        dto.setIdProfessor(entity.getIdProfessor());
-        dto.setIdSala(entity.getIdSala());
-        dto.setIdAluno(entity.getIdAluno());
+        dto.setIdProfessor(entity.getIdProfessor().getId());
+        if(entity.getIdSala() != null) {
+            dto.setIdSala(entity.getIdSala().getId());
+        }else{
+            dto.setIdSala(null);
+        }
+        dto.setIdAluno(entity.getIdAluno().getId());
 
         return dto;
     }

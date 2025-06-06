@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { ModalComponent } from '../../../../../components/modal/modal.component';
 import { SimpleTableComponent } from '../../../../../components/simple-table/simple-table.component';
 import { SearchBoxSingleComponent } from '../../../../../components/search-box-single/search-box-single.component';
@@ -37,6 +37,8 @@ export class FigurinosPorAlunoAdminPageComponent {
   eventoService = inject(EventoService);
   adminService = inject(AdminService);
   alertService = inject(AlertService)
+
+  @ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
 
 	filterForm: FormGroup;
 	figurinoAlunoForm: FormGroup;
@@ -282,7 +284,7 @@ export class FigurinosPorAlunoAdminPageComponent {
 	}
 
   onConfirmDelete(choice: boolean | void){
-if (choice) {
+    if (choice) {
 			this.eventoService.excluirFigurinoAluno(this.selectId).subscribe({
 				next: () => {
 					this.buscar();
@@ -335,27 +337,34 @@ if (choice) {
   }
 
   onFilter(){
-    this.buscar()
+    this.tabela.isLoad(true)
+		this.paginaAtual = 0;
+		this.tabela.resetPage()
+		this.buscar()
   }
 
   buscar(){
     this.eventoService.filterFigurinoAluno(this.getfilter()).subscribe({
       next: (reponse: any) =>{
-        this.figurinoObj = reponse
-        console.log(this.figurinoObj);
+        if(reponse.total <= 0){
+          this.alertService.info("Nenhum registro encontrado")
+        }else{
+          this.figurinoObj = reponse
+        }
+        this.tabela.isLoad(false)
       }
     })
   }
 
   onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
-    //this.tabela.isLoad(true)
+    this.tabela.isLoad(true)
     this.paginaAtual = --event.paginaSelecionada;
     this.itensPage = event.itensPage;
     this.buscar();
   }
 
   orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
-    //this.tabela.isLoad(true)
+    this.tabela.isLoad(true)
     this.orderByValue = event.chave;
     this.orderValue = event.direcao;
     this.buscar()

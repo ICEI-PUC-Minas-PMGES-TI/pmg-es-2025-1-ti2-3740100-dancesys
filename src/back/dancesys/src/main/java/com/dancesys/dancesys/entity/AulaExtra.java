@@ -24,6 +24,10 @@ public class AulaExtra {
 
     @Column(name = "situacao", nullable = false)
     private Integer situacao;
+    public final static Integer PENDENTE = 1;
+    public final static Integer ACEITA = 2;
+    public final static Integer INDEFERIDA = 3;
+    public final static Integer CANCELADA = 4;
 
     @Column(name = "motivo")
     private String motivo;
@@ -31,12 +35,15 @@ public class AulaExtra {
     @Column(name = "codigo")
     private String codigo;
 
-    @Column(name = "id_professor", nullable = false)
-    private Long idProfessor;
+    @ManyToOne
+    @JoinColumn(name = "id_Professor", nullable = false)
+    private Professor idProfessor;
 
-    @Column(name = "id_sala")
-    private Long idSala;
+    @ManyToOne
+    @JoinColumn(name = "id_Sala")
+    private Sala idSala;
 
-    @Column(name = "id_aluno", nullable = false)
-    private Long idAluno;
+    @ManyToOne
+    @JoinColumn(name = "id_Aluno", nullable = false)
+    private Aluno idAluno;
 }

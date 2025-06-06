@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -130,4 +132,18 @@ public class AulaOcorrenciaServiceImpl {
         aulaOcorrenciaRepository.save(ao);
     }
 
+
+    public boolean verificaHorario(LocalDateTime inicio, LocalDateTime fim, Long idProfessor) {
+        LocalDate data = inicio.toLocalDate();
+        LocalTime novoInicio = inicio.toLocalTime();
+        LocalTime novoFim = fim.toLocalTime();
+
+        List<AulaOcorrencia> ocorrencias = aulaOcorrenciaRepository.findByDataAndIdAula_IdProfessor_IdAndStatus(data, idProfessor, AulaOcorrencia.ATIVO);
+
+        return ocorrencias.stream().noneMatch(ocorrencia -> {
+            LocalTime aulaInicio = ocorrencia.getIdAula().getHorarioInicio();
+            LocalTime aulaFim = ocorrencia.getIdAula().getHorarioFim();
+            return novoInicio.isBefore(aulaFim) && novoFim.isAfter(aulaInicio);
+        });
+    }
 }
