@@ -35,7 +35,7 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 						pagoEm: "",
 						alunos: [id],
 						status: [],
-						tipos: [1, 3],
+						tipos: [],
 						tamanho: 0,
 						pagina: 0,
 						orderBy: "",
