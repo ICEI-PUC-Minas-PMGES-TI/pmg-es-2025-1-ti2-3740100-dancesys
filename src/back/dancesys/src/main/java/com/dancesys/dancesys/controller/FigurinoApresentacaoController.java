@@ -33,7 +33,12 @@ public class FigurinoApresentacaoController {
     }
 
     @DeleteMapping(value = "excluir/{id}")
-    public void excluir(@PathVariable Long id) {
+    public void excluir(@PathVariable Long id) throws RuntimeException {
         figurinoApresentacaoService.deletar(id);
+    }
+
+    @GetMapping(value = "status/{id}")
+    public void toggleStatus(@PathVariable Long id) throws RuntimeException {
+        figurinoApresentacaoService.toggleStatus(id);
     }
 }

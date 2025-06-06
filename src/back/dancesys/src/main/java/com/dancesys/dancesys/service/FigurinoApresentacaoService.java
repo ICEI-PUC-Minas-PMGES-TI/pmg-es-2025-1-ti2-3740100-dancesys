@@ -12,5 +12,7 @@ public interface FigurinoApresentacaoService {
 
     public PaginatedResponse<FigurinoApresentacao> buscar(FigurinoAlunoFilter filtro);
 
-    public void deletar (Long id);
+    public void deletar (Long id) throws RuntimeException;
+
+    public void toggleStatus(Long id) throws RuntimeException;
 }

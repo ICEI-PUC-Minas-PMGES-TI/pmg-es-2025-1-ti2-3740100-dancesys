@@ -17,6 +17,8 @@ public interface DividendoRepository extends JpaRepository<Dividendo, Long> {
 
     List<Dividendo> findByCriadoEmLessThanEqualAndStatusEquals(LocalDate criadoEm, Integer status);
 
+    Optional<Dividendo> findByCodigo(String codigo);
+
     @Query(value = """
         SELECT
             MONTH(criado_em) AS mes,

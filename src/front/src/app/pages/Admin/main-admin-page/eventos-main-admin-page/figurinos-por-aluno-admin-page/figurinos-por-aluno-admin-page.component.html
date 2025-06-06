@@ -10,7 +10,7 @@
 		</header>
 		<main>
 			<form [formGroup]="figurinoAlunoForm" class="flex flex-col p-2 space-y-3">
-                <section class="flex flex-row space-x-2 flex-1">
+                <section *ngIf="!isEdit"class="flex flex-row space-x-2 flex-1">
 				        <div class="flex flex-col flex-1">
                             <app-search-box-single
                             formControlName="idAluno"
@@ -35,7 +35,7 @@
                         </div>
 				</section>
                 <section class="flex flex-row space-x-2 flex-1">
-					<div class="flex flex-col flex-1">
+					<div *ngIf="!isEdit" class="flex flex-col flex-1">
 	                    <app-search-box-single
                         formControlName="idApresentacaoEvento"
                         [label]="'Apresentacao:'"
@@ -60,13 +60,29 @@
 				</section>
 				
 				
-				<button class="self-start mt-3" type="submit" (click)="salvar()" appButton>
+				<button class="self-start mt-3" type="submit" [disabled]="!isFormValido()" (click)="salvar()" appButton>
 				  Salvar
 				</button>
 			</form>
 		</main>
 	</div>
 	</app-modal>
+}
+
+@if(isStatusModalOpen){
+    <app-modal
+		[confirmMode]="true"
+		message="Deseja mudar o status de figurino?"
+		(onClose)="onConfirmStatus($event)"
+	></app-modal>
+}
+
+@if(isDeleteModalOpen){
+    <app-modal
+		[confirmMode]="true"
+		message="Deseja excluir esse figurino?"
+		(onClose)="onConfirmDelete($event)"
+	></app-modal>
 }
 
 <main class="py-4 max-w-full max-h-full h-full">
