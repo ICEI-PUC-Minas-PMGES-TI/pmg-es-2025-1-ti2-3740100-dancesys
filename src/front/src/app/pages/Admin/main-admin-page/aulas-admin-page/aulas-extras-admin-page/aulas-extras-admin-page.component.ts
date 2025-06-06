@@ -18,6 +18,7 @@ import { UsuarioFiltro } from "../../../../../models/usuario.model";
 import { AdminService } from "../../../../../services/admin.service";
 import { AlertService } from "../../../../../services/Alert.service";
 import { AulaService } from "../../../../../services/aula.service";
+import { SalaService } from "../../../../../services/sala.service";
 
 @Component({
 	selector: "app-aulas-extras-admin-page",
@@ -41,23 +42,28 @@ export class AulasExtrasAdminPageComponent {
 	adminService = inject(AdminService);
 	aulaService = inject(AulaService);
 	alertServie = inject(AlertService);
+	salaService = inject(SalaService)
 
 	filterForm: FormGroup;
+	salaForm: FormGroup;
 
 	professoresFilterLs: any[] = [];
 	alunosFilterLs: any[] = [];
 	aulaExtraObj: any = [];
+	salasLs: any = []
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
 	orderByValue!: string;
 	orderValue!: string;
 
+	selectId: number = 0;
+
 	statusMap: Record<number, string> = {
 		1: "Pendente",
 		2: "Aceita",
 		3: "Indeferida",
-		4: "cancelada",
+		4: "Cancelada",
 	};
 
 	colunas = [
@@ -86,9 +92,9 @@ export class AulasExtrasAdminPageComponent {
 	acoes = [
 		{
 			icon: "check",
-			title: "Acitar",
+			title: "Aceitar",
 			cor: "green",
-			callback: (item: any) => this.aceitar(item),
+			callback: (item: any) => this.aceitar(item.id),
 		},
 		{
 			icon: "delete",
@@ -104,7 +110,7 @@ export class AulasExtrasAdminPageComponent {
 		},
 	];
 
-	openModal: "aceitar" | "recusar" | "cancelar" | null = "recusar";
+	openModal: "aceitar" | "recusar" | "cancelar" | null = null;
 
 	statusObj: { value: number; name: string }[] = [
 		{ value: 1, name: "Pendente" },
@@ -123,10 +129,15 @@ export class AulasExtrasAdminPageComponent {
 			orderBy: [this.orderByValue],
 			order: [this.orderValue],
 		});
+
+		this.salaForm = this.fb.group({
+			sala: [],
+		});
 	}
 
 	ngOnInit() {
 		this.buscar();
+		this.buscarSalas();
 	}
 
 	getFilter() {
@@ -170,7 +181,26 @@ export class AulasExtrasAdminPageComponent {
 		});
 	}
 
-	aceitar(item: any) {}
+	buscarSalas(){
+		this.salaService.fetchSalas().subscribe({
+			next: (response) =>{
+				this.salasLs = response
+			}
+		})
+	}
+
+	aceitar(id: number) {
+		this.openModal = 'aceitar'
+		this.selectId = id
+	}
+
+	aceitarConfirm(){
+
+	}
+
+	closeAceitarModal(){
+		this.openModal = null
+	}
 
 	onAceitarAula(sim: boolean | void) {
 		this.openModal = null;
@@ -253,6 +283,10 @@ export class AulasExtrasAdminPageComponent {
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();
+	}
+
+	isFormSalaValido(){
+		return this.salaForm.valid;
 	}
 
 	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {

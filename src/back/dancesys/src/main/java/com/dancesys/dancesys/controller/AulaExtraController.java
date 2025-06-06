@@ -26,4 +26,9 @@ public class AulaExtraController {
     public PaginatedResponse<AulaExtra> buscar(@RequestBody AulaExtraFilter filtro){
         return aulaExtraService.buscar(filtro);
     }
+
+    @PutMapping(value = "aceitar/{id}/{idSala}")
+    public void aceitar(@PathVariable Long id, @PathVariable Long idSala) throws RuntimeException {
+        aulaExtraService.aceitar(id, idSala);
+    }
 }

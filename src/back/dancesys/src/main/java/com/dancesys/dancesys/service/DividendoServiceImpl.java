@@ -10,6 +10,7 @@ import com.dancesys.dancesys.repository.DividendoRepository;
 import com.dancesys.dancesys.repository.DividendoRepositoryCustom;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,20 @@ public class DividendoServiceImpl implements DividendoService {
             dto.setValor(figurino.getValor());
             dto.setTipo(Dividendo.FIGURINO);
             dto.setCodigo(entity.getCodigo());
+
+            return salvar(dto);
+        }catch(RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public DividendoDTO gerarAula(AulaExtra entity, BigDecimal valor) throws RuntimeException{
+        try{
+            DividendoDTO dto = new DividendoDTO();
+            dto.setIdAluno(entity.getIdAluno());
+            dto.setCodigo(entity.getCodigo());
+            dto.setValor(valor);
+            dto.setTipo(Dividendo.AULA);
 
             return salvar(dto);
         }catch(RuntimeException e){

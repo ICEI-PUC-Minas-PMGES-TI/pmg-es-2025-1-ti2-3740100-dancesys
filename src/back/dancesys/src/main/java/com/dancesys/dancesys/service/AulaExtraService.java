@@ -9,4 +9,7 @@ public interface AulaExtraService {
     AulaExtraDTO salvar(AulaExtraDTO dto) throws RuntimeException;
 
     public PaginatedResponse<AulaExtra> buscar(AulaExtraFilter filtro);
+
+
+    public void aceitar(Long id, Long idSala) throws RuntimeException;
 }
