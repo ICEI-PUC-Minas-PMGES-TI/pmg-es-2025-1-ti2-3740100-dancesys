@@ -1,40 +1,109 @@
+@if (openModal == "aceitar") {
+	<app-modal
+		[confirmMode]="true"
+		message="Deseja mesmo aceitar a aula?"
+		(onClose)="onAceitarAula($event)"
+	></app-modal>
+}
+@if (openModal == "cancelar") {
+	<app-modal>
+		<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
+			Deseja mesmo cancelar a aula?
+		</p>
+		<form class="flex flex-col" #cancelForm="ngForm">
+			<div class="flex flex-col pb-2 space-y-1">
+				<label for="motivoCancelar">Motivo: </label>
+				<textarea
+					class="bg-main-300 rounded-md p-1"
+					required
+					ngModel
+					name="motivoCancelar"
+					rows="4"
+				></textarea>
+			</div>
+			<div class="flex space-x-4">
+				<button appButton (click)="onCancelarAula(cancelForm)">
+					Enviar
+				</button>
+				<button
+					appButton
+					color="danger"
+					(click)="onCancelarAula(false)"
+				>
+					Cancelar
+				</button>
+			</div>
+		</form>
+	</app-modal>
+}
+@if (openModal == "recusar") {
+	<app-modal>
+		<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
+			Deseja mesmo recusar a aula?
+		</p>
+		<form class="flex flex-col" #recusarForm="ngForm">
+			<div class="flex flex-col pb-2 space-y-1">
+				<label for="motivoRecusar">Motivo: </label>
+				<textarea
+					class="bg-main-300 rounded-md p-1"
+					required
+					ngModel
+					name="motivoRecusar"
+					rows="4"
+				></textarea>
+			</div>
+			<div class="flex space-x-4">
+				<button appButton (click)="onRecusarAula(recusarForm)">
+					Enviar
+				</button>
+				<button appButton color="danger" (click)="onRecusarAula(false)">
+					Cancelar
+				</button>
+			</div>
+		</form>
+	</app-modal>
+}
 <main class="py-4 max-w-full max-h-full h-full">
-    <section class="flex flex-col pb-4 max-w-full">
+	<section class="flex flex-col pb-4 max-w-full">
 		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
-		<form class="flex flex-col text-main-500 font-bold" [formGroup]="filterForm">
+		<form
+			class="flex flex-col text-main-500 font-bold"
+			[formGroup]="filterForm"
+		>
 			<div class="flex px-1 flex-row space-x-2">
 				<section class="flex flex-row space-x-4 flex-1">
 					<div class="flex flex-col">
-                        <app-search-box-single
-                        formControlName="aluno"
-                        [label]="'Aluno:'"
-                        [options]="alunosFilterLs"
-                        [optionLabel]="'idUsuario.nome'"
-                        [optionValue]="'id'"
-                        nullLabel="Pesquisar"
-                        (searchChange)="buscarAluno($event)"
-                        ></app-search-box-single>
+						<app-search-box-single
+							formControlName="aluno"
+							[label]="'Aluno:'"
+							[options]="alunosFilterLs"
+							[optionLabel]="'idUsuario.nome'"
+							[optionValue]="'id'"
+							nullLabel="Pesquisar"
+							(searchChange)="buscarAluno($event)"
+						></app-search-box-single>
 					</div>
 					<div class="flex flex-col">
 						<app-search-box-single
-                        formControlName="professor"
-                        [label]="'Professor:'"
-                        [options]="professoresFilterLs"
-                        [optionLabel]="'idUsuario.nome'"
-                        [optionValue]="'id'"
-                        nullLabel="Pesquisar"
-                        (searchChange)="buscarProfessor($event)"
-                        ></app-search-box-single>
+							formControlName="professor"
+							[label]="'Professor:'"
+							[options]="professoresFilterLs"
+							[optionLabel]="'idUsuario.nome'"
+							[optionValue]="'id'"
+							nullLabel="Pesquisar"
+							(searchChange)="buscarProfessor($event)"
+						></app-search-box-single>
 					</div>
 					<div class="flex flex-col">
 						<app-multi-select-input
-                        formControlName="status"
-						[label]="'Status:'"
-						[options]="statusObj"
-						optionLabel="name"
-						optionValue="value"
-						(selectionChange)="onStatusChange($event)"
-						nullLabel="Todos">
+							formControlName="status"
+							[label]="'Status:'"
+							[options]="statusObj"
+							optionLabel="name"
+							optionValue="value"
+							(selectionChange)="onStatusChange($event)"
+							nullLabel="Todos"
+						>
 						</app-multi-select-input>
 					</div>
 				</section>
@@ -43,7 +112,13 @@
 	</section>
 	<section class="flex justify-between flex-row">
 		<div class="flex flex-row space-x-2">
-			<button icon="search" icon-slot="right" appButton color="dark" (click)="onFilter()">
+			<button
+				icon="search"
+				icon-slot="right"
+				appButton
+				color="dark"
+				(click)="onFilter()"
+			>
 				Filtrar
 			</button>
 		</div>

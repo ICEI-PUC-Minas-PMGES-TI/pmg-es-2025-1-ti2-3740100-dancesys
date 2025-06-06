@@ -13,11 +13,21 @@ import { switchMap } from "rxjs";
 import { EnsaioFilter } from "../../../models/Ensaio.model";
 import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
 import { DatePipe } from "@angular/common";
+import { ModalComponent } from "../../../components/modal/modal.component";
+import { FormsModule, NgForm } from "@angular/forms";
+import { Modalidade } from "../../../models/modalidade.model";
+import { ModalidadesService } from "../../../services/modalidades.service";
+import { ProfessorFiltro } from "../../../models/professor.model";
+import { SearchBoxSingleComponent } from "../../../components/search-box-single/search-box-single.component";
+import { AulaExtraDTO } from "../../../models/Aula.model";
 
 @Component({
 	selector: "app-calendar-aluno-page",
 	imports: [
+		ModalComponent,
+		FormsModule,
 		CalendarioItemComponent,
+		SearchBoxSingleComponent,
 		MiniCalendarComponent,
 		BotaoComponent,
 		DatePipe,
@@ -30,14 +40,20 @@ export class CalendarAlunoPageComponent {
 
 	adminService = inject(AdminService);
 	userService = inject(UsuarioService);
+	modalidadesService = inject(ModalidadesService);
+
+	modalidades: Modalidade[] = [];
 
 	calendarItems: ItemDeCalendario[] = [];
 	showCalItems: Array<ItemDeCalendario[]> = [];
 	selectedDay: Date = new Date();
 	dadosSobreMesSelecionado!: { firstDay: Date; lastDay: Date };
 	paginas = Math.ceil(this.calendarItems.length / 5);
+	professoresFilterLs: any[] = [];
 
 	vendoMeuCalendario: boolean = true;
+
+	openModal: "solicitarAulaExtra" | null = null;
 
 	@ViewChild(MiniCalendarComponent) minicalendar!: MiniCalendarComponent;
 
@@ -57,7 +73,33 @@ export class CalendarAlunoPageComponent {
 			firstDay: firstDayOfMonth,
 			lastDay: lastDayOfMonth,
 		};
+		this.reloadModalidades();
 		this.carregarItens();
+	}
+
+	private reloadModalidades() {
+		this.modalidadesService.fetchModalidades().subscribe({
+			next: (response) => {
+				this.modalidades = response;
+			},
+			error: (err: any) => {
+				console.log(err);
+			},
+		});
+	}
+
+	buscarProfessor(termo: any) {
+		const filtro: ProfessorFiltro = {
+			nome: termo,
+			email: "",
+			cpf: "",
+			status: 1,
+		};
+		this.adminService.filterProfessores(filtro).subscribe({
+			next: (response) => {
+				this.professoresFilterLs = response;
+			},
+		});
 	}
 
 	private paginarItens() {
@@ -163,7 +205,7 @@ export class CalendarAlunoPageComponent {
 										: -1,
 								);
 								this.paginarItens();
-								this.minicalendar.isLoad(false)
+								this.minicalendar.isLoad(false);
 							},
 						});
 				},
@@ -194,8 +236,12 @@ export class CalendarAlunoPageComponent {
 		this.paginarItens();
 	}
 
+	abrirModalSolicitarAulaExtra() {
+		this.openModal = "solicitarAulaExtra";
+	}
+
 	mudarMes(dadosSobreMes: { firstDay: Date; lastDay: Date }) {
-		this.minicalendar.isLoad(true)
+		this.minicalendar.isLoad(true);
 		this.dadosSobreMesSelecionado = dadosSobreMes;
 		this.carregarItens();
 	}
@@ -206,6 +252,43 @@ export class CalendarAlunoPageComponent {
 		if (changed) {
 			this.carregarItens();
 		}
+	}
+
+	solicitarAulaExtra(form: NgForm | false) {
+		if (form == false) {
+			this.openModal = null;
+			return;
+		}
+		if (form.invalid) {
+			return;
+		}
+		// TODO: COLOCAR LÓGICA DE SOLICITAR AULA EXTRA
+		this.userService
+			.getAlunoIdByUserId(this.userService.usuario()!.id)
+			.subscribe({
+				next: (alunoId) => {
+					console.log(form.value);
+					const horIni: Date = new Date(form.value.dataAE);
+					const horFim: Date = new Date(form.value.dataAE);
+					horIni.setHours(
+						form.value.horarioInicioAE.split(":")[0] as number,
+						form.value.horarioInicioAE.split(":")[1] as number,
+					);
+					horFim.setHours(
+						form.value.horarioFimAE.split(":")[0] as number,
+						form.value.horarioFimAE.split(":")[1] as number,
+					);
+
+					const valor = {
+						horarioInicio: horIni,
+						horarioFim: horFim,
+						idProfessor: form.value.professorAE,
+						idAluno: alunoId,
+					} as AulaExtraDTO;
+					console.log(valor);
+					this.openModal = null;
+				},
+			});
 	}
 
 	get dateArrayFromItems() {

@@ -1,3 +1,94 @@
+@if (openModal == "solicitarAulaExtra") {
+	<app-modal>
+		<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
+			Solicitar aula extra
+		</p>
+		<form #solicitarAulaExtraForm="ngForm" class="flex flex-col space-y-2">
+			<section class="flex flex-col space-y-2 pb-2">
+				<div class="flex space-x-2">
+					<div class="flex flex-col flex-1">
+						<label for="dataAE">Data:</label>
+						<input
+							name="dataAE"
+							required
+							ngModel
+							type="date"
+							class="p-1 flex flex-1 bg-main-300 rounded-md"
+						/>
+					</div>
+					<div class="flex flex-col flex-1">
+						<label for="horarioInicioAE">Horário Início:</label>
+						<input
+							name="horarioInicioAE"
+							required
+							ngModel
+							type="time"
+							class="p-1 flex flex-1 bg-main-300 rounded-md"
+						/>
+					</div>
+					<div class="flex flex-col flex-1">
+						<label for="horarioFimAE">Horário Fim:</label>
+						<input
+							name="horarioFimAE"
+							required
+							ngModel
+							type="time"
+							class="p-1 flex flex-1 bg-main-300 rounded-md"
+						/>
+					</div>
+				</div>
+				<div class="flex space-x-2">
+					<!-- <div class="flex flex-col"> -->
+					<!-- 	<label for="modalidadeAE">Modalidade:</label> -->
+					<!-- 	<select -->
+					<!-- 		name="modalidadeAE" -->
+					<!-- 		required -->
+					<!-- 		ngModel -->
+					<!-- 		type="text" -->
+					<!-- 		class="p-1 bg-main-300 rounded-md" -->
+					<!-- 	> -->
+					<!-- 		@for ( -->
+					<!-- 			modalidade of modalidades; -->
+					<!-- 			track modalidade.id -->
+					<!-- 		) { -->
+					<!-- 			<option [value]="modalidade.nome"> -->
+					<!-- 				{{ modalidade.nome }} -->
+					<!-- 			</option> -->
+					<!-- 		} -->
+					<!-- 	</select> -->
+					<!-- </div> -->
+					<div class="flex flex-col">
+						<app-search-box-single
+							name="professorAE"
+							ngModel
+							[label]="'Professor:'"
+							[options]="professoresFilterLs"
+							[optionLabel]="'idUsuario.nome'"
+							[optionValue]="'id'"
+							nullLabel="Pesquisar"
+							(searchChange)="buscarProfessor($event)"
+						></app-search-box-single>
+					</div>
+				</div>
+			</section>
+			<div class="flex flex-row space-x-4">
+				<button
+					appButton
+					(click)="solicitarAulaExtra(solicitarAulaExtraForm)"
+				>
+					Confirmar
+				</button>
+				<button
+					appButton
+					(click)="solicitarAulaExtra(false)"
+					color="danger"
+				>
+					Cancelar
+				</button>
+			</div>
+		</form>
+	</app-modal>
+}
 <main
 	class="bg-main-100 flex flex-1 space-y-4 flex-col h-full w-full p-8 text-main-500"
 >
@@ -46,6 +137,9 @@
 				(diaSelecionado)="selecionarDia($event)"
 				(mesCarregado)="mudarMes($event)"
 			></app-mini-calendar>
+			<button appButton (click)="abrirModalSolicitarAulaExtra()">
+				Solicitar Aula Extra
+			</button>
 		</div>
 	</div>
 </main>

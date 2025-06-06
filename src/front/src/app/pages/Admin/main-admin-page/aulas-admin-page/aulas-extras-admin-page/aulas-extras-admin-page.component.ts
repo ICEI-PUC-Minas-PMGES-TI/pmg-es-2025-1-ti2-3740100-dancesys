@@ -2,7 +2,13 @@ import { Component, inject } from "@angular/core";
 import { ModalComponent } from "../../../../../components/modal/modal.component";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 import { MultiSelectInputComponent } from "../../../../../components/multi-select-input/multi-select-input.component";
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import {
+	FormBuilder,
+	FormGroup,
+	FormsModule,
+	NgForm,
+	ReactiveFormsModule,
+} from "@angular/forms";
 import { BotaoComponent } from "../../../../../components/botao/botao.component";
 import { CommonModule } from "@angular/common";
 import { SearchBoxSingleComponent } from "../../../../../components/search-box-single/search-box-single.component";
@@ -14,6 +20,7 @@ import { UsuarioFiltro } from "../../../../../models/usuario.model";
 	selector: "app-aulas-extras-admin-page",
 	imports: [
 		ModalComponent,
+		FormsModule,
 		SimpleTableComponent,
 		MultiSelectInputComponent,
 		SearchBoxSingleComponent,
@@ -32,6 +39,8 @@ export class AulasExtrasAdminPageComponent {
 
 	professoresFilterLs: any[] = [];
 	alunosFilterLs: any[] = [];
+
+	openModal: "aceitar" | "recusar" | "cancelar" | null = "recusar";
 
 	statusObj: { value: number; name: string }[] = [
 		{ value: 1, name: "Pendente" },
@@ -85,6 +94,44 @@ export class AulasExtrasAdminPageComponent {
 	}
 
 	onFilter() {}
+
+	onAceitarAula(sim: boolean | void) {
+		this.openModal = null;
+		if (!sim) {
+			return;
+		}
+		// TODO: COLOCAR A LÓGICA DE ACEITAR A AULA
+		console.log("Aceitou a aula");
+	}
+
+	onCancelarAula(form: NgForm | false) {
+		if (form == false) {
+			this.openModal = null;
+			return;
+		}
+		if (form.invalid) {
+			// não fecha o modal
+			return;
+		}
+		this.openModal = null;
+		// TODO:  COLOCAR LÓGICA DE CANCELAR AULA
+		console.log("Cancelou a aula");
+		console.log(`Motivo: ${form.value.motivoCancelar}`);
+	}
+
+	onRecusarAula(form: NgForm | false) {
+		if (form == false) {
+			this.openModal = null;
+			return;
+		}
+		if (form.invalid) {
+			return;
+		}
+		this.openModal = null;
+		// TODO:  COLOCAR LÓGICA DE CANCELAR AULA
+		console.log("Recusou a aula");
+		console.log(`Motivo: ${form.value.motivoRecusar}`);
+	}
 
 	onStatusChange(selected: number[]) {}
 }
