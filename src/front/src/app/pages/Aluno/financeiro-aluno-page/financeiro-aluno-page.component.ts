@@ -5,6 +5,7 @@ import { AdminService } from "../../../services/admin.service";
 import { UsuarioService } from "../../../services/usuario.service";
 import { Dividendo, DividendoFilter } from "../../../models/Dividendo.model";
 import { prettyLog } from "../../Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
+import { DividendoService } from "../../../services/dividendo.service";
 
 @Component({
 	selector: "app-financeiro-aluno-page",
@@ -16,6 +17,7 @@ import { prettyLog } from "../../Admin/main-admin-page/usuarios-admin-page/usuar
 export class FinanceiroAlunoPageComponent implements OnInit {
 	adminService = inject(AdminService);
 	usuarioService = inject(UsuarioService);
+	dividendoService = inject(DividendoService);
 
 	boletos: Dividendo[] = [];
 
@@ -52,6 +54,13 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 
 	pagar(id: number) {
 		prettyLog(`Pagando o boleto de id: ${id}`);
+		this.dividendoService.pagarBoleto(id).subscribe({
+			next: () => {
+				this.buscar();
+			},
+			error: (err: any) => {
+				console.log(err);
+			},
+		});
 	}
 }
-
