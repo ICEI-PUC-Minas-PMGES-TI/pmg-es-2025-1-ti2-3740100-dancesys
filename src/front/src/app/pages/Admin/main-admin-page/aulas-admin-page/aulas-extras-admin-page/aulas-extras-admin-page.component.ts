@@ -42,7 +42,7 @@ export class AulasExtrasAdminPageComponent {
 	adminService = inject(AdminService);
 	aulaService = inject(AulaService);
 	alertServie = inject(AlertService);
-	salaService = inject(SalaService)
+	salaService = inject(SalaService);
 
 	filterForm: FormGroup;
 	salaForm: FormGroup;
@@ -50,7 +50,7 @@ export class AulasExtrasAdminPageComponent {
 	professoresFilterLs: any[] = [];
 	alunosFilterLs: any[] = [];
 	aulaExtraObj: any = [];
-	salasLs: any = []
+	salasLs: any = [];
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
@@ -181,45 +181,32 @@ export class AulasExtrasAdminPageComponent {
 		});
 	}
 
-	resetFormSala(){
-		this.salaForm = this.fb.group({
-			sala: [],
+	buscarSalas() {
+		this.salaService.fetchSalas().subscribe({
+			next: (response) => {
+				this.salasLs = response;
+			},
 		});
 	}
 
-	getSalaForm(){
-		const item = this.salaForm.value;
-		const id = item.sala
-
-		return id;
-	}
-
-	buscarSalas(){
-		this.salaService.fetchSalas().subscribe({
-			next: (response) =>{
-				this.salasLs = response
-			}
-		})
-	}
-
 	aceitar(id: number) {
-		this.openModal = 'aceitar'
-		this.selectId = id
+		this.openModal = "aceitar";
+		this.selectId = id;
 	}
 
-	aceitarConfirm(){
-		this.aulaService.acitarAulaExtra(this.selectId, this.getSalaForm()).subscribe({
-			next: (response) =>{
-				this.closeAceitarModal()
-				this.buscar()
-			}
-		})
+	aceitarConfirm() {}
+
+	closeAceitarModal() {
+		this.openModal = null;
 	}
 
-	closeAceitarModal(){
-		this.openModal = null
-		this.selectId = 0
-		this.resetFormSala()
+	onAceitarAula(sim: boolean | void) {
+		this.openModal = null;
+		if (!sim) {
+			return;
+		}
+		// TODO: COLOCAR A LÓGICA DE ACEITAR A AULA
+		console.log("Aceitou a aula");
 	}
 
 	onCancelarAula(form: NgForm | false) {
@@ -296,7 +283,7 @@ export class AulasExtrasAdminPageComponent {
 		this.buscar();
 	}
 
-	isFormSalaValido(){
+	isFormSalaValido() {
 		return this.salaForm.valid;
 	}
 
@@ -308,6 +295,7 @@ export class AulasExtrasAdminPageComponent {
 	}
 
 	formartarData(valor: Date) {
+		console.log(valor);
 		const str = valor.toLocaleString();
 		const strarr = str.split("T");
 		const strD = strarr[0].split("-");

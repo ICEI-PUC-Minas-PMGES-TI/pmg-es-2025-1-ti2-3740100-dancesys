@@ -20,6 +20,7 @@ import { ModalidadesService } from "../../../services/modalidades.service";
 import { ProfessorFiltro } from "../../../models/professor.model";
 import { SearchBoxSingleComponent } from "../../../components/search-box-single/search-box-single.component";
 import { AulaExtraDTO } from "../../../models/Aula.model";
+import { AulaService } from "../../../services/aula.service";
 
 @Component({
 	selector: "app-calendar-aluno-page",
@@ -39,6 +40,7 @@ export class CalendarAlunoPageComponent {
 	currPag: number = 0;
 
 	adminService = inject(AdminService);
+	aulaService = inject(AulaService);
 	userService = inject(UsuarioService);
 	modalidadesService = inject(ModalidadesService);
 
@@ -270,11 +272,11 @@ export class CalendarAlunoPageComponent {
 					console.log(form.value);
 					const horIni: Date = new Date(form.value.dataAE);
 					const horFim: Date = new Date(form.value.dataAE);
-					horIni.setHours(
+					horIni.setUTCHours(
 						form.value.horarioInicioAE.split(":")[0] as number,
 						form.value.horarioInicioAE.split(":")[1] as number,
 					);
-					horFim.setHours(
+					horFim.setUTCHours(
 						form.value.horarioFimAE.split(":")[0] as number,
 						form.value.horarioFimAE.split(":")[1] as number,
 					);
@@ -285,7 +287,14 @@ export class CalendarAlunoPageComponent {
 						idProfessor: form.value.professorAE,
 						idAluno: alunoId,
 					} as AulaExtraDTO;
-					console.log(valor);
+					this.aulaService.solicitarAulaExtra(valor).subscribe({
+						next: () => {
+							console.log("Foi!");
+						},
+						error: (error: any) => {
+							console.log(error);
+						},
+					});
 					this.openModal = null;
 				},
 			});
