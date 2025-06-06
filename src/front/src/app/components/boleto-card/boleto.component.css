@@ -1,19 +1,24 @@
+:host() {
+	width: 60%;
+}
+
 .boleto {
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #55371F;
+	padding: 1rem;
+	width: 100%;
+	margin-bottom: 1rem;
+	border-radius: 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #55371f;
 }
 
 .info p {
-  margin: 0;
+	margin: 0;
 }
 
 .atrasado-texto {
-  color: #8B1515;
-  font-weight: bold;
-  margin-top: 0.5rem;
+	color: #8b1515;
+	font-weight: bold;
+	margin-top: 0.5rem;
 }

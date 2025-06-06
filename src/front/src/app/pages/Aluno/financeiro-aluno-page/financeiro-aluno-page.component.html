@@ -1,6 +1,11 @@
 <div class="container-financeiro">
-  <h1 class="titulo">Financeiro</h1>
-  @for (boleto of boletos; track boleto.id) {
-    <app-boleto-card [boleto]="boleto" (payEvent)="pagar($event)"></app-boleto-card>
-  }
+	<h1 class="titulo">Financeiro</h1>
+	<div class="flex flex-1">
+		@for (boleto of boletos; track boleto.id) {
+			<app-boleto-card
+				[boleto]="boleto"
+				(payEvent)="pagar($event)"
+			></app-boleto-card>
+		}
+	</div>
 </div>
