@@ -27,7 +27,7 @@ public class AulaExtraController {
         return aulaExtraService.buscar(filtro);
     }
 
-    @PutMapping(value = "aceitar/{id}/{idSala}")
+    @GetMapping(value = "aceitar/{id}/{idSala}")
     public void aceitar(@PathVariable Long id, @PathVariable Long idSala) throws RuntimeException {
         aulaExtraService.aceitar(id, idSala);
     }

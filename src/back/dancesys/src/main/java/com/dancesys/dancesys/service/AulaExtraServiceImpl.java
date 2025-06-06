@@ -78,7 +78,7 @@ public class AulaExtraServiceImpl implements AulaExtraService {
         long minutos = duracao.toMinutes();
         BigDecimal valorHora = entity.getIdProfessor().getValorHoraExtra();
         BigDecimal minutosNaHora = new BigDecimal("60");
-        BigDecimal valorPorMin = valorHora.divide(minutosNaHora);
+        BigDecimal valorPorMin = valorHora.divide(minutosNaHora, 10, RoundingMode.HALF_UP);
         BigDecimal minutosBD = new BigDecimal(minutos);
         BigDecimal valor = valorPorMin.multiply(minutosBD);
         BigDecimal valorFormatado = valor.setScale(2, RoundingMode.HALF_UP);

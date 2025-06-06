@@ -181,6 +181,19 @@ export class AulasExtrasAdminPageComponent {
 		});
 	}
 
+	resetFormSala(){
+		this.salaForm = this.fb.group({
+			sala: [],
+		});
+	}
+
+	getSalaForm(){
+		const item = this.salaForm.value;
+		const id = item.sala
+
+		return id;
+	}
+
 	buscarSalas(){
 		this.salaService.fetchSalas().subscribe({
 			next: (response) =>{
@@ -195,20 +208,18 @@ export class AulasExtrasAdminPageComponent {
 	}
 
 	aceitarConfirm(){
-
+		this.aulaService.acitarAulaExtra(this.selectId, this.getSalaForm()).subscribe({
+			next: (response) =>{
+				this.closeAceitarModal()
+				this.buscar()
+			}
+		})
 	}
 
 	closeAceitarModal(){
 		this.openModal = null
-	}
-
-	onAceitarAula(sim: boolean | void) {
-		this.openModal = null;
-		if (!sim) {
-			return;
-		}
-		// TODO: COLOCAR A LÓGICA DE ACEITAR A AULA
-		console.log("Aceitou a aula");
+		this.selectId = 0
+		this.resetFormSala()
 	}
 
 	onCancelarAula(form: NgForm | false) {

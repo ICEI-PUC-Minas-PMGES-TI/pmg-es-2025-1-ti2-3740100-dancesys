@@ -16,4 +16,8 @@ export class AulaService {
             ...filtro,
         });
     }
+
+    public acitarAulaExtra(idAula: number, idSala: number){
+        return this.http.get(`${this.url}extra/aceitar/${idAula}/${idSala}`)
+    }
 }
