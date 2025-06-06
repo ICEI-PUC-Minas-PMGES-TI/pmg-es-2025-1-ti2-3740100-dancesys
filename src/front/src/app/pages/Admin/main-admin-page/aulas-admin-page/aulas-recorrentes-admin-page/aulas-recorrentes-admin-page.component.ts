@@ -160,7 +160,7 @@ export class AulasRecorrentesAdminPageComponent {
   }
 
   buscar() {
-    this.adminService.fetchAulasOcorrentes(this.getFilterForm()).subscribe({
+    this.adminService.fetchAulasOcorrentes2(this.getFilterForm()).subscribe({
       next: (response: any) => {
         if(response.total == 0){
           this.alertService.info("Nenhum registro encontrado!")

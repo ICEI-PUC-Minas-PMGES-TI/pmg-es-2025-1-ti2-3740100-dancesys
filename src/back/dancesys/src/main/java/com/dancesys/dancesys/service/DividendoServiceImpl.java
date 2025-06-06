@@ -38,28 +38,10 @@ public class DividendoServiceImpl implements DividendoService {
             }
 
             entity = dividendoRepository.save(DividendoMapper.toEntity(dto));
-            emailServiceImpl.enviarEmailHtml(entity.getIdAluno().getIdUsuario().getEmail(), definirTipo(entity.getTipo()), entity.getValor().toString());
             return DividendoMapper.toDto(entity);
         }catch(Exception e){
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    private String definirTipo(Integer tipo){
-        switch (tipo){
-            case 1:
-                return "Matricula";
-            case 2:
-                return "Mensalidade";
-            case 3:
-                return "Aula";
-            case 4:
-                return "Ingresso";
-            case 5:
-                return "Figurino";
-        }
-
-        return null;
     }
 
     public DividendoDTO gerarMatricula(Aluno entity) throws RuntimeException{
@@ -99,16 +81,18 @@ public class DividendoServiceImpl implements DividendoService {
     }
 
     public DividendoDTO gerarFigurino(FigurinoApresentacao entity) throws RuntimeException{
-        DividendoDTO dto = new DividendoDTO();
-        dto.setIdAluno(entity.getIdAluno());
-        Figurino figurino = figurinoServiceImpl.findById(entity.getIdFigurino().getId());
-        dto.setValor(figurino.getValor());
-        dto.setTipo(Dividendo.FIGURINO);
-        String codigo = String.format("%d.%d.%d.%.2f.%02d%02d%d",
-                Dividendo.FIGURINO, entity.getIdAluno().getId(), entity.getIdFigurino().getId(), figurino.getValor(), LocalDate.now().getDayOfMonth(), LocalDate.now().getMonthValue(), LocalDate.now().getYear());
-        dto.setCodigo(codigo);
+        try{
+            DividendoDTO dto = new DividendoDTO();
+            dto.setIdAluno(entity.getIdAluno());
+            Figurino figurino = figurinoServiceImpl.findById(entity.getIdFigurino().getId());
+            dto.setValor(figurino.getValor());
+            dto.setTipo(Dividendo.FIGURINO);
+            dto.setCodigo(entity.getCodigo());
 
-        return salvar(dto);
+            return salvar(dto);
+        }catch(RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void gerarMensalidade(Aluno entity) throws RuntimeException{
@@ -141,12 +125,16 @@ public class DividendoServiceImpl implements DividendoService {
     @Override
     public void jobDividendosDiario(){
         LocalDate data = LocalDate.now();
-        LocalDate date = data.minusMonths(1);
+        LocalDate date = data.minusDays(30);
         List<Dividendo> dividendosAtrasados = dividendoRepository.findByCriadoEmLessThanEqualAndStatusEquals(date, Dividendo.pendente);
 
         for(Dividendo d : dividendosAtrasados){
             d.setStatus(Dividendo.atrasado);
             dividendoRepository.save(d);
         }
+    }
+
+    public Dividendo findByCodigo(String codigo){
+        return dividendoRepository.findByCodigo(codigo).get();
     }
 }

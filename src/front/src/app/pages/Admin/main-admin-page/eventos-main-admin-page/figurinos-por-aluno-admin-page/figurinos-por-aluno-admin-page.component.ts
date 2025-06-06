@@ -36,7 +36,7 @@ enum ToggleModal {
 export class FigurinosPorAlunoAdminPageComponent {
   eventoService = inject(EventoService);
   adminService = inject(AdminService);
-  aleretService = inject(AlertService)
+  alertService = inject(AlertService)
 
 	filterForm: FormGroup;
 	figurinoAlunoForm: FormGroup;
@@ -51,20 +51,30 @@ export class FigurinosPorAlunoAdminPageComponent {
   figurinoObj: any = []
 
   isModalOpen: boolean = false
+  isStatusModalOpen: boolean = false
+  isDeleteModalOpen: boolean = false
   isEdit: boolean = false
+  selectId: number = 0
 
   paginaAtual: number = 0;
   itensPage: number = 10;
   orderByValue!: string;
   orderValue!: string
 
-  tamanhosLs: string[] = ['PP', 'P', 'M', 'G', 'GG', 'XGG']
+  tamanhosLs: string[] = ['PP', 'P', 'M', 'G', 'GG']
+
+  statusMap: Record<number, string> = {
+		1: "No estoque",
+		2: "Entregue",
+		3: "Devolvido",
+	};
 
   colunas = [
 		{ chave: "idAluno.idUsuario.nome", titulo: "Aluno" },
 		{ chave: "idFigurino.nome", titulo: "Figurino"},
 		{ chave: "idApresentacaoEvento.nome", titulo: "Apresentação"},
 		{ chave: "tamanho", titulo: "Tamanho" },
+    { chave: "status", titulo: "Status", formatar: (valor: number) => this.statusMap[valor] ?? String(valor),}
 	];
 
   acoes = [
@@ -78,7 +88,13 @@ export class FigurinosPorAlunoAdminPageComponent {
 			icon: "delete",
 			title: "Excluir",
 			cor: "dark",
-			callback: (item: any) => this.excluir(item),
+			callback: (item: any) => this.excluir(item.id),
+		},
+    {
+			icon: "warning",
+			title: "Status",
+			cor: "dark",
+			callback: (item: any) => this.status(item.id),
 		},
 	];
 
@@ -194,15 +210,40 @@ export class FigurinosPorAlunoAdminPageComponent {
     this.isModalOpen = true
   }
 
+  limparFigrunoAlunoForm(){
+    this.figurinoAlunoForm = this.fb.group({
+      id: [],
+      idAluno: [],
+      idApresentacaoEvento: [],
+      idFigurino: [],
+      codigo: [],
+      tamanho: [],
+      status: []
+    })
+  }
+
+  preencherFigrunoAlunoForm(item: any){
+    this.figurinoAlunoForm = this.fb.group({
+      id: [item.id],
+      idAluno: [item.idAluno.id],
+      idApresentacaoEvento: [item.idApresentacaoEvento.id],
+      idFigurino: [item.idFigurino.id],
+      codigo: [item.codigo],
+      tamanho: [item.tamanho],
+      status: [item.status]
+    })
+  }
+
   closeModal(){
     this.isModalOpen = false
     this.isEdit = false
+    this.limparFigrunoAlunoForm()
   }
 
   salvar(){
     this.eventoService.salvarFigurinoAluno(this.getFigurnoAlunoForm()).subscribe({
       next: (response) =>{
-        this.aleretService.sucesso("Figurino relacionado a aluno com sucesso")
+        this.alertService.sucesso("Figurino relacionado a aluno com sucesso")
         this.buscar()
         this.closeModal()
       }
@@ -212,11 +253,66 @@ export class FigurinosPorAlunoAdminPageComponent {
   editar(item: any){
     this.isEdit = true
     this.isModalOpen = true
+    this.preencherFigrunoAlunoForm(item)
   }
 
-  excluir(item: any){
-
+  status(id: number){
+    this.selectId
+    this.isStatusModalOpen = true
   }
+
+  onConfirmStatus(choice: boolean | void){
+		if (choice) {
+			this.eventoService.toogleStatusFigurinoAluno(this.selectId).subscribe({
+				next: () => {
+					this.buscar();
+					this.alertService.info("Status do figurino alterado!");
+          this.selectId = 0;
+		      this.isStatusModalOpen = false;
+				},
+				error: (err) => {
+          this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+          this.selectId = 0;
+		      this.isStatusModalOpen = false;
+				},
+			});
+		}
+	}
+
+  onConfirmDelete(choice: boolean | void){
+if (choice) {
+			this.eventoService.excluirFigurinoAluno(this.selectId).subscribe({
+				next: () => {
+					this.buscar();
+					this.alertService.exclusao("Figurino excluido!");
+          this.selectId = 0;
+		      this.isDeleteModalOpen = false;
+				},
+				error: (err) => {
+          this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+          this.selectId = 0;
+		      this.isDeleteModalOpen = false;
+				},
+			});
+		}
+  }
+
+  closeStatusModal(){
+    this.isStatusModalOpen = false
+  }
+
+  excluir(id: number){
+    this.selectId = id
+    this.isDeleteModalOpen = true
+  }
+
+  isFormValido(): boolean {
+		return this.figurinoAlunoForm.valid;
+	}
 
   getFigurnoAlunoForm(){
     const item = this.figurinoAlunoForm.value;

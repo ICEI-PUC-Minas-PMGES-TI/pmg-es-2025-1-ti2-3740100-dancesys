@@ -29,4 +29,12 @@ export class EventoService {
             ...item,
         });
     }
+
+    public excluirFigurinoAluno(id: number){
+        return this.http.delete(`${this.url}figurino/aluno/excluir/${id}`)
+    }
+
+    public toogleStatusFigurinoAluno(id: number){
+        return this.http.get(`${this.url}figurino/aluno/status/${id}`);
+    }
 }
