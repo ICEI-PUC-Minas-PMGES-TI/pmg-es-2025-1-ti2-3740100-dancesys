@@ -9,6 +9,7 @@ import com.dancesys.dancesys.repository.EnsaioApresentacaoRepository;
 import com.dancesys.dancesys.repository.EnsaioRepositoryCustom;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,5 +53,11 @@ public class EnsaioApresentacaoServiceImpl implements EnsaioApresentacaoService{
 
     public boolean existsByApresentacaoId(Long id){
         return ensaioApresentacaoRepository.existsByIdApresentacaoEventoId(id);
+    }
+
+    public boolean verificaHorario(LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim, Long idProfessor){
+        List<EnsaioApresentacao> ea = ensaioApresentacaoRepository.findByDataHoraInicioLessThanAndDataHoraFimGreaterThanAndIdProfessorId(dataHoraInicio,dataHoraFim,idProfessor);
+
+        return ea.isEmpty();
     }
 }

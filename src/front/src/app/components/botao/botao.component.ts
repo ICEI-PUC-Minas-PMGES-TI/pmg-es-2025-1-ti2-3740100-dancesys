@@ -8,6 +8,9 @@ enum ButtonColors {
 	danger = "bg-danger text-white",
 	blue = "bg-blue-500 text-white",
 	success = "bg-green-500 text-white",
+	yellow = "yellow text-white",
+	green = "green text-white",
+	red = "red text-white"
 }
 
 enum IconSlots {

@@ -1,12 +1,22 @@
 <main class="py-4 max-w-full max-h-full h-full">
     <section class="flex flex-col pb-4 max-w-full">
-		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				(click)="limparFiltros()"
+			>
+				Limpar filtros
+			</button>
+		</div>
 		<form class="flex flex-col text-main-500 font-bold" [formGroup]="filterForm">
 			<div class="flex px-1 flex-row space-x-2">
 				<section class="flex flex-row space-x-4 flex-1">
 					<div class="flex flex-col">
                         <app-search-box-single
-                        formControlName="aluno"
+                        formControlName="idAluno"
                         [label]="'Aluno:'"
                         [options]="alunosFilterLs"
                         [optionLabel]="'idUsuario.nome'"
@@ -17,7 +27,7 @@
 					</div>
 					<div class="flex flex-col">
 						<app-search-box-single
-                        formControlName="professor"
+                        formControlName="idProfessor"
                         [label]="'Professor:'"
                         [options]="professoresFilterLs"
                         [optionLabel]="'idUsuario.nome'"
@@ -33,7 +43,6 @@
 						[options]="statusObj"
 						optionLabel="name"
 						optionValue="value"
-						(selectionChange)="onStatusChange($event)"
 						nullLabel="Todos">
 						</app-multi-select-input>
 					</div>
@@ -48,11 +57,12 @@
 			</button>
 		</div>
 	</section>
-	<!-- <app-simple-table
+	<app-simple-table
 	[colunas]="colunas"
-	[dados]="aulaObj.conteudo"
+	[dados]="aulaExtraObj.conteudo"
 	[botoesAcoes]="acoes"
-	[totalItens]="aulaObj.total"
-	(paginacaoChange)="onPaginacaoChange($event)">
-	</app-simple-table> -->
+	[totalItens]="aulaExtraObj.total"
+	(paginacaoChange)="onPaginacaoChange($event)"
+    (orderChange)="orderBy($event)">
+	</app-simple-table>
 </main>

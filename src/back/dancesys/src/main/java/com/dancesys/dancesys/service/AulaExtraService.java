@@ -6,9 +6,7 @@ import com.dancesys.dancesys.entity.AulaExtra;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 
 public interface AulaExtraService {
-    AulaExtraDTO salvar(AulaExtraDTO dto) throws Exception;
+    AulaExtraDTO salvar(AulaExtraDTO dto) throws RuntimeException;
 
-    PaginatedResponse<AulaExtra> buscar(AulaExtraFilter filtro);
-
-    void deletar(Long id);
+    public PaginatedResponse<AulaExtra> buscar(AulaExtraFilter filtro);
 }

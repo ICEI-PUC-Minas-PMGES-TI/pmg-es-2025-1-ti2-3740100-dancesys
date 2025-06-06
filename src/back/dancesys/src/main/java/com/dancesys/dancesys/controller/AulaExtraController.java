@@ -10,25 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("evento/aula-extra")
+@RequestMapping("aula/extra")
 public class AulaExtraController {
 
     @Autowired
     AulaExtraService aulaExtraService;
 
     @PostMapping(value = {"", "alterar"})
-    public ResponseEntity<AulaExtraDTO> salvar(@RequestBody AulaExtraDTO dto) throws Exception {
+    public ResponseEntity<AulaExtraDTO> salvar(@RequestBody AulaExtraDTO dto) throws RuntimeException {
         final AulaExtraDTO salvo = aulaExtraService.salvar(dto);
         return ResponseEntity.ok(salvo);
     }
 
     @PostMapping(value = "buscar")
-    public PaginatedResponse<AulaExtra> buscar(@RequestBody AulaExtraFilter filtro) {
+    public PaginatedResponse<AulaExtra> buscar(@RequestBody AulaExtraFilter filtro){
         return aulaExtraService.buscar(filtro);
-    }
-
-    @DeleteMapping(value = "excluir/{id}")
-    public void excluir(@PathVariable Long id) {
-        aulaExtraService.deletar(id);
     }
 }
