@@ -2,6 +2,7 @@ package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.AulaExtraDTO;
 import com.dancesys.dancesys.dto.AulaExtraFilter;
+import com.dancesys.dancesys.dto.MensagemDTO;
 import com.dancesys.dancesys.entity.AulaExtra;
 import com.dancesys.dancesys.entity.Dividendo;
 import com.dancesys.dancesys.infra.PaginatedResponse;
@@ -72,6 +73,10 @@ public class AulaExtraServiceImpl implements AulaExtraService {
             throw new RuntimeException("Professor com horario oculpado");
         }
 
+        if(!entity.getSituacao().equals(AulaExtra.PENDENTE)) {
+            throw new RuntimeException("Aula ja com status alterado");
+        }
+
         entity.setSituacao(AulaExtra.ACEITA);
 
         Duration duracao = Duration.between(entity.getHorarioInicio(), entity.getHorarioFim());
@@ -89,7 +94,18 @@ public class AulaExtraServiceImpl implements AulaExtraService {
 
         dividendoServiceImpl.gerarAula(entity, valorFormatado);
         aulaExtraRepository.save(entity);
+    }
 
+    @Override
+    public void indeferir(Long id, MensagemDTO msg) throws RuntimeException{
+        AulaExtra entity = aulaExtraRepository.findById(id).get();
+        if(!entity.getSituacao().equals(AulaExtra.PENDENTE)) {
+            throw new RuntimeException("Aula ja com status alterado");
+        }
+        entity.setSituacao(AulaExtra.INDEFERIDA);
+        entity.setMotivo(msg.getMensagem());
+
+        aulaExtraRepository.save(entity);
     }
 
     @Override

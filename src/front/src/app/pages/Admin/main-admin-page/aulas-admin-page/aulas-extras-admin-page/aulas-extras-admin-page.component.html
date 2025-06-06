@@ -56,7 +56,7 @@
 	</form>
 </app-modal>
 } @if (openModal == "recusar") {
-<app-modal>
+<app-modal (onClose)="closeIndeferirModal()">
 	<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
 		Deseja mesmo recusar a aula?
 	</p>
