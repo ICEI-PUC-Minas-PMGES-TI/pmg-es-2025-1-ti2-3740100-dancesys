@@ -12,6 +12,7 @@ import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.AulaMapper;
 import com.dancesys.dancesys.repository.AulaRepository;
 import com.dancesys.dancesys.repository.AulaRepositoryCustom;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class AulaServiceImpl implements  AulaService {
             AulaRepository aulaRepository,
             AulaAlunoServiceImpl aulaAlunoServiceImpl,
             AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl,
-            ChamadaServiceImpl chamadaServiceImpl,
+            @Lazy ChamadaServiceImpl chamadaServiceImpl,
             AulaRepositoryCustom aulaRepositoryCustom
     ){
         this.aulaRepository = aulaRepository;

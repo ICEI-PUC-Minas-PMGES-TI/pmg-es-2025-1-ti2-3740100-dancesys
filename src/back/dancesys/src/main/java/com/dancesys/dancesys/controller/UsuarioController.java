@@ -29,7 +29,7 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "auth")
-    public ResponseEntity<LoginDTO> login(@RequestBody UsuarioDTO usuario) throws Exception {
+    public ResponseEntity<LoginDTO> login(@RequestBody UsuarioDTO usuario) throws RuntimeException {
         final LoginDTO login = usuarioService.login(usuario);
         return ResponseEntity.ok(login);
     }

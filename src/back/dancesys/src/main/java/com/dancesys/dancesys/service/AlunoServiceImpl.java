@@ -3,6 +3,7 @@ package com.dancesys.dancesys.service;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Usuario;
 import com.dancesys.dancesys.repository.AlunoRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class AlunoServiceImpl{
 
     public AlunoServiceImpl(
             AlunoRepository alunoRepository,
-            DividendoServiceImpl dividendoService
+            @Lazy DividendoServiceImpl dividendoService
     ) {
         this.alunoRepository = alunoRepository;
         this.dividendoService = dividendoService;

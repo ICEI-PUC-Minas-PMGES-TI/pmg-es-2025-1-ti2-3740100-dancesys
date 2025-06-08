@@ -10,7 +10,7 @@ import java.util.List;
 public interface UsuarioService{
     public UsuarioDTO salvar(UsuarioDTO dto) throws Exception;
 
-    public LoginDTO login(UsuarioDTO dto) throws Exception;
+    public LoginDTO login(UsuarioDTO dto) throws RuntimeException;
 
     public AlunoDTO salvarAluno(AlunoDTO dto) throws Exception;
 

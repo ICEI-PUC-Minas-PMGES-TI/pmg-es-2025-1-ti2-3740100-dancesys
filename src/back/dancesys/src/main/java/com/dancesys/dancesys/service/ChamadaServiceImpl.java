@@ -20,7 +20,7 @@ public class ChamadaServiceImpl implements ChamadaService {
 
     public ChamadaServiceImpl(
             ChamadaRepository chamadaRepository,
-            AlunoServiceImpl alunoServiceImpl,
+            @Lazy AlunoServiceImpl alunoServiceImpl,
             @Lazy AulaOcorrenciaServiceImpl aulaOcorrenciaServiceImpl
     ) {
         this.chamadaRepository = chamadaRepository;

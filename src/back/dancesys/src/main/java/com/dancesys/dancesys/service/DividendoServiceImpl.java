@@ -8,25 +8,28 @@ import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.DividendoMapper;
 import com.dancesys.dancesys.repository.DividendoRepository;
 import com.dancesys.dancesys.repository.DividendoRepositoryCustom;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DividendoServiceImpl implements DividendoService {
     private final DividendoRepository dividendoRepository;
     private final DividendoRepositoryCustom dividendoRepositoryCustom;
-    private final EmailServiceImpl emailServiceImpl;
     private final FigurinoServiceImpl figurinoServiceImpl;
     private final AlunoServiceImpl alunoServiceImpl;
 
-    public DividendoServiceImpl(DividendoRepository dividendoRepository, DividendoRepositoryCustom dividendoRepositoryCustom, EmailServiceImpl emailServiceImpl, FigurinoServiceImpl figurinoServiceImpl, AlunoServiceImpl alunoServiceImpl) {
+    public DividendoServiceImpl(
+            DividendoRepository dividendoRepository,
+            DividendoRepositoryCustom dividendoRepositoryCustom,
+            FigurinoServiceImpl figurinoServiceImpl,
+            @Lazy AlunoServiceImpl alunoServiceImpl
+    ) {
         this.dividendoRepository = dividendoRepository;
         this.dividendoRepositoryCustom = dividendoRepositoryCustom;
-        this.emailServiceImpl = emailServiceImpl;
         this.figurinoServiceImpl = figurinoServiceImpl;
         this.alunoServiceImpl = alunoServiceImpl;
     }
