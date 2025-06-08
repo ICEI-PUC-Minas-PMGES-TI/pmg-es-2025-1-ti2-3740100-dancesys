@@ -11,6 +11,6 @@ public class LoginDTO {
     private Long id;
     private String nome;
     public Integer tipo;
-    private Boolean status;
+    private Long idExtra;
     private String urlFoto;
 }

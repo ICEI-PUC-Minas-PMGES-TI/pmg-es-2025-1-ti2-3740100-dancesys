@@ -50,19 +50,15 @@ public class UsuarioMapper {
             return dto;
         }
 
-        public static LoginDTO toLoginDTO(Usuario entity) {
+        public static LoginDTO toLoginDTO(Usuario entity, Integer tipo, Long idExtra) {
             if (entity == null) return null;
 
             LoginDTO dto = new LoginDTO();
 
             dto.setId(entity.getId());
             dto.setNome(entity.getNome());
-            if(entity.getStatus().equals(Usuario.ativo)){
-                dto.setStatus(true);
-            }else{
-                dto.setStatus(false);
-            }
-            dto.setTipo(entity.getTipo());
+            dto.setTipo(tipo);
+            dto.setIdExtra(idExtra);
             dto.setUrlFoto(entity.getUrlFoto());
 
             return dto;

@@ -35,4 +35,8 @@ public class ProfessorServiceImpl {
     public PaginatedResponse<Professor> buscar(ProfessorFilter filtro){
         return professorCustomRepository.buscar(filtro);
     }
+
+    public Professor findByIdUsuario(Long id){
+        return professorRepository.findByIdUsuarioId(id);
+    }
 }

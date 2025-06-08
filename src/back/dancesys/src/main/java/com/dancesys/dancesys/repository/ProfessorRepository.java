@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor,Long> {
+    Professor findByIdUsuarioId(Long id);
+
     @Query("SELECT p FROM Professor p JOIN p.idUsuario u " +
             "WHERE (:nome IS NULL OR LOWER(u.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) " +
             "AND (:cpf IS NULL OR LOWER(u.cpf) LIKE LOWER(CONCAT('%', :cpf ,'%'))) " +

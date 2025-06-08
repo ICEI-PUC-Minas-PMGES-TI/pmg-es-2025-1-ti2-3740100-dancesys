@@ -56,19 +56,35 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public LoginDTO login(UsuarioDTO dto) throws Exception{
+    public LoginDTO login(UsuarioDTO dto) throws RuntimeException{
         try{
             Usuario user = usuarioRepository.findByEmailAndSenha(dto.getEmail(), dto.getSenha());
             if(user==null){
-                throw new Exception("Usuario não encontrado");
+                throw new RuntimeException("Usuario não encontrado");
             }
 
             if(user.getStatus().equals(Usuario.desativo)){
                 throw new Exception("Usuario desativado");
             }
-            return UsuarioMapper.toLoginDTO(user);
+
+            Integer tipo =  user.getTipo();
+            Long idExtra = null;
+
+            if(!user.getTipo().equals(Usuario.admin)){
+                if(user.getTipo().equals(Usuario.aluno)){
+                    Aluno aluno = alunoServiceImpl.findByIdUsuario(user.getId());
+                    idExtra = aluno.getId();
+                    if(aluno.getTipo().equals(Aluno.livre)){
+                        tipo = 4;
+                    }
+                }else{
+                    Professor professor = professorServiceImpl.findByIdUsuario(user.getId());
+                    idExtra = professor.getId();
+                }
+            }
+            return UsuarioMapper.toLoginDTO(user, tipo, idExtra);
         }catch (Exception e){
-            throw new Exception(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
