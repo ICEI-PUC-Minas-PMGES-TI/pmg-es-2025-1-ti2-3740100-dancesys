@@ -16,4 +16,6 @@ public interface AulaOcorrenciaRepository extends JpaRepository<AulaOcorrencia, 
     Optional<AulaOcorrencia> findById(Long id);
 
     List<AulaOcorrencia> findByDataAndIdAula_IdProfessor_IdAndStatus(LocalDate date, Long idProfessor,Integer status);
+
+    List<AulaOcorrencia> findByIdAulaId(Long idAulaId);
 }

@@ -56,6 +56,11 @@ public class AulaServiceImpl implements  AulaService {
 
                     chamadaServiceImpl.deletarAll(chamadaServiceImpl.findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(dto.getId(), idsNotIn));
                 }
+
+                List<AulaOcorrencia> aos = aulaOcorrenciaServiceImpl.findyByIdAulaId(dto.getId());
+                for(AulaOcorrencia ao : aos){
+                    chamadaServiceImpl.gerarChamada(dto.getAlunos(), ao.getId());
+                }
             }
 
             Aula entity = aulaRepository.save(AulaMapper.toEntity(dto));

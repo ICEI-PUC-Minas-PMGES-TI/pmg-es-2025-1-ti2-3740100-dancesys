@@ -132,6 +132,9 @@ public class AulaOcorrenciaServiceImpl {
         aulaOcorrenciaRepository.save(ao);
     }
 
+    public List<AulaOcorrencia> findyByIdAulaId(Long idAula){
+        return aulaOcorrenciaRepository.findByIdAulaId(idAula);
+    }
 
     public boolean verificaHorario(LocalDateTime inicio, LocalDateTime fim, Long idProfessor) {
         LocalDate data = inicio.toLocalDate();
