@@ -21,12 +21,14 @@ public class DividendoServiceImpl implements DividendoService {
     private final DividendoRepositoryCustom dividendoRepositoryCustom;
     private final EmailServiceImpl emailServiceImpl;
     private final FigurinoServiceImpl figurinoServiceImpl;
+    private final AlunoServiceImpl alunoServiceImpl;
 
-    public DividendoServiceImpl(DividendoRepository dividendoRepository, DividendoRepositoryCustom dividendoRepositoryCustom, EmailServiceImpl emailServiceImpl, FigurinoServiceImpl figurinoServiceImpl) {
+    public DividendoServiceImpl(DividendoRepository dividendoRepository, DividendoRepositoryCustom dividendoRepositoryCustom, EmailServiceImpl emailServiceImpl, FigurinoServiceImpl figurinoServiceImpl, AlunoServiceImpl alunoServiceImpl) {
         this.dividendoRepository = dividendoRepository;
         this.dividendoRepositoryCustom = dividendoRepositoryCustom;
         this.emailServiceImpl = emailServiceImpl;
         this.figurinoServiceImpl = figurinoServiceImpl;
+        this.alunoServiceImpl = alunoServiceImpl;
     }
 
     @Override
@@ -126,6 +128,11 @@ public class DividendoServiceImpl implements DividendoService {
     @Override
     public DividendoDTO pagar(Long id) throws RuntimeException{
         Dividendo entity = dividendoRepository.findById(id).get();
+        if(entity.getTipo().equals(Dividendo.MENSALIDADE)){
+            if(entity.getIdAluno().getTipo().equals(Aluno.livre)){
+                alunoServiceImpl.setMaxCreditos(entity.getIdAluno());
+            }
+        }
         entity.setStatus(Dividendo.pago);
         entity.setPagoEm(LocalDate.now());
         return salvar(DividendoMapper.toDto(entity));

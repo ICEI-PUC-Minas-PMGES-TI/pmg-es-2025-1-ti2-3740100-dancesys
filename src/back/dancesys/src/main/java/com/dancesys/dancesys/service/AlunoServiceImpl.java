@@ -55,6 +55,11 @@ public class AlunoServiceImpl{
         return alunoRepository.save(entity);
     }
 
+    public void setMaxCreditos(Aluno entity){
+        entity.setCreditos(Aluno.max_creditos);
+        alunoRepository.save(entity);
+    }
+
     public Aluno findById(Long id){
         return alunoRepository.findById(id);
     }
