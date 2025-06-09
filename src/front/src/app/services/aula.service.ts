@@ -4,6 +4,7 @@ import { environment } from "../../environment/environment";
 import { AulaExtraFilter } from "../models/AulaExtra.model";
 import { Mensagem } from "../models/Mensagem.model";
 import { AulaExtraDTO } from "../models/Aula.model";
+import { AulaExperimental, AulaExperimentalFilter } from "../models/AulaExperimental.model";
 
 @Injectable({
 	providedIn: "root",
@@ -23,7 +24,7 @@ export class AulaService {
 		return this.http.post(`${this.url}extra`, { ...aula });
 	}
 
-    public acitarAulaExtra(idAula: number, idSala: number){
+    public aceitarAulaExtra(idAula: number, idSala: number){
         return this.http.get(`${this.url}extra/aceitar/${idAula}/${idSala}`)
     }
 
@@ -37,5 +38,13 @@ export class AulaService {
         return this.http.post(`${this.url}extra/cancelar/${idAula}`, {
             ...msg
         })
+    }
+
+    public salvarAulaExperimental(item: AulaExperimental){
+        return this.http.post(`${this.url}experimental` , { ...item })
+    }
+
+    public filterAulaExperimental(filtro: AulaExperimentalFilter){
+        return this.http.post(`${this.url}experimental/buscar`, { ...filtro })
     }
 }

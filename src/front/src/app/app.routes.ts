@@ -30,6 +30,7 @@ import { IndicadorFinanceiroAdminPageComponent } from "./pages/Admin/indicadores
 import { UsuarioPageComponent } from "./pages/usuario-page/usuario-page.component";
 import { AlunoTabelaAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/aluno-tabela-admin-page/aluno-tabela-admin-page.component";
 import { ProfessorTabelaAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/professor-tabela-admin-page/professor-tabela-admin-page.component";
+import { AulasExperimentaisAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-admin-page/aulas-experimentais-admin-page/aulas-experimentais-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -132,6 +133,11 @@ export const routes: Routes = [
 										path: "extras",
 										component:
 											AulasExtrasAdminPageComponent,
+									},
+									{
+										path: "experimentais",
+										component:
+											AulasExperimentaisAdminPageComponent,
 									},
 								],
 							},

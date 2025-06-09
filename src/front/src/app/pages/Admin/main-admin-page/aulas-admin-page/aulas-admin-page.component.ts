@@ -16,5 +16,6 @@ export class AulasAdminPageComponent {
 		{ label: "Aulas Fixas", route: "fixas" },
 		{ label: "Aulas Recorrentes", route: "recorrentes" },
 		{ label: "Aulas Extras", route: "extras" },
+		{ label: "Aulas Experimentais", route: "experimentais"}
 	];
 }

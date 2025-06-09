@@ -127,8 +127,8 @@ export class FincanceiroAdminPageComponent {
 		{ value: 3, text: "Atrasado" },
 	];
 
-	orderByValue: string = "";
-	orderValue: string = "";
+	orderByValue: string = "criadoEm";
+	orderValue: string = "desc";
 
 	datesfilter: { value: string; text: string }[] = [];
 

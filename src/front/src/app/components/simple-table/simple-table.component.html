@@ -89,66 +89,69 @@
 	</div>
 </section>
 @if (paged) {
-	<div class="flex justify-end items-center mt-4 space-x-1">
-		<section class="flex flex-row">
-			<button
-				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer"
-				(click)="primeiraPagina()"
-			>
-				<<
-			</button>
-			<button
-				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-3 cursor-pointer"
-				(click)="anteriorPagina()"
-			>
-				<
-			</button>
-
-			<div class="flex">
+	<section class="flex justify-between items-center mt-4 space-x-2 w-full">
+		<h2 class="text-main-500 font-bold">Total: {{ totalItens }}</h2>
+		<div class="flex justify-end items-center mt-4 space-x-1">
+			<section class="flex flex-row">
 				<button
-					*ngFor="let pg of pgsLs"
-					(click)="selecionarPagina(pg)"
-					[ngClass]="{
-						'bg-main-400 text-main-500': pg === paginaSelecionada,
-						'bg-main-500 text-white': pg !== paginaSelecionada,
-					}"
-					class="flex items-center justify-center w-8 h-8 p-1 rounded-lg mr-1 border-2 border-main-500 transition-all cursor-pointer"
+					class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer"
+					(click)="primeiraPagina()"
 				>
-					{{ pg }}
+					<<
 				</button>
-			</div>
-
-			<button
-				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 ml-2 cursor-pointer"
-				(click)="proximaPagina()"
-			>
+				<button
+					class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-3 cursor-pointer"
+					(click)="anteriorPagina()"
 				>
-			</button>
-			<button
-				class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer"
-				(click)="ultimaPagina()"
-			>
-				>>
-			</button>
-			<div
-				class="flex items-center justify-center bg-main-500 text-white decoration-double h-8 p-1 rounded-lg ml-2 cursor-pointer"
-			>
-				<form [formGroup]="itensForm">
-					<select
-						name="itensPage"
-						id="itensPage"
-						class="text-white bg-main-500"
-						formControlName="itensPage"
+					<
+				</button>
+
+				<div class="flex">
+					<button
+						*ngFor="let pg of pgsLs"
+						(click)="selecionarPagina(pg)"
+						[ngClass]="{
+							'bg-main-400 text-main-500': pg === paginaSelecionada,
+							'bg-main-500 text-white': pg !== paginaSelecionada,
+						}"
+						class="flex items-center justify-center w-8 h-8 p-1 rounded-lg mr-1 border-2 border-main-500 transition-all cursor-pointer"
 					>
-						<option [ngValue]="5">5</option>
-						<option [ngValue]="10">10</option>
-						<option [ngValue]="25">25</option>
-						<option [ngValue]="50">50</option>
-						<option [ngValue]="100">100</option>
-						<option [ngValue]="0">Todos</option>
-					</select>
-				</form>
-			</div>
-		</section>
-	</div>
+						{{ pg }}
+					</button>
+				</div>
+
+				<button
+					class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 ml-2 cursor-pointer"
+					(click)="proximaPagina()"
+				>
+					>
+				</button>
+				<button
+					class="flex items-center justify-center bg-main-500 text-white decoration-double w-8 h-8 p-1 rounded-lg mr-1 cursor-pointer"
+					(click)="ultimaPagina()"
+				>
+					>>
+				</button>
+				<div
+					class="flex items-center justify-center bg-main-500 text-white decoration-double h-8 p-1 rounded-lg ml-2 cursor-pointer"
+				>
+					<form [formGroup]="itensForm">
+						<select
+							name="itensPage"
+							id="itensPage"
+							class="text-white bg-main-500"
+							formControlName="itensPage"
+						>
+							<option [ngValue]="5">5</option>
+							<option [ngValue]="10">10</option>
+							<option [ngValue]="25">25</option>
+							<option [ngValue]="50">50</option>
+							<option [ngValue]="100">100</option>
+							<option [ngValue]="0">Todos</option>
+						</select>
+					</form>
+				</div>
+			</section>
+		</div>
+	</section>
 }

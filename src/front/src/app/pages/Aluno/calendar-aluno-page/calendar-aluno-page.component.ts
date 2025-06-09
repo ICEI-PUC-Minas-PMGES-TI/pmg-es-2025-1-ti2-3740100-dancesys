@@ -85,7 +85,6 @@ export class CalendarAlunoPageComponent {
 				this.modalidades = response;
 			},
 			error: (err: any) => {
-				console.log(err);
 			},
 		});
 	}
@@ -237,7 +236,6 @@ export class CalendarAlunoPageComponent {
 			return;
 		}
 		// TODO: COLOCAR LÓGICA DE SOLICITAR AULA EXTRA
-		console.log(form.value);
 		const horIni: Date = new Date(form.value.dataAE);
 		const horFim: Date = new Date(form.value.dataAE);
 		horIni.setUTCHours(
@@ -257,10 +255,8 @@ export class CalendarAlunoPageComponent {
 		} as AulaExtraDTO;
 		this.aulaService.solicitarAulaExtra(valor).subscribe({
 			next: () => {
-				console.log("Foi!");
 			},
 			error: (error: any) => {
-				console.log(error);
 			},
 		});
 		this.openModal = null;

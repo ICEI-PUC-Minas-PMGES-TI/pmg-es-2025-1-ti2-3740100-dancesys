@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Aula_Experimetal")
+@Table(name = "Aula_Experimental")
 @Getter
 @Setter
 public class AulaExperimental {
@@ -16,11 +16,14 @@ public class AulaExperimental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dataHorarioInicio", nullable = false)
+    @Column(name = "data_horario_inicio", nullable = false)
     private LocalDateTime dataHorarioInicio;
 
-    @Column(name = "dataHorarioFim", nullable = false)
+    @Column(name = "data_horario_fim", nullable = false)
     private LocalDateTime dataHorarioFim;
+
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
     @Column(name = "cpf", nullable = false)
     private String cpf;
@@ -30,9 +33,15 @@ public class AulaExperimental {
 
     @Column(name = "situacao", nullable = true)
     private Integer situacao;
+    public static final Integer PENDENTE = 1;
+    public static final Integer CONVERTIDO = 2;
+    public static final Integer RECUSADO = 3;
 
     @Column(name = "motivo", nullable = true)
     private Integer motivo;
+    public static final Integer INTERESSE = 1;
+    public static final Integer FINANCEIRO = 2;
+    public static final Integer OUTRO = 3;
 
     @Column(name = "motivo_outro", nullable = true)
     private String motivoOutro;

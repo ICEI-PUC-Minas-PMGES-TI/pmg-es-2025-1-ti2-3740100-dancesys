@@ -209,7 +209,7 @@ export class AulasExtrasAdminPageComponent {
 
 	aceitarConfirm() {
 		this.aulaService
-			.acitarAulaExtra(this.selectId, this.getSalaForm())
+			.aceitarAulaExtra(this.selectId, this.getSalaForm())
 			.subscribe({
 				next: (response) => {
 					this.alertService.sucesso("Aula aceita com sucesso");
@@ -355,7 +355,6 @@ export class AulasExtrasAdminPageComponent {
 	}
 
 	formartarData(valor: Date) {
-		console.log(valor);
 		const str = valor.toLocaleString();
 		const strarr = str.split("T");
 		const strD = strarr[0].split("-");

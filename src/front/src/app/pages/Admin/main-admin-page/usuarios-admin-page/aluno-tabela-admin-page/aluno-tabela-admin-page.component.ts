@@ -161,7 +161,6 @@ export class AlunoTabelaAdminPageComponent {
 		this.totalItens = response.total;
 		this.tabela.isLoad(false);
 		this.isLoading = false;
-		console.log(this.alunos);
 	}
 
 	reloadModalidades() {

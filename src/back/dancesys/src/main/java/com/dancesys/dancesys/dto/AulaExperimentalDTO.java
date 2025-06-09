@@ -3,14 +3,17 @@ package com.dancesys.dancesys.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
 public class AulaExperimentalDTO {
     private Long id;
-    private LocalDateTime dataHorarioInicio;
-    private LocalDateTime dataHorarioFim;
+    private LocalDate data;
+    private LocalTime horarioInicio;
+    private LocalTime horarioFim;
+    private String nome;
     private String cpf;
     private String numero;
     private Integer situacao;
