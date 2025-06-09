@@ -14,6 +14,7 @@ import { AdminService } from "../../../../services/admin.service";
 import { SearchBoxMultiComponent } from "../../../../components/search-box-multi/search-box-multi.component";
 import { UsuarioFiltro } from "../../../../models/usuario.model";
 import { AlertService } from "../../../../services/Alert.service";
+import { AlunoFilter } from "../../../../models/aluno.model";
 
 @Component({
 	selector: "app-fincanceiro-admin-page",
@@ -31,7 +32,7 @@ import { AlertService } from "../../../../services/Alert.service";
 	styleUrl: "./fincanceiro-admin-page.component.css",
 })
 export class FincanceiroAdminPageComponent {
-  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent;
 
 	filterForm: FormGroup;
 	adminService = inject(AdminService);
@@ -67,7 +68,7 @@ export class FincanceiroAdminPageComponent {
 	};
 
 	colunas = [
-		{ chave: "codigo", titulo: "Codigo"},
+		{ chave: "codigo", titulo: "Codigo" },
 		{ chave: "idAluno.idUsuario.nome", titulo: "Aluno" },
 		{
 			chave: "tipo",
@@ -146,44 +147,44 @@ export class FincanceiroAdminPageComponent {
 			tamanho: [this.itensPage],
 			pagina: [this.paginaAtual],
 			orderBy: [this.orderByValue],
-			order: [this.orderValue]
+			order: [this.orderValue],
 		});
 
 		return this.filterForm.value;
 	}
 
-	onFilter(){
-		this.tabela.isLoad(true)
+	onFilter() {
+		this.tabela.isLoad(true);
 		this.paginaAtual = 0;
-		this.tabela.resetPage()
-		this.buscar()
-  	}
-	
+		this.tabela.resetPage();
+		this.buscar();
+	}
+
 	buscar() {
 		this.adminService.filterDividendos(this.getFilter()).subscribe({
 			next: (response: any) => {
-				if(response.total == 0){
-					this.alertService.info("Nenhum registro encontrado!")
-				}else{
+				if (response.total == 0) {
+					this.alertService.info("Nenhum registro encontrado!");
+				} else {
 					this.dividendos = response;
 				}
-				this.tabela.isLoad(false)
+				this.tabela.isLoad(false);
 			},
 			error: (err: any) => {},
 		});
 	}
 
 	buscarAluno(termo: any) {
-		const filtro: UsuarioFiltro = {
+		const filtro: AlunoFilter = {
 			nome: termo,
 			email: "",
 			cpf: "",
-			tipo: 2,
 			status: 1,
 		};
-		this.adminService.filterUsuarios(filtro).subscribe({
+
+		this.adminService.filterAlunos(filtro).subscribe({
 			next: (response) => {
-				this.alunosFilterLs = response;
+				this.alunosFilterLs = response.conteudo;
 			},
 		});
 	}
@@ -260,16 +261,16 @@ export class FincanceiroAdminPageComponent {
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
-		this.tabela.isLoad(true)
+		this.tabela.isLoad(true);
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();
 	}
 
-	orderBy(event: { chave: string, direcao: 'asc' | 'desc' }){
-		this.tabela.isLoad(true)
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
 		this.orderByValue = event.chave;
 		this.orderValue = event.direcao;
-		this.buscar()
-  }
+		this.buscar();
+	}
 }

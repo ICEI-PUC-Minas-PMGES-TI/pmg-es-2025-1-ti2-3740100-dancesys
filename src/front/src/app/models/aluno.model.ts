@@ -11,6 +11,18 @@ export interface Aluno {
 	creditos: number;
 	boolBaile: boolean;
 	tipo: TipoAluno.FIXO | TipoAluno.FLEXIVEL;
-	usuario: Usuario;
+	idUsuario: Usuario;
 	modalidades: ModalidadeAlunoNivel[];
+}
+
+export interface AlunoFilter {
+	nome?: string;
+	cpf?: string;
+	email?: string;
+	tipo?: TipoAluno;
+	status?: 0 | 1;
+	tamanho?: number;
+	pagina?: number;
+	orderBy?: string;
+	order?: string;
 }

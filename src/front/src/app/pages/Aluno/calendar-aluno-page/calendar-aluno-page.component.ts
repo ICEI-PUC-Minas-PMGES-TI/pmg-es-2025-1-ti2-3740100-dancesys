@@ -99,7 +99,7 @@ export class CalendarAlunoPageComponent {
 		};
 		this.adminService.filterProfessores(filtro).subscribe({
 			next: (response) => {
-				this.professoresFilterLs = response;
+				this.professoresFilterLs = response.conteudo;
 			},
 		});
 	}

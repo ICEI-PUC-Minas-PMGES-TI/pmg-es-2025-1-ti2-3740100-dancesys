@@ -28,6 +28,8 @@ import { SalaAdminPageComponent } from "./pages/Admin/main-admin-page/outros-adm
 import { IndicadoresAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicadores-admin-page.component";
 import { IndicadorFinanceiroAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-financeiro-admin-page/indicador-financeiro-admin-page.component";
 import { UsuarioPageComponent } from "./pages/usuario-page/usuario-page.component";
+import { AlunoTabelaAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/aluno-tabela-admin-page/aluno-tabela-admin-page.component";
+import { ProfessorTabelaAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/professor-tabela-admin-page/professor-tabela-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -90,6 +92,23 @@ export const routes: Routes = [
 							{
 								path: "usuarios",
 								component: UsuariosAdminPageComponent,
+								children: [
+									{
+										path: "",
+										redirectTo: "alunos",
+										pathMatch: "full",
+									},
+									{
+										path: "alunos",
+										component:
+											AlunoTabelaAdminPageComponent,
+									},
+									{
+										path: "professores",
+										component:
+											ProfessorTabelaAdminPageComponent,
+									},
+								],
 							},
 							{
 								path: "aulas",

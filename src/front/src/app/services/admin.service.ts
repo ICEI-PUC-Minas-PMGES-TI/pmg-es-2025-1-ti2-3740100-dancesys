@@ -5,11 +5,7 @@ import { environment } from "../../environment/environment";
 import { UsuarioFiltro } from "../models/usuario.model";
 import { horarioProfessorFilter } from "../models/horarioProfessorFilter.model";
 import { HorarioProfessor } from "../models/horarioProfessor.model";
-import {
-	FormAlunoValue,
-	FormProfessorValue,
-} from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
-import { Aluno } from "../models/aluno.model";
+import { Aluno, AlunoFilter } from "../models/aluno.model";
 import { Professor, ProfessorFiltro } from "../models/professor.model";
 import { DividendoFilter, Dividendo } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
@@ -22,6 +18,8 @@ import {
 	ApresentacaoEventoResponse,
 } from "../models/apresentacao_evento.model";
 import { Ensaio, EnsaioFilter } from "../models/Ensaio.model";
+import { FormAlunoValue } from "../pages/Admin/main-admin-page/usuarios-admin-page/aluno-tabela-admin-page/aluno-tabela-admin-page.component";
+import { FormProfessorValue } from "../pages/Admin/main-admin-page/usuarios-admin-page/professor-tabela-admin-page/professor-tabela-admin-page.component";
 
 export interface AlunoResponse {
 	id: number;
@@ -91,16 +89,23 @@ export interface ProfessorResponse {
 export class AdminService {
 	http = inject(HttpClient);
 
-	public fetchAlunos(): Observable<AlunoResponse[]> {
-		return this.http.get(
-			`${environment.API_URL}usuario/aluno/buscar`,
-		) as Observable<AlunoResponse[]>;
+	public fetchAlunos(filtro: AlunoFilter): Observable<{
+		conteudo: AlunoResponse[];
+		total: number;
+	}> {
+		return this.http.post(`${environment.API_URL}usuario/aluno/buscar`, {
+			...filtro,
+		}) as Observable<{ conteudo: AlunoResponse[]; total: number }>;
 	}
 
-	public fetchProfessores(): Observable<ProfessorResponse[]> {
-		return this.http.get(
+	public fetchProfessores(): Observable<{
+		conteudo: ProfessorResponse[];
+		total: number;
+	}> {
+		return this.http.post(
 			`${environment.API_URL}usuario/professor/buscar`,
-		) as Observable<ProfessorResponse[]>;
+			{},
+		) as Observable<{ conteudo: ProfessorResponse[]; total: number }>;
 	}
 
 	public addUsuarioAluno(aluno: FormAlunoValue) {
@@ -125,25 +130,21 @@ export class AdminService {
 		});
 	}
 
-	public filterUsuarios(filtro: UsuarioFiltro): Observable<AlunoResponse[]> {
-		const params = new HttpParams({
-			fromObject: { ...filtro },
-		});
-		return this.http.get<AlunoResponse[]>(
-			`${environment.API_URL}usuario/aluno/buscar?${params.toString()}`,
-		) as Observable<AlunoResponse[]>;
+	public filterAlunos(
+		filtro: AlunoFilter,
+	): Observable<{ conteudo: AlunoResponse[]; total: number }> {
+		return this.http.post(`${environment.API_URL}usuario/aluno/buscar`, {
+			...filtro,
+		}) as Observable<{ conteudo: AlunoResponse[]; total: number }>;
 	}
+
 	public filterProfessores(
 		filtro: ProfessorFiltro,
-	): Observable<ProfessorResponse[]> {
-		const params = new HttpParams({
-			fromObject: { ...filtro },
-		});
-		return this.http.get<ProfessorResponse[]>(
-			`${
-				environment.API_URL
-			}usuario/professor/buscar?${params.toString()}`,
-		) as Observable<ProfessorResponse[]>;
+	): Observable<{ conteudo: ProfessorResponse[]; total: number }> {
+		return this.http.post(
+			`${environment.API_URL}usuario/professor/buscar`,
+			{ ...filtro },
+		) as Observable<{ conteudo: ProfessorResponse[]; total: number }>;
 	}
 
 	// deve ser o ID da tabela Usuarios
@@ -155,10 +156,10 @@ export class AdminService {
 		return this.http.post(`${environment.API_URL}usuario/aluno/alterar`, {
 			...aluno,
 			boolBaile: aluno.boolBaile ? 1 : 0,
-			status: aluno.usuario.status,
-			senha: aluno.usuario.senha,
-			criadoEm: aluno.usuario.criadoEm,
-			urlFoto: aluno.usuario.urlFoto,
+			status: aluno.idUsuario.status,
+			senha: aluno.idUsuario.senha,
+			criadoEm: aluno.idUsuario.criadoEm,
+			urlFoto: aluno.idUsuario.urlFoto,
 		});
 	}
 

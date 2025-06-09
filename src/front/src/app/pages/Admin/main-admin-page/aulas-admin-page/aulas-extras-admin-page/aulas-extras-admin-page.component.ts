@@ -20,6 +20,7 @@ import { AlertService } from "../../../../../services/Alert.service";
 import { AulaService } from "../../../../../services/aula.service";
 import { SalaService } from "../../../../../services/sala.service";
 import { Mensagem } from "../../../../../models/Mensagem.model";
+import { AlunoFilter } from "../../../../../models/aluno.model";
 
 @Component({
 	selector: "app-aulas-extras-admin-page",
@@ -43,7 +44,7 @@ export class AulasExtrasAdminPageComponent {
 	adminService = inject(AdminService);
 	aulaService = inject(AulaService);
 	alertService = inject(AlertService);
-	salaService = inject(SalaService)
+	salaService = inject(SalaService);
 
 	filterForm: FormGroup;
 	salaForm: FormGroup;
@@ -162,29 +163,28 @@ export class AulasExtrasAdminPageComponent {
 		};
 		this.adminService.filterProfessores(filtro).subscribe({
 			next: (response) => {
-				this.professoresFilterLs = response;
+				this.professoresFilterLs = response.conteudo;
 			},
 		});
 	}
 
 	buscarAluno(termo: any) {
-		const filtro: UsuarioFiltro = {
+		const filtro: AlunoFilter = {
 			nome: termo,
 			email: "",
 			cpf: "",
-			tipo: 2,
 			status: 1,
 		};
-		this.adminService.filterUsuarios(filtro).subscribe({
+		this.adminService.filterAlunos(filtro).subscribe({
 			next: (response) => {
-				this.alunosFilterLs = response;
+				this.alunosFilterLs = response.conteudo;
 			},
 		});
 	}
 
-	getSalaForm(){
+	getSalaForm() {
 		const item = this.salaForm.value;
-		const id = item.sala
+		const id = item.sala;
 
 		return id;
 	}
@@ -202,25 +202,27 @@ export class AulasExtrasAdminPageComponent {
 		this.selectId = id;
 	}
 
-	closeAceitarModal(){
+	closeAceitarModal() {
 		this.openModal = null;
 		this.selectId = 0;
 	}
 
-	aceitarConfirm(){
-		this.aulaService.acitarAulaExtra(this.selectId, this.getSalaForm()).subscribe({
-			next: (response) =>{
-				this.alertService.sucesso("Aula aceita com sucesso")
-				this.closeAceitarModal()
-				this.buscar()
-			},
-			error: (err) =>{
-				this.alertService.erro(
-					err?.error?.mensagem || "Erro inesperado!",
-				);
-				this.closeAceitarModal()
-			}
-		})
+	aceitarConfirm() {
+		this.aulaService
+			.acitarAulaExtra(this.selectId, this.getSalaForm())
+			.subscribe({
+				next: (response) => {
+					this.alertService.sucesso("Aula aceita com sucesso");
+					this.closeAceitarModal();
+					this.buscar();
+				},
+				error: (err) => {
+					this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+					this.closeAceitarModal();
+				},
+			});
 	}
 
 	onCancelarAula(form: NgForm | false) {
@@ -233,26 +235,24 @@ export class AulasExtrasAdminPageComponent {
 			return;
 		}
 		this.openModal = null;
-		const item = form.value.motivoCancelar
-		const msg : Mensagem = {
-			mensagem: item
-		}
+		const item = form.value.motivoCancelar;
+		const msg: Mensagem = {
+			mensagem: item,
+		};
 
 		this.aulaService.cancelarAulaextra(this.selectId, msg).subscribe({
-			next: (response) =>{
-				this.alertService.sucesso("Aula cancelada com sucesso")
-				this.closeCancelarModal()
-				this.buscar()
+			next: (response) => {
+				this.alertService.sucesso("Aula cancelada com sucesso");
+				this.closeCancelarModal();
+				this.buscar();
 			},
-			error: (err) =>{
+			error: (err) => {
 				this.alertService.erro(
 					err?.error?.mensagem || "Erro inesperado!",
 				);
-				this.closeCancelarModal()
-			}
-		})
-		
-
+				this.closeCancelarModal();
+			},
+		});
 	}
 
 	onRecusarAula(form: NgForm | false) {
@@ -263,44 +263,44 @@ export class AulasExtrasAdminPageComponent {
 		if (form.invalid) {
 			return;
 		}
-		const item = form.value.motivoRecusar
+		const item = form.value.motivoRecusar;
 
-		const msg : Mensagem = {
-			mensagem: item
-		}
+		const msg: Mensagem = {
+			mensagem: item,
+		};
 
 		this.aulaService.indeferirAulaExtra(this.selectId, msg).subscribe({
-			next: (response) =>{
-				this.alertService.sucesso("Aula indeferida com sucesso")
-				this.closeIndeferirModal()
-				this.buscar()
+			next: (response) => {
+				this.alertService.sucesso("Aula indeferida com sucesso");
+				this.closeIndeferirModal();
+				this.buscar();
 			},
-			error: (err) =>{
+			error: (err) => {
 				this.alertService.erro(
 					err?.error?.mensagem || "Erro inesperado!",
 				);
-				this.closeIndeferirModal()
-			}
-		})
+				this.closeIndeferirModal();
+			},
+		});
 	}
 
 	indeferir(id: number) {
-		this.openModal = 'recusar'
-		this.selectId = id
+		this.openModal = "recusar";
+		this.selectId = id;
 	}
 
-	closeIndeferirModal(){
-		this.openModal = null
+	closeIndeferirModal() {
+		this.openModal = null;
 		this.selectId = 0;
 	}
 
 	cancelar(id: number) {
-		this.openModal = 'cancelar'
-		this.selectId = id
+		this.openModal = "cancelar";
+		this.selectId = id;
 	}
 
-	closeCancelarModal(){
-		this.openModal = null
+	closeCancelarModal() {
+		this.openModal = null;
 		this.selectId = 0;
 	}
 

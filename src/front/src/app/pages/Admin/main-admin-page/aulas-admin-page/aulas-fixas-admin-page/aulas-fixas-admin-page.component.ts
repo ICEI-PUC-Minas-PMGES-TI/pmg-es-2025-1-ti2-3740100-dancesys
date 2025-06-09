@@ -22,6 +22,7 @@ import { UsuarioFiltro } from "../../../../../models/usuario.model";
 import { SalaService } from "../../../../../services/sala.service";
 import { Sala } from "../../../../../models/Sala.model";
 import { AlertService } from "../../../../../services/Alert.service";
+import { AlunoFilter } from "../../../../../models/aluno.model";
 
 enum ToggleModal {
 	NEW = "Criar Aula",
@@ -44,7 +45,7 @@ enum ToggleModal {
 	styleUrl: "./aulas-fixas-admin-page.component.css",
 })
 export class AulasFixasAdminPageComponent {
-  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent;
 
 	filterForm: FormGroup;
 	aulaForm: FormGroup;
@@ -53,7 +54,6 @@ export class AulasFixasAdminPageComponent {
 	modalidadeService = inject(ModalidadesService);
 	salaService = inject(SalaService);
 	alertService = inject(AlertService);
-	
 
 	ToggleModal = ToggleModal;
 	paginaAtual: number = 0;
@@ -62,7 +62,7 @@ export class AulasFixasAdminPageComponent {
 	isModalConfirm: boolean = false;
 	isEdit: boolean = false;
 
-	statusId!: number
+	statusId!: number;
 
 	diaSemanaMap: Record<number, string> = {
 		1: "Segunda",
@@ -177,7 +177,7 @@ export class AulasFixasAdminPageComponent {
 	carregarProfessores() {
 		this.adminService.fetchProfessores().subscribe({
 			next: (response) => {
-				this.professoresObj = response;
+				this.professoresObj = response.conteudo;
 			},
 			error: (err: any) => {},
 		});
@@ -194,7 +194,7 @@ export class AulasFixasAdminPageComponent {
 	getFormValue() {
 		const item = this.aulaForm.value;
 		const aulaItem: Aula = item;
-		
+
 		return aulaItem;
 	}
 
@@ -244,31 +244,31 @@ export class AulasFixasAdminPageComponent {
 		return this.filterForm.value;
 	}
 
-	onFilter(){
-		this.tabela.isLoad(true)
+	onFilter() {
+		this.tabela.isLoad(true);
 		this.paginaAtual = 0;
-		this.tabela.resetPage()
-		this.buscar()
-  	}
+		this.tabela.resetPage();
+		this.buscar();
+	}
 
 	buscar() {
 		this.adminService.filterAulas(this.getfilter()).subscribe({
 			next: (response: any) => {
-				if(response.total == 0){
-					this.alertService.info("Nenhum registro encontrado!")
-				}else{
+				if (response.total == 0) {
+					this.alertService.info("Nenhum registro encontrado!");
+				} else {
 					this.aulaObj = response;
 				}
-				this.tabela.isLoad(false)
+				this.tabela.isLoad(false);
 			},
 			error: (err: any) => {},
 		});
 	}
 
 	salvar() {
-		const formValue : Aula = this.getFormValue()
-		if(formValue.maxAlunos < formValue.alunos.length){
-			this.alertService.info("Maximo de alunos ultrapassado!")
+		const formValue: Aula = this.getFormValue();
+		if (formValue.maxAlunos < formValue.alunos.length) {
+			this.alertService.info("Maximo de alunos ultrapassado!");
 			return;
 		}
 
@@ -277,7 +277,11 @@ export class AulasFixasAdminPageComponent {
 				this.buscar();
 				this.resertFormValue();
 				this.closeModal();
-				this.alertService.sucesso(this.isEdit? "Aula editada com sucesso": "Aula criada com sucesso")
+				this.alertService.sucesso(
+					this.isEdit
+						? "Aula editada com sucesso"
+						: "Aula criada com sucesso",
+				);
 			},
 		});
 	}
@@ -288,19 +292,18 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	status(item: any) {
-		this.statusId = item.id
-		this.isModalConfirm = true
+		this.statusId = item.id;
+		this.isModalConfirm = true;
 	}
 
-	onConfirmStatus(choice: boolean | void){
+	onConfirmStatus(choice: boolean | void) {
 		if (choice) {
 			this.adminService.alterarStatusAula(this.statusId).subscribe({
 				next: () => {
 					this.buscar();
 					this.alertService.info("Status da aula alterado!");
 				},
-				error: (err) => {
-				},
+				error: (err) => {},
 			});
 		}
 		this.statusId = 0;
@@ -338,22 +341,22 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	buscarAluno(termo: any) {
-		const filtro: UsuarioFiltro = {
+		const filtro: AlunoFilter = {
 			nome: termo,
 			email: "",
 			cpf: "",
 			tipo: 1,
 			status: 1,
 		};
-		this.adminService.filterUsuarios(filtro).subscribe({
+		this.adminService.filterAlunos(filtro).subscribe({
 			next: (response) => {
-				this.alunosFilterLs = response;
+				this.alunosFilterLs = response.conteudo;
 			},
 		});
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
-		this.tabela.isLoad(true)
+		this.tabela.isLoad(true);
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();

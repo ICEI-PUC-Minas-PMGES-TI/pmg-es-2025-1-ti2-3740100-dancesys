@@ -10,7 +10,11 @@ export interface Professor {
 
 export interface ProfessorFiltro {
 	nome?: string;
-	email: string;
-	status: 0 | 1;
-	cpf: string;
+	cpf?: string;
+	email?: string;
+	status?: 0 | 1;
+	tamanho?: number;
+	pagina?: number;
+	orderBy?: string;
+	order?: string;
 }

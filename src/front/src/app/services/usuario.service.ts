@@ -1,11 +1,11 @@
 import { Injectable, inject, signal } from "@angular/core";
-import { CookieService } from "ngx-cookie-service";
 import { Usuario, UsuarioCookie, UsuarioTipos } from "../models/usuario.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environment/environment";
 import { Router } from "@angular/router";
 import { AlunoResponse, ProfessorResponse } from "./admin.service";
 import { Observable, switchMap } from "rxjs";
+import { AlertService } from "./Alert.service";
 
 const USER_INFO_EXPIRE_DAYS: number = 10; // em dias
 
@@ -22,15 +22,15 @@ export class UsuarioService {
 
 	// injeções
 	private http = inject(HttpClient);
-	private cookieService = inject(CookieService);
 	private router = inject(Router);
+	private alertService = inject(AlertService);
 
 	// controller
 	private usuarioController: String = "usuario";
 
 	constructor() {
 		// verificar se existe algum usuário no cookie
-		const cookie = this.cookieService.get("user_cookie");
+		const cookie = localStorage.getItem("user_cookie");
 		if (cookie) {
 			// coloca o usuário no signal
 			const userCookie: UsuarioCookie = JSON.parse(cookie);
@@ -73,12 +73,8 @@ export class UsuarioService {
 			.pipe(
 				switchMap((cookie) => {
 					console.log(cookie);
-					this.cookieService.deleteAll();
-					this.cookieService.set(
-						"user_cookie",
-						JSON.stringify(cookie),
-						{ expires: USER_INFO_EXPIRE_DAYS },
-					);
+					localStorage.clear();
+					localStorage.setItem("user_cookie", JSON.stringify(cookie));
 					this._myCookie.set({ ...cookie });
 					return this.http.post<possibleUserTypes>(
 						`${environment.API_URL}${this.usuarioController}/validar`,
@@ -93,6 +89,7 @@ export class UsuarioService {
 					console.log(this.currentUsuario());
 				},
 				error: (err: any) => {
+					this.alertService.erro(err.error.mensagem);
 					console.log(err);
 				},
 			});
@@ -103,7 +100,7 @@ export class UsuarioService {
 	}
 
 	public deslogar() {
-		this.cookieService.delete("user_cookie", "/");
+		localStorage.clear();
 		this._myCookie.set(null);
 		this.currentUsuario.set(null);
 		this.redirecionarUsuario();

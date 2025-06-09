@@ -10,7 +10,7 @@ enum ButtonColors {
 	success = "bg-green-500 text-white",
 	yellow = "yellow text-white",
 	green = "green text-white",
-	red = "red text-white"
+	red = "red text-white",
 }
 
 enum IconSlots {
@@ -41,6 +41,7 @@ export class BotaoComponent {
 	@Input("size") size: string = Sizes.default;
 	@Input("color") color: string = "dark";
 	@Input("moreStyles") moreStyles: string = "";
+	@Input("text") text: string = "";
 
 	get styling() {
 		let styles = [

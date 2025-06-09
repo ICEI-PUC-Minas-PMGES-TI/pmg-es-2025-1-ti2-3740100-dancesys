@@ -1,0 +1,540 @@
+@if (isModalOpen == "confirmToggleAluno") {
+	<app-modal
+		[confirmMode]="true"
+		[message]="
+			isActivatingUser
+				? toggleUserStatusMessages.ACTIVATE
+				: toggleUserStatusMessages.DEACTIVATE
+		"
+		(onClose)="onConfirmToggleAluno($event)"
+	></app-modal>
+}
+@if (isModalOpen == "editProf" && tempEditProf) {
+	<app-modal (onClose)="closeEditModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Editar Professor</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#form="ngForm"
+					(ngSubmit)="submitEditProfessorForm(form)"
+				>
+					<section class="flex flex-row space-x-2 flex-1">
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="nome">Nome:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="nome"
+									id="nome"
+									[(ngModel)]="tempEditProf.usuario.nome"
+									placeholder="..."
+									#nomeCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="email">E-mail:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="email"
+									name="email"
+									id="email"
+									[(ngModel)]="tempEditProf.usuario.email"
+									placeholder="..."
+									#emailCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="dataNascimento"
+									>Data de Nascimento:</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="date"
+									name="dataNascimento"
+									id="dataNascimento"
+									[(ngModel)]="
+										tempEditProf.usuario.dataNascimento
+									"
+									placeholder="..."
+									#dataNascCtrl="ngModel"
+									required
+								/>
+							</div>
+						</section>
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="cpf">CPF:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									mask="000.000.000-00"
+									name="cpf"
+									id="cpf"
+									[(ngModel)]="tempEditProf.usuario.cpf"
+									placeholder="..."
+									#cpfCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="numero">Telefone:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="tel"
+									mask="(00) 00000-0000"
+									name="numero"
+									id="numero"
+									[(ngModel)]="tempEditProf.usuario.numero"
+									placeholder="..."
+									#telefoneCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="valorHoraExtra"
+									>Valor Hora Extra:</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="number"
+									name="valorHoraExtra"
+									id="valorHoraExtra"
+									[(ngModel)]="tempEditProf.valorHoraExtra"
+									#valorHoraExtraCtrl="ngModel"
+									required
+									placeholder="R$0.00"
+								/>
+							</div>
+						</section>
+					</section>
+					<section class="flex flex-col w-full">
+						<label for="endereco">Endereço:</label>
+						<input
+							class="p-1 bg-main-300 rounded-md"
+							type="text"
+							name="endereco"
+							id="endereco"
+							[(ngModel)]="tempEditProf.usuario.endereco"
+							placeholder="..."
+							#enderecoCtrl="ngModel"
+							required
+						/>
+					</section>
+					<section class="flex flex-col space-y-2 w-full">
+						<label for="infoProfissionais"
+							>Informações Profissionais:</label
+						>
+						<textarea
+							class="p-1 bg-main-300 rounded-md resize-none"
+							name="infoProfissionais"
+							id="infoProfissionais"
+							rows="4"
+							maxlength="255"
+							[(ngModel)]="tempEditProf.informacoesProfissionais"
+							placeholder="..."
+							#infoProfissionaisCtrl="ngModel"
+							required
+						></textarea>
+					</section>
+					<section
+						class="flex flex-row w-full justify-between space-x-2"
+					>
+						<div class="flex w-full flex-col">
+							<div
+								class="flex justify-between flex-1 items-end space-x-2 flex-row"
+							>
+								<div class="flex flex-col flex-1">
+									<label for="modalidade">Modalidade</label>
+									<select
+										class="p-1 bg-main-300 rounded-md"
+										name="modalidade"
+										id="modalidade"
+										required
+										#modalidadeInput
+									>
+										@for (
+											modalidade of modalidades;
+											track modalidade.id
+										) {
+											<option [value]="modalidade.id">
+												{{ modalidade.nome }}
+											</option>
+										}
+									</select>
+								</div>
+								<button
+									(click)="
+										addModalidadeProfessor(modalidadeInput)
+									"
+									type="button"
+									appButton
+									icon-size="medium"
+									icon="add_circle"
+									color="medium"
+									icon-slot="icon-only"
+									moreStyles="p-[0rem]"
+								></button>
+							</div>
+							<div
+								class="flex w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar"
+							>
+								@for (
+									mod of tempEditProf.modalidades;
+									track mod;
+									let i = $index
+								) {
+									<div
+										class="flex flex-1 space-x-2 flex-row justify-between"
+									>
+										<strong class="flex flex-1">
+											{{ getModalidadeNome(mod) }}</strong
+										>
+										<button
+											type="button"
+											appButton
+											icon-slot="icon-only"
+											(click)="
+												deleteModalidadeProfessor(i)
+											"
+											icon="delete"
+											color="danger"
+											icon-size="small"
+											moreStyles="p-[0rem]"
+										></button>
+									</div>
+								}
+							</div>
+						</div>
+					</section>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Salvar Edições
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+@if (isModalOpen == "addProfessor") {
+	<app-modal (onClose)="closeAddModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">Criar Usuário Professor</h1>
+			</header>
+			<main>
+				<form
+					class="flex flex-1 space-y-2 flex-col p-2"
+					#form="ngForm"
+					(ngSubmit)="submitAddProfessorForm(form)"
+				>
+					<section class="flex flex-row space-x-2 flex-1">
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="nome">Nome:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="nome"
+									id="nome"
+									ngModel
+									placeholder="..."
+									#nomeCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="email">E-mail:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="email"
+									name="email"
+									id="email"
+									ngModel
+									placeholder="..."
+									#emailCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="dataNascimento"
+									>Data de Nascimento:</label
+								>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="date"
+									name="dataNascimento"
+									id="dataNascimento"
+									ngModel
+									placeholder="..."
+									#dataNascCtrl="ngModel"
+									required
+								/>
+							</div>
+						</section>
+						<section class="flex flex-col space-y-2 flex-1">
+							<div class="flex flex-col">
+								<label for="cpf">CPF:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									mask="000.000.000-00"
+									name="cpf"
+									id="cpf"
+									ngModel
+									placeholder="..."
+									#cpfCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="numero">Telefone:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="tel"
+									mask="(00) 00000-0000"
+									name="numero"
+									id="numero"
+									ngModel
+									placeholder="..."
+									#telefoneCtrl="ngModel"
+									required
+								/>
+							</div>
+							<div class="flex flex-col">
+								<label for="valorHoraExtra"
+									>Valor Hora Extra:</label
+								>
+								<input
+									type="number"
+									name="valorHoraExtra"
+									ngModel
+									id="valorHoraExtra"
+									placeholder="R$0.00"
+									#valorHoraExtraCtrl="ngModel"
+									required
+									class="p-1 bg-main-300 rounded-md"
+								/>
+							</div>
+						</section>
+					</section>
+					<section class="flex flex-col w-full">
+						<label for="endereco">Endereço:</label>
+						<input
+							class="p-1 bg-main-300 rounded-md"
+							type="text"
+							name="endereco"
+							id="endereco"
+							ngModel
+							placeholder="..."
+							#enderecoCtrl="ngModel"
+							required
+						/>
+					</section>
+					<section class="flex flex-col space-y-2 w-full">
+						<label for="informacoesProfissionais"
+							>Informações Profissionais</label
+						>
+						<textarea
+							class="p-1 bg-main-300 rounded-md resize-none"
+							name="informacoesProfissionais"
+							id="informacoesProfissionais"
+							rows="4"
+							maxlength="255"
+							ngModel
+							placeholder="..."
+							#infoProfissionaisCtrl="ngModel"
+						></textarea>
+					</section>
+					<section
+						class="flex flex-row w-full justify-between space-x-2"
+					>
+						<div class="flex w-full flex-col">
+							<div
+								class="flex justify-between flex-1 items-end space-x-2 flex-row"
+							>
+								<div class="flex flex-col flex-1">
+									<label for="modalidade">Modalidade</label>
+									<select
+										class="p-1 bg-main-300 rounded-md"
+										name="modalidade"
+										id="modalidade"
+										required
+										#modalidadeInput
+									>
+										@for (
+											modalidade of modalidades;
+											track modalidade.id
+										) {
+											<option [value]="modalidade.id">
+												{{ modalidade.nome }}
+											</option>
+										}
+									</select>
+								</div>
+								<button
+									(click)="
+										addModalidadeProfessor(modalidadeInput)
+									"
+									type="button"
+									appButton
+									icon-size="medium"
+									icon="add_circle"
+									color="medium"
+									icon-slot="icon-only"
+									moreStyles="p-[0rem]"
+								></button>
+							</div>
+							<div
+								class="flex w-full flex-col space-y-1 pt-2 overflow-auto max-h-28 app-scrollbar"
+							>
+								@for (
+									mod of modalidadesProfArr;
+									track mod;
+									let i = $index
+								) {
+									<div
+										class="flex flex-1 space-x-2 flex-row justify-between"
+									>
+										<strong class="flex flex-1">
+											{{ getModalidadeNome(mod) }}</strong
+										>
+										<button
+											type="button"
+											appButton
+											icon-slot="icon-only"
+											(click)="
+												deleteModalidadeProfessor(i)
+											"
+											icon="delete"
+											color="danger"
+											icon-size="small"
+											moreStyles="p-[0rem]"
+										></button>
+									</div>
+								}
+							</div>
+						</div>
+					</section>
+					<button class="flex flex-0 mt-3" type="submit" appButton>
+						Adicionar
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+<main class="py-4 max-w-full max-h-full h-full">
+	<section class="flex flex-col pb-4 max-w-full">
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				[class]="{
+					hidden: !hasFormValues,
+				}"
+				(click)="limparFiltros()"
+			>
+				Limpar filtros
+			</button>
+		</div>
+		<form
+			#filterForm="ngForm"
+			(ngSubmit)="filterFormSubmit()"
+			class="flex flex-col text-main-500 font-bold"
+		>
+			<div class="flex px-1 flex-row space-x-2">
+				<div class="flex flex-col">
+					<label for="nomeFilter">Nome:</label>
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="nomeFilter"
+						ngModel
+						placeholder="..."
+						id="nomeFilter"
+						value=""
+					/>
+				</div>
+				<div class="flex flex-col">
+					<label for="cpfFilter">CPF:</label>
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						ngModel
+						mask="000.000.000-00"
+						name="cpfFilter"
+						placeholder="..."
+						id="cpfFilter"
+						value=""
+					/>
+				</div>
+				<div class="flex flex-col">
+					<label for="emailFilter">E-Mail:</label>
+					<input
+						class="p-1 rounded-md bg-main-300"
+						type="text"
+						name="emailFilter"
+						placeholder="..."
+						id="emailFilter"
+						ngModel
+						value=""
+					/>
+				</div>
+			</div>
+			<div class="flex px-1 flex-row space-x-2">
+				<div class="flex flex-col">
+					<label for="statusFilter">Status:</label>
+					<select
+						class="p-1 rounded-md bg-main-300"
+						ngModel
+						type="text"
+						name="statusFilter"
+						placeholder="..."
+						id="statusFilter"
+						value=""
+					>
+						<option value="">Todos</option>
+						<option value="1">Ativo</option>
+						<option value="0">Inativo</option>
+					</select>
+				</div>
+			</div>
+		</form>
+	</section>
+	<section class="flex justify-between flex-row">
+		<div class="flex flex-row space-x-2">
+			<button
+				(click)="openAddProfessorModal()"
+				icon="add_circle"
+				icon-slot="right"
+				appButton
+				color="dark"
+				type="button"
+			>
+				Novo
+			</button>
+			<button
+				(click)="filterForm.ngSubmit.emit()"
+				type="button"
+				icon="search"
+				icon-slot="right"
+				appButton
+				color="dark"
+			>
+				Filtrar
+			</button>
+		</div>
+	</section>
+	@if (professores.length > 0 && !isLoading) {}
+</main>

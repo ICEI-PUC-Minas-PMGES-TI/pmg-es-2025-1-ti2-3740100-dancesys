@@ -4,8 +4,8 @@ import { BoletoCardComponent } from "../../../components/boleto-card/boleto.comp
 import { AdminService } from "../../../services/admin.service";
 import { UsuarioService } from "../../../services/usuario.service";
 import { Dividendo, DividendoFilter } from "../../../models/Dividendo.model";
-import { prettyLog } from "../../Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
 import { DividendoService } from "../../../services/dividendo.service";
+import { prettyLog } from "../../../prettylog";
 
 @Component({
 	selector: "app-financeiro-aluno-page",

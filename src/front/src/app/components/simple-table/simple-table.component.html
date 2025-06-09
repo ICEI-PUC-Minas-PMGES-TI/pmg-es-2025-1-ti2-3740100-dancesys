@@ -6,16 +6,21 @@
 					<th
 						*ngFor="let coluna of colunas"
 						[style.width]="coluna.width"
-						(click)="(coluna.order ?? true) && ordenarPor(coluna.chave)"
+						(click)="
+							(coluna.order ?? true) && ordenarPor(coluna.chave)
+						"
 						[class.cursor-pointer]="coluna.order ?? true"
 						class="select-none"
 					>
-						<div class="w-full flex flex-row justify-center space-x-2 px-6">
+						<div
+							class="w-full flex flex-row justify-center space-x-2 px-6"
+						>
 							<span>{{ coluna.titulo }}</span>
 							<span
 								[ngClass]="{
 									visivel: ordenacao?.chave === coluna.chave,
-									invisivel: ordenacao?.chave !== coluna.chave,
+									invisivel:
+										ordenacao?.chave !== coluna.chave,
 								}"
 							>
 								{{ ordenacao?.direcao === "asc" ? "▲" : "▼" }}
@@ -30,7 +35,12 @@
 			</thead>
 			<tbody class="relative">
 				<tr *ngIf="isLoading" class="absolute inset-0 bg-black/80 z-10">
-					<td [attr.colspan]="colunas.length + (botoesAcoes?.length ? 1 : 0)" class="load">
+					<td
+						[attr.colspan]="
+							colunas.length + (botoesAcoes?.length ? 1 : 0)
+						"
+						class="load"
+					>
 						<div class="flex justify-center items-center h-full">
 							<div class="loader"></div>
 						</div>
@@ -48,20 +58,26 @@
 					>
 						{{
 							coluna.formatar
-								? coluna.formatar(getValor(item, coluna.chave), item)
+								? coluna.formatar(
+										getValor(item, coluna.chave),
+										item
+									)
 								: getValor(item, coluna.chave)
 						}}
 					</td>
 					@if (botoesAcoes && botoesAcoes.length > 0) {
 						<td [style.width]="actionsWidth">
-							<div class="flex justify-center items-center space-x-3">
+							<div
+								class="flex justify-center items-center space-x-3"
+							>
 								<button
 									*ngFor="let botao of botoesAcoes"
 									appButton
-									[icon]="botao.icon"
+									[icon]="botao.icon ? botao.icon : ''"
 									icon-slot="icon-only"
 									[title]="botao.title"
 									[color]="botao.cor"
+									[text]="botao.text ? botao.text : ''"
 									(click)="botao.callback(item)"
 								></button>
 							</div>

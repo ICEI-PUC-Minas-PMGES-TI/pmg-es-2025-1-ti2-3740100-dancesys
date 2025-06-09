@@ -16,6 +16,7 @@ import {
 import { SearchBoxMultiComponent } from "../../../../../components/search-box-multi/search-box-multi.component";
 import { UsuarioFiltro } from "../../../../../models/usuario.model";
 import { AlertService } from "../../../../../services/Alert.service";
+import { AlunoFilter } from "../../../../../models/aluno.model";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -33,7 +34,7 @@ import { AlertService } from "../../../../../services/Alert.service";
 })
 export class ApresentacoesAdminPageComponent implements OnInit {
 	@ViewChild("filterForm") filterForm!: NgForm;
-  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent;
 
 	private adminService = inject(AdminService);
 	private alertService = inject(AlertService);
@@ -59,7 +60,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 			chave: "horaFim",
 			titulo: "Horário Final",
 		},
-		{chave: "eventoNome", titulo: "Evento"}
+		{ chave: "eventoNome", titulo: "Evento" },
 	];
 	acoes = [
 		{
@@ -120,24 +121,23 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 	}
 
 	buscarAlunos(termo: any) {
-		const filtro: UsuarioFiltro = {
+		const filtro: AlunoFilter = {
 			nome: termo,
 			email: "",
 			cpf: "",
-			tipo: 2,
 			status: 1,
 		};
 
-		this.adminService.filterUsuarios(filtro).subscribe({
+		this.adminService.filterAlunos(filtro).subscribe({
 			next: (response) => {
-				this.alunosLs = response;
+				this.alunosLs = response.conteudo;
 			},
 		});
 	}
 
 	// necessário para a tabela
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
-		this.tabela.isLoad(true)
+		this.tabela.isLoad(true);
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.onFiltrar();
@@ -169,14 +169,16 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.deleteApresentacaoEvento(this.excluirApresentacaoId!)
 				.subscribe({
 					next: () => {
-						this.alertService.exclusao("Apresentação excluida com sucesso!")
+						this.alertService.exclusao(
+							"Apresentação excluida com sucesso!",
+						);
 						this.onFiltrar();
 					},
-					error: (err: any) =>{
+					error: (err: any) => {
 						this.alertService.erro(
-						err?.error?.mensagem || "Erro inesperado!",
-					);
-					}
+							err?.error?.mensagem || "Erro inesperado!",
+						);
+					},
 				});
 		}
 		if (!this.isModalEditarOpen) {
@@ -201,7 +203,9 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.subscribe({
 					next: () => {
 						this.onToggleCriarModal();
-						this.alertService.sucesso("Apresentação criada com sucesso!")
+						this.alertService.sucesso(
+							"Apresentação criada com sucesso!",
+						);
 						this.onFiltrar();
 					},
 				});
@@ -219,19 +223,21 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.subscribe({
 					next: () => {
 						this.onToggleEditarModal();
-						this.alertService.sucesso("Apresentação editada com sucesso!")
+						this.alertService.sucesso(
+							"Apresentação editada com sucesso!",
+						);
 						this.onFiltrar();
 					},
 				});
 		}
 	}
 
-	onFilter(){
-		this.tabela.isLoad(true)
+	onFilter() {
+		this.tabela.isLoad(true);
 		this.paginaAtual = 0;
-		this.tabela.resetPage()
-		this.onFiltrar()
-  	}
+		this.tabela.resetPage();
+		this.onFiltrar();
+	}
 
 	// como se fosse o fetchApresentacoes
 	onFiltrar() {
@@ -241,12 +247,14 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				.fetchApresentacoes({ ...this.filterForm.value })
 				.subscribe({
 					next: (apRes: ApresentacaoEventoResponse) => {
-						if(apRes.total == 0){
-							this.alertService.info("Nenhum registro encontrado!")
-						}else{
+						if (apRes.total == 0) {
+							this.alertService.info(
+								"Nenhum registro encontrado!",
+							);
+						} else {
 							this.apresentacoes = apRes;
 						}
-						this.tabela.isLoad(false)
+						this.tabela.isLoad(false);
 					},
 				});
 			return;

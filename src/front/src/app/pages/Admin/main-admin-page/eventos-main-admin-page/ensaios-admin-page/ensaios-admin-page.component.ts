@@ -24,6 +24,7 @@ import {
 } from "../../../../../models/apresentacao_evento.model";
 import { EventoResponse } from "../../../../../models/evento.model";
 import { Ensaio, EnsaioFilter } from "../../../../../models/Ensaio.model";
+import { AlunoFilter } from "../../../../../models/aluno.model";
 
 enum ToggleModal {
 	NEW = "Criar Ensaio",
@@ -46,7 +47,7 @@ enum ToggleModal {
 	styleUrl: "./ensaios-admin-page.component.css",
 })
 export class EnsaiosAdminPageComponent {
-  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent;
 
 	adminService = inject(AdminService);
 	alertService = inject(AlertService);
@@ -205,8 +206,7 @@ export class EnsaiosAdminPageComponent {
 					this.buscar();
 					this.alertService.exclusao("Ensaio excluido com sucesso");
 				},
-				error: (err) => {
-				},
+				error: (err) => {},
 			});
 		}
 		this.idDelete = 0;
@@ -227,12 +227,12 @@ export class EnsaiosAdminPageComponent {
 		this.isEdit = false;
 	}
 
-	onFilter(){
-		this.tabela.isLoad(true)
+	onFilter() {
+		this.tabela.isLoad(true);
 		this.paginaAtual = 0;
-		this.tabela.resetPage()
-		this.buscar()
-  	}
+		this.tabela.resetPage();
+		this.buscar();
+	}
 
 	buscar() {
 		this.adminService.filterEnsaio2(this.getFilterForm()).subscribe({
@@ -242,39 +242,37 @@ export class EnsaiosAdminPageComponent {
 				} else {
 					this.ensaios = response;
 				}
-				this.tabela.isLoad(false)
+				this.tabela.isLoad(false);
 			},
 		});
 	}
 
 	buscarAlunos(termo: any) {
-		const filtro: UsuarioFiltro = {
+		const filtro: AlunoFilter = {
 			nome: termo,
 			email: "",
 			cpf: "",
-			tipo: 1,
 			status: 1,
 		};
 
-		this.adminService.filterUsuarios(filtro).subscribe({
+		this.adminService.filterAlunos(filtro).subscribe({
 			next: (response) => {
-				this.alunosFilterLs = response;
+				this.alunosFilterLs = response.conteudo;
 			},
 		});
 	}
 
 	buscarAlunosForm(termo: any) {
-		const filtro: UsuarioFiltro = {
+		const filtro: AlunoFilter = {
 			nome: termo,
 			email: "",
 			cpf: "",
-			tipo: 2,
 			status: 1,
 		};
 
-		this.adminService.filterUsuarios(filtro).subscribe({
+		this.adminService.filterAlunos(filtro).subscribe({
 			next: (response) => {
-				this.alunosLs = response;
+				this.alunosLs = response.conteudo;
 			},
 		});
 	}
@@ -298,7 +296,7 @@ export class EnsaiosAdminPageComponent {
 	carregarProfessores() {
 		this.adminService.fetchProfessores().subscribe({
 			next: (response) => {
-				this.professoresObj = response;
+				this.professoresObj = response.conteudo;
 			},
 			error: (err: any) => {},
 		});
@@ -346,7 +344,7 @@ export class EnsaiosAdminPageComponent {
 	}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
-		this.tabela.isLoad(true)
+		this.tabela.isLoad(true);
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.buscar();
