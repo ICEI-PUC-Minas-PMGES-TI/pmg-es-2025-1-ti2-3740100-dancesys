@@ -1,8 +1,11 @@
 package com.dancesys.dancesys.service;
 
+import com.dancesys.dancesys.dto.AlunoFilter;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Usuario;
+import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.repository.AlunoRepository;
+import com.dancesys.dancesys.repository.AlunoRepositoryCustom;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +15,16 @@ import java.util.List;
 public class AlunoServiceImpl{
     private final AlunoRepository alunoRepository;
     private final DividendoServiceImpl dividendoService;
+    private final AlunoRepositoryCustom  alunoRepositoryCustom;
 
     public AlunoServiceImpl(
             AlunoRepository alunoRepository,
-            @Lazy DividendoServiceImpl dividendoService
+            @Lazy DividendoServiceImpl dividendoService,
+            AlunoRepositoryCustom alunoRepositoryCustom
     ) {
         this.alunoRepository = alunoRepository;
         this.dividendoService = dividendoService;
+        this.alunoRepositoryCustom = alunoRepositoryCustom;
     }
 
     public Aluno salvar(Aluno entity) throws Exception{
@@ -65,8 +71,8 @@ public class AlunoServiceImpl{
         return alunoRepository.findById(id);
     }
 
-    public List<Aluno> buscarAlunos(String nome, String cpf, String email, Integer tipo, Integer status){
-        return alunoRepository.buscarAlunos(nome, cpf, email, tipo, status);
+    public PaginatedResponse<Aluno> buscar(AlunoFilter filtro){
+        return alunoRepositoryCustom.buscar(filtro);
     }
 
     public Aluno findByIdUsuario(Long idUsuario){

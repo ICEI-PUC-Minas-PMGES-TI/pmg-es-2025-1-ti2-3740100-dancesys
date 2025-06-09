@@ -5,6 +5,7 @@ import com.dancesys.dancesys.entity.Professor;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.repository.ProfessorCustomRepository;
 import com.dancesys.dancesys.repository.ProfessorRepository;
+import com.dancesys.dancesys.repository.ProfessorRepositoryCustom;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +14,16 @@ import java.util.List;
 public class ProfessorServiceImpl {
     private final ProfessorRepository professorRepository;
     private final ProfessorCustomRepository professorCustomRepository;
+    private final ProfessorRepositoryCustom  professorRepositoryCustom;
 
-    public ProfessorServiceImpl(ProfessorRepository professorRepository, ProfessorCustomRepository professorCustomRepository) {
+    public ProfessorServiceImpl(
+            ProfessorRepository professorRepository,
+            ProfessorCustomRepository professorCustomRepository,
+            ProfessorRepositoryCustom professorRepositoryCustom
+    ) {
         this.professorRepository = professorRepository;
         this.professorCustomRepository = professorCustomRepository;
+        this.professorRepositoryCustom = professorRepositoryCustom;
     }
 
     public Professor salvar(Professor entity) throws Exception{
@@ -28,8 +35,8 @@ public class ProfessorServiceImpl {
         }
     }
 
-    public List<Professor> buscarProfessores(String nome, String cpf, String email, Integer status){
-        return professorRepository.buscarProfessor(nome,cpf,email,status);
+    public PaginatedResponse<Professor> buscarProfessores(ProfessorFilter filtro){
+        return professorCustomRepository.buscar(filtro);
     }
 
     public PaginatedResponse<Professor> buscar(ProfessorFilter filtro){

@@ -12,4 +12,6 @@ public class ProfessorFilter {
     private Integer status;
     private Integer tamanho;
     private Integer pagina;
+    private String orderBy;
+    private String order;
 }
