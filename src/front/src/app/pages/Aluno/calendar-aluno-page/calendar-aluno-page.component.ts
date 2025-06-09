@@ -6,7 +6,7 @@ import {
 import { UsuarioTipos } from "../../../models/usuario.model";
 import { TipoAluno } from "../../../models/aluno.model";
 import { BotaoComponent } from "../../../components/botao/botao.component";
-import { AdminService } from "../../../services/admin.service";
+import { AdminService, AlunoResponse } from "../../../services/admin.service";
 import { UsuarioService } from "../../../services/usuario.service";
 import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
 import { switchMap } from "rxjs";
@@ -126,93 +126,65 @@ export class CalendarAlunoPageComponent {
 
 	private carregarItens() {
 		this.calendarItems = [];
-		this.userService
-			.getAlunoIdByUserId(this.userService.usuario()!.id)
+		this.adminService
+			.fetchAulasOcorrentes({
+				alunos: this.vendoMeuCalendario
+					? [this.userService.usuario()!.id]
+					: null,
+				dataInicio: this.dadosSobreMesSelecionado.firstDay,
+				dataFim: this.dadosSobreMesSelecionado.lastDay,
+				alunoNotIm: !this.vendoMeuCalendario
+					? this.userService.usuario()!.id
+					: null,
+			} as AulaOcorrenciaFilter)
+			.pipe(
+				switchMap((aulasOcorrentes: any) => {
+					const arr = aulasOcorrentes?.conteudo.map((aula: any) => {
+						return {
+							title: `Aula de ${aula.idAula.idModalidade.nome}`,
+							subtitle: `Professor: ${aula.idAula.idProfessor.idUsuario.nome}`,
+							dataHorario: new Date(
+								new Date(aula.data).getFullYear(),
+								new Date(aula.data).getMonth(),
+								new Date(aula.data).getDate(),
+								aula.idAula.horarioInicio.split(":")[0],
+								aula.idAula.horarioInicio.split(":")[1],
+							),
+							tipoUsuario: (
+								this.userService.usuario() as AlunoResponse
+							).tipo,
+							TipoAluno: TipoAluno.FLEXIVEL,
+						} as ItemDeCalendario;
+					});
+					this.calendarItems = [...this.calendarItems, ...arr];
+					return this.adminService.filterEnsaio({
+						alunos: [this.userService.usuario()!.id],
+						dataInicio: this.dadosSobreMesSelecionado.firstDay,
+						dataFim: this.dadosSobreMesSelecionado.lastDay,
+					} as EnsaioFilter);
+				}),
+			)
 			.subscribe({
-				next: (alunoId) => {
-					this.adminService
-						.fetchAulasOcorrentes({
-							alunos: this.vendoMeuCalendario ? [alunoId] : null,
-							dataInicio: this.dadosSobreMesSelecionado.firstDay,
-							dataFim: this.dadosSobreMesSelecionado.lastDay,
-							alunoNotIm: !this.vendoMeuCalendario
-								? alunoId
-								: null,
-						} as AulaOcorrenciaFilter)
-						.pipe(
-							switchMap((aulasOcorrentes: any) => {
-								const arr = aulasOcorrentes?.conteudo.map(
-									(aula: any) => {
-										return {
-											title: `Aula de ${aula.idAula.idModalidade.nome}`,
-											subtitle: `Professor: ${aula.idAula.idProfessor.idUsuario.nome}`,
-											dataHorario: new Date(
-												new Date(
-													aula.data,
-												).getFullYear(),
-												new Date(aula.data).getMonth(),
-												new Date(aula.data).getDate(),
-												aula.idAula.horarioInicio.split(
-													":",
-												)[0],
-												aula.idAula.horarioInicio.split(
-													":",
-												)[1],
-											),
-											tipoUsuario:
-												this.userService.usuario()!
-													.tipo,
-											TipoAluno: TipoAluno.FLEXIVEL,
-										} as ItemDeCalendario;
-									},
-								);
-								this.calendarItems = [
-									...this.calendarItems,
-									...arr,
-								];
-								return this.adminService.filterEnsaio({
-									alunos: [alunoId],
-									dataInicio:
-										this.dadosSobreMesSelecionado.firstDay,
-									dataFim:
-										this.dadosSobreMesSelecionado.lastDay,
-								} as EnsaioFilter);
-							}),
-						)
-						.subscribe({
-							next: (ensaios: any) => {
-								const arr = ensaios?.conteudo.map(
-									(ensaio: any) => {
-										return {
-											title: `Ensaio de ${ensaio.idApresentacaoEvento.nome}`,
-											subtitle: `Professor: ${ensaio.idProfessor.idUsuario.nome}`,
-											dataHorario: new Date(
-												ensaio.dataHoraInicio,
-											),
-											tipoUsuario:
-												this.userService.usuario()!
-													.tipo,
-											TipoAluno: TipoAluno.FLEXIVEL,
-										} as ItemDeCalendario;
-									},
-								);
-								this.calendarItems = [
-									...this.calendarItems,
-									...arr,
-								];
-								this.calendarItems.sort((a, b) =>
-									a.dataHorario.getTime() <
-									b.dataHorario.getTime()
-										? 1
-										: -1,
-								);
-								this.paginarItens();
-								this.minicalendar.isLoad(false);
-							},
-						});
-				},
-				error: (erro) => {
-					console.log(erro);
+				next: (ensaios: any) => {
+					const arr = ensaios?.conteudo.map((ensaio: any) => {
+						return {
+							title: `Ensaio de ${ensaio.idApresentacaoEvento.nome}`,
+							subtitle: `Professor: ${ensaio.idProfessor.idUsuario.nome}`,
+							dataHorario: new Date(ensaio.dataHoraInicio),
+							tipoUsuario: (
+								this.userService.usuario() as AlunoResponse
+							).tipo,
+							TipoAluno: TipoAluno.FLEXIVEL,
+						} as ItemDeCalendario;
+					});
+					this.calendarItems = [...this.calendarItems, ...arr];
+					this.calendarItems.sort((a, b) =>
+						a.dataHorario.getTime() < b.dataHorario.getTime()
+							? 1
+							: -1,
+					);
+					this.paginarItens();
+					this.minicalendar.isLoad(false);
 				},
 			});
 	}
@@ -265,39 +237,33 @@ export class CalendarAlunoPageComponent {
 			return;
 		}
 		// TODO: COLOCAR LÓGICA DE SOLICITAR AULA EXTRA
-		this.userService
-			.getAlunoIdByUserId(this.userService.usuario()!.id)
-			.subscribe({
-				next: (alunoId) => {
-					console.log(form.value);
-					const horIni: Date = new Date(form.value.dataAE);
-					const horFim: Date = new Date(form.value.dataAE);
-					horIni.setUTCHours(
-						form.value.horarioInicioAE.split(":")[0] as number,
-						form.value.horarioInicioAE.split(":")[1] as number,
-					);
-					horFim.setUTCHours(
-						form.value.horarioFimAE.split(":")[0] as number,
-						form.value.horarioFimAE.split(":")[1] as number,
-					);
+		console.log(form.value);
+		const horIni: Date = new Date(form.value.dataAE);
+		const horFim: Date = new Date(form.value.dataAE);
+		horIni.setUTCHours(
+			form.value.horarioInicioAE.split(":")[0] as number,
+			form.value.horarioInicioAE.split(":")[1] as number,
+		);
+		horFim.setUTCHours(
+			form.value.horarioFimAE.split(":")[0] as number,
+			form.value.horarioFimAE.split(":")[1] as number,
+		);
 
-					const valor = {
-						horarioInicio: horIni,
-						horarioFim: horFim,
-						idProfessor: form.value.professorAE,
-						idAluno: alunoId,
-					} as AulaExtraDTO;
-					this.aulaService.solicitarAulaExtra(valor).subscribe({
-						next: () => {
-							console.log("Foi!");
-						},
-						error: (error: any) => {
-							console.log(error);
-						},
-					});
-					this.openModal = null;
-				},
-			});
+		const valor = {
+			horarioInicio: horIni,
+			horarioFim: horFim,
+			idProfessor: form.value.professorAE,
+			idAluno: (this.userService.usuario() as AlunoResponse).id,
+		} as AulaExtraDTO;
+		this.aulaService.solicitarAulaExtra(valor).subscribe({
+			next: () => {
+				console.log("Foi!");
+			},
+			error: (error: any) => {
+				console.log(error);
+			},
+		});
+		this.openModal = null;
 	}
 
 	get dateArrayFromItems() {

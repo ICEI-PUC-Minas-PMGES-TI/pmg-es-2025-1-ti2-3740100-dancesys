@@ -26,30 +26,24 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 	}
 
 	buscar() {
-		this.usuarioService
-			.getAlunoIdByUserId(this.usuarioService.usuario()!.id)
-			.subscribe({
-				next: (id) => {
-					const filtro: DividendoFilter = {
-						criadoEm: "",
-						pagoEm: "",
-						alunos: [id],
-						status: [],
-						tipos: [],
-						tamanho: 0,
-						pagina: 0,
-						orderBy: "",
-						order: "",
-					};
+		const filtro: DividendoFilter = {
+			criadoEm: "",
+			pagoEm: "",
+			alunos: [this.usuarioService.usuario()!.id],
+			status: [],
+			tipos: [],
+			tamanho: 0,
+			pagina: 0,
+			orderBy: "",
+			order: "",
+		};
 
-					this.adminService.filterDividendos(filtro).subscribe({
-						next: (response: any) => {
-							this.boletos = response.conteudo;
-							console.log(this.boletos);
-						},
-					});
-				},
-			});
+		this.adminService.filterDividendos(filtro).subscribe({
+			next: (response: any) => {
+				this.boletos = response.conteudo;
+				console.log(this.boletos);
+			},
+		});
 	}
 
 	pagar(id: number) {

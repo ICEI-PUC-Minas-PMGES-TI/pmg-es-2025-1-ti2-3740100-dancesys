@@ -4,17 +4,20 @@ import { Usuario, UsuarioCookie, UsuarioTipos } from "../models/usuario.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environment/environment";
 import { Router } from "@angular/router";
-import { AlunoResponse } from "./admin.service";
-import { Observable } from "rxjs";
+import { AlunoResponse, ProfessorResponse } from "./admin.service";
+import { Observable, switchMap } from "rxjs";
 
 const USER_INFO_EXPIRE_DAYS: number = 10; // em dias
+
+type possibleUserTypes = Usuario | AlunoResponse | ProfessorResponse | null;
 
 @Injectable({
 	providedIn: "root",
 })
 export class UsuarioService {
 	// atributos
-	private currentUsuario = signal<Usuario | null>(null);
+	private _myCookie = signal<UsuarioCookie | null>(null);
+	private currentUsuario = signal<possibleUserTypes>(null);
 	public usuario = this.currentUsuario.asReadonly();
 
 	// injeções
@@ -31,70 +34,78 @@ export class UsuarioService {
 		if (cookie) {
 			// coloca o usuário no signal
 			const userCookie: UsuarioCookie = JSON.parse(cookie);
-			const newUser: Usuario = new Usuario();
-			newUser.id = userCookie.id;
-			newUser.tipo = userCookie.tipo;
-			newUser.status = userCookie.status;
-			newUser.nome = userCookie.nome;
-			newUser.urlFoto = userCookie.urlFoto;
-			this.currentUsuario.set(structuredClone(newUser));
-			// redirecionamento do usuario
-			this.redirecionarUsuario();
+			this._myCookie.set(userCookie);
+			this.http
+				.post<possibleUserTypes>(
+					`${environment.API_URL}${this.usuarioController}/validar`,
+					{ ...userCookie },
+				)
+				.subscribe({
+					next: (response) => {
+						this.currentUsuario.set(response);
+						this.redirecionarUsuario();
+						console.log(this.currentUsuario());
+					},
+				});
 		}
 	}
 
 	private redirecionarUsuario() {
 		// redireciona baseado no tipo do usuário
-		if (this.currentUsuario() === null) {
+		if (this.getLoggedInUserType() === null) {
 			this.router.navigate(["login"]);
 			return;
 		}
-		if (this.currentUsuario()!.tipo == UsuarioTipos.ADMIN) {
+		if (this.getLoggedInUserType() === UsuarioTipos.ADMIN) {
+			// logado como admin
 			this.router.navigate(["admin"]);
-		} else if (this.currentUsuario()!.tipo == UsuarioTipos.FUNCIONARIO) {
+		} else if (this.getLoggedInUserType() === UsuarioTipos.FUNCIONARIO) {
 			this.router.navigate(["funcionario"]);
-		} else if (this.currentUsuario()!.tipo == UsuarioTipos.ALUNO) {
+		} else if (this.getLoggedInUserType() === UsuarioTipos.ALUNO) {
 			this.router.navigate(["aluno"]);
 		}
 	}
 
-	public login(item: Usuario) {
+	public login(email: string, password: string) {
 		const url = `${environment.API_URL}${this.usuarioController}/auth`;
-		this.http.post(url, item).subscribe({
-			next: (resp) => {
-				// coloca o usuario no signal
-				const userResp = <Usuario>resp;
-				this.currentUsuario.set(userResp);
-				// gerenciamento de cookie
-				const userCookie: UsuarioCookie = {
-					id: userResp.id,
-					tipo: userResp.tipo,
-					status: userResp.status,
-					nome: userResp.nome,
-					urlFoto: userResp.urlFoto,
-				};
-				this.cookieService.set(
-					"user_cookie",
-					JSON.stringify(userCookie),
-					USER_INFO_EXPIRE_DAYS,
-				);
-				// redireciona o usuário
-				this.redirecionarUsuario();
-			},
-			error: (err) => {
-			},
-		});
+		this.http
+			.post<UsuarioCookie>(url, { email, senha: password })
+			.pipe(
+				switchMap((cookie) => {
+					console.log(cookie);
+					this.cookieService.deleteAll();
+					this.cookieService.set(
+						"user_cookie",
+						JSON.stringify(cookie),
+						{ expires: USER_INFO_EXPIRE_DAYS },
+					);
+					this._myCookie.set({ ...cookie });
+					return this.http.post<possibleUserTypes>(
+						`${environment.API_URL}${this.usuarioController}/validar`,
+						{ ...cookie },
+					);
+				}),
+			)
+			.subscribe({
+				next: (response: possibleUserTypes) => {
+					this.currentUsuario.set(response);
+					this.redirecionarUsuario();
+					console.log(this.currentUsuario());
+				},
+				error: (err: any) => {
+					console.log(err);
+				},
+			});
+	}
+
+	public getLoggedInUserType() {
+		return this._myCookie()?.tipo ? this._myCookie()?.tipo : null;
 	}
 
 	public deslogar() {
 		this.cookieService.delete("user_cookie", "/");
+		this._myCookie.set(null);
 		this.currentUsuario.set(null);
 		this.redirecionarUsuario();
-	}
-
-	public getAlunoIdByUserId(uid: number): Observable<number> {
-		return this.http.get<number>(
-			`${environment.API_URL}usuario/aluno/achar/${uid}`,
-		);
 	}
 }

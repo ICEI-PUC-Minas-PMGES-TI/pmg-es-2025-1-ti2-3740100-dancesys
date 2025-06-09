@@ -1,12 +1,19 @@
 <div class="boleto" [style.background-color]="getCorFundo()">
-  <div class="info">
-    <p><strong>Mensalidade {{ boleto.criadoEm | date: 'MM/yyyy' }}</strong></p>
-    <p>{{ boleto.valor | currency:'BRL' }}</p>
-    @if (boleto.status === 3) {
-      <span class="atrasado-texto">Atrasada!</span>
-    }
-  </div>
-  <button appButton [color]="getCorBotao()" (click)="pagarBoleto()">
-    {{ getTextoBotao() }}
-  </button>
+	<div class="info">
+		<p>
+			<strong>Mensalidade {{ boleto.criadoEm | date: "MM/yyyy" }}</strong>
+		</p>
+		<p>{{ boleto.valor | currency: "BRL" }}</p>
+		@if (boleto.status === 3) {
+			<span class="atrasado-texto">Atrasada!</span>
+		}
+	</div>
+	<button
+		[disabled]="boleto.status === 2"
+		appButton
+		[color]="getCorBotao()"
+		(click)="pagarBoleto()"
+	>
+		{{ getTextoBotao() }}
+	</button>
 </div>
