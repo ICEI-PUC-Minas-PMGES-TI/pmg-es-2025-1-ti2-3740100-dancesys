@@ -11,7 +11,7 @@ import {
 } from "../pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
 import { Aluno } from "../models/aluno.model";
 import { Professor, ProfessorFiltro } from "../models/professor.model";
-import { DividendoFilter, Dividendo} from "../models/Dividendo.model";
+import { DividendoFilter, Dividendo } from "../models/Dividendo.model";
 import { Aula, AulaFilter } from "../models/Aula.model";
 import { AulaOcorrenciaFilter } from "../models/AulaOcorrencia.model";
 import { Evento, EventoFilter, EventoResponse } from "../models/evento.model";
@@ -23,7 +23,7 @@ import {
 } from "../models/apresentacao_evento.model";
 import { Ensaio, EnsaioFilter } from "../models/Ensaio.model";
 
-export type AlunoResponse = {
+export interface AlunoResponse {
 	id: number;
 	creditos: number;
 	boolBaile: boolean;
@@ -53,8 +53,9 @@ export type AlunoResponse = {
 		};
 		nivel: 1 | 2 | 3;
 	}[];
-};
-export type ProfessorResponse = {
+}
+
+export interface ProfessorResponse {
 	id: number;
 	informacoesProfissionais: string;
 	valorHoraExtra: number;
@@ -82,7 +83,7 @@ export type ProfessorResponse = {
 			nome: string;
 		};
 	}[];
-};
+}
 
 @Injectable({
 	providedIn: "root",
@@ -304,6 +305,4 @@ export class AdminService {
 			`${environment.API_URL}ensaioApresentacao/excluir/${id}`,
 		);
 	}
-
-	
 }

@@ -1,44 +1,21 @@
-export class Usuario {
-	public id!: number; // Long
-	public nome!: string; // String
-	public cpf!: string; // String
-	public numero!: string; // String
-	public email!: string; // String
-	public senha!: string; // String
-	public tipo!: number; // Integer
-	public status!: boolean; // Boolean
-	public endereco!: string; // String
-	public urlFoto!: string | null; // String
-	public dataNascimento!: Date; // LocalDate
-	public criadoEm!: Date; // LocalDate
-
-	public static getTipoString(t: number): string {
-		switch (t) {
-			case UsuarioTipos.ADMIN:
-				return "Admin";
-			case UsuarioTipos.ALUNO:
-				return "Aluno";
-			case UsuarioTipos.FUNCIONARIO:
-				return "Funcionário";
-			default:
-				return "Unknown";
-		}
-	}
-
-	public static getStatusString(s: boolean): string {
-		if (s) {
-			return "Ativo";
-		}
-		return "Inativo";
-	}
+export interface Usuario {
+	id: number; // Long
+	nome: string; // String
+	cpf: string; // String
+	numero: string; // String
+	email: string; // String
+	senha: string; // String
+	tipo: number; // Integer
+	status: boolean; // Boolean
+	endereco: string; // String
+	urlFoto: string | null; // String
+	dataNascimento: Date; // LocalDate
+	criadoEm: Date; // LocalDate
 }
 
 export interface UsuarioCookie {
-	nome: string;
 	id: number;
 	tipo: number;
-	status: boolean;
-	urlFoto: string | null;
 }
 
 export interface UsuarioFiltro {
