@@ -29,8 +29,8 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "auth")
-    public ResponseEntity<LoginDTO> login(@RequestBody UsuarioDTO usuario) throws RuntimeException {
-        final LoginDTO login = usuarioService.login(usuario);
+    public ResponseEntity<LoginCookie> login(@RequestBody LoginDTO dto) throws RuntimeException {
+        final LoginCookie login = usuarioService.login(dto);
         return ResponseEntity.ok(login);
     }
 
@@ -81,5 +81,10 @@ public class UsuarioController {
     @GetMapping(value = "aluno/achar/{id}")
     public Long acharAluno(@PathVariable Long id){
         return usuarioService.acharIdAlunoUsuario(id);
+    }
+
+    @PostMapping(value = "validar")
+    public Object validar(@RequestBody LoginCookie cookie) throws Exception {
+        return usuarioService.validacaoLogin(cookie);
     }
 }

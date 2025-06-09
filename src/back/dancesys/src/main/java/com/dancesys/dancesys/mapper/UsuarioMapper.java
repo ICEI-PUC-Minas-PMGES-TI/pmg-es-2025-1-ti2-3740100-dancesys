@@ -1,10 +1,9 @@
 package com.dancesys.dancesys.mapper;
 
 import com.dancesys.dancesys.dto.AlunoDTO;
+import com.dancesys.dancesys.dto.LoginCookie;
 import com.dancesys.dancesys.dto.LoginDTO;
-import com.dancesys.dancesys.dto.ProfessorDTO;
 import com.dancesys.dancesys.dto.UsuarioDTO;
-import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.Usuario;
 
 public class UsuarioMapper {
@@ -50,16 +49,13 @@ public class UsuarioMapper {
             return dto;
         }
 
-        public static LoginDTO toLoginDTO(Usuario entity, Integer tipo, Long idExtra) {
+        public static LoginCookie toLoginDTO(Usuario entity) {
             if (entity == null) return null;
 
-            LoginDTO dto = new LoginDTO();
+            LoginCookie dto = new LoginCookie();
 
             dto.setId(entity.getId());
-            dto.setNome(entity.getNome());
-            dto.setTipo(tipo);
-            dto.setIdExtra(idExtra);
-            dto.setUrlFoto(entity.getUrlFoto());
+            dto.setTipo(entity.getTipo());
 
             return dto;
         }

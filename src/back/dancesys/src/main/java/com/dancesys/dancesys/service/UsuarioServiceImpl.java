@@ -56,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public LoginDTO login(UsuarioDTO dto) throws RuntimeException{
+    public LoginCookie login(LoginDTO dto) throws RuntimeException{
         try{
             Usuario user = usuarioRepository.findByEmailAndSenha(dto.getEmail(), dto.getSenha());
             if(user==null){
@@ -67,22 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 throw new Exception("Usuario desativado");
             }
 
-            Integer tipo =  user.getTipo();
-            Long idExtra = null;
-
-            if(!user.getTipo().equals(Usuario.admin)){
-                if(user.getTipo().equals(Usuario.aluno)){
-                    Aluno aluno = alunoServiceImpl.findByIdUsuario(user.getId());
-                    idExtra = aluno.getId();
-                    if(aluno.getTipo().equals(Aluno.livre)){
-                        tipo = 4;
-                    }
-                }else{
-                    Professor professor = professorServiceImpl.findByIdUsuario(user.getId());
-                    idExtra = professor.getId();
-                }
-            }
-            return UsuarioMapper.toLoginDTO(user, tipo, idExtra);
+            return UsuarioMapper.toLoginDTO(user);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
@@ -193,5 +178,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void gerarBoletosMensalJob() throws Exception{
         alunoServiceImpl.gerarBoletosMenslaidadeJob();
+    }
+
+    @Override
+    public Object validacaoLogin(LoginCookie cookie) throws RuntimeException{
+        if(cookie.getTipo().equals(Usuario.aluno)){
+            return alunoServiceImpl.findByIdUsuario(cookie.getId());
+        }else if(cookie.getTipo().equals(Usuario.funcionario)){
+            return professorServiceImpl.findByIdUsuario(cookie.getId());
+        }else{
+            return usuarioRepository.findById(cookie.getId());
+        }
     }
 }

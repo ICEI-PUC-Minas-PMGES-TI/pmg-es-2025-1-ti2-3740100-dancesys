@@ -10,7 +10,7 @@ import java.util.List;
 public interface UsuarioService{
     public UsuarioDTO salvar(UsuarioDTO dto) throws Exception;
 
-    public LoginDTO login(UsuarioDTO dto) throws RuntimeException;
+    public LoginCookie login(LoginDTO dto) throws RuntimeException;
 
     public AlunoDTO salvarAluno(AlunoDTO dto) throws Exception;
 
@@ -27,4 +27,6 @@ public interface UsuarioService{
     public Long acharIdAlunoUsuario(Long id);
 
     public void gerarBoletosMensalJob() throws Exception;
+
+    public Object validacaoLogin(LoginCookie cookie) throws RuntimeException;
 }
