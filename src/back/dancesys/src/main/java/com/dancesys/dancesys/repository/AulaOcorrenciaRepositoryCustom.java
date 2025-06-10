@@ -32,8 +32,8 @@ public class AulaOcorrenciaRepositoryCustom {
             predicates.add(root.get("chamada").get("idAluno").get("id").in(filtro.getAlunos()));
         }
 
-        if (filtro.getAlunoNotIn() != null) {
-            predicates.add(root.get("chamada").get("idAluno").get("id").in(filtro.getAlunoNotIn()));
+        if (filtro.getAlunoNotIn() != null  && !filtro.getAlunoNotIn().isEmpty()) {
+            predicates.add(root.get("chamada").get("idAluno").get("id").in(filtro.getAlunoNotIn()).not());
         }
 
         if (filtro.getDataInicio() != null && filtro.getDataFim() == null) {
@@ -87,8 +87,9 @@ public class AulaOcorrenciaRepositoryCustom {
             countPredicates.add(countRoot.get("chamada").get("idAluno").get("id").in(filtro.getAlunos()));
         }
 
-        if (filtro.getAlunoNotIn() != null) {
-            countPredicates.add(cb.notEqual(countRoot.get("chamada").get("idAluno").get("id"), filtro.getAlunoNotIn()));
+
+        if (filtro.getAlunoNotIn() != null  && !filtro.getAlunoNotIn().isEmpty()) {
+            countPredicates.add(countRoot.get("chamada").get("idAluno").get("id").in(filtro.getAlunoNotIn()).not());
         }
 
         if (filtro.getDataInicio() != null && filtro.getDataFim() == null) {
