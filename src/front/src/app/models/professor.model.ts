@@ -4,7 +4,7 @@ export interface Professor {
 	id: number;
 	informacoesProfissionais: string;
 	valorHoraExtra: number;
-	usuario: Usuario;
+	idUsuario: Usuario;
 	modalidades: number[]; // correspondente aos ids das modalidades
 }
 

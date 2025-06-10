@@ -90,7 +90,7 @@ export class AlunoTabelaAdminPageComponent {
 		{ chave: "idUsuario.dataNascimento", titulo: "Data de Nascimento" },
 		{ chave: "tipo", titulo: "Tipo" },
 		{
-			chave: "status",
+			chave: "idUsuario.status",
 			titulo: "Status",
 			formatar: (valor: number) => (valor == 0 ? "Desativado" : "Ativo"),
 		},
@@ -108,7 +108,7 @@ export class AlunoTabelaAdminPageComponent {
 			text: "Mudar Status",
 			cor: "dark",
 			callback: (item: any) =>
-				this.toggleUserStatus(item.id, item.idUsuario.status),
+				this.toggleUserStatus(item.idUsuario.id, item.idUsuario.status),
 		},
 	];
 
@@ -201,6 +201,7 @@ export class AlunoTabelaAdminPageComponent {
 	}
 
 	onConfirmToggleAluno(choice: boolean | void) {
+		console.log(this.isActivatingUser, this.idToggleStatusUser);
 		if (choice) {
 			this.adminService
 				.toggleUserStatus(this.idToggleStatusUser)
@@ -345,6 +346,7 @@ export class AlunoTabelaAdminPageComponent {
 	}
 
 	toggleUserStatus(id: number, status: boolean) {
+		console.log(id, status);
 		this.idToggleStatusUser = id;
 		this.isActivatingUser = !status;
 		this.openToggleConfirmAlunoModal();

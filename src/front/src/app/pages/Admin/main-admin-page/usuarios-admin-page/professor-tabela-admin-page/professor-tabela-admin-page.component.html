@@ -32,7 +32,7 @@
 									type="text"
 									name="nome"
 									id="nome"
-									[(ngModel)]="tempEditProf.usuario.nome"
+									[(ngModel)]="tempEditProf.idUsuario.nome"
 									placeholder="..."
 									#nomeCtrl="ngModel"
 									required
@@ -45,7 +45,7 @@
 									type="email"
 									name="email"
 									id="email"
-									[(ngModel)]="tempEditProf.usuario.email"
+									[(ngModel)]="tempEditProf.idUsuario.email"
 									placeholder="..."
 									#emailCtrl="ngModel"
 									required
@@ -61,7 +61,7 @@
 									name="dataNascimento"
 									id="dataNascimento"
 									[(ngModel)]="
-										tempEditProf.usuario.dataNascimento
+										tempEditProf.idUsuario.dataNascimento
 									"
 									placeholder="..."
 									#dataNascCtrl="ngModel"
@@ -78,7 +78,7 @@
 									mask="000.000.000-00"
 									name="cpf"
 									id="cpf"
-									[(ngModel)]="tempEditProf.usuario.cpf"
+									[(ngModel)]="tempEditProf.idUsuario.cpf"
 									placeholder="..."
 									#cpfCtrl="ngModel"
 									required
@@ -92,7 +92,7 @@
 									mask="(00) 00000-0000"
 									name="numero"
 									id="numero"
-									[(ngModel)]="tempEditProf.usuario.numero"
+									[(ngModel)]="tempEditProf.idUsuario.numero"
 									placeholder="..."
 									#telefoneCtrl="ngModel"
 									required
@@ -122,7 +122,7 @@
 							type="text"
 							name="endereco"
 							id="endereco"
-							[(ngModel)]="tempEditProf.usuario.endereco"
+							[(ngModel)]="tempEditProf.idUsuario.endereco"
 							placeholder="..."
 							#enderecoCtrl="ngModel"
 							required
@@ -451,64 +451,60 @@
 		<form
 			#filterForm="ngForm"
 			(ngSubmit)="filterFormSubmit()"
-			class="flex flex-col text-main-500 font-bold"
+			class="flex flex-row space-x-4 text-main-500 font-bold"
 		>
-			<div class="flex px-1 flex-row space-x-2">
-				<div class="flex flex-col">
-					<label for="nomeFilter">Nome:</label>
-					<input
-						class="p-1 rounded-md bg-main-300"
-						type="text"
-						name="nomeFilter"
-						ngModel
-						placeholder="..."
-						id="nomeFilter"
-						value=""
-					/>
-				</div>
-				<div class="flex flex-col">
-					<label for="cpfFilter">CPF:</label>
-					<input
-						class="p-1 rounded-md bg-main-300"
-						type="text"
-						ngModel
-						mask="000.000.000-00"
-						name="cpfFilter"
-						placeholder="..."
-						id="cpfFilter"
-						value=""
-					/>
-				</div>
-				<div class="flex flex-col">
-					<label for="emailFilter">E-Mail:</label>
-					<input
-						class="p-1 rounded-md bg-main-300"
-						type="text"
-						name="emailFilter"
-						placeholder="..."
-						id="emailFilter"
-						ngModel
-						value=""
-					/>
-				</div>
+			<div class="flex flex-col">
+				<label for="nomeFilter">Nome:</label>
+				<input
+					class="p-1 rounded-md bg-main-300"
+					type="text"
+					name="nomeFilter"
+					ngModel
+					placeholder="..."
+					id="nomeFilter"
+					value=""
+				/>
 			</div>
-			<div class="flex px-1 flex-row space-x-2">
-				<div class="flex flex-col">
-					<label for="statusFilter">Status:</label>
-					<select
-						class="p-1 rounded-md bg-main-300"
-						ngModel
-						type="text"
-						name="statusFilter"
-						placeholder="..."
-						id="statusFilter"
-						value=""
-					>
-						<option value="">Todos</option>
-						<option value="1">Ativo</option>
-						<option value="0">Inativo</option>
-					</select>
-				</div>
+			<div class="flex flex-col">
+				<label for="cpfFilter">CPF:</label>
+				<input
+					class="p-1 rounded-md bg-main-300"
+					type="text"
+					ngModel
+					mask="000.000.000-00"
+					name="cpfFilter"
+					placeholder="..."
+					id="cpfFilter"
+					value=""
+				/>
+			</div>
+			<div class="flex flex-col">
+				<label for="emailFilter">E-Mail:</label>
+				<input
+					class="p-1 rounded-md bg-main-300"
+					type="text"
+					name="emailFilter"
+					placeholder="..."
+					id="emailFilter"
+					ngModel
+					value=""
+				/>
+			</div>
+			<div class="flex flex-col">
+				<label for="statusFilter">Status:</label>
+				<select
+					class="p-1 rounded-md bg-main-300"
+					ngModel
+					type="text"
+					name="statusFilter"
+					placeholder="..."
+					id="statusFilter"
+					value=""
+				>
+					<option value="">Todos</option>
+					<option value="1">Ativo</option>
+					<option value="0">Inativo</option>
+				</select>
 			</div>
 		</form>
 	</section>
@@ -536,5 +532,14 @@
 			</button>
 		</div>
 	</section>
-	@if (professores.length > 0 && !isLoading) {}
+	@if (professores.length > 0 && !isLoading) {
+		<app-simple-table
+			[colunas]="colunas"
+			[botoesAcoes]="acoes"
+			[dados]="professores"
+			[totalItens]="totalItens"
+			(paginacaoChange)="onPaginacaoChange($event)"
+			(orderChange)="orderBy($event)"
+		></app-simple-table>
+	}
 </main>

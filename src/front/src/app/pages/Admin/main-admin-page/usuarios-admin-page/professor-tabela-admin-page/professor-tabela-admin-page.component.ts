@@ -14,6 +14,7 @@ import {
 } from "../../../../../models/professor.model";
 import { Modalidade } from "../../../../../models/modalidade.model";
 import { UsuarioTipos } from "../../../../../models/usuario.model";
+import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
 
 export type FormProfessorValue = {
 	nome: string;
@@ -44,6 +45,7 @@ enum ToggleUserStatusMessages {
 		FormsModule,
 		NgxMaskDirective,
 		NgxMaskPipe,
+		SimpleTableComponent,
 	],
 	templateUrl: "./professor-tabela-admin-page.component.html",
 	styleUrl: "./professor-tabela-admin-page.component.css",
@@ -67,6 +69,40 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 
 	toggleUserStatusMessages = ToggleUserStatusMessages;
 
+	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent;
+	paginaAtual: number = 0;
+	itensPage: number = 10;
+	totalItens: number = 0;
+	orderByValue!: string;
+	orderValue!: string;
+	colunas = [
+		{ chave: "idUsuario.nome", titulo: "Professor" },
+		{ chave: "idUsuario.email", titulo: "Email" },
+		{ chave: "idUsuario.numero", titulo: "Telefone" },
+		{ chave: "idUsuario.dataNascimento", titulo: "Data de Nascimento" },
+		{
+			chave: "idUsuario.status",
+			titulo: "Status",
+			formatar: (valor: number) => (valor == 0 ? "Desativado" : "Ativo"),
+		},
+	];
+
+	acoes = [
+		{
+			icon: "edit",
+			title: "Editar",
+			cor: "dark",
+			callback: (item: any) => this.openEditModal(item.id),
+		},
+		{
+			title: "Status",
+			text: "Mudar Status",
+			cor: "dark",
+			callback: (item: any) =>
+				this.toggleUserStatus(item.idUsuario.id, item.idUsuario.status),
+		},
+	];
+
 	ngOnInit(): void {
 		this.reloadUsers();
 		this.reloadModalidades();
@@ -78,13 +114,20 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 
 	reloadUsers() {
 		this.isLoading = true;
-		this.adminService.fetchProfessores().subscribe({
-			next: (response) => {
-				this.handleProfessorResponse(response);
-				this.isLoading = false;
-			},
-			error: (err) => {},
-		});
+		this.adminService
+			.fetchProfessores({
+				tamanho: this.itensPage,
+				pagina: this.paginaAtual,
+				orderBy: this.orderByValue,
+				order: this.orderValue,
+			})
+			.subscribe({
+				next: (response) => {
+					this.handleProfessorResponse(response);
+					this.isLoading = false;
+				},
+				error: (err) => {},
+			});
 	}
 
 	private handleProfessorResponse(response: {
@@ -97,7 +140,7 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 				id: profResponse.id,
 				valorHoraExtra: profResponse.valorHoraExtra,
 				informacoesProfissionais: profResponse.informacoesProfissionais,
-				usuario: {
+				idUsuario: {
 					...profResponse.idUsuario,
 				},
 				modalidades: profResponse.modalidades.map((obj) => {
@@ -107,6 +150,8 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 			this.professores = [...this.professores, professor];
 		});
 		console.log(this.professores);
+		this.totalItens = response.total;
+		this.tabela.isLoad(false);
 		this.isLoading = false;
 	}
 
@@ -117,7 +162,9 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 				this.modalidades = response;
 				this.isLoading = false;
 			},
-			error: (err) => {},
+			error: (err: any) => {
+				console.log(err);
+			},
 		});
 	}
 
@@ -148,7 +195,7 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 		this.closeAddModal();
 		this.adminService.addUsuarioProfessor(value).subscribe({
 			next: () => {
-				this.reloadUsers();
+				this.filterFormSubmit();
 			},
 		});
 	}
@@ -161,7 +208,7 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 		if (form.valid) {
 			this.adminService.editarProfessor(value).subscribe({
 				next: () => {
-					this.reloadUsers();
+					this.filterFormSubmit();
 				},
 			});
 		}
@@ -232,6 +279,10 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 			email: this.filterForm.value.emailFilter || "",
 			cpf: this.filterForm.value.cpfFilter || "",
 			status: this.filterForm.value.statusFilter || "",
+			tamanho: this.itensPage,
+			pagina: this.paginaAtual,
+			orderBy: this.orderByValue,
+			order: this.orderValue,
 		};
 		this.adminService
 			.filterProfessores(filtro as ProfessorFiltro)
@@ -265,12 +316,26 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 				.toggleUserStatus(this.idToggleStatusUser)
 				.subscribe({
 					next: () => {
-						// this.reloadUsers();
+						this.filterFormSubmit();
 						this.idToggleStatusUser = -1;
 						this.isActivatingUser = false;
 					},
 				});
 		}
 		this.isModalOpen = false;
+	}
+
+	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
+		this.tabela.isLoad(true);
+		this.paginaAtual = --event.paginaSelecionada;
+		this.itensPage = event.itensPage;
+		this.filterFormSubmit();
+	}
+
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
+		this.filterFormSubmit();
 	}
 }
