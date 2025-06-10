@@ -33,7 +33,7 @@ public class AulaOcorrenciaRepositoryCustom {
         }
 
         if (filtro.getAlunoNotIn() != null) {
-            predicates.add(cb.notEqual(root.get("chamada").get("idAluno").get("id"), filtro.getAlunoNotIn()));
+            predicates.add(root.get("chamada").get("idAluno").get("id").in(filtro.getAlunoNotIn()));
         }
 
         if (filtro.getDataInicio() != null && filtro.getDataFim() == null) {
