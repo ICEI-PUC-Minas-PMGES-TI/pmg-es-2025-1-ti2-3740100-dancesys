@@ -12,10 +12,11 @@ import { ProfessorFiltro } from '../../../../../models/professor.model';
 import { AulaExperimental, AulaExperimentalFilter } from '../../../../../models/AulaExperimental.model';
 import { AulaService } from '../../../../../services/aula.service';
 import { AlertService } from '../../../../../services/Alert.service';
+import { Mensagem } from '../../../../../models/Mensagem.model';
 
 enum ToggleModal {
 	NEW = "Criar Aula experimental",
-	EDIT = "Editar Aula experimental",
+	EDIT = "Inscrição rejeitada?",
 }
 
 @Component({
@@ -51,13 +52,18 @@ export class AulasExperimentaisAdminPageComponent {
 
 	filterForm: FormGroup;
 	aulaForm: FormGroup;
+	rejeitarForm: FormGroup;
 
   ToggleModal = ToggleModal
 
   isModalOpen: boolean = false
+  isModalRejeitarOpen: boolean = false
   isEdit: boolean = false
 
   professoresLs: any = []
+
+  selectId: number = 0
+  isModalConfirm: boolean = false
 
   situacao: {value: number, name: string}[] = [
     {value: 1, name: 'Pendente'},
@@ -78,9 +84,9 @@ export class AulasExperimentaisAdminPageComponent {
 	};
 
   motivoMap: Record<number, string> = {
-		1: "Pendente",
-		2: "Convertido",
-		3: "Recusado",
+		1: "Interesse",
+		2: "Finaceiro",
+		3: "Outro",
 	};
 
   colunas = [
@@ -89,16 +95,23 @@ export class AulasExperimentaisAdminPageComponent {
 		{ chave: "numero", titulo: "Numero", formatar: (valor: string) => this.maskPipe.transform(valor, '(00) 00000-0000') ?? '' },
 		{ chave: "dataHorarioInicio", titulo: "Inicio", formatar: (valor: Date) => valor != null ? this.formartarData(valor) : "" },
 		{ chave: "dataHorarioFim", titulo: "Fim", formatar: (valor: Date) => valor != null ? this.formartarData(valor) : "" },
-		{ chave: "situcao", titulo: "Situcao", formatar: (valor: number) => valor != null? this.situacaoMap[valor] ?? String(valor) : ""},
+		{ chave: "situacao", titulo: "Situação", formatar: (valor: number) => valor != null? this.situacaoMap[valor] ?? String(valor) : "" },
+    { chave: "motivoOutro", titulo: "Descrição", view: true },
 		{ chave: "motivo", titulo: "Motivo", formatar: (valor: number) => valor != null? this.motivoMap[valor] ?? String(valor) : "" },
   ]
 
   acoes = [
 		{
-			icon: "edit",
-			title: "Editar",
-			cor: "dark",
-			callback: (item: any) => this.editar(item),
+			icon: "check",
+			title: "Coveter",
+			cor: "green",
+			callback: (item: any) => this.coverter(item.id),
+		},
+    {
+			icon: "delete",
+			title: "Rejeitar",
+			cor: "red",
+			callback: (item: any) => this.reitar(item.id),
 		},
 	];
 
@@ -130,8 +143,14 @@ export class AulasExperimentaisAdminPageComponent {
         cpf: [],
         numero: [],
         nome: [],
+        motivo: [],
         idProfessor: []
     });
+
+    this.rejeitarForm = this.fb.group({
+      motivo: [],
+      mensagem: [""]
+    })
 	}
 
   ngOnInit(){
@@ -164,28 +183,97 @@ export class AulasExperimentaisAdminPageComponent {
           this.alertService.info("Nenhum registro encontrado!")
         }else{
             this.aulasObj = response
+            console.log(response)
         }
         this.tabela.isLoad(false)
       }
     })
   }
+
   isFormValido(){
     return this.aulaForm.valid;
+  }
+
+  isReitarFormValido(){
+    return this.rejeitarForm.valid;
+  }
+
+  getRejeitarForm(){
+    const item = this.rejeitarForm.value;
+    
+    return item;
+  }
+
+  resetRejeitarForm(){
+    this.rejeitarForm = this.fb.group({
+      motivo: [],
+      mensagem: [""]
+    })
   }
 
   salvar(){
     this.aulaService.salvarAulaExperimental(this.getAulaForm()).subscribe({
       next: (response) =>{
         this.closeModal()
-        this.alertService.sucesso(this.isEdit? 'Aula experimental alterado com sucesso' : 'Aula experimental criada com sucesso')
+        this.alertService.sucesso('Aula experimental alterado com sucesso')
         this.buscar()
       }
     })
   }
 
-  editar(item: any){
-    
+  reitar(id: number){
+    this.isModalRejeitarOpen = true
+    this.selectId = id
   }
+
+  closeRejeitarModal(){
+    this.isModalRejeitarOpen = false
+    this.selectId = 0
+    this.resetRejeitarForm()
+  }
+
+  reitarConfirm(){
+    const item = this.getRejeitarForm()
+    const motivo = item.motivo;
+    const msg: Mensagem = {
+          mensagem: item.mensagem,
+        };
+    this.aulaService.rejeitarAulaExperimental(motivo, this.selectId, msg).subscribe({
+      next: (response) =>{
+        this.closeRejeitarModal()
+        this.buscar()
+      },
+      error: (err) =>{
+        this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+        this.closeRejeitarModal()
+      }
+    })
+  }
+
+  coverter(id: number){
+    this.selectId = id
+    this.isModalConfirm = true
+  }
+
+  onConfirm(choice: boolean | void) {
+		if (choice) {
+			this.aulaService.converterAulaExperimental(this.selectId).subscribe({
+        next: (response) =>{
+          this.alertService.sucesso("Situação atulizada")
+          this.buscar()
+        },
+        error: (err) => {
+          this.alertService.erro(
+						err?.error?.mensagem || "Erro inesperado!",
+					);
+        }
+      })
+		}
+		this.selectId = 0;
+		this.isModalConfirm = false;
+	}
 
   buscarProfessor(termo: any){
     const filtro: ProfessorFiltro = {

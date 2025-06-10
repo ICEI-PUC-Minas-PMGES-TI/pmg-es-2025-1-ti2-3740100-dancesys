@@ -83,7 +83,7 @@ export class AulasExtrasAdminPageComponent {
 			formatar: (valor: Date) =>
 				valor != null ? this.formartarData(valor) : "",
 		},
-		{ chave: "motivo", titulo: "Motivo", width: "20%" },
+		{ chave: "motivo", titulo: "Motivo", view: true },
 		{
 			chave: "situacao",
 			titulo: "Situacao",

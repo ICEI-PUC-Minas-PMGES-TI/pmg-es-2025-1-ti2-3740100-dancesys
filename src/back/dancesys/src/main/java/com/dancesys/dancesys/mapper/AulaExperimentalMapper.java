@@ -19,6 +19,8 @@ public class AulaExperimentalMapper {
         entity.setSituacao(dto.getSituacao());
         entity.setMotivo(dto.getMotivo());
         entity.setMotivoOutro(dto.getMotivoOutro());
+        entity.setCriadoEm(dto.getCriadoEm());
+        entity.setFinalizadoEm(dto.getFinalizadoEm());
 
         Professor professor = new Professor();
         professor.setId(dto.getIdProfessor());
@@ -42,6 +44,8 @@ public class AulaExperimentalMapper {
         dto.setSituacao(entity.getSituacao());
         dto.setMotivo(entity.getMotivo());
         dto.setMotivoOutro(entity.getMotivoOutro());
+        dto.setCriadoEm(entity.getCriadoEm());
+        dto.setFinalizadoEm(entity.getFinalizadoEm());
         dto.setIdProfessor(entity.getIdProfessor().getId());
 
         return dto;

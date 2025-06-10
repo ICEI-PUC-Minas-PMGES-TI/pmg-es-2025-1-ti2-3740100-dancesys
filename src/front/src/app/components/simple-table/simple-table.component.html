@@ -1,3 +1,14 @@
+@if(isModal){
+	<app-modal
+		(onClose)="closeModal()"
+	>
+	<div class="w-full">
+		<main class="m-5">
+			<h1 class="text-main-500 text-center">{{ viewItem }}</h1>
+		</main>
+	</div>
+	</app-modal>
+}
 <section class="tabela relative">
 	<div class="tabela-wrapper relative">
 		<table class="w-full">
@@ -56,14 +67,33 @@
 						"
 						class="text-center"
 					>
-						{{
-							coluna.formatar
-								? coluna.formatar(
-										getValor(item, coluna.chave),
-										item
-									)
-								: getValor(item, coluna.chave)
-						}}
+						@if(coluna.view && (coluna.formatar?.(getValor(item, coluna.chave), item) ??getValor(item, coluna.chave)) != null){
+							<button
+									appButton
+									icon="view"
+									icon-slot="icon-only"
+									title="Ver"
+									color="blue"
+									(click)="view(coluna.formatar
+									? coluna.formatar(
+											getValor(item, coluna.chave),
+											item
+										)
+									: getValor(item, coluna.chave))"
+								></button>
+						}
+
+						@if(!coluna.view){
+							{{
+								coluna.formatar
+									? coluna.formatar(
+											getValor(item, coluna.chave),
+											item
+										)
+									: getValor(item, coluna.chave)
+							}}
+						}
+						
 					</td>
 					@if (botoesAcoes && botoesAcoes.length > 0) {
 						<td [style.width]="actionsWidth">

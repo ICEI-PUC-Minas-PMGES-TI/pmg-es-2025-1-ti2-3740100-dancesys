@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -45,6 +46,12 @@ public class AulaExperimental {
 
     @Column(name = "motivo_outro", nullable = true)
     private String motivoOutro;
+
+    @Column(name = "criado_em")
+    private LocalDate criadoEm;
+
+    @Column(name = "finalizado_em")
+    private LocalDate finalizadoEm;
 
     @ManyToOne
     @JoinColumn(name = "id_Professor", nullable = false)

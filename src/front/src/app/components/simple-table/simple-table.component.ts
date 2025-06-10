@@ -10,10 +10,11 @@ import { BotaoComponent } from "../botao/botao.component";
 import { IconComponent } from "../icon/icon.component";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { ModalComponent } from "../modal/modal.component";
 
 @Component({
 	selector: "app-simple-table",
-	imports: [BotaoComponent, IconComponent, CommonModule, ReactiveFormsModule],
+	imports: [BotaoComponent, IconComponent, CommonModule, ReactiveFormsModule, ModalComponent],
 	templateUrl: "./simple-table.component.html",
 	styleUrl: "./simple-table.component.css",
 })
@@ -22,6 +23,7 @@ export class SimpleTableComponent implements OnChanges {
 		chave: string;
 		titulo: string;
 		order?: boolean;
+		view?: boolean;
 		width?: string;
 		formatar?: (valor: any, item?: any) => string;
 	}[] = [];
@@ -56,6 +58,8 @@ export class SimpleTableComponent implements OnChanges {
 	ordenacao: { chave: string; direcao: "asc" | "desc" } | null = null;
 
 	isLoading: boolean = false;
+	isModal: boolean = false;
+	viewItem: any
 
 	constructor(private fb: FormBuilder) {
 		this.itensForm = this.fb.group({
@@ -236,6 +240,16 @@ export class SimpleTableComponent implements OnChanges {
 
 			return 0;
 		});
+	}
+
+	view(item: string){
+		this.isModal = true
+		this.viewItem = item
+	}
+
+	closeModal(){
+		this.isModal = false
+		this.viewItem = null
 	}
 
 	resetPage() {

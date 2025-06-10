@@ -72,6 +72,7 @@ export class AulasRecorrentesAdminPageComponent {
 				valor != null ? this.formatarHorario(valor) : "",
 		},
 		{ chave: "idAula.idModalidade.nome", titulo: "Modalidade" },
+		{ chave: "motivoCancelamento", titulo: "Motivo", view: true},
 		{
 			chave: "status",
 			titulo: "Status",

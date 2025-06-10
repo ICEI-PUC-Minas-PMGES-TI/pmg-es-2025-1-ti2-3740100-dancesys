@@ -1,16 +1,16 @@
-import { Time } from "@angular/common";
-
 export class AulaExperimental {
     id!: number;
     data!: Date;
-    horarioInicio!: Time;
-    horarioFim!: Time;
+    horarioInicio!: Date;
+    horarioFim!: Date;
     nome!: String;
     cpf!: String;
     numero!: String;
     situacao!: number;
     motivo!: number;
     motivoOutro!: String;
+    criadoEm!: Date;
+    finalizadoEM!: Date;
     idProfessor!: number;
 }
 

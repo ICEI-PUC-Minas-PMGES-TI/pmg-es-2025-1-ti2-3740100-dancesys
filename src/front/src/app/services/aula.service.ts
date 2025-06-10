@@ -47,4 +47,12 @@ export class AulaService {
     public filterAulaExperimental(filtro: AulaExperimentalFilter){
         return this.http.post(`${this.url}experimental/buscar`, { ...filtro })
     }
+
+    public converterAulaExperimental(id: number){
+        return this.http.get(`${this.url}experimental/converter/${id}`)
+    }
+
+    public rejeitarAulaExperimental(motivo: number, id: number, msg: Mensagem){
+        return this.http.post(`${this.url}experimental/rejeitar/${motivo}/${id}`, { ...msg })
+    }
 }

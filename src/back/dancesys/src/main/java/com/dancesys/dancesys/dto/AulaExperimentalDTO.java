@@ -19,5 +19,7 @@ public class AulaExperimentalDTO {
     private Integer situacao;
     private Integer motivo;
     private String motivoOutro;
+    private LocalDate criadoEm;
+    private LocalDate finalizadoEm;
     private Long idProfessor;
 }

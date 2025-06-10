@@ -1,3 +1,62 @@
+@if (isModalConfirm) {
+	<app-modal
+		[confirmMode]="true"
+		message="O aluno foi convertido?"
+		(onClose)="onConfirm($event)"
+	></app-modal>
+}
+
+@if(isModalRejeitarOpen){
+    <app-modal
+		(onClose)="closeRejeitarModal()"
+	>
+	<div class="w-full">
+		<header
+			class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+		>
+			<h1 class="font-bold text-3xl">Rejeitar aluno</h1>
+		</header>
+		<main>
+			<form [formGroup]="rejeitarForm" class="flex flex-col p-2 space-y-3">
+				<section class="flex flex-row space-x-3 flex-1">
+					<div class="flex flex-col flex-1">
+					  <label for="motivo">Motivo: </label>
+					  <select
+					  class="p-1 bg-main-300 rounded-md"
+					  name="motivo"
+					  id="motivo"
+					  formControlName="motivo"
+					  required>
+						  <option *ngFor="let motivo of motivos" [ngValue]="motivo.value">{{ motivo.name }}</option>
+					  </select>
+					</div>
+				</section>
+
+                <section class="flex flex-row space-x-2 flex-1">
+					<div class="flex flex-col flex-1">
+						<label for="mensagem"
+							>Motivo outro:</label
+						>
+						<textarea
+							class="p-1 bg-main-300 rounded-md resize-none"
+							name="mensagem"
+							id="mensagem"
+							rows="4"
+							maxlength="255"
+							placeholder="..."
+                            formControlName="mensagem"
+						></textarea>
+					</div>
+				</section>
+				<button class="self-start mt-3" type="submit" [disabled]="!isReitarFormValido()" (click)="reitarConfirm()" appButton>
+				  Confirmar
+				</button>
+			</form>
+		</main>
+	</div>
+	</app-modal>
+}
+
 @if(isModalOpen){
     <app-modal
 		(onClose)="closeModal()"
