@@ -16,17 +16,14 @@
 			<p class="font-semibold text-lg">{{ item.subtitle }}</p>
 		</div>
 		<div>
-			@if (
-				item.tipoUsuario == tiposUsuario.ALUNO &&
-				item?.tipoAluno == tiposAluno.FLEXIVEL
-			) {
+			@if (item.button) {
 				<button
 					type="button"
 					appButton
-					color="danger"
-					(click)="item?.onCancelEvent()"
+					[color]="getButtonCor()"
+					(click)="item?.button?.click()"
 				>
-					Cancelar
+					{{ item?.button?.label }}
 				</button>
 			}
 		</div>

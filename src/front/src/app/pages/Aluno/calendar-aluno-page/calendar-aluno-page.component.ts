@@ -9,7 +9,7 @@ import { BotaoComponent } from "../../../components/botao/botao.component";
 import { AdminService, AlunoResponse } from "../../../services/admin.service";
 import { UsuarioService } from "../../../services/usuario.service";
 import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
-import { switchMap } from "rxjs";
+import { of, switchMap } from "rxjs";
 import { EnsaioFilter } from "../../../models/Ensaio.model";
 import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
 import { DatePipe } from "@angular/common";
@@ -21,6 +21,7 @@ import { ProfessorFiltro } from "../../../models/professor.model";
 import { SearchBoxSingleComponent } from "../../../components/search-box-single/search-box-single.component";
 import { AulaExtraDTO } from "../../../models/Aula.model";
 import { AulaService } from "../../../services/aula.service";
+import { AulaExtraFilter } from "../../../models/AulaExtra.model";
 
 @Component({
 	selector: "app-calendar-aluno-page",
@@ -84,8 +85,7 @@ export class CalendarAlunoPageComponent {
 			next: (response) => {
 				this.modalidades = response;
 			},
-			error: (err: any) => {
-			},
+			error: (err: any) => {},
 		});
 	}
 
@@ -123,8 +123,13 @@ export class CalendarAlunoPageComponent {
 		this.showCalItems = [...arr];
 	}
 
+	private seInscreverEmAula(aula: any) {
+		console.log(aula);
+	}
+
 	private carregarItens() {
 		this.calendarItems = [];
+		console.log(this.userService.usuario());
 		this.adminService
 			.fetchAulasOcorrentes({
 				alunos: this.vendoMeuCalendario
@@ -132,7 +137,7 @@ export class CalendarAlunoPageComponent {
 					: null,
 				dataInicio: this.dadosSobreMesSelecionado.firstDay,
 				dataFim: this.dadosSobreMesSelecionado.lastDay,
-				alunoNotIm: !this.vendoMeuCalendario
+				alunoNotIn: !this.vendoMeuCalendario
 					? this.userService.usuario()!.id
 					: null,
 			} as AulaOcorrenciaFilter)
@@ -153,9 +158,57 @@ export class CalendarAlunoPageComponent {
 								this.userService.usuario() as AlunoResponse
 							).tipo,
 							TipoAluno: TipoAluno.FLEXIVEL,
+							button: !this.vendoMeuCalendario
+								? {
+										label: "Se Inscrever",
+										cor: "green",
+										click: () => {
+											this.seInscreverEmAula(aula);
+										},
+									}
+								: undefined,
 						} as ItemDeCalendario;
 					});
 					this.calendarItems = [...this.calendarItems, ...arr];
+					if (!this.vendoMeuCalendario) {
+						return this.adminService.filterEnsaio({
+							alunos: [this.userService.usuario()!.id],
+							dataInicio: this.dadosSobreMesSelecionado.firstDay,
+							dataFim: this.dadosSobreMesSelecionado.lastDay,
+						} as EnsaioFilter);
+					}
+					return this.aulaService.filterAulaExtra({
+						idAluno: this.userService.usuario()!.id,
+						dataInicio: this.dadosSobreMesSelecionado.firstDay
+							.toISOString()
+							.substring(0, 10),
+						dataFim: this.dadosSobreMesSelecionado.lastDay
+							.toISOString()
+							.substring(0, 10),
+					} as AulaExtraFilter);
+				}),
+				switchMap((aulasExtras: any) => {
+					const statusAula = [
+						"Pendente ⏲️",
+						"Aceita 😼",
+						"Indeferida ❌",
+						"Cancelada ⛔",
+					];
+					const arr = aulasExtras?.conteudo.map((aula: any) => {
+						return {
+							title: "Aula Extra ",
+							subtitle: `Professor: ${aula.idProfessor.idUsuario.nome} | Status: ${statusAula[aula.situacao - 1]}`,
+							dataHorario: new Date(aula.horarioInicio),
+							tipoUsuario: (
+								this.userService.usuario() as AlunoResponse
+							).tipo,
+							TipoAluno: TipoAluno.FLEXIVEL,
+						} as ItemDeCalendario;
+					});
+					this.calendarItems = [...this.calendarItems, ...arr];
+					if (!this.vendoMeuCalendario) {
+						return of(null);
+					}
 					return this.adminService.filterEnsaio({
 						alunos: [this.userService.usuario()!.id],
 						dataInicio: this.dadosSobreMesSelecionado.firstDay,
@@ -165,23 +218,25 @@ export class CalendarAlunoPageComponent {
 			)
 			.subscribe({
 				next: (ensaios: any) => {
-					const arr = ensaios?.conteudo.map((ensaio: any) => {
-						return {
-							title: `Ensaio de ${ensaio.idApresentacaoEvento.nome}`,
-							subtitle: `Professor: ${ensaio.idProfessor.idUsuario.nome}`,
-							dataHorario: new Date(ensaio.dataHoraInicio),
-							tipoUsuario: (
-								this.userService.usuario() as AlunoResponse
-							).tipo,
-							TipoAluno: TipoAluno.FLEXIVEL,
-						} as ItemDeCalendario;
-					});
-					this.calendarItems = [...this.calendarItems, ...arr];
-					this.calendarItems.sort((a, b) =>
-						a.dataHorario.getTime() < b.dataHorario.getTime()
-							? 1
-							: -1,
-					);
+					if (ensaios) {
+						const arr = ensaios?.conteudo.map((ensaio: any) => {
+							return {
+								title: `Ensaio de ${ensaio.idApresentacaoEvento.nome}`,
+								subtitle: `Professor: ${ensaio.idProfessor.idUsuario.nome}`,
+								dataHorario: new Date(ensaio.dataHoraInicio),
+								tipoUsuario: (
+									this.userService.usuario() as AlunoResponse
+								).tipo,
+								TipoAluno: TipoAluno.FLEXIVEL,
+							} as ItemDeCalendario;
+						});
+						this.calendarItems = [...this.calendarItems, ...arr];
+						this.calendarItems.sort((a, b) =>
+							a.dataHorario.getTime() < b.dataHorario.getTime()
+								? 1
+								: -1,
+						);
+					}
 					this.paginarItens();
 					this.minicalendar.isLoad(false);
 				},
@@ -235,7 +290,6 @@ export class CalendarAlunoPageComponent {
 		if (form.invalid) {
 			return;
 		}
-		// TODO: COLOCAR LÓGICA DE SOLICITAR AULA EXTRA
 		const horIni: Date = new Date(form.value.dataAE);
 		const horFim: Date = new Date(form.value.dataAE);
 		horIni.setUTCHours(
@@ -255,9 +309,9 @@ export class CalendarAlunoPageComponent {
 		} as AulaExtraDTO;
 		this.aulaService.solicitarAulaExtra(valor).subscribe({
 			next: () => {
+				this.carregarItens();
 			},
-			error: (error: any) => {
-			},
+			error: (error: any) => {},
 		});
 		this.openModal = null;
 	}

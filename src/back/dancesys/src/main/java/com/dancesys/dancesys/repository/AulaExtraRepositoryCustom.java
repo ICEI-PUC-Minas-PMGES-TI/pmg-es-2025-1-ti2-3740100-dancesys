@@ -37,7 +37,7 @@ public class AulaExtraRepositoryCustom {
             LocalDateTime startOfDay = data.atStartOfDay();
             LocalDateTime endOfDay = data.atTime(LocalTime.MAX);
 
-            predicates.add(cb.between(root.get("dataHoraInicio"), startOfDay, endOfDay));
+            predicates.add(cb.between(root.get("horarioInicio"), startOfDay, endOfDay));
         }
 
         if(filtro.getDataInicio() != null && filtro.getDataFim() != null){
@@ -46,7 +46,7 @@ public class AulaExtraRepositoryCustom {
             LocalDateTime startOfDay = dataIn.atStartOfDay();
             LocalDateTime endOfDay = dataFim.atTime(LocalTime.MAX);
 
-            predicates.add(cb.between(root.get("dataHoraInicio"), startOfDay, endOfDay));
+            predicates.add(cb.between(root.get("horarioInicio"), startOfDay, endOfDay));
         }
 
         if(filtro.getIdProfessor() != null){
@@ -93,7 +93,7 @@ public class AulaExtraRepositoryCustom {
             LocalDateTime startOfDay = data.atStartOfDay();
             LocalDateTime endOfDay = data.atTime(LocalTime.MAX);
 
-            countPredicates.add(cb.between(countRoot.get("dataHoraInicio"), startOfDay, endOfDay));
+            countPredicates.add(cb.between(countRoot.get("horarioInicio"), startOfDay, endOfDay));
         }
 
         if(filtro.getDataInicio() != null && filtro.getDataFim() != null){
@@ -102,7 +102,7 @@ public class AulaExtraRepositoryCustom {
             LocalDateTime startOfDay = dataIn.atStartOfDay();
             LocalDateTime endOfDay = dataFim.atTime(LocalTime.MAX);
 
-            countPredicates.add(cb.between(countRoot.get("dataHoraInicio"), startOfDay, endOfDay));
+            countPredicates.add(cb.between(countRoot.get("horarioInicio"), startOfDay, endOfDay));
         }
 
         if(filtro.getIdProfessor() != null){

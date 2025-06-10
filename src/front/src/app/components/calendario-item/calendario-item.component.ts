@@ -10,7 +10,7 @@ export type ItemDeCalendario = {
 	dataHorario: Date;
 	title: string;
 	subtitle: string;
-	onCancelEvent?: Function;
+	button?: { label: string; click: Function; cor: string };
 };
 
 @Component({
@@ -39,5 +39,12 @@ export class CalendarioItemComponent {
 		const horas: string = date.getHours().toString().padStart(2, "0");
 		const minutos: string = date.getMinutes().toString().padStart(2, "0");
 		return `${horas}:${minutos}`;
+	}
+
+	getButtonCor(): string {
+		if (this.item.button) {
+			return this.item.button.cor;
+		}
+		return "default";
 	}
 }
