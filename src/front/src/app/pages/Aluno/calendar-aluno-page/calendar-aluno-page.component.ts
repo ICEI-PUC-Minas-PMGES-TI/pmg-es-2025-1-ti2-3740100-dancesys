@@ -138,7 +138,7 @@ export class CalendarAlunoPageComponent {
 				dataInicio: this.dadosSobreMesSelecionado.firstDay,
 				dataFim: this.dadosSobreMesSelecionado.lastDay,
 				alunoNotIn: !this.vendoMeuCalendario
-					? this.userService.usuario()!.id
+					? [this.userService.usuario()!.id]
 					: null,
 			} as AulaOcorrenciaFilter)
 			.pipe(

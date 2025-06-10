@@ -1,7 +1,7 @@
 export class AulaOcorrenciaFilter {
 	professores!: number[];
 	alunos!: number[];
-	alunoNotIn!: number;
+	alunoNotIn!: [number];
 	dataInicio!: Date;
 	dataFim!: Date;
 	codigo!: string;
