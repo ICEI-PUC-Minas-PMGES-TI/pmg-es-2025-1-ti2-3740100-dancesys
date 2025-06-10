@@ -2,6 +2,7 @@ package com.dancesys.dancesys.repository;
 
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -10,7 +11,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface AulaOcorrenciaRepository extends JpaRepository<AulaOcorrencia, Long> {
+public interface AulaOcorrenciaRepository extends JpaRepository<AulaOcorrencia, Long>, JpaSpecificationExecutor<AulaOcorrencia> {
     List<AulaOcorrencia> findByIdAula_IdAndDataGreaterThan(Long idAulaId, LocalDate dataIsGreaterThan);
 
     Optional<AulaOcorrencia> findById(Long id);

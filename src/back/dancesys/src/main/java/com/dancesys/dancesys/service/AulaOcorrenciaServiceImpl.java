@@ -6,9 +6,11 @@ import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.entity.Chamada;
 import com.dancesys.dancesys.infra.PaginatedResponse;
+import com.dancesys.dancesys.infra.Specification.AulaOcorrenciaSpecifications;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepositoryCustom;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -148,5 +150,13 @@ public class AulaOcorrenciaServiceImpl {
             LocalTime aulaFim = ocorrencia.getIdAula().getHorarioFim();
             return novoInicio.isBefore(aulaFim) && novoFim.isAfter(aulaInicio);
         });
+    }
+
+    public List<AulaOcorrencia> buscarAulasPorPeriodoESemAluno(AulaOcorrenciaFilter filtro) {
+        Specification<AulaOcorrencia> spec = Specification.where(
+                        AulaOcorrenciaSpecifications.entreDatas(filtro.getDataInicio(), filtro.getDataFim()))
+                .and(AulaOcorrenciaSpecifications.naoPossuiChamadaParaAluno(filtro.getAlunoNotIn()));
+
+        return aulaOcorrenciaRepository.findAll(spec);
     }
 }

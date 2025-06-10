@@ -66,4 +66,9 @@ public class AulaController {
         aulaService.cancelar(id, mensagem);
     }
 
+    @PostMapping(value = "ocorrencia/buscar/geral")
+    public List<AulaOcorrencia> buscarAo2(@RequestBody AulaOcorrenciaFilter filter){
+        return aulaService.buscarAo2(filter);
+    }
+
 }

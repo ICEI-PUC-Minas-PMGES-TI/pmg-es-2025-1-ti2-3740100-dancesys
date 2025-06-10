@@ -126,4 +126,9 @@ public class AulaServiceImpl implements  AulaService {
     public void cancelar(Long id, MensagemDTO mensagem) throws RuntimeException{
         aulaOcorrenciaServiceImpl.cancelar(id, mensagem);
     }
+
+    @Override
+    public List<AulaOcorrencia> buscarAo2(AulaOcorrenciaFilter filtro){
+        return aulaOcorrenciaServiceImpl.buscarAulasPorPeriodoESemAluno(filtro);
+    }
 }
