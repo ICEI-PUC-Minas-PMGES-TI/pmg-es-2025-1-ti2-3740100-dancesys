@@ -98,13 +98,14 @@ export class AdminService {
 		}) as Observable<{ conteudo: AlunoResponse[]; total: number }>;
 	}
 
-	public fetchProfessores(): Observable<{
+	public fetchProfessores(filtro?: ProfessorFiltro): Observable<{
 		conteudo: ProfessorResponse[];
 		total: number;
 	}> {
+		console.log(filtro);
 		return this.http.post(
 			`${environment.API_URL}usuario/professor/buscar`,
-			{},
+			{ ...filtro },
 		) as Observable<{ conteudo: ProfessorResponse[]; total: number }>;
 	}
 
