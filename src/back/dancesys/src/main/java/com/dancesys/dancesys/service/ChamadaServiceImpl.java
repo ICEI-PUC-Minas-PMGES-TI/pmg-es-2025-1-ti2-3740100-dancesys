@@ -9,6 +9,7 @@ import com.dancesys.dancesys.repository.ChamadaRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -44,11 +45,11 @@ public class ChamadaServiceImpl implements ChamadaService {
 
             ChamadaId id = new ChamadaId(idAluno,idAulaOcorrencia);
             if(chamadaRepository.findById(id).isPresent()){
-                throw new RuntimeException("você ja esta inscrito nesta aula");
+                throw new RuntimeException("Você já esta inscrito nesta aula");
             }else{
                 Aluno aluno = alunoServiceImpl.findById(idAluno);
                 if(aluno.getCreditos() == 0) {
-                    throw new RuntimeException("Creditos insuficiente");
+                    throw new RuntimeException("Créditos insuficiente");
                 }else{
                     alunoServiceImpl.dimuirCredito(aluno, 1);
                     chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,idAluno,Chamada.faltante));
@@ -63,7 +64,7 @@ public class ChamadaServiceImpl implements ChamadaService {
     public String removerAluno(Long idAluno, Long idAulaOcorrencia){
         AulaOcorrencia ao = aulaOcorrenciaServiceImpl.buscarPorId(idAulaOcorrencia);
 
-        if(LocalTime.now().isBefore(ao.getIdAula().getHorarioInicio().minusHours(1))){
+        if(LocalTime.now().isBefore(ao.getIdAula().getHorarioInicio().minusHours(1)) && ao.getData().equals(LocalDate.now())){
             throw new RuntimeException("Você só pode se desincrever em ate 1 hora antes da aula");
         }
 

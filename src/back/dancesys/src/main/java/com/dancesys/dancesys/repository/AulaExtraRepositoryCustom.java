@@ -50,7 +50,7 @@ public class AulaExtraRepositoryCustom {
         }
 
         if(filtro.getIdProfessor() != null){
-            predicates.add(cb.equal(root.get("idProfessor").get("id"), filtro.getIdAluno()));
+            predicates.add(cb.equal(root.get("idProfessor").get("id"), filtro.getIdProfessor()));
         }
 
         if(filtro.getIdAluno() != null){
@@ -106,7 +106,7 @@ public class AulaExtraRepositoryCustom {
         }
 
         if(filtro.getIdProfessor() != null){
-            countPredicates.add(cb.equal(countRoot.get("idProfessor").get("id"), filtro.getIdAluno()));
+            countPredicates.add(cb.equal(countRoot.get("idProfessor").get("id"), filtro.getIdProfessor()));
         }
 
         if(filtro.getIdAluno() != null){

@@ -8,3 +8,14 @@ export type Financeiro = {
     mediaDiasAtraso: number;
     boletosNaoPagos: number;
 }
+
+export type Conversao = {
+    mes: number;
+    totalConvertido: number;
+    totalRecusado: number;
+    totalCriadas: number;
+    totalFinalizadas: number;
+    totalInteresse: number;
+    totalFinanceiro: number;
+    totalOutro: number;
+}

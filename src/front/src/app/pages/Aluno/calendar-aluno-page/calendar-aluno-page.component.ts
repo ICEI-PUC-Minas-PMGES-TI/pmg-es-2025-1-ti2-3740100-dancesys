@@ -12,7 +12,7 @@ import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
 import { of, switchMap } from "rxjs";
 import { EnsaioFilter } from "../../../models/Ensaio.model";
 import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
-import { DatePipe } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { ModalComponent } from "../../../components/modal/modal.component";
 import { FormsModule, NgForm } from "@angular/forms";
 import { Modalidade } from "../../../models/modalidade.model";
@@ -34,6 +34,7 @@ import { AlertService } from "../../../services/Alert.service";
 		MiniCalendarComponent,
 		BotaoComponent,
 		DatePipe,
+		CommonModule
 	],
 	templateUrl: "./calendar-aluno-page.component.html",
 	styleUrl: "./calendar-aluno-page.component.css",
@@ -59,6 +60,8 @@ export class CalendarAlunoPageComponent {
 	vendoMeuCalendario: boolean = true;
 
 	openModal: "solicitarAulaExtra" | null = null;
+
+	isLoading: boolean = true
 
 	@ViewChild(MiniCalendarComponent) minicalendar!: MiniCalendarComponent;
 
@@ -142,6 +145,7 @@ export class CalendarAlunoPageComponent {
 	}
 
 	private carregarItens() {
+		this.isLoading = true
 		this.calendarItems = [];
 		this.adminService
 			.fetchAulasOcorrentes(
@@ -259,8 +263,8 @@ export class CalendarAlunoPageComponent {
 								: -1,
 						);
 					}
+					this.isLoading = false
 					this.paginarItens();
-					this.minicalendar.isLoad(false);
 				},
 			});
 	}
@@ -291,7 +295,6 @@ export class CalendarAlunoPageComponent {
 	}
 
 	mudarMes(dadosSobreMes: { firstDay: Date; lastDay: Date }) {
-		this.minicalendar.isLoad(true);
 		this.dadosSobreMesSelecionado = dadosSobreMes;
 		this.carregarItens();
 	}

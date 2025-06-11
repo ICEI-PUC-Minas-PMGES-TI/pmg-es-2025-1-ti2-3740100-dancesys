@@ -1,9 +1,6 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.AulaDTO;
-import com.dancesys.dancesys.dto.AulaFilter;
-import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
-import com.dancesys.dancesys.dto.MensagemDTO;
+import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaAluno;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
