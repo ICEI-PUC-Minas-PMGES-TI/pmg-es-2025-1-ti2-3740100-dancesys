@@ -1,1 +1,28 @@
-<p>eventos-aluno-page works!</p>
+<main class="py-4 max-w-full max-h-full h-full">
+	<section class="flex flex-col pb-4 max-w-full">
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Eventos Disponíveis</h1>
+		</div>
+
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+			<div
+				*ngFor="let evento of eventos?.conteudo"
+				class="border rounded-lg p-4 shadow-md bg-white"
+			>
+				<img
+					[ngClass]="{ hidden: !evento.urlFoto }"
+					[src]="evento.urlFoto"
+					alt="{{ evento.nome }}"
+					class="w-full h-48 object-cover rounded-lg mb-4"
+				/>
+				<h2 class="font-semibold text-lg">{{ evento.nome }}</h2>
+				<p class="text-sm text-gray-600">{{ evento.local }}</p>
+				<p class="text-sm text-gray-500">
+					{{ evento.dataHoraInicio | date : "dd/MM/yyyy HH:mm" }} -
+					{{ evento.dataHoraFim | date : "dd/MM/yyyy HH:mm" }}
+				</p>
+				<p class="mt-2 text-sm">Preço: R$ {{ evento.valor }}</p>
+			</div>
+		</div>
+	</section>
+</main>
