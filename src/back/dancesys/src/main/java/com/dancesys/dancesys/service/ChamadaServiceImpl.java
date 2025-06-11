@@ -39,9 +39,11 @@ public class ChamadaServiceImpl implements ChamadaService {
     }
 
     @Override
-    public Chamada adicionarAluno(Long idAulaOcorrencia, Long idAluno) throws RuntimeException {
+    public void adicionarAluno(Long idAulaOcorrencia, Long idAluno) throws RuntimeException {
         try{
-            if(chamadaRepository.findByIdAluno_Id(idAluno) !=null){
+
+            ChamadaId id = new ChamadaId(idAluno,idAulaOcorrencia);
+            if(chamadaRepository.findById(id).isPresent()){
                 throw new RuntimeException("você ja esta inscrito nesta aula");
             }else{
                 Aluno aluno = alunoServiceImpl.findById(idAluno);
@@ -49,7 +51,7 @@ public class ChamadaServiceImpl implements ChamadaService {
                     throw new RuntimeException("Creditos insuficiente");
                 }else{
                     alunoServiceImpl.dimuirCredito(aluno, 1);
-                    return chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,idAluno,Chamada.faltante));
+                    chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,idAluno,Chamada.faltante));
                 }
             }
         }catch (RuntimeException e) {

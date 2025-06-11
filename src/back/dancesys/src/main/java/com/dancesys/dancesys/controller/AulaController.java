@@ -41,9 +41,8 @@ public class AulaController {
     }
 
     @GetMapping(value = "inscrever/{idAulaOcorrencia}/{idAluno}")
-    public ResponseEntity<Chamada> adicionarAluno(@PathVariable Long idAulaOcorrencia, @PathVariable Long idAluno ) throws RuntimeException {
-        Chamada chamada = chamadaService.adicionarAluno(idAulaOcorrencia, idAluno);
-        return ResponseEntity.ok(chamada);
+    public void adicionarAluno(@PathVariable Long idAulaOcorrencia, @PathVariable Long idAluno ) throws RuntimeException {
+        chamadaService.adicionarAluno(idAulaOcorrencia, idAluno);
     }
 
     @GetMapping(value = "desinscrever/{idAulaOcorrencia}/{idAluno}")
