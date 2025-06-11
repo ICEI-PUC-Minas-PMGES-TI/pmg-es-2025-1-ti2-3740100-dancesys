@@ -129,7 +129,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   }
 
   getTotalPagosNoPrazo(){
-    const array: number[] = [10,26,20,33,13,9,17,22,31,12,24,25]//[0,0,0,0,0,0,0,0,0,0,0,0]
+    const array: number[] = [0,0,0,0,0,0,0,0,0,0,0,0]
     this.relatorioresponse.forEach((el) =>{
       array[el.mes - 1] += el.boletosPagosSemAtraso;
     })
@@ -138,7 +138,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   }
 
   getTotalPagosAtrasado(){
-    const array: number[] = [5,11,13,8,13,5,18,10,12,17,2,11] //[0,0,0,0,0,0,0,0,0,0,0,0]
+    const array: number[] = [0,0,0,0,0,0,0,0,0,0,0,0]
     this.relatorioresponse.forEach((el) =>{
       array[el.mes - 1] += el.boletosPagosComAtraso;
     })
@@ -264,7 +264,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   }
 
   getTotalAtrasoPorTipo(response: Financeiro[]){
-    const array: number[] = [4,5,2,7,3] //[0,0,0,0,0]
+    const array: number[] = [0,0,0,0,0]
 
     response.forEach((el) =>{
       array[el.tipo - 1] += el.boletosPagosComAtraso;
@@ -274,7 +274,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   }
 
   getValorAtrasoPorTipo(response: Financeiro[]){
-    const array: number[] = [100,400,350,80,150] //[0,0,0,0,0]
+    const array: number[] = [0,0,0,0,0]
 
     response.forEach((el) =>{
       array[el.tipo - 1] += el.somaValoresComAtraso;
@@ -284,7 +284,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   }
 
   getTotalNoPrazoPorTipo(response: Financeiro[]){
-    const array: number[] = [4,2,3,1,5] // [0,0,0,0,0]
+    const array: number[] = [0,0,0,0,0]
 
     response.forEach((el) =>{
       array[el.tipo - 1] += el.boletosPagosSemAtraso;
@@ -294,7 +294,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   }
 
   getValorNoPrazoPorTipo(response: Financeiro[]){
-    const array: number[] = [200,100,60,150,450] // [0,0,0,0,0]
+    const array: number[] = [0,0,0,0,0]
 
     response.forEach((el) =>{
       array[el.tipo - 1] += el.somaValoresSemAtraso;

@@ -1,0 +1,75 @@
+<main class="py-4 max-w-full h-full overflow-auto max-h-[90vh] app-scrollbar">
+    <section class="flex flex-row py-5">
+        <h1 class="text-main-500 text-xl font-bold">Geral de</h1>
+        <form [formGroup]="anoForm">
+            <select
+			name="ano"
+			id="ano"
+			class="text-white bg-main-500 p-1 mx-3 rounded-lg"
+			formControlName="ano"
+			>
+				<option *ngFor="let ano of anos"  [ngValue]="ano">{{ ano }}</option>
+			</select>
+        </form>
+    </section>
+    <section>
+        <div class="padrao w-full h-120 flex justify-center items-center">
+            <app-graphic-line 
+            #graficoLinha
+            [labels]="labelsGL" 
+            [data]="dataGL">
+            </app-graphic-line>
+        </div>
+    </section>
+    <section class="flex flex-row py-5 items-center">
+        <h1 class="text-main-500 text-xl font-bold">Geral de</h1>
+        <form [formGroup]="mesForm">
+            <select
+			name="mes"
+			id="mes"
+			class="text-white bg-main-500 p-1 mx-3 rounded-lg text-center"
+			formControlName="mes"
+			>
+				<option *ngFor="let mes of meses"  [ngValue]="mes.value">{{ mes.name }}</option>
+			</select>
+        </form>
+        <h1 class="text-main-500 text-xl font-bold">/2025</h1>
+    </section>
+    @if(hasMes){
+        <section class="flex flex-row space-x-3 py-5">
+            <div class="padrao flex-1 aspect-square p-3 flex flex-col">
+                <h1 class="text-main-500 text-xl font-bold w-full">Motivos</h1>
+                <app-graphic-pizza #graficoPizza class="flex-1" [labels]="labelsGP" [data]="dataGP"></app-graphic-pizza>
+            </div>
+            <div class="flex-1 aspect-square flex flex-col space-y-2">
+                <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+                    <h1 class="text-main-500 text-xl font-bold">{{ marcadasEm }}</h1>
+                    <span class="text-main-500 text-base font-normal">Aulas marcadas</span>
+                </div>
+                <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+                    <h1 class="text-main-500 text-xl font-bold">{{ finalizadaEm }}</h1>
+                    <span class="text-main-500 text-base font-normal">Aulas finalizadas</span>
+                </div>
+            </div>
+            <div class="flex-1 aspect-square flex flex-col space-y-3">
+                <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+                    <h1 class="text-main-500 text-xl font-bold">{{ porcentagemInteresse }}%</h1>
+                    <span class="text-main-500 text-base font-normal">Recusados por falta interesse</span>
+                </div>
+                <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+                    <h1 class="text-main-500 text-xl font-bold">{{ porcentagemFinanceiro }}%</h1>
+                    <span class="text-main-500 text-base font-normal">Recusados por problema financeiro</span>
+                </div>
+                <div class="py-10 flex-1 padrao flex flex-col justify-center items-center">
+                    <h1 class="text-main-500 text-xl font-bold">{{ porcentagemOutro }}%</h1>
+                    <span class="text-main-500 text-base font-normal">Recusados por outro motivo</span>
+                </div>
+            </div>
+        </section>
+    }
+    @if(!hasMes){
+        <h1 class="text-main-500 text-xl font-bold w-full">Sem dados para este mês</h1>
+    }
+</main>
+
+
