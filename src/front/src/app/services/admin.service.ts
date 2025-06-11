@@ -231,7 +231,19 @@ export class AdminService {
 		return this.http.get(`${environment.API_URL}aula/status/${id}`);
 	}
 
-	public fetchAulasOcorrentes(filtro: AulaOcorrenciaFilter) {
+	public fetchAulasOcorrentes(filtro: AulaOcorrenciaFilter, geral?: boolean) {
+		if (geral) {
+			return this.http.post(
+				`${environment.API_URL}aula/ocorrencia/buscar/geral`,
+				{
+					...filtro,
+					dataInicio: filtro.dataInicio
+						.toISOString()
+						.substring(0, 10),
+					dataFim: filtro.dataFim.toISOString().substring(0, 10),
+				},
+			);
+		}
 		return this.http.post(`${environment.API_URL}aula/ocorrencia/buscar`, {
 			...filtro,
 			dataInicio: filtro.dataInicio.toISOString().substring(0, 10),

@@ -9,7 +9,11 @@ import {
 } from "../../../../../services/admin.service";
 import { ModalidadesService } from "../../../../../services/modalidades.service";
 import { FormsModule, NgForm } from "@angular/forms";
-import { Aluno, AlunoFilter } from "../../../../../models/aluno.model";
+import {
+	Aluno,
+	AlunoFilter,
+	TipoAluno,
+} from "../../../../../models/aluno.model";
 import {
 	Modalidade,
 	ModalidadeAlunoNivel,
@@ -18,6 +22,10 @@ import {
 	UsuarioFiltro,
 	UsuarioTipos,
 } from "../../../../../models/usuario.model";
+import {
+	formatarData,
+	formatarTelefone,
+} from "../../../../../utils/formatters";
 
 export type FormAlunoValue = {
 	nome: string;
@@ -86,9 +94,22 @@ export class AlunoTabelaAdminPageComponent {
 	colunas = [
 		{ chave: "idUsuario.nome", titulo: "Aluno" },
 		{ chave: "idUsuario.email", titulo: "Email" },
-		{ chave: "idUsuario.numero", titulo: "Telefone" },
-		{ chave: "idUsuario.dataNascimento", titulo: "Data de Nascimento" },
-		{ chave: "tipo", titulo: "Tipo" },
+		{
+			chave: "idUsuario.numero",
+			titulo: "Telefone",
+			formatar: (valor: number) => formatarTelefone(valor),
+		},
+		{
+			chave: "idUsuario.dataNascimento",
+			titulo: "Data de Nascimento",
+			formatar: (valor: string) => formatarData(valor),
+		},
+		{
+			chave: "tipo",
+			titulo: "Tipo",
+			formatar: (valor: TipoAluno) =>
+				valor == TipoAluno.FIXO ? "Fixo" : "Flexível",
+		},
 		{
 			chave: "idUsuario.status",
 			titulo: "Status",
@@ -207,7 +228,7 @@ export class AlunoTabelaAdminPageComponent {
 				.toggleUserStatus(this.idToggleStatusUser)
 				.subscribe({
 					next: () => {
-						this.reloadUsers();
+						this.filterFormSubmit();
 						this.idToggleStatusUser = -1;
 						this.isActivatingUser = false;
 					},
@@ -278,7 +299,7 @@ export class AlunoTabelaAdminPageComponent {
 		this.closeAddModal();
 		this.adminService.addUsuarioAluno(value).subscribe({
 			next: () => {
-				this.reloadUsers();
+				this.filterFormSubmit();
 			},
 		});
 	}
@@ -293,7 +314,7 @@ export class AlunoTabelaAdminPageComponent {
 		this.closeEditModal();
 		this.adminService.editarAluno(value).subscribe({
 			next: () => {
-				this.reloadUsers();
+				this.filterFormSubmit();
 			},
 		});
 	}

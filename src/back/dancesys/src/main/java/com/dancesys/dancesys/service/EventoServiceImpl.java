@@ -55,7 +55,7 @@ public class EventoServiceImpl implements EventoService {
     @Override
     public void excluir(Long idEvento) throws RuntimeException {
         if(apresentacaoEventoServiceImpl.existsByEvento(idEvento)){
-            throw new RuntimeException("Existem apresentações cadastardas para esse evento!");
+            throw new RuntimeException("Existem apresentações cadastradas para esse evento!");
         }
         Evento evento = eventoRepository.findById(idEvento).get();
         filesServiceImpl.deleteFileByUrl(evento.getUrlFoto());

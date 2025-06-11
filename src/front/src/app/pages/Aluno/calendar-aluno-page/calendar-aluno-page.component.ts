@@ -22,6 +22,7 @@ import { SearchBoxSingleComponent } from "../../../components/search-box-single/
 import { AulaExtraDTO } from "../../../models/Aula.model";
 import { AulaService } from "../../../services/aula.service";
 import { AulaExtraFilter } from "../../../models/AulaExtra.model";
+import { AlertService } from "../../../services/Alert.service";
 
 @Component({
 	selector: "app-calendar-aluno-page",
@@ -44,6 +45,7 @@ export class CalendarAlunoPageComponent {
 	aulaService = inject(AulaService);
 	userService = inject(UsuarioService);
 	modalidadesService = inject(ModalidadesService);
+	alertService = inject(AlertService);
 
 	modalidades: Modalidade[] = [];
 
@@ -124,33 +126,50 @@ export class CalendarAlunoPageComponent {
 	}
 
 	private seInscreverEmAula(aula: any) {
-		console.log(aula);
+		this.aulaService
+			.seInscreverAula(aula.id, this.userService.usuario()!.id)
+			.subscribe({
+				next: (value: any) => {
+					this.alertService.sucesso(
+						"Inscrição realizada com sucesso! 😎",
+					);
+					this.carregarItens();
+				},
+				error: (err: any) => {
+					this.alertService.erro(err.error.mensagem);
+				},
+			});
 	}
 
 	private carregarItens() {
 		this.calendarItems = [];
-		console.log(this.userService.usuario());
 		this.adminService
-			.fetchAulasOcorrentes({
-				alunos: this.vendoMeuCalendario
-					? [this.userService.usuario()!.id]
-					: null,
-				dataInicio: this.dadosSobreMesSelecionado.firstDay,
-				dataFim: this.dadosSobreMesSelecionado.lastDay,
-				alunoNotIn: !this.vendoMeuCalendario
-					? [this.userService.usuario()!.id]
-					: null,
-			} as AulaOcorrenciaFilter)
+			.fetchAulasOcorrentes(
+				{
+					alunos: this.vendoMeuCalendario
+						? [this.userService.usuario()!.id]
+						: null,
+					dataInicio: this.dadosSobreMesSelecionado.firstDay,
+					dataFim: this.dadosSobreMesSelecionado.lastDay,
+					alunoNotIn: !this.vendoMeuCalendario
+						? this.userService.usuario()!.id
+						: null,
+				} as AulaOcorrenciaFilter,
+				!this.vendoMeuCalendario,
+			)
 			.pipe(
 				switchMap((aulasOcorrentes: any) => {
-					const arr = aulasOcorrentes?.conteudo.map((aula: any) => {
+					let arr = this.vendoMeuCalendario
+						? [...aulasOcorrentes?.conteudo]
+						: [...aulasOcorrentes];
+					arr = arr.map((aula: any) => {
 						return {
 							title: `Aula de ${aula.idAula.idModalidade.nome}`,
 							subtitle: `Professor: ${aula.idAula.idProfessor.idUsuario.nome}`,
 							dataHorario: new Date(
 								new Date(aula.data).getFullYear(),
 								new Date(aula.data).getMonth(),
-								new Date(aula.data).getDate(),
+								new Date(aula.data).getDate() + 1,
 								aula.idAula.horarioInicio.split(":")[0],
 								aula.idAula.horarioInicio.split(":")[1],
 							),
@@ -158,15 +177,18 @@ export class CalendarAlunoPageComponent {
 								this.userService.usuario() as AlunoResponse
 							).tipo,
 							TipoAluno: TipoAluno.FLEXIVEL,
-							button: !this.vendoMeuCalendario
-								? {
-										label: "Se Inscrever",
-										cor: "green",
-										click: () => {
-											this.seInscreverEmAula(aula);
-										},
-									}
-								: undefined,
+							button:
+								!this.vendoMeuCalendario &&
+								(this.userService.usuario() as AlunoResponse)
+									.tipo == TipoAluno.FLEXIVEL
+									? {
+											label: "Se Inscrever",
+											cor: "green",
+											click: () => {
+												this.seInscreverEmAula(aula);
+											},
+										}
+									: undefined,
 						} as ItemDeCalendario;
 					});
 					this.calendarItems = [...this.calendarItems, ...arr];
@@ -309,9 +331,14 @@ export class CalendarAlunoPageComponent {
 		} as AulaExtraDTO;
 		this.aulaService.solicitarAulaExtra(valor).subscribe({
 			next: () => {
+				this.alertService.sucesso(
+					"Solicitação realizada com sucesso! 😎",
+				);
 				this.carregarItens();
 			},
-			error: (error: any) => {},
+			error: (error: any) => {
+				this.alertService.erro(error.error.mensagem);
+			},
 		});
 		this.openModal = null;
 	}

@@ -15,6 +15,10 @@ import {
 import { Modalidade } from "../../../../../models/modalidade.model";
 import { UsuarioTipos } from "../../../../../models/usuario.model";
 import { SimpleTableComponent } from "../../../../../components/simple-table/simple-table.component";
+import {
+	formatarData,
+	formatarTelefone,
+} from "../../../../../utils/formatters";
 
 export type FormProfessorValue = {
 	nome: string;
@@ -78,8 +82,16 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 	colunas = [
 		{ chave: "idUsuario.nome", titulo: "Professor" },
 		{ chave: "idUsuario.email", titulo: "Email" },
-		{ chave: "idUsuario.numero", titulo: "Telefone" },
-		{ chave: "idUsuario.dataNascimento", titulo: "Data de Nascimento" },
+		{
+			chave: "idUsuario.numero",
+			titulo: "Telefone",
+			formatar: (valor: number) => formatarTelefone(valor),
+		},
+		{
+			chave: "idUsuario.dataNascimento",
+			titulo: "Data de Nascimento",
+			formatar: (valor: string) => formatarData(valor),
+		},
 		{
 			chave: "idUsuario.status",
 			titulo: "Status",
