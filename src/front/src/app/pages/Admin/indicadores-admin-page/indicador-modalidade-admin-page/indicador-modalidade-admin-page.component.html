@@ -1,0 +1,28 @@
+<main class="py-4 max-w-full h-full overflow-auto max-h-[90vh] app-scrollbar">
+    <section class="flex flex-row py-5">
+        <h1 class="text-main-500 text-xl font-bold">Geral de</h1>
+        <form [formGroup]="anoForm">
+            <select
+			name="ano"
+			id="ano"
+			class="text-white bg-main-500 p-1 mx-3 rounded-lg"
+			formControlName="ano"
+			>
+				<option *ngFor="let ano of anos"  [ngValue]="ano">{{ ano }}</option>
+			</select>
+        </form>
+    </section>
+    <section>
+        <div class="padrao w-full h-120 flex justify-center items-center">
+            <app-graphic-line 
+            #graficoLinha
+            [labels]="labelsGL" 
+            [data]="dataGL">
+            </app-graphic-line>
+        </div>
+    </section>
+
+    <!-- <app-graphic-bar-y #graficoBar [labels]="labelsTeste" [data]="dataTeste"></app-graphic-bar-y> -->
+</main>
+
+

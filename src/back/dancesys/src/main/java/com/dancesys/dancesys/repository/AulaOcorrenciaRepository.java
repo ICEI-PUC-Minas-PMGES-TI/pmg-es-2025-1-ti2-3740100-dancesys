@@ -80,5 +80,25 @@ public interface AulaOcorrenciaRepository extends JpaRepository<AulaOcorrencia, 
         ) ax ON ax.mes = m.mes
     ORDER BY m.mes;
     """, nativeQuery = true)
-    List<Object[]> getRelatrioAulas(@Param("idProfessor") Long idProfessor, @Param("ano") Integer ano);
+    List<Object[]> getRelatorioAulas(@Param("idProfessor") Long idProfessor, @Param("ano") Integer ano);
+
+    @Query(value = """
+        SELECT 
+            m.nome AS nome_modalidade,
+            MONTH(ao.data) AS mes,
+            COUNT(*) AS quantidade_aulas
+        FROM 
+            Aula_Ocorrencia ao
+        JOIN 
+            Aula a ON ao.id_Aula = a.id
+        JOIN 
+            Modalidade m ON a.id_Modalidade = m.id
+        WHERE 
+            YEAR(ao.data) = :ano
+        GROUP BY 
+            m.nome, MONTH(ao.data)
+        ORDER BY 
+            mes, nome_modalidade;
+    """, nativeQuery = true)
+    List<Object[]> getRelatorioAulasModalidade(@Param("ano") Integer ano);
 }

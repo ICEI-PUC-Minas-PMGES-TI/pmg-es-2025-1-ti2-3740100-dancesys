@@ -1,53 +1,39 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { NgChartsModule } from 'ng2-charts';
-import { Chart, ChartDataset } from 'chart.js';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Chart, ChartDataset } from 'chart.js';
+import { NgChartsModule } from 'ng2-charts';
 
 @Component({
-  selector: 'app-graphic-line',
+  selector: 'app-graphic-bar-y',
   imports: [
     CommonModule,
     NgChartsModule 
   ],
-  templateUrl: './graphic-line.component.html',
-  styleUrl: './graphic-line.component.css'
+  templateUrl: './graphic-bar-y.component.html',
+  styleUrl: './graphic-bar-y.component.css'
 })
-export class GraphicLineComponent {
+export class GraphicBarYComponent {
   @Input() labels: string[] = []
   @Input() data: ChartDataset [] = []
 
-  delayed = false;
-
-  @ViewChild('graficoLinha') canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('graficoBarraY') canvasRef!: ElementRef<HTMLCanvasElement>;
   graficoLinha: Chart | undefined;
-  gerarGraficoLinha(){
+  gerarGraficoBar(){
     if (this.graficoLinha) {
       this.graficoLinha.destroy();
     }
-
+    
     const ctx = this.canvasRef.nativeElement.getContext('2d');
     if (ctx) {
       this.graficoLinha = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: this.labels,
           datasets: this.data
         },
         options: {
+          indexAxis: 'y',
           responsive: true,
-          animation: {
-          onComplete: () => {
-            this.delayed = true;
-          },
-          delay: (context) => {
-            return context.type === 'data' &&
-                   context.mode === 'default' &&
-                   !this.delayed
-              ? context.dataIndex * 100
-              : 0;
-          }
-
-        },
           plugins: {
             legend: {
               position: 'top',

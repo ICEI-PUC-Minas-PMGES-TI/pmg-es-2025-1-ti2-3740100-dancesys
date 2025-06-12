@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.IndicadorAulasDTO;
+import com.dancesys.dancesys.dto.IndicadorAulasModalidadeDTO;
 import com.dancesys.dancesys.dto.IndicadorConversaoDTO;
 import com.dancesys.dancesys.dto.IndicadorFinanceiroDTO;
 
@@ -12,4 +13,6 @@ public interface IndicadoresService {
     public List<IndicadorConversaoDTO> getRelatorioConversao(Integer ano);
 
     public List<IndicadorAulasDTO> getRelatorioAula(Integer ano, Long idProfessor);
+
+    public List<IndicadorAulasModalidadeDTO> getRelatorioAulasModalidade(Integer ano);
 }

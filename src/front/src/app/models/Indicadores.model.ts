@@ -30,5 +30,10 @@ export type Aulas = {
     minutosAulasExtras:  number;
     totalAulasExperimentais:  number;
     minutosAulasExperimentais:  number;
+}
 
+export type AulasModalidade = {
+    modalidade: string;
+    mes: number;
+    totalAulas: number;
 }

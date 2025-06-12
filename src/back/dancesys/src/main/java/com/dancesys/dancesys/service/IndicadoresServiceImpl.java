@@ -1,6 +1,7 @@
 package com.dancesys.dancesys.service;
 
 import com.dancesys.dancesys.dto.IndicadorAulasDTO;
+import com.dancesys.dancesys.dto.IndicadorAulasModalidadeDTO;
 import com.dancesys.dancesys.dto.IndicadorConversaoDTO;
 import com.dancesys.dancesys.dto.IndicadorFinanceiroDTO;
 import com.dancesys.dancesys.repository.AulaExperimentalRepository;
@@ -74,7 +75,7 @@ public class IndicadoresServiceImpl implements IndicadoresService {
 
     @Override
     public List<IndicadorAulasDTO> getRelatorioAula(Integer ano, Long idProfessor) {
-        List<Object[]> result = aulaOcorrenciaRepository.getRelatrioAulas(idProfessor, ano);
+        List<Object[]> result = aulaOcorrenciaRepository.getRelatorioAulas(idProfessor, ano);
         List<IndicadorAulasDTO> dtos = new ArrayList<>();
 
         for(Object[] r : result){
@@ -88,6 +89,23 @@ public class IndicadoresServiceImpl implements IndicadoresService {
             dto.setMinutosAulasExtras((Integer)r[6]);
             dto.setTotalAulasExperimentais((Integer)r[7]);
             dto.setMinutosAulasExperimentais((Integer)r[8]);
+
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+    @Override
+    public List<IndicadorAulasModalidadeDTO> getRelatorioAulasModalidade(Integer ano){
+        List<Object[]> result = aulaOcorrenciaRepository.getRelatorioAulasModalidade(ano);
+        List<IndicadorAulasModalidadeDTO> dtos = new ArrayList<>();
+
+        for(Object[] r : result){
+            IndicadorAulasModalidadeDTO dto = new IndicadorAulasModalidadeDTO();
+            dto.setModalidade((String) r[0]);
+            dto.setMes((Integer)r[1]);
+            dto.setTotalAulas((Integer)r[2]);
 
             dtos.add(dto);
         }

@@ -107,18 +107,18 @@ export class IndicadorConversaoAdminPageComponent {
     this.dataGL.push({
       label: 'Convertido',
       data: this.getConvertido(),
-      borderColor: 'green',
-      backgroundColor: 'green',
-      pointBackgroundColor: 'green',
+      borderColor: 'rgb(79, 183, 31)',
+      backgroundColor: 'rgb(79, 183, 31)',
+      pointBackgroundColor: 'rgb(79, 183, 31)',
       fill: false
     });
 
     this.dataGL.push({
       label: 'Recusado',
       data: this.getRecusado(),
-      borderColor: 'red',
-      backgroundColor: 'red',
-      pointBackgroundColor: 'red',
+      borderColor: 'rgb(178, 43, 43)',
+      backgroundColor: 'rgb(178, 43, 43)',
+      pointBackgroundColor: 'rgb(178, 43, 43)',
       fill: false
     });
 
