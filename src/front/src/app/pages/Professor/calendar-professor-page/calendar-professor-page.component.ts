@@ -6,7 +6,11 @@ import {
 import { UsuarioTipos } from "../../../models/usuario.model";
 import { TipoAluno } from "../../../models/aluno.model";
 import { BotaoComponent } from "../../../components/botao/botao.component";
-import { AdminService, AlunoResponse } from "../../../services/admin.service";
+import {
+	AdminService,
+	AlunoResponse,
+	ProfessorResponse,
+} from "../../../services/admin.service";
 import { UsuarioService } from "../../../services/usuario.service";
 import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
 import { of, switchMap } from "rxjs";
@@ -36,10 +40,10 @@ import { AlertService } from "../../../services/Alert.service";
 		DatePipe,
 		CommonModule,
 	],
-	templateUrl: "./calendar-aluno-page.component.html",
-	styleUrl: "./calendar-aluno-page.component.css",
+	templateUrl: "./calendar-professor-page.component.html",
+	styleUrl: "./calendar-professor-page.component.css",
 })
-export class CalendarAlunoPageComponent {
+export class CalendarProfessorPageComponent {
 	currPag: number = 0;
 
 	adminService = inject(AdminService);
@@ -48,18 +52,11 @@ export class CalendarAlunoPageComponent {
 	modalidadesService = inject(ModalidadesService);
 	alertService = inject(AlertService);
 
-	modalidades: Modalidade[] = [];
-
 	calendarItems: ItemDeCalendario[] = [];
 	showCalItems: Array<ItemDeCalendario[]> = [];
 	selectedDay: Date = new Date();
 	dadosSobreMesSelecionado!: { firstDay: Date; lastDay: Date };
 	paginas = Math.ceil(this.calendarItems.length / 5);
-	professoresFilterLs: any[] = [];
-
-	vendoMeuCalendario: boolean = true;
-
-	openModal: "solicitarAulaExtra" | null = null;
 
 	isLoading: boolean = true;
 
@@ -81,31 +78,7 @@ export class CalendarAlunoPageComponent {
 			firstDay: firstDayOfMonth,
 			lastDay: lastDayOfMonth,
 		};
-		this.reloadModalidades();
 		this.carregarItens();
-	}
-
-	private reloadModalidades() {
-		this.modalidadesService.fetchModalidades().subscribe({
-			next: (response) => {
-				this.modalidades = response;
-			},
-			error: (err: any) => {},
-		});
-	}
-
-	buscarProfessor(termo: any) {
-		const filtro: ProfessorFiltro = {
-			nome: termo,
-			email: "",
-			cpf: "",
-			status: 1,
-		};
-		this.adminService.filterProfessores(filtro).subscribe({
-			next: (response) => {
-				this.professoresFilterLs = response.conteudo;
-			},
-		});
 	}
 
 	private paginarItens() {
@@ -128,44 +101,20 @@ export class CalendarAlunoPageComponent {
 		this.showCalItems = [...arr];
 	}
 
-	private seInscreverEmAula(aula: any) {
-		this.aulaService
-			.seInscreverAula(aula.id, this.userService.usuario()!.id)
-			.subscribe({
-				next: (value: any) => {
-					this.alertService.sucesso(
-						"Inscrição realizada com sucesso! 😎",
-					);
-					this.carregarItens();
-				},
-				error: (err: any) => {
-					this.alertService.erro(err.error.mensagem);
-				},
-			});
-	}
-
 	private carregarItens() {
 		this.isLoading = true;
 		let itensDeCalendario: ItemDeCalendario[] = [];
 		this.adminService
-			.fetchAulasOcorrentes(
-				{
-					alunos: this.vendoMeuCalendario
-						? [this.userService.usuario()!.id]
-						: null,
-					dataInicio: this.dadosSobreMesSelecionado.firstDay,
-					dataFim: this.dadosSobreMesSelecionado.lastDay,
-					alunoNotIn: !this.vendoMeuCalendario
-						? this.userService.usuario()!.id
-						: null,
-				} as AulaOcorrenciaFilter,
-				!this.vendoMeuCalendario,
-			)
+			.fetchAulasOcorrentes({
+				professores: [
+					(this.userService.usuario() as ProfessorResponse)!.id,
+				],
+				dataInicio: this.dadosSobreMesSelecionado.firstDay,
+				dataFim: this.dadosSobreMesSelecionado.lastDay,
+			} as AulaOcorrenciaFilter)
 			.pipe(
 				switchMap((aulasOcorrentes: any) => {
-					let arr = this.vendoMeuCalendario
-						? [...aulasOcorrentes?.conteudo]
-						: [...aulasOcorrentes];
+					let arr = [...aulasOcorrentes?.conteudo];
 					arr = arr.map((aula: any) => {
 						const dataIni = new Date(
 							new Date(aula.data).getFullYear(),
@@ -176,71 +125,29 @@ export class CalendarAlunoPageComponent {
 						);
 						return {
 							title: `Aula de ${aula.idAula.idModalidade.nome}`,
-							subtitle: `Professor: ${aula.idAula.idProfessor.idUsuario.nome}`,
+							subtitle: `Sala: ${aula.idAula.idSala.nome}`,
 							dataHorario: dataIni,
 							tipoUsuario: (
-								this.userService.usuario() as AlunoResponse
-							).tipo,
-							TipoAluno: TipoAluno.FLEXIVEL,
+								this.userService.usuario() as ProfessorResponse
+							).idUsuario.tipo,
 							button:
-								!this.vendoMeuCalendario &&
-								(this.userService.usuario() as AlunoResponse)
-									.tipo == TipoAluno.FLEXIVEL
+								dataIni.getTime() < new Date().getTime()
 									? {
-											label: "Se Inscrever",
-											cor: "green",
+											label: "Lista de Presença",
+											cor: "dark",
 											click: () => {
-												this.seInscreverEmAula(aula);
+												// TODO: COLOCAR LÓGICA DA CHAMADA
+												console.log(
+													"Fazendo chamada!!",
+												);
 											},
 										}
-									: this.vendoMeuCalendario &&
-										  (
-												this.userService.usuario() as AlunoResponse
-										  ).tipo == TipoAluno.FLEXIVEL &&
-										  dataIni.getTime() >
-												new Date().getTime()
-										? {
-												label: "Cancelar",
-												cor: "danger",
-												click: () => {
-													this.aulaService
-														.seDesinscreverAula(
-															aula.id,
-															(
-																this.userService.usuario() as AlunoResponse
-															).id,
-														)
-														.subscribe({
-															next: () => {
-																this.alertService.sucesso(
-																	"Saiu da aula com sucesso!",
-																);
-																this.carregarItens();
-															},
-															error: (
-																err: any,
-															) => {
-																this.alertService.erro(
-																	err.error
-																		.mensagem,
-																);
-															},
-														});
-												},
-											}
-										: undefined,
+									: undefined,
 						} as ItemDeCalendario;
 					});
 					itensDeCalendario = [...itensDeCalendario, ...arr];
-					if (!this.vendoMeuCalendario) {
-						return this.adminService.filterEnsaio({
-							alunos: [this.userService.usuario()!.id],
-							dataInicio: this.dadosSobreMesSelecionado.firstDay,
-							dataFim: this.dadosSobreMesSelecionado.lastDay,
-						} as EnsaioFilter);
-					}
 					return this.aulaService.filterAulaExtra({
-						idAluno: this.userService.usuario()!.id,
+						idProfessor: this.userService.usuario()!.id,
 						dataInicio: this.dadosSobreMesSelecionado.firstDay
 							.toISOString()
 							.substring(0, 10),
@@ -257,22 +164,21 @@ export class CalendarAlunoPageComponent {
 						"Cancelada ⛔",
 					];
 					const arr = aulasExtras?.conteudo.map((aula: any) => {
+						const salaTexto = aula.idAula?.idSala
+							? aula.idAula.idSala.nome
+							: "Indefinida";
 						return {
 							title: "Aula Extra ",
-							subtitle: `Professor: ${aula.idProfessor.idUsuario.nome} | Status: ${statusAula[aula.situacao - 1]}`,
+							subtitle: `Sala: ${salaTexto} | Status: ${statusAula[aula.situacao - 1]}`,
 							dataHorario: new Date(aula.horarioInicio),
 							tipoUsuario: (
-								this.userService.usuario() as AlunoResponse
-							).tipo,
-							TipoAluno: TipoAluno.FLEXIVEL,
+								this.userService.usuario() as ProfessorResponse
+							).idUsuario.tipo,
 						} as ItemDeCalendario;
 					});
 					itensDeCalendario = [...itensDeCalendario, ...arr];
-					if (!this.vendoMeuCalendario) {
-						return of(null);
-					}
 					return this.adminService.filterEnsaio({
-						alunos: [this.userService.usuario()!.id],
+						idProfessor: this.userService.usuario()!.id,
 						dataInicio: this.dadosSobreMesSelecionado.firstDay,
 						dataFim: this.dadosSobreMesSelecionado.lastDay,
 					} as EnsaioFilter);
@@ -284,12 +190,11 @@ export class CalendarAlunoPageComponent {
 						const arr = ensaios?.conteudo.map((ensaio: any) => {
 							return {
 								title: `Ensaio de ${ensaio.idApresentacaoEvento.nome}`,
-								subtitle: `Professor: ${ensaio.idProfessor.idUsuario.nome}`,
+								subtitle: `Evento: ${ensaio.idApresentacaoEvento.eventoNome}`,
 								dataHorario: new Date(ensaio.dataHoraInicio),
 								tipoUsuario: (
-									this.userService.usuario() as AlunoResponse
-								).tipo,
-								TipoAluno: TipoAluno.FLEXIVEL,
+									this.userService.usuario() as ProfessorResponse
+								).idUsuario.tipo,
 							} as ItemDeCalendario;
 						});
 						itensDeCalendario = [...itensDeCalendario, ...arr];
@@ -327,60 +232,9 @@ export class CalendarAlunoPageComponent {
 		this.paginarItens();
 	}
 
-	abrirModalSolicitarAulaExtra() {
-		this.openModal = "solicitarAulaExtra";
-	}
-
 	mudarMes(dadosSobreMes: { firstDay: Date; lastDay: Date }) {
 		this.dadosSobreMesSelecionado = dadosSobreMes;
 		this.carregarItens();
-	}
-
-	changeToMyCalendar(yes: boolean) {
-		const changed = this.vendoMeuCalendario !== yes;
-		this.vendoMeuCalendario = yes;
-		if (changed) {
-			this.carregarItens();
-		}
-	}
-
-	solicitarAulaExtra(form: NgForm | false) {
-		if (form == false) {
-			this.openModal = null;
-			return;
-		}
-		if (form.invalid) {
-			return;
-		}
-		const horIni: Date = new Date(form.value.dataAE);
-		const horFim: Date = new Date(form.value.dataAE);
-		horIni.setUTCHours(
-			form.value.horarioInicioAE.split(":")[0] as number,
-			form.value.horarioInicioAE.split(":")[1] as number,
-		);
-		horFim.setUTCHours(
-			form.value.horarioFimAE.split(":")[0] as number,
-			form.value.horarioFimAE.split(":")[1] as number,
-		);
-
-		const valor = {
-			horarioInicio: horIni,
-			horarioFim: horFim,
-			idProfessor: form.value.professorAE,
-			idAluno: (this.userService.usuario() as AlunoResponse).id,
-		} as AulaExtraDTO;
-		this.aulaService.solicitarAulaExtra(valor).subscribe({
-			next: () => {
-				this.alertService.sucesso(
-					"Solicitação realizada com sucesso! 😎",
-				);
-				this.carregarItens();
-			},
-			error: (error: any) => {
-				this.alertService.erro(error.error.mensagem);
-			},
-		});
-		this.openModal = null;
 	}
 
 	get dateArrayFromItems() {

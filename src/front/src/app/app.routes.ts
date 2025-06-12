@@ -2,7 +2,11 @@ import { Routes } from "@angular/router";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { DashboardAlunoPageComponent } from "./pages/Aluno/dashboard-aluno-page/dashboard-aluno-page.component";
 import { DashboardAdminPageComponent } from "./pages/Admin/dashboard-admin-page/dashboard-admin-page.component";
-import { AdminCanMatchFn, AlunoCanMatchFn } from "./guards/auth.guard";
+import {
+	AdminCanMatchFn,
+	AlunoCanMatchFn,
+	ProfessorCanMatchFn,
+} from "./guards/auth.guard";
 import { MainAdminPageComponent } from "./pages/Admin/main-admin-page/main-admin-page.component";
 import { CalendarAdminPageComponent } from "./pages/Admin/calendar-admin-page/calendar-admin-page.component";
 import { UsuariosAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/usuarios-admin-page.component";
@@ -33,6 +37,7 @@ import { ProfessorTabelaAdminPageComponent } from "./pages/Admin/main-admin-page
 import { AulasExperimentaisAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-admin-page/aulas-experimentais-admin-page/aulas-experimentais-admin-page.component";
 import { IndicadorConversaoAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-conversao-admin-page/indicador-conversao-admin-page.component";
 import { IndicadorAulasAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-aulas-admin-page/indicador-aulas-admin-page.component";
+import { CalendarProfessorPageComponent } from "./pages/Professor/calendar-professor-page/calendar-professor-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -222,13 +227,11 @@ export const routes: Routes = [
 							},
 							{
 								path: "conversao",
-								component:
-									IndicadorConversaoAdminPageComponent,
+								component: IndicadorConversaoAdminPageComponent,
 							},
 							{
 								path: "aulas",
-								component:
-									IndicadorAulasAdminPageComponent,
+								component: IndicadorAulasAdminPageComponent,
 							},
 						],
 					},
@@ -242,7 +245,7 @@ export const routes: Routes = [
 	},
 	{
 		path: "professor",
-		canMatch: [AdminCanMatchFn],
+		canMatch: [ProfessorCanMatchFn],
 		children: [
 			{ path: "", redirectTo: "dashboard", pathMatch: "full" },
 			{
@@ -252,6 +255,10 @@ export const routes: Routes = [
 					{
 						path: "profile",
 						component: UsuarioPageComponent,
+					},
+					{
+						path: "calendar",
+						component: CalendarProfessorPageComponent,
 					},
 				],
 			},

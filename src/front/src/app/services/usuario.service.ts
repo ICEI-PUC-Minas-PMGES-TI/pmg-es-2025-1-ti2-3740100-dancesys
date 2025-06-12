@@ -56,11 +56,12 @@ export class UsuarioService {
 			this.router.navigate(["login"]);
 			return;
 		}
+		console.log(this.getLoggedInUserType() === UsuarioTipos.FUNCIONARIO);
 		if (this.getLoggedInUserType() === UsuarioTipos.ADMIN) {
 			// logado como admin
 			this.router.navigate(["admin"]);
 		} else if (this.getLoggedInUserType() === UsuarioTipos.FUNCIONARIO) {
-			this.router.navigate(["funcionario"]);
+			this.router.navigate(["professor"]);
 		} else if (this.getLoggedInUserType() === UsuarioTipos.ALUNO) {
 			this.router.navigate(["aluno"]);
 		}

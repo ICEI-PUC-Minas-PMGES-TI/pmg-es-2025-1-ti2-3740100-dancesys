@@ -154,8 +154,9 @@ export class AdminService {
 	}
 
 	public editarAluno(aluno: Aluno) {
+		const a = { ...aluno, usuario: aluno.idUsuario };
 		return this.http.post(`${environment.API_URL}usuario/aluno/alterar`, {
-			...aluno,
+			...a,
 			boolBaile: aluno.boolBaile ? 1 : 0,
 			status: aluno.idUsuario.status,
 			senha: aluno.idUsuario.senha,
@@ -165,10 +166,11 @@ export class AdminService {
 	}
 
 	public editarProfessor(professor: Professor) {
+		const p = { ...professor, usuario: professor.idUsuario };
 		return this.http.post(
 			`${environment.API_URL}usuario/professor/alterar`,
 			{
-				...professor,
+				...p,
 			},
 		);
 	}

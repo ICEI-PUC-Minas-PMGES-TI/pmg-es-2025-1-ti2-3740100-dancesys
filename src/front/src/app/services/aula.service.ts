@@ -65,4 +65,8 @@ export class AulaService {
 	public seInscreverAula(idAula: number, idAluno: number) {
 		return this.http.get(`${this.url}inscrever/${idAula}/${idAluno}`);
 	}
+
+	public seDesinscreverAula(idAula: number, idAluno: number) {
+		return this.http.get(`${this.url}desinscrever/${idAula}/${idAluno}`);
+	}
 }

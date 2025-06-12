@@ -1,0 +1,46 @@
+<div *ngIf="isLoading" class="overlay">
+	<div class="loader"></div>
+</div>
+<main
+	class="bg-main-100 flex flex-1 space-y-4 flex-col h-full w-full p-8 text-main-500"
+>
+	<div
+		class="flex w-full border-b-4 border-b-main-500 px-2 space-x-3 justify-start"
+	>
+		<a
+			class="cursor-pointer p-2 bg-main-500 text-white font-bold rounded-t-lg px-8 mr-4"
+			>Meu Calendário</a
+		>
+	</div>
+	<h1 class="text-xl font-bold">Dia {{ selectedDay | date }}</h1>
+	<div class="flex flex-row flex-1 justify-between">
+		<div class="flex flex-col w-3/5 space-y-4 max-h-max">
+			@for (item of showCalItems[currPag]; track item.dataHorario) {
+				<app-calendario-item [item]="item"></app-calendario-item>
+			}
+			@if (showCalItems.length <= 0) {
+				<h1 class="text-xl font-bold">
+					Não há itens de calendário nessa data!
+				</h1>
+				<h2 class="text-lg font-semibold">Tente com outra data 😎</h2>
+			}
+		</div>
+		<div class="flex flex-col px-10 space-y-4">
+			@if (showCalItems.length > 1) {
+				<div class="flex flex-row space-x-4">
+					<button appButton (click)="previousPage()">
+						Página Anterior
+					</button>
+					<button appButton (click)="nextPage()">
+						Próxima página
+					</button>
+				</div>
+			}
+			<app-mini-calendar
+				[eventsDays]="dateArrayFromItems"
+				(diaSelecionado)="selecionarDia($event)"
+				(mesCarregado)="mudarMes($event)"
+			></app-mini-calendar>
+		</div>
+	</div>
+</main>
