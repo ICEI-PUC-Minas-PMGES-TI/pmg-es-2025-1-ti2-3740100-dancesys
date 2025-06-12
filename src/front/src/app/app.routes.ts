@@ -32,6 +32,7 @@ import { AlunoTabelaAdminPageComponent } from "./pages/Admin/main-admin-page/usu
 import { ProfessorTabelaAdminPageComponent } from "./pages/Admin/main-admin-page/usuarios-admin-page/professor-tabela-admin-page/professor-tabela-admin-page.component";
 import { AulasExperimentaisAdminPageComponent } from "./pages/Admin/main-admin-page/aulas-admin-page/aulas-experimentais-admin-page/aulas-experimentais-admin-page.component";
 import { IndicadorConversaoAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-conversao-admin-page/indicador-conversao-admin-page.component";
+import { IndicadorAulasAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-aulas-admin-page/indicador-aulas-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
@@ -223,6 +224,11 @@ export const routes: Routes = [
 								path: "conversao",
 								component:
 									IndicadorConversaoAdminPageComponent,
+							},
+							{
+								path: "aulas",
+								component:
+									IndicadorAulasAdminPageComponent,
 							},
 						],
 					},

@@ -19,3 +19,16 @@ export type Conversao = {
     totalFinanceiro: number;
     totalOutro: number;
 }
+
+export type Aulas = {
+    mes: number;
+    totalAulasOcorrentesRealizadas:  number;
+    totalAulasOcorrentesCanceladas:  number;
+    minutosAulasOcorrentes:  number;
+    totalAulasExtrasRealizadas:  number;
+    totalAulasExtrasCanceladas:  number;
+    minutosAulasExtras:  number;
+    totalAulasExperimentais:  number;
+    minutosAulasExperimentais:  number;
+
+}
