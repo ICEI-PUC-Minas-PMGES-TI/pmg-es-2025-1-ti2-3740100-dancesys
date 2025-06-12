@@ -1,9 +1,6 @@
 package com.dancesys.dancesys.controller;
 
-import com.dancesys.dancesys.dto.IndicadorAulasDTO;
-import com.dancesys.dancesys.dto.IndicadorAulasModalidadeDTO;
-import com.dancesys.dancesys.dto.IndicadorConversaoDTO;
-import com.dancesys.dancesys.dto.IndicadorFinanceiroDTO;
+import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.service.IndicadoresService;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,5 +38,10 @@ public class IndicadoresController {
     @GetMapping(value = "aulas/modalidade/{ano}")
     public List<IndicadorAulasModalidadeDTO> getAulasModalidade(@PathVariable Integer ano){
         return indicadoresService.getRelatorioAulasModalidade(ano);
+    }
+
+    @GetMapping(value = "alunos/modalidade")
+    public List<IndicadorAlunoModalideDTO> getAlunosModalidade(){
+        return indicadoresService.getRelatorioAlunoModalidade();
     }
 }

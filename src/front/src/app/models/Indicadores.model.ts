@@ -37,3 +37,9 @@ export type AulasModalidade = {
     mes: number;
     totalAulas: number;
 }
+
+export type AlunosModalide = {
+    modalidade: string;
+    nivel: number;
+    quantidadeAlunos: number;
+}

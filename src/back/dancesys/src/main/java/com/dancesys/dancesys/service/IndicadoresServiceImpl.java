@@ -1,9 +1,7 @@
 package com.dancesys.dancesys.service;
 
-import com.dancesys.dancesys.dto.IndicadorAulasDTO;
-import com.dancesys.dancesys.dto.IndicadorAulasModalidadeDTO;
-import com.dancesys.dancesys.dto.IndicadorConversaoDTO;
-import com.dancesys.dancesys.dto.IndicadorFinanceiroDTO;
+import com.dancesys.dancesys.dto.*;
+import com.dancesys.dancesys.repository.AlunoRepository;
 import com.dancesys.dancesys.repository.AulaExperimentalRepository;
 import com.dancesys.dancesys.repository.AulaOcorrenciaRepository;
 import com.dancesys.dancesys.repository.DividendoRepository;
@@ -18,15 +16,18 @@ public class IndicadoresServiceImpl implements IndicadoresService {
     private final DividendoRepository dividendoRepository;
     private final AulaExperimentalRepository  aulaExperimentalRepository;
     private final AulaOcorrenciaRepository aulaOcorrenciaRepository;
+    private final AlunoRepository alunoRepository;
 
     public IndicadoresServiceImpl(
             DividendoRepository dividendoRepository,
             AulaExperimentalRepository aulaExperimentalRepository,
-            AulaOcorrenciaRepository aulaOcorrenciaRepository
+            AulaOcorrenciaRepository aulaOcorrenciaRepository,
+            AlunoRepository alunoRepository
     ) {
         this.dividendoRepository = dividendoRepository;
         this.aulaExperimentalRepository = aulaExperimentalRepository;
         this.aulaOcorrenciaRepository = aulaOcorrenciaRepository;
+        this.alunoRepository = alunoRepository;
     }
 
     @Override
@@ -106,6 +107,23 @@ public class IndicadoresServiceImpl implements IndicadoresService {
             dto.setModalidade((String) r[0]);
             dto.setMes((Integer)r[1]);
             dto.setTotalAulas((Integer)r[2]);
+
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+    @Override
+    public List<IndicadorAlunoModalideDTO> getRelatorioAlunoModalidade(){
+        List<Object[]> result = alunoRepository.getRelatorioAlunoModalidade();
+        List<IndicadorAlunoModalideDTO> dtos = new ArrayList<>();
+
+        for(Object[] r : result){
+            IndicadorAlunoModalideDTO dto = new IndicadorAlunoModalideDTO();
+            dto.setModalide((String) r[0]);
+            dto.setNivel((Integer) r[1]);
+            dto.setQuantidadeAlunos((Integer) r[2]);
 
             dtos.add(dto);
         }

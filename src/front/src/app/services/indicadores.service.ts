@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Aulas, AulasModalidade, Conversao, Financeiro } from "../models/Indicadores.model";
+import { AlunosModalide, Aulas, AulasModalidade, Conversao, Financeiro } from "../models/Indicadores.model";
 import { environment } from "../../environment/environment";
 
 @Injectable({
@@ -27,5 +27,9 @@ export class IndicadoresService{
 
     public getRelatorioAulasModalidade(ano: number): Observable<AulasModalidade[]>{
         return this.http.get(`${this.url}aulas/modalidade/${ano}`) as Observable<AulasModalidade[]>
+    }
+
+    public getRelatorioAlunosModalidade(): Observable<AlunosModalide[]>{
+        return this.http.get(`${this.url}/alunos/modalidade`) as Observable<AlunosModalide[]>
     }
 }
