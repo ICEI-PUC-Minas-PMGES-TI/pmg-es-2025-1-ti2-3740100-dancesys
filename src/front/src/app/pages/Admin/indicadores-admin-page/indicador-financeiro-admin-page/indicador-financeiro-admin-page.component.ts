@@ -39,6 +39,7 @@ export class IndicadorFinanceiroAdminPageComponent {
 	mesForm: FormGroup;
 
   anoInicial: number = 2025
+  anoSelecionado: number = 2025
 
   meses: {value: number; name: string}[] = [
     {value: 1, name: 'Janeiro'},
@@ -74,6 +75,7 @@ export class IndicadorFinanceiroAdminPageComponent {
 
     this.anoForm.get('ano')?.valueChanges.subscribe((novoValor) => {
       this.buscar();
+      this.anoSelecionado = this.anoForm.get('ano')?.value;
     });
 
     this.mesForm.get('mes')?.valueChanges.subscribe((novoValor) => {

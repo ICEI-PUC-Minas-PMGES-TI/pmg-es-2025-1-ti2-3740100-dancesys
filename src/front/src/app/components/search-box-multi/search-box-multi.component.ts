@@ -129,7 +129,7 @@ import {
 	  }
   
 	  const lowerSearch = this.searchText.toLowerCase();
-  
+	  
 	  return this.options.filter((option) =>
 		this.getPropByPath(option, this.optionLabel).toLowerCase().includes(lowerSearch),
 	  );

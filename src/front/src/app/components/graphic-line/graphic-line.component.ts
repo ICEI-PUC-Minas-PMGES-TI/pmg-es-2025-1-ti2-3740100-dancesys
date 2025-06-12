@@ -23,6 +23,7 @@ export class GraphicLineComponent {
   gerarGraficoLinha(){
     if (this.graficoLinha) {
       this.graficoLinha.destroy();
+      console.log(this.data)
     }
     
     const ctx = this.canvasRef.nativeElement.getContext('2d');
