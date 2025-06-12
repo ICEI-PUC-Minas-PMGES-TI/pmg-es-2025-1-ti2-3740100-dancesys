@@ -61,10 +61,10 @@ public class ChamadaServiceImpl implements ChamadaService {
     }
 
     @Override
-    public String removerAluno(Long idAluno, Long idAulaOcorrencia){
+    public void removerAluno(Long idAluno, Long idAulaOcorrencia){
         AulaOcorrencia ao = aulaOcorrenciaServiceImpl.buscarPorId(idAulaOcorrencia);
 
-        if(LocalTime.now().isBefore(ao.getIdAula().getHorarioInicio().minusHours(1)) && ao.getData().equals(LocalDate.now())){
+        if(LocalTime.now().isAfter(ao.getIdAula().getHorarioInicio().minusHours(1)) && ao.getData().equals(LocalDate.now())){
             throw new RuntimeException("Você só pode se desincrever em ate 1 hora antes da aula");
         }
 
@@ -72,8 +72,6 @@ public class ChamadaServiceImpl implements ChamadaService {
         ChamadaId id =  new ChamadaId(idAluno,idAulaOcorrencia);
         chamadaRepository.deleteById(id);
         alunoServiceImpl.aumentarCredito(aluno,1);
-
-        return "Removido com sucesso";
     }
 
     public List<Chamada> buscarPorAula(Long idAula){

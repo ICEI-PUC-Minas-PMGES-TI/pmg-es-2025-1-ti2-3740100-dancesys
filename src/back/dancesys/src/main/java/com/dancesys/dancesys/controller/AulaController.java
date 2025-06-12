@@ -46,8 +46,8 @@ public class AulaController {
     }
 
     @GetMapping(value = "desinscrever/{idAulaOcorrencia}/{idAluno}")
-    public String removerAluno(@PathVariable Long idAulaOcorrencia, @PathVariable Long idAluno ) throws RuntimeException {
-        return chamadaService.removerAluno(idAluno,idAulaOcorrencia);
+    public void removerAluno(@PathVariable Long idAulaOcorrencia, @PathVariable Long idAluno ) throws RuntimeException {
+        chamadaService.removerAluno(idAluno,idAulaOcorrencia);
     }
 
     @GetMapping(value = "status/{id}")
