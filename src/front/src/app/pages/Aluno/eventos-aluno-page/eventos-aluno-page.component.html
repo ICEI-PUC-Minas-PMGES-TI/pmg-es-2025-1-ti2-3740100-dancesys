@@ -22,7 +22,61 @@
 					{{ evento.dataHoraFim | date : "dd/MM/yyyy HH:mm" }}
 				</p>
 				<p class="mt-2 text-sm">Preço: R$ {{ evento.valor }}</p>
+				<button
+					class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600"
+					(click)="
+						evento.id !== undefined
+							? comprarIngresso(evento.id)
+							: null
+					"
+				>
+					Comprar Ingresso
+				</button>
 			</div>
 		</div>
 	</section>
+
+	<div *ngIf="isModalOpen" class="modal-overlay">
+		<div class="modal-content">
+			<h2 class="font-semibold text-lg">Compra de Ingresso</h2>
+			<form (ngSubmit)="processarCompra()" [formGroup]="ingressoForm">
+				<label for="qtdIngressos" class="text-sm"
+					>Quantidade de Ingressos</label
+				>
+				<input
+					id="qtdIngressos"
+					type="number"
+					formControlName="qtdIngressos"
+					min="1"
+					max="10"
+					class="w-full p-2 rounded-md border"
+				/>
+
+				<label for="tipoIngresso" class="mt-3 text-sm"
+					>Tipo de Ingresso</label
+				>
+				<select
+					formControlName="tipoIngresso"
+					class="w-full p-2 rounded-md border"
+				>
+					<option value="normal">Entrada Normal</option>
+					<option value="meio">Meio Ingresso</option>
+				</select>
+
+				<button
+					type="submit"
+					class="mt-4 w-full bg-main-500 text-white p-2 rounded-md"
+				>
+					Comprar Ingresso
+				</button>
+				<button
+					type="button"
+					class="mt-2 w-full bg-red-500 text-white p-2 rounded-md"
+					(click)="fecharModal()"
+				>
+					Fechar
+				</button>
+			</form>
+		</div>
+	</div>
 </main>
