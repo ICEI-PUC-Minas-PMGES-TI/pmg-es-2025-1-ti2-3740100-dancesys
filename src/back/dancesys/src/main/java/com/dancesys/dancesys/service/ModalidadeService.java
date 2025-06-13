@@ -11,5 +11,5 @@ public interface ModalidadeService {
 
     public List<Modalidade> buscar();
 
-    public String excluir(Long id);
+    public void excluir(Long id);
 }

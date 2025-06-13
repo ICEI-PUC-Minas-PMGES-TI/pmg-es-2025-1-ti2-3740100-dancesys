@@ -1,7 +1,74 @@
-<section class="flex justify-between flex-row">
-        <div class="flex flex-row space-x-2">
-            <button icon="add_circle" icon-slot="right" appButton color="dark" (click)="novo()">
+@if (isModalConfirm) {
+	<app-modal
+		[confirmMode]="true"
+		message="Deseja excluir essa modalidade?"
+		(onClose)="onConfirmDelete($event)"
+	></app-modal>
+}
+@if(isModalOpen){
+    <app-modal (onClose)="closeModal()">
+		<div class="w-full">
+			<header
+				class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+			>
+				<h1 class="font-bold text-3xl">
+					{{ isEdit ? ToggleModal.EDIT : ToggleModal.NEW }}
+				</h1>
+			</header>
+			<main>
+				<form
+					[formGroup]="modalidadeForm"
+					class="flex flex-col p-2 space-y-2"
+				>
+					<section class="flex flex-row space-x-3 flex-1">
+						<div class="flex flex-1 flex-col">
+								<label for="cpf">Nome:</label>
+								<input
+									class="p-1 bg-main-300 rounded-md"
+									type="text"
+									name="nome"
+									id="nome"
+									placeholder="...."
+                                    formControlName ="nome"
+									required
+								/>
+							</div>
+					</section>
+
+					<button
+						class="self-start mt-3"
+						type="submit"
+						[disabled]="!isFormValido()"
+						(click)="salvar()"
+						appButton
+					>
+						Salvar
+					</button>
+				</form>
+			</main>
+		</div>
+	</app-modal>
+}
+
+<main class="py-4 max-w-full max-h-full h-full">
+	<section class="flex justify-between flex-row">
+		<div class="flex flex-row space-x-2">
+			<button
+				icon="add_circle"
+				icon-slot="right"
+				appButton
+				color="dark"
+				(click)="novo()"
+			>
 				Novo
 			</button>
-        </div>
-    </section>
+		</div>
+	</section>
+	<app-simple-table
+		[colunas]="colunas"
+		[dados]="modalidadeObj"
+		[botoesAcoes]="acoes"
+        [paged]="false"
+	>
+	</app-simple-table>
+</main>

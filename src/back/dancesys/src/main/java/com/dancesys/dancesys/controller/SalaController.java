@@ -34,7 +34,7 @@ public class SalaController {
     }
 
     @DeleteMapping(value = "excluir/{id}")
-    public String excluir(@PathVariable Long id) throws Exception {
-        return salaService.excluir(id);
+    public void excluir(@PathVariable Long id) throws Exception {
+        salaService.excluir(id);
     }
 }

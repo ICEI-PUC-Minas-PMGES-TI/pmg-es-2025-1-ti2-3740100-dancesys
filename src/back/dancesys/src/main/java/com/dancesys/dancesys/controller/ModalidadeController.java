@@ -32,7 +32,7 @@ public class ModalidadeController {
     }
 
     @DeleteMapping(value = "excluir/{id}")
-    public String excluir(@PathVariable Long id) throws Exception {
-        return modalidadeService.excluir(id);
+    public void excluir(@PathVariable Long id) throws Exception {
+        modalidadeService.excluir(id);
     }
 }

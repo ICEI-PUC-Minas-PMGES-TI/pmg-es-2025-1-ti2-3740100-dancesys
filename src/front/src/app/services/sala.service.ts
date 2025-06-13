@@ -9,9 +9,18 @@ import { Sala } from "../models/Sala.model";
 export class SalaService {
 	http = inject(HttpClient);
 
+	url = `${environment.API_URL}sala`
 	public fetchSalas(): Observable<Sala[]> {
 		return this.http.get(
-			`${environment.API_URL}sala/buscar`,
+			`${this.url}/buscar`,
 		) as Observable<Sala[]>;
+	}
+
+	public salvarSala(item: Sala) {
+			return this.http.post(`${this.url}`, { ...item});
+		}
+	
+	public excluir(id: number){
+		return this.http.delete(`${this.url}/excluir/${id}`)
 	}
 }

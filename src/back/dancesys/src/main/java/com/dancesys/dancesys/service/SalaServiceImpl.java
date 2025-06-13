@@ -32,8 +32,7 @@ public class SalaServiceImpl implements SalaService {
     }
 
     @Override
-    public String excluir(Long id){
+    public void excluir(Long id){
         salaRepository.deleteById(id);
-        return "Sala excluida com sucesso!";
     }
 }

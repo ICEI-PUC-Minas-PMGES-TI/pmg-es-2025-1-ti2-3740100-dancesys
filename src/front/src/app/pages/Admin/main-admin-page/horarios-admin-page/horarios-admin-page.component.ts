@@ -147,7 +147,7 @@ export class HorariosAdminPageComponent {
 	carregarProfessores(){
 		this.adminService.fetchProfessores().subscribe({
 			next: (response) => {
-				this.professoresObj = response;
+				this.professoresObj = response.conteudo;
 			},
 			error: (err) => {
 			},
@@ -217,6 +217,7 @@ export class HorariosAdminPageComponent {
 	}
 
 	editar(item: any) {
+		console.log(item)
 		this.isModalOpen = true;
 		this.isEdit = true;
 		this.preencherHorarioForm(item);
@@ -227,7 +228,7 @@ export class HorariosAdminPageComponent {
 			this.adminService.excluirHorarioProfessor(this.idDelete).subscribe({
 				next: () =>{
 					this.buscar();
-					this.alertService.exclusao("Horario excluid com sucesso!")
+					this.alertService.exclusao("Horario excluido com sucesso!")
 				},
 				error: (err) => {
 				},

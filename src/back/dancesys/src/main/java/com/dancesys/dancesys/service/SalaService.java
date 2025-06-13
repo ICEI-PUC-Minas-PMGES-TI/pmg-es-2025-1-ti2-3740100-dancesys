@@ -11,5 +11,5 @@ public interface SalaService {
 
     public List<Sala> buscar();
 
-    public String excluir(Long id);
+    public void excluir(Long id);
 }

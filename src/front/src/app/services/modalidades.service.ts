@@ -9,9 +9,20 @@ import { environment } from "../../environment/environment";
 export class ModalidadesService {
 	http = inject(HttpClient);
 
+	url = `${environment.API_URL}modalidade`
+
 	public fetchModalidades(): Observable<Modalidade[]> {
 		return this.http.get(
-			`${environment.API_URL}modalidade/buscar`,
+			`${this.url}/buscar`,
 		) as Observable<Modalidade[]>;
 	}
+
+	public salvarModalidade(item: Modalidade) {
+		return this.http.post(`${this.url}`, { ...item});
+	}
+
+	public excluir(id: number){
+		return this.http.delete(`${this.url}/excluir/${id}`)
+	}
+
 }

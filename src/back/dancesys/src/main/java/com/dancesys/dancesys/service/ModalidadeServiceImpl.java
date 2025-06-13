@@ -34,8 +34,7 @@ public class ModalidadeServiceImpl implements ModalidadeService{
     }
 
     @Override
-    public String excluir(Long id){
+    public void excluir(Long id){
         modalidadeRepository.deleteById(id);
-        return "Modalidade removida com sucesso";
     }
 }
