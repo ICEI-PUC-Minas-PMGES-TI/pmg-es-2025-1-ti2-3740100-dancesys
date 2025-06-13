@@ -44,6 +44,7 @@ import { MainProfessorPageComponent } from "./pages/Professor/main-professor-pag
 
 
 export  const routes: Routes = [
+
 	{ path: "", redirectTo: "login", pathMatch: "full" },
 	{ path: "login", component: LoginPageComponent },
 	{
@@ -255,7 +256,9 @@ export  const routes: Routes = [
 		path: "professor",
 		canMatch: [ProfessorCanMatchFn],
 		children: [
+
 			{ path: "", redirectTo: "dashboard/main", pathMatch: "full" },
+
 			{
 				path: "dashboard",
 				component: DashboardProfessorPageComponent,
