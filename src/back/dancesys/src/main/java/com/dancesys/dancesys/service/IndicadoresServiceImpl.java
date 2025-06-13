@@ -121,7 +121,7 @@ public class IndicadoresServiceImpl implements IndicadoresService {
 
         for(Object[] r : result){
             IndicadorAlunoModalideDTO dto = new IndicadorAlunoModalideDTO();
-            dto.setModalide((String) r[0]);
+            dto.setModalidade((String) r[0]);
             dto.setNivel((Integer) r[1]);
             dto.setQuantidadeAlunos((Integer) r[2]);
 

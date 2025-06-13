@@ -118,7 +118,7 @@ export class AulasFixasAdminPageComponent {
 		this.filterForm = this.fb.group({
 			dias: [this.diasFilter],
 			professores: [this.professorFilter],
-			modalidades: [this.modalidesFilter],
+			modalidades: [this.modalidadesFilter],
 			tamanho: [this.itensPage],
 			pagina: [this.paginaAtual],
 		});
@@ -149,7 +149,7 @@ export class AulasFixasAdminPageComponent {
 	];
 
 	diasFilter: number[] = [];
-	modalidesFilter: number[] = [];
+	modalidadesFilter: number[] = [];
 	professorFilter: number[] = [];
 	modalidadesObj: Modalidade[] = [];
 	professoresObj: ProfessorResponse[] = [];
@@ -236,7 +236,7 @@ export class AulasFixasAdminPageComponent {
 		this.filterForm = this.fb.group({
 			dias: [this.diasFilter],
 			professores: [this.professorFilter],
-			modalidades: [this.modalidesFilter],
+			modalidades: [this.modalidadesFilter],
 			tamanho: [this.itensPage],
 			pagina: [this.paginaAtual],
 		});
@@ -371,7 +371,7 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	onModalidadeChange(selected: number[]) {
-		this.modalidesFilter = selected;
+		this.modalidadesFilter = selected;
 	}
 
 	onProfessoresChange(selected: number[]) {

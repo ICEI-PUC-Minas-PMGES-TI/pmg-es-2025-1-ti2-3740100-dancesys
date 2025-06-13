@@ -21,8 +21,14 @@
             </app-graphic-line>
         </div>
     </section>
-
-    <!-- <app-graphic-bar-y #graficoBar [labels]="labelsTeste" [data]="dataTeste"></app-graphic-bar-y> -->
+    <section class="flex flex-row py-5">
+        <h1 class="text-main-500 text-xl font-bold">Alunos por modalidade</h1>
+    </section>
+    <section>
+        <div class="padrao flex justify-center items-center">
+            <app-graphic-bar-y class="w-full" #graficoBar [labels]="labelsGB" [data]="dataGB"></app-graphic-bar-y>
+        </div>
+    </section>
 </main>
 
 

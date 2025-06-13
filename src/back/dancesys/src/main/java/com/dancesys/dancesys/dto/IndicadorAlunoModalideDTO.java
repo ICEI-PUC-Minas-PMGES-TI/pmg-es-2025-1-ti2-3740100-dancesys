@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class IndicadorAlunoModalideDTO {
-    private String modalide;
+    private String modalidade;
     private Integer nivel;
     private Integer quantidadeAlunos;
 }

@@ -38,7 +38,7 @@ import { AulasExperimentaisAdminPageComponent } from "./pages/Admin/main-admin-p
 import { IndicadorConversaoAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-conversao-admin-page/indicador-conversao-admin-page.component";
 import { IndicadorAulasAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-aulas-admin-page/indicador-aulas-admin-page.component";
 import { CalendarProfessorPageComponent } from "./pages/Professor/calendar-professor-page/calendar-professor-page.component";
-import { IndicardorModalidadeAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicardor-modalidade-admin-page/indicardor-modalidade-admin-page.component";
+import { IndicardorModalidadeAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-modalidade-admin-page/indicador-modalidade-admin-page.component";
 
 export const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
