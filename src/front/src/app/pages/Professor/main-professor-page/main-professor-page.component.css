@@ -1,0 +1,119 @@
+/* Container principal */
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f9e9d9;
+  color: #5b3a1a;
+  font-family: serif;
+}
+
+/* Sidebar */
+.app-navbar {
+  width: 60px;
+  background: #d6bfa2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  gap: 20px;
+}
+
+/* Botões da navbar */
+.app-navbar-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botão do perfil na parte inferior */
+.app-navbar-button.bottom {
+  margin-top: auto;
+}
+
+/* Conteúdo principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Seção próximas aulas */
+.next-classes {
+  margin-bottom: 40px;
+}
+
+.next-classes h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+/* Cartões de aula */
+.class-card {
+  background: #d3c4b3cc;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.class-card:last-child {
+  margin-bottom: 0;
+}
+
+.info-left, .info-right {
+  display: flex;
+  gap: 20px;
+}
+
+.info-left > div, .info-right > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.class-type {
+  display: flex;
+  align-items: center;
+}
+
+/* Seção próximos eventos */
+.next-events h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.events-container {
+  display: flex;
+  gap: 12px;
+}
+
+/* Cartão de evento */
+.event-card {
+  background: #d3c4b3cc;
+  border-radius: 8px;
+  width: 140px;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.event-card .image {
+  background: #bbb;
+  height: 80px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.event-title {
+  font-weight: 600;
+}

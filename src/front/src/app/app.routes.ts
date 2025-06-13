@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { LoginPageComponent } from "./pages/login-page/login-page.component";
 import { DashboardAlunoPageComponent } from "./pages/Aluno/dashboard-aluno-page/dashboard-aluno-page.component";
 import { DashboardAdminPageComponent } from "./pages/Admin/dashboard-admin-page/dashboard-admin-page.component";
+import { DashboardProfessorPageComponent } from "./pages/Professor/dashboard-professor-page/dashboard-professor-page.component";
 import {
 	AdminCanMatchFn,
 	AlunoCanMatchFn,
@@ -39,8 +40,10 @@ import { IndicadorConversaoAdminPageComponent } from "./pages/Admin/indicadores-
 import { IndicadorAulasAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-aulas-admin-page/indicador-aulas-admin-page.component";
 import { CalendarProfessorPageComponent } from "./pages/Professor/calendar-professor-page/calendar-professor-page.component";
 import { IndicardorModalidadeAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-modalidade-admin-page/indicador-modalidade-admin-page.component";
+import { MainProfessorPageComponent } from "./pages/Professor/main-professor-page/main-professor-page.component";
 
-export const routes: Routes = [
+
+export  const routes: Routes = [
 	{ path: "", redirectTo: "login", pathMatch: "full" },
 	{ path: "login", component: LoginPageComponent },
 	{
@@ -252,10 +255,10 @@ export const routes: Routes = [
 		path: "professor",
 		canMatch: [ProfessorCanMatchFn],
 		children: [
-			{ path: "", redirectTo: "dashboard", pathMatch: "full" },
+			{ path: "", redirectTo: "dashboard/main", pathMatch: "full" },
 			{
 				path: "dashboard",
-				component: DashboardAdminPageComponent,
+				component: DashboardProfessorPageComponent,
 				children: [
 					{
 						path: "profile",
@@ -264,6 +267,10 @@ export const routes: Routes = [
 					{
 						path: "calendar",
 						component: CalendarProfessorPageComponent,
+					},
+					{
+						path: "main",
+						component: MainProfessorPageComponent,
 					},
 				],
 			},
