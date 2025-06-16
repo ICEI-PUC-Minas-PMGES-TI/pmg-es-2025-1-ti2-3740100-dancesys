@@ -156,6 +156,20 @@ export class EnsaiosAdminPageComponent {
 		return EnsaioFilter;
 	}
 
+	resetFilter(){
+		this.filterForm = this.fb.group({
+			idProfessor: [],
+			alunos: [[]],
+			apresentacoes: [[]],
+			dataInicio: [],
+			dataFim: [],
+			tamanho: [this.itensPage],
+			pagina: [this.paginaAtual],
+			orderBy: [],
+			order: []
+		});
+	}
+
 	resetEnsaioForm() {
 		this.ensaioForm = this.fb.group({
 			id: [],

@@ -162,6 +162,20 @@ export class AulasRecorrentesAdminPageComponent {
 		});
 	}
 
+	resetFilter(){
+		this.filterForm = this.fb.group({
+			professores: [[]],
+			alunos: [[]],
+			dataInicio: [],
+			dataFim: [],
+			codigo: [],
+			tamanho: [this.itensPage],
+			pagina: [this.paginaAtual],
+			orderBy: [this.orderByValue],
+			order: [this.orderValue],
+		});
+	}
+
 	getFilterForm() {
 		this.filterForm.get("tamanho")?.setValue(this.itensPage);
 		this.filterForm.get("pagina")?.setValue(this.paginaAtual);

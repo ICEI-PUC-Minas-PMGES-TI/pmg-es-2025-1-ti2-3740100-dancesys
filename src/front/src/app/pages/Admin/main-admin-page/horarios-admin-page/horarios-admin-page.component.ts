@@ -179,6 +179,17 @@ export class HorariosAdminPageComponent {
 		return filter;
 	}
 
+	resetFilter(){
+		this.filterForm = this.fb.group({
+		  professores: [[]],
+		  diasSemana: [[]],
+		  pagina: [],
+		  tamanho: [],
+		  orderBy: [],
+		  order: []
+		});
+	}
+
 	onFilter(){
 		this.tabela.isLoad(true)
 		this.paginaAtual = 0;

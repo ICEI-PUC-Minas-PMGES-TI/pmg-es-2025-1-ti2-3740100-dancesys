@@ -245,6 +245,18 @@ export class AulasFixasAdminPageComponent {
 		return this.filterForm.value;
 	}
 
+	resetFilter(){
+		this.filterForm = this.fb.group({
+			dias: [],
+			professores: [],
+			modalidades: [],
+			tamanho: [],
+			pagina: [],
+			orderBy: [],
+			order: []
+		});
+	}
+
 	onFilter() {
 		this.tabela.isLoad(true);
 		this.paginaAtual = 0;

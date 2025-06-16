@@ -153,6 +153,18 @@ export class FincanceiroAdminPageComponent {
 		return this.filterForm.value;
 	}
 
+	resetFilter(){
+		this.filterForm = this.fb.group({
+			criadoEm: [""],
+			pagoEm: [""],
+			status: [[]],
+			tipos: [[]],
+			alunos: [[]],
+			tamanho: [this.itensPage],
+			pagina: [this.paginaAtual],
+		});
+	}
+
 	onFilter() {
 		this.tabela.isLoad(true);
 		this.paginaAtual = 0;

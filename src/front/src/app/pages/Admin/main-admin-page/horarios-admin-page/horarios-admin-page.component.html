@@ -108,10 +108,21 @@
 
 <main class="py-4 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
-		<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
-		<form class="flex flex-col text-main-500 font-bold">
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				(click)="resetFilter()"
+			>
+				Limpar filtros
+			</button>
+		</div>
+		<form [formGroup]="filterForm" class="flex flex-col text-main-500 font-bold">
 			<div class="flex px-1 flex-row space-x-2">
 				<app-multi-select-input
+					formControlName="professores"
 					[label]="'Professor:'"
 					[options]="professoresObj"
 					optionLabel="idUsuario.nome"
@@ -121,6 +132,7 @@
 				></app-multi-select-input>
 
 				<app-multi-select-input
+					formControlName="diasSemana"
 					[label]="'Dias:'"
 					[options]="diasObj"
 					optionLabel="nome"
