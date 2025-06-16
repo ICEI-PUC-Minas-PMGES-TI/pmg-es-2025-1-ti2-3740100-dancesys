@@ -59,6 +59,8 @@ export class EnsaiosAdminPageComponent {
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
+	orderByValue!: string;
+	orderValue!: string;
 
 	isModalOpen: boolean = false;
 	isEdit: boolean = false;
@@ -107,6 +109,8 @@ export class EnsaiosAdminPageComponent {
 			dataFim: [],
 			tamanho: [this.itensPage],
 			pagina: [this.paginaAtual],
+			orderBy: [],
+			order: []
 		});
 
 		this.ensaioForm = this.fb.group({
@@ -143,6 +147,8 @@ export class EnsaiosAdminPageComponent {
 	getFilterForm() {
 		this.filterForm.get("tamanho")?.setValue(this.itensPage);
 		this.filterForm.get("pagina")?.setValue(this.paginaAtual);
+		this.filterForm.get("orderBy")?.setValue(this.orderByValue);
+		this.filterForm.get("order")?.setValue(this.orderValue);
 
 		const item = this.filterForm.value;
 		const EnsaioFilter: EnsaioFilter = item;
@@ -284,6 +290,8 @@ export class EnsaiosAdminPageComponent {
 			alunos: null,
 			tamanho: 0,
 			pagina: 0,
+			orderBy: '',
+			order: ''
 		};
 
 		this.adminService.fetchApresentacoes(filtro).subscribe({
@@ -309,6 +317,8 @@ export class EnsaiosAdminPageComponent {
 			alunos: null,
 			tamanho: 0,
 			pagina: 0,
+			orderBy: '',
+			order: ''
 		};
 
 		this.adminService.fetchApresentacoes(filtro).subscribe({
@@ -347,6 +357,13 @@ export class EnsaiosAdminPageComponent {
 		this.tabela.isLoad(true);
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
+		this.buscar();
+	}
+
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
 		this.buscar();
 	}
 }

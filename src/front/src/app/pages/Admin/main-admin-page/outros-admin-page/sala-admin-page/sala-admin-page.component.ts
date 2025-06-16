@@ -71,7 +71,6 @@ export class SalaAdminPageComponent {
     this.salaService.fetchSalas().subscribe({
       next: (response) =>{
         this.salaObj = response
-        console.log(this.salaObj)
       }
     })
   }
@@ -89,7 +88,6 @@ export class SalaAdminPageComponent {
   }
 
   salvar(){
-    console.log(this.getSalaForm())
     this.salaService.salvarSala(this.getSalaForm()).subscribe({
       next: (response) =>{
         this.alertService.sucesso("Sala salva com sucesso")

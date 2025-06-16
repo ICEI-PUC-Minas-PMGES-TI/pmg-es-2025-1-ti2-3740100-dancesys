@@ -22,4 +22,6 @@ export type EventoFilter = {
 	alunos: number[] | null;
 	pagina: number;
 	tamanho: number;
+	orderBy: string;
+	order: string;
 };

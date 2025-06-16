@@ -16,4 +16,6 @@ public class EnsaioFilter {
     private LocalDate dataFim;
     private Integer pagina;
     private Integer tamanho;
+    private String orderBy;
+    private String order;
 }

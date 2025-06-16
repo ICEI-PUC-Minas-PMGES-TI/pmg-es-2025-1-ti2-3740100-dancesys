@@ -39,6 +39,8 @@ export class EventosAdminPageComponent implements OnInit {
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
+	orderByValue: string = '';
+	orderValue: string = '';
 
 	currentEventoEditar: Evento | undefined = undefined;
 
@@ -213,6 +215,8 @@ export class EventosAdminPageComponent implements OnInit {
 				alunos: null,
 				pagina: this.paginaAtual,
 				tamanho: this.itensPage,
+				orderBy: this.orderByValue,
+				order: this.orderValue
 			} as EventoFilter)
 			.subscribe({
 				next: (ev: EventoResponse) => {
@@ -231,5 +235,12 @@ export class EventosAdminPageComponent implements OnInit {
 			return Object.keys(form.value).some((k) => !!form.value[k]);
 		}
 		return false;
+	}
+
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
+		this.onFiltrar();
 	}
 }

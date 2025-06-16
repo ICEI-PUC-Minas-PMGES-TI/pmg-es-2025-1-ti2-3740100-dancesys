@@ -178,6 +178,8 @@ export class FigurinosPorAlunoAdminPageComponent {
 			alunos: [],
 			pagina: 0,
 			tamanho: 0,
+			orderBy: '',
+			order: ''
 		};
 
 		this.adminService.fetchEventos(filtro).subscribe({
@@ -212,6 +214,8 @@ export class FigurinosPorAlunoAdminPageComponent {
 			alunos: [],
 			tamanho: 0,
 			pagina: 0,
+			orderBy: '',
+			order: ''
 		};
 
 		this.adminService.fetchApresentacoes(filtro).subscribe({

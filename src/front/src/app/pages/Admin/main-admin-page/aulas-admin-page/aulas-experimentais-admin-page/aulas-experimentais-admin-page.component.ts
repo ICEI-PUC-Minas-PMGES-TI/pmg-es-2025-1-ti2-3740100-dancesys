@@ -183,7 +183,6 @@ export class AulasExperimentaisAdminPageComponent {
           this.alertService.info("Nenhum registro encontrado!")
         }else{
             this.aulasObj = response
-            console.log(response)
         }
         this.tabela.isLoad(false)
       }

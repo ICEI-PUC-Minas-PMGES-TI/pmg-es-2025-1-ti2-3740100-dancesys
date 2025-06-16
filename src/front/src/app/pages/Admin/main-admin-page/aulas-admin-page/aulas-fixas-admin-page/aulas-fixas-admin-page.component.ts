@@ -58,6 +58,8 @@ export class AulasFixasAdminPageComponent {
 	ToggleModal = ToggleModal;
 	paginaAtual: number = 0;
 	itensPage: number = 10;
+	orderByValue: string = '';
+	orderValue: string = '';
 	isModalOpen: boolean = false;
 	isModalConfirm: boolean = false;
 	isEdit: boolean = false;
@@ -116,11 +118,13 @@ export class AulasFixasAdminPageComponent {
 
 	constructor(private fb: FormBuilder) {
 		this.filterForm = this.fb.group({
-			dias: [this.diasFilter],
-			professores: [this.professorFilter],
-			modalidades: [this.modalidadesFilter],
-			tamanho: [this.itensPage],
-			pagina: [this.paginaAtual],
+			dias: [],
+			professores: [],
+			modalidades: [],
+			tamanho: [],
+			pagina: [],
+			orderBy: [],
+			order: []
 		});
 
 		this.aulaForm = this.fb.group({
@@ -233,13 +237,10 @@ export class AulasFixasAdminPageComponent {
 	}
 
 	getfilter() {
-		this.filterForm = this.fb.group({
-			dias: [this.diasFilter],
-			professores: [this.professorFilter],
-			modalidades: [this.modalidadesFilter],
-			tamanho: [this.itensPage],
-			pagina: [this.paginaAtual],
-		});
+		this.filterForm.get("tamanho")?.setValue(this.itensPage);
+		this.filterForm.get("pagina")?.setValue(this.paginaAtual);
+		this.filterForm.get("orderBy")?.setValue(this.orderByValue);
+		this.filterForm.get("order")?.setValue(this.orderValue);
 
 		return this.filterForm.value;
 	}
@@ -376,5 +377,12 @@ export class AulasFixasAdminPageComponent {
 
 	onProfessoresChange(selected: number[]) {
 		this.professorFilter = selected;
+	}
+
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
+		this.buscar();
 	}
 }

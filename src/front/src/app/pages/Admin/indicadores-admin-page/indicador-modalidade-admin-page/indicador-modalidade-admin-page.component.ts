@@ -72,7 +72,6 @@ export class IndicardorModalidadeAdminPageComponent {
       next: (response) =>{
         this.relatorioResponse2 = response
         this.gerarGraficoBar()
-        console.log(this.relatorioResponse2)
       }
     })
   }

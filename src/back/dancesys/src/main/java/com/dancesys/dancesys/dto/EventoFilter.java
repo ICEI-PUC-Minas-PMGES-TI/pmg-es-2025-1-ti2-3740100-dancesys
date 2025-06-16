@@ -15,4 +15,6 @@ public class EventoFilter {
     private List<Long> alunos;
     private Integer pagina;
     private Integer tamanho;
+    private String orderBy;
+    private String order;
 }

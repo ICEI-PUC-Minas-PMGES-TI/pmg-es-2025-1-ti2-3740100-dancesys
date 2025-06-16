@@ -15,4 +15,6 @@ export class EnsaioFilter{
     dataFim!: Date;
     pagina!: number;
     tamanho!: number;
+    orderBy!: string;
+    order!: string;
 }

@@ -20,4 +20,6 @@ export type ApresentacaoEventoFilter = {
 	alunos: number[] | null;
 	tamanho: number | 0;
 	pagina: number | 0;
+	orderBy: string| null;
+	order: string | null;
 };

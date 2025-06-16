@@ -160,7 +160,12 @@
             </button>
         </div>
     </section>
-    <app-simple-table [colunas]="colunas" [dados]="ensaios.conteudo" [botoesAcoes]="acoes" [totalItens]="ensaios.total"
-        (paginacaoChange)="onPaginacaoChange($event)">
+    <app-simple-table [colunas]="colunas" 
+	[dados]="ensaios.conteudo" 
+	[botoesAcoes]="acoes" 
+	[totalItens]="ensaios.total"
+    (paginacaoChange)="onPaginacaoChange($event)"
+	(orderChange)="orderBy($event)"
+	>
     </app-simple-table>
 </main>

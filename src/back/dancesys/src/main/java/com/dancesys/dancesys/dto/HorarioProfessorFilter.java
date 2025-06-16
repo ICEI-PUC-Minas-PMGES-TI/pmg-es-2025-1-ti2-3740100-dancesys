@@ -13,4 +13,6 @@ public class HorarioProfessorFilter {
     private List<Long> professores;
     private Integer pagina;
     private Integer tamanho;
+    private String orderBy;
+    private String order;
 }

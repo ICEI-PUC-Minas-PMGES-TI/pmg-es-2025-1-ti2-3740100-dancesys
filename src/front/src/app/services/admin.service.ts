@@ -102,7 +102,6 @@ export class AdminService {
 		conteudo: ProfessorResponse[];
 		total: number;
 	}> {
-		console.log(filtro);
 		return this.http.post(
 			`${environment.API_URL}usuario/professor/buscar`,
 			{ ...filtro },

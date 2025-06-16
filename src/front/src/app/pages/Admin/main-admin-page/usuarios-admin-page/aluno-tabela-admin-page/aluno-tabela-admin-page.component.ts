@@ -222,7 +222,6 @@ export class AlunoTabelaAdminPageComponent {
 	}
 
 	onConfirmToggleAluno(choice: boolean | void) {
-		console.log(this.isActivatingUser, this.idToggleStatusUser);
 		if (choice) {
 			this.adminService
 				.toggleUserStatus(this.idToggleStatusUser)
@@ -367,7 +366,6 @@ export class AlunoTabelaAdminPageComponent {
 	}
 
 	toggleUserStatus(id: number, status: boolean) {
-		console.log(id, status);
 		this.idToggleStatusUser = id;
 		this.isActivatingUser = !status;
 		this.openToggleConfirmAlunoModal();

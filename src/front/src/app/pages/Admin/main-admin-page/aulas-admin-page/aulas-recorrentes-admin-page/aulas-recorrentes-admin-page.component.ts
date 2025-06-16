@@ -115,8 +115,8 @@ export class AulasRecorrentesAdminPageComponent {
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
-	orderByValue!: string;
-	orderValue!: string;
+	orderByValue: string = 'data';
+	orderValue: string = 'desc';
 
 	alunosFilterLs: any = [];
 	professoresFilterLs: any = [];

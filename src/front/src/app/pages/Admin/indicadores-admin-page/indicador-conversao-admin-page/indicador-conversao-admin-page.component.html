@@ -1,6 +1,6 @@
 <main class="py-4 max-w-full h-full overflow-auto max-h-[90vh] app-scrollbar">
     <section class="flex flex-row py-5">
-        <h1 class="text-main-500 text-xl font-bold">Geral de</h1>
+        <h1 class="text-main-500 text-xl font-bold">Relatório de taxa de conversão anual de</h1>
         <form [formGroup]="anoForm">
             <select
 			name="ano"
@@ -22,7 +22,7 @@
         </div>
     </section>
     <section class="flex flex-row py-5 items-center">
-        <h1 class="text-main-500 text-xl font-bold">Geral de</h1>
+        <h1 class="text-main-500 text-xl font-bold">Relatório de taxa de conversão mensal de</h1>
         <form [formGroup]="mesForm">
             <select
 			name="mes"
@@ -38,7 +38,7 @@
     @if(hasMes){
         <section class="flex flex-row space-x-3 py-5">
             <div class="padrao flex-1 aspect-square p-3 flex flex-col">
-                <h1 class="text-main-500 text-xl font-bold w-full">Motivos</h1>
+                <h1 class="text-main-500 text-xl font-bold w-full">Motivos de rejeição</h1>
                 <app-graphic-pizza #graficoPizza class="flex-1" [labels]="labelsGP" [data]="dataGP"></app-graphic-pizza>
             </div>
             <div class="flex-1 aspect-square flex flex-col space-y-2">

@@ -8,6 +8,7 @@ import { AdminService } from "../../../../services/admin.service";
 import { HorarioProfessor } from "../../../../models/horarioProfessor.model";
 import { ModalComponent } from "../../../../components/modal/modal.component";
 import { AlertService } from "../../../../services/Alert.service";
+import { horarioProfessorFilter } from "../../../../models/horarioProfessorFilter.model";
 
 enum ToggleModal {
 	NEW = "Criar Horario",
@@ -47,6 +48,9 @@ export class HorariosAdminPageComponent {
 	isEdit = false;
 	paginaAtual: number = 0;
 	itensPage: number = 10;
+	orderByValue: string = '';
+	orderValue: string = '';
+
 	diasObj = [
 		{dia: 1, nome: "Segunda"},
 		{dia: 2, nome: "Terça"},
@@ -61,8 +65,10 @@ export class HorariosAdminPageComponent {
 		this.filterForm = this.fb.group({
 		  professores: [[]],
 		  diasSemana: [[]],
-		  pagina: [this.paginaAtual],
-		  tamanho: [this.itensPage]
+		  pagina: [],
+		  tamanho: [],
+		  orderBy: [],
+		  order: []
 		});
 
 		this.horarioForm = this.fb.group({
@@ -163,13 +169,14 @@ export class HorariosAdminPageComponent {
 	}
 
 	filterGet(){
-		this.filterForm = this.fb.group({
-			professores: [this.professoresFilter],
-			diasSemana: [this.diasSemanaFilter],
-			pagina: [this.paginaAtual],
-		  	tamanho: [this.itensPage]
-		  });
-		return this.filterForm.value;
+		this.filterForm.get("tamanho")?.setValue(this.itensPage);
+		this.filterForm.get("pagina")?.setValue(this.paginaAtual);
+		this.filterForm.get("orderBy")?.setValue(this.orderByValue);
+		this.filterForm.get("order")?.setValue(this.orderValue);
+
+		const filter: horarioProfessorFilter = this.filterForm.value;
+
+		return filter;
 	}
 
 	onFilter(){
@@ -217,7 +224,6 @@ export class HorariosAdminPageComponent {
 	}
 
 	editar(item: any) {
-		console.log(item)
 		this.isModalOpen = true;
 		this.isEdit = true;
 		this.preencherHorarioForm(item);
@@ -247,6 +253,13 @@ export class HorariosAdminPageComponent {
 		this.tabela.isLoad(true)
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
+		this.buscar();
+	}
+
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
 		this.buscar();
 	}
 }

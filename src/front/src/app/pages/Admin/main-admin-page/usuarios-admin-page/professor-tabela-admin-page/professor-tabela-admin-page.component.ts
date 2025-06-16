@@ -161,7 +161,6 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 			};
 			this.professores = [...this.professores, professor];
 		});
-		console.log(this.professores);
 		this.totalItens = response.total;
 		this.tabela.isLoad(false);
 		this.isLoading = false;

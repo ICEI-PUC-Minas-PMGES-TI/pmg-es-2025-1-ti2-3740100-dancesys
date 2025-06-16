@@ -2,6 +2,7 @@ package com.dancesys.dancesys.repository;
 
 import com.dancesys.dancesys.dto.AulaFilter;
 import com.dancesys.dancesys.entity.Aula;
+import com.dancesys.dancesys.infra.CriterialUtils;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -35,6 +36,16 @@ public class AulaRepositoryCustom {
 
         if(filtro.getModalidades() != null && !filtro.getModalidades().isEmpty()) {
             predicates.add(root.get("idModalidade").get("id").in(filtro.getModalidades()));
+        }
+
+        if (filtro.getOrderBy() != null && !filtro.getOrderBy().isEmpty()) {
+            Path<?> campoOrdenacao = CriterialUtils.getPath(root, filtro.getOrderBy());
+
+            if (filtro.getOrder().equalsIgnoreCase("asc")) {
+                query.orderBy(cb.asc(campoOrdenacao));
+            } else {
+                query.orderBy(cb.desc(campoOrdenacao));
+            }
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));

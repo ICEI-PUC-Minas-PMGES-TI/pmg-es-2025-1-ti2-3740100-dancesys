@@ -2,13 +2,11 @@ package com.dancesys.dancesys.repository;
 
 import com.dancesys.dancesys.dto.HorarioProfessorFilter;
 import com.dancesys.dancesys.entity.HorarioProfessor;
+import com.dancesys.dancesys.infra.CriterialUtils;
 import com.dancesys.dancesys.infra.PaginatedResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -36,6 +34,16 @@ public class HorarioProfessorRepositoryCustom {
 
         if (filtro.getProfessores() != null && !filtro.getProfessores().isEmpty()) {
             predicates.add(root.get("idProfessor").get("id").in(filtro.getProfessores()));
+        }
+
+        if (filtro.getOrderBy() != null && !filtro.getOrderBy().isEmpty()) {
+            Path<?> campoOrdenacao = CriterialUtils.getPath(root, filtro.getOrderBy());
+
+            if (filtro.getOrder().equalsIgnoreCase("asc")) {
+                query.orderBy(cb.asc(campoOrdenacao));
+            } else {
+                query.orderBy(cb.desc(campoOrdenacao));
+            }
         }
 
         query.where(cb.and(predicates.toArray(new Predicate[0])));

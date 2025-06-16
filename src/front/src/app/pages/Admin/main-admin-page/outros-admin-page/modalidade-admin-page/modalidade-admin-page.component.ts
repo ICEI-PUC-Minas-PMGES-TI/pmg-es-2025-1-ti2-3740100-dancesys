@@ -72,7 +72,6 @@ export class ModalidadeAdminPageComponent {
     this.modalidadeService.fetchModalidades().subscribe({
       next: (response) =>{
         this.modalidadeObj = response
-        console.log(this.modalidadeObj)
       }
     })
   }
@@ -90,7 +89,6 @@ export class ModalidadeAdminPageComponent {
   }
 
   salvar(){
-    console.log(this.getModalidadeForm())
     this.modalidadeService.salvarModalidade(this.getModalidadeForm()).subscribe({
       next: (response) =>{
         this.alertService.sucesso("Modalidade salva com sucesso")

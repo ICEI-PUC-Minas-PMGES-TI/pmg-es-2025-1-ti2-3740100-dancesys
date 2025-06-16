@@ -48,7 +48,9 @@ export class EventosAlunoPageComponent implements OnInit {
 				data: null,
 				alunos: null,
 				pagina: 0,
-				tamanho: 10,
+				tamanho: 0,
+				orderBy: '',
+				order: ''
 			})
 			.subscribe({
 				next: (res: EventoResponse) => {

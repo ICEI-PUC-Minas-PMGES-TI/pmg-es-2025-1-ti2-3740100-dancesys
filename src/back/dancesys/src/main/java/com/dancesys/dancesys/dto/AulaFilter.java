@@ -13,4 +13,6 @@ public class AulaFilter {
     private List<Long> modalidades;
     private Integer tamanho;
     private Integer pagina;
+    private String orderBy;
+    private String order;
 }

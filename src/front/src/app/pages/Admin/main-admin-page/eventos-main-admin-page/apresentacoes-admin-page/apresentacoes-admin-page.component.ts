@@ -41,6 +41,8 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
+	orderByValue!: string;
+	orderValue!: string;
 
 	currentApresentacaoEditar: ApresentacaoEvento | undefined = undefined;
 
@@ -60,7 +62,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 			chave: "horaFim",
 			titulo: "Horário Final",
 		},
-		{ chave: "eventoNome", titulo: "Evento" },
+		{ chave: "eventoNome", titulo: "Evento", order: false },
 	];
 	acoes = [
 		{
@@ -244,7 +246,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 		// verifica se tem filtro
 		if (this.filterForm) {
 			this.adminService
-				.fetchApresentacoes({ ...this.filterForm.value })
+				.fetchApresentacoes({ ...this.filterForm.value, orderBy: this.orderByValue, order: this.orderValue })
 				.subscribe({
 					next: (apRes: ApresentacaoEventoResponse) => {
 						if (apRes.total == 0) {
@@ -267,6 +269,8 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 				idEvento: null,
 				tamanho: 0,
 				pagina: 0,
+				orderBy: '',
+				order: ''
 			})
 			.subscribe({
 				next: (apRes: ApresentacaoEventoResponse) => {
@@ -285,5 +289,12 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 		return item.map((i: any) => {
 			return i.idAluno;
 		});
+	}
+
+	orderBy(event: { chave: string; direcao: "asc" | "desc" }) {
+		this.tabela.isLoad(true);
+		this.orderByValue = event.chave;
+		this.orderValue = event.direcao;
+		this.onFiltrar();
 	}
 }
