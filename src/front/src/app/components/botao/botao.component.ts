@@ -52,6 +52,7 @@ export class BotaoComponent {
 			"cursor-pointer",
 			"flex",
 			"justify-center",
+			"transicao",
 			"items-center",
 			Sizes[this.size as keyof typeof Sizes],
 		];

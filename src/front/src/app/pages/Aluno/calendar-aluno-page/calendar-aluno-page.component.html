@@ -1,101 +1,126 @@
 <div *ngIf="isLoading" class="overlay">
-      <div class="loader"></div>
+	<div class="loader"></div>
 </div>
 @if (openModal == "solicitarAulaExtra") {
-<app-modal>
-	<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
-		Solicitar aula extra
-	</p>
-	<form #solicitarAulaExtraForm="ngForm" class="flex flex-col space-y-2">
-		<section class="flex flex-col space-y-2 pb-2">
-			<div class="flex space-x-2">
-				<div class="flex flex-col flex-1">
-					<label for="dataAE">Data:</label>
-					<input name="dataAE" required ngModel type="date" class="p-1 flex flex-1 bg-main-300 rounded-md" />
+	<app-modal>
+		<p class="font-bold text-xl border-b-4 border-b-main-500 mb-2 pb-2">
+			Solicitar aula extra
+		</p>
+		<form #solicitarAulaExtraForm="ngForm" class="flex flex-col space-y-2">
+			<section class="flex flex-col space-y-2 pb-2">
+				<div class="flex space-x-2">
+					<div class="flex flex-col flex-1">
+						<label for="dataAE">Data:</label>
+						<input
+							name="dataAE"
+							required
+							ngModel
+							type="date"
+							class="p-1 flex flex-1 bg-main-300 rounded-md"
+						/>
+					</div>
+					<div class="flex flex-col flex-1">
+						<label for="horarioInicioAE">Horário Início:</label>
+						<input
+							name="horarioInicioAE"
+							required
+							ngModel
+							type="time"
+							class="p-1 flex flex-1 bg-main-300 rounded-md"
+						/>
+					</div>
+					<div class="flex flex-col flex-1">
+						<label for="horarioFimAE">Horário Fim:</label>
+						<input
+							name="horarioFimAE"
+							required
+							ngModel
+							type="time"
+							class="p-1 flex flex-1 bg-main-300 rounded-md"
+						/>
+					</div>
 				</div>
-				<div class="flex flex-col flex-1">
-					<label for="horarioInicioAE">Horário Início:</label>
-					<input name="horarioInicioAE" required ngModel type="time"
-						class="p-1 flex flex-1 bg-main-300 rounded-md" />
+				<div class="flex space-x-2">
+					<div class="flex flex-col">
+						<app-search-box-single
+							name="professorAE"
+							ngModel
+							[label]="'Professor:'"
+							[options]="professoresFilterLs"
+							[optionLabel]="'idUsuario.nome'"
+							[optionValue]="'id'"
+							nullLabel="Pesquisar"
+							(searchChange)="buscarProfessor($event)"
+						></app-search-box-single>
+					</div>
 				</div>
-				<div class="flex flex-col flex-1">
-					<label for="horarioFimAE">Horário Fim:</label>
-					<input name="horarioFimAE" required ngModel type="time"
-						class="p-1 flex flex-1 bg-main-300 rounded-md" />
-				</div>
+			</section>
+			<div class="flex flex-row space-x-4">
+				<button
+					appButton
+					(click)="solicitarAulaExtra(solicitarAulaExtraForm)"
+				>
+					Confirmar
+				</button>
+				<button
+					appButton
+					(click)="solicitarAulaExtra(false)"
+					color="danger"
+				>
+					Cancelar
+				</button>
 			</div>
-			<div class="flex space-x-2">
-				<!-- <div class="flex flex-col"> -->
-				<!-- 	<label for="modalidadeAE">Modalidade:</label> -->
-				<!-- 	<select -->
-				<!-- 		name="modalidadeAE" -->
-				<!-- 		required -->
-				<!-- 		ngModel -->
-				<!-- 		type="text" -->
-				<!-- 		class="p-1 bg-main-300 rounded-md" -->
-				<!-- 	> -->
-				<!-- 		@for ( -->
-				<!-- 			modalidade of modalidades; -->
-				<!-- 			track modalidade.id -->
-				<!-- 		) { -->
-				<!-- 			<option [value]="modalidade.nome"> -->
-				<!-- 				{{ modalidade.nome }} -->
-				<!-- 			</option> -->
-				<!-- 		} -->
-				<!-- 	</select> -->
-				<!-- </div> -->
-				<div class="flex flex-col">
-					<app-search-box-single name="professorAE" ngModel [label]="'Professor:'"
-						[options]="professoresFilterLs" [optionLabel]="'idUsuario.nome'" [optionValue]="'id'"
-						nullLabel="Pesquisar" (searchChange)="buscarProfessor($event)"></app-search-box-single>
-				</div>
-			</div>
-		</section>
-		<div class="flex flex-row space-x-4">
-			<button appButton (click)="solicitarAulaExtra(solicitarAulaExtraForm)">
-				Confirmar
-			</button>
-			<button appButton (click)="solicitarAulaExtra(false)" color="danger">
-				Cancelar
-			</button>
-		</div>
-	</form>
-</app-modal>
+		</form>
+	</app-modal>
 }
-<main class="bg-main-100 flex flex-1 space-y-4 flex-col h-full w-full p-8 text-main-500">
-	<div class="flex w-full border-b-4 border-b-main-500 px-2 space-x-3 justify-start">
-		<a class="cursor-pointer p-2 text-main-500 font-bold rounded-t-lg px-8 mr-4"
-			[class]="vendoMeuCalendario ? 'bg-main-500 text-white' : ''" (click)="changeToMyCalendar(true)">Meu
-			Calendário</a>
-		<a class="cursor-pointer p-2 text-main-500 font-bold rounded-t-lg px-8 mr-4"
-			[class]="!vendoMeuCalendario ? 'bg-main-500 text-white' : ''" (click)="changeToMyCalendar(false)">Calendário
-			Geral</a>
+<main
+	class="bg-main-100 flex flex-1 space-y-4 flex-col h-full w-full p-8 text-main-500"
+>
+	<div
+		class="flex w-full border-b-4 border-b-main-500 px-2 space-x-3 justify-start"
+	>
+		<a
+			class="cursor-pointer p-2 text-main-500 font-bold rounded-t-lg px-8 mr-4"
+			[class]="vendoMeuCalendario ? 'bg-main-500 text-white' : ''"
+			(click)="changeToMyCalendar(true)"
+			>Meu Calendário</a
+		>
+		<a
+			class="cursor-pointer p-2 text-main-500 font-bold rounded-t-lg px-8 mr-4"
+			[class]="!vendoMeuCalendario ? 'bg-main-500 text-white' : ''"
+			(click)="changeToMyCalendar(false)"
+			>Calendário Geral</a
+		>
 	</div>
 	<h1 class="text-xl font-bold">Dia {{ selectedDay | date }}</h1>
 	<div class="flex flex-row flex-1 justify-between">
 		<div class="flex flex-col w-3/5 space-y-4 max-h-max">
 			@for (item of showCalItems[currPag]; track item.dataHorario) {
-			<app-calendario-item [item]="item"></app-calendario-item>
+				<app-calendario-item [item]="item"></app-calendario-item>
 			}
-			@if (showCalItems.length <= 0) { <h1 class="text-xl font-bold">
-				Não há itens de calendário nessa data!
+			@if (showCalItems.length <= 0) {
+				<h1 class="text-xl font-bold">
+					Não há itens de calendário nessa data!
 				</h1>
 				<h2 class="text-lg font-semibold">Tente com outra data 😎</h2>
-				}
+			}
 		</div>
 		<div class="flex flex-col px-10 space-y-4">
 			@if (showCalItems.length > 1) {
-			<div class="flex flex-row space-x-4">
-				<button appButton (click)="previousPage()">
-					Página Anterior
-				</button>
-				<button appButton (click)="nextPage()">
-					Próxima página
-				</button>
-			</div>
+				<div class="flex flex-row space-x-4">
+					<button appButton (click)="previousPage()">
+						Página Anterior
+					</button>
+					<button appButton (click)="nextPage()">
+						Próxima página
+					</button>
+				</div>
 			}
-			<app-mini-calendar [eventsDays]="dateArrayFromItems" (diaSelecionado)="selecionarDia($event)"
-				(mesCarregado)="mudarMes($event)"></app-mini-calendar>
+			<app-mini-calendar
+				[eventsDays]="dateArrayFromItems"
+				(diaSelecionado)="selecionarDia($event)"
+				(mesCarregado)="mudarMes($event)"
+			></app-mini-calendar>
 			<button appButton (click)="abrirModalSolicitarAulaExtra()">
 				Solicitar Aula Extra
 			</button>
