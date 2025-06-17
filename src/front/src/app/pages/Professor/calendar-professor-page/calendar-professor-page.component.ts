@@ -27,6 +27,7 @@ import { AulaExtraDTO } from "../../../models/Aula.model";
 import { AulaService } from "../../../services/aula.service";
 import { AulaExtraFilter } from "../../../models/AulaExtra.model";
 import { AlertService } from "../../../services/Alert.service";
+import { AulaExperimentalFilter } from "../../../models/AulaExperimental.model";
 
 @Component({
 	selector: "app-calendar-aluno-page",
@@ -143,6 +144,28 @@ export class CalendarProfessorPageComponent {
 											},
 										}
 									: undefined,
+						} as ItemDeCalendario;
+					});
+					itensDeCalendario = [...itensDeCalendario, ...arr];
+					return this.aulaService.filterAulaExperimental({
+						idProfessor: (
+							this.userService.usuario() as ProfessorResponse
+						).id,
+						dataInicial: this.dadosSobreMesSelecionado.firstDay,
+						dataFinal: this.dadosSobreMesSelecionado.lastDay,
+					} as AulaExperimentalFilter);
+				}),
+				switchMap((aulasExperimentais: any) => {
+					let arr = [...aulasExperimentais?.conteudo];
+					arr = arr.map((aula: any) => {
+						const dataIni = new Date(aula.dataHorarioInicio);
+						return {
+							title: `Aula Experimental`,
+							subtitle: `Aluno: ${aula.nome}`,
+							dataHorario: dataIni,
+							tipoUsuario: (
+								this.userService.usuario() as ProfessorResponse
+							).idUsuario.tipo,
 						} as ItemDeCalendario;
 					});
 					itensDeCalendario = [...itensDeCalendario, ...arr];
