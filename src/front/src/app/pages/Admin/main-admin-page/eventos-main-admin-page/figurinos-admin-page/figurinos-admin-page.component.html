@@ -1,3 +1,132 @@
+@if (isModalConfirm) {
+	<app-modal
+		[confirmMode]="true"
+		message="Deseja excluir esse figurino?"
+		(onClose)="onConfirmDelete($event)"
+	></app-modal>
+}
+
+@if(isModalFoto){
+    <app-modal
+		(onClose)="closeModalFoto()"
+		zindex="z-4"
+	>
+	<div class="w-full">
+		<main class="w-full relative flex flex-row justify-center">
+			<img src="{{ urlFotoEdit }}" class="h-full">
+		</main>
+	</div>
+	</app-modal>
+}
+
+@if(ImageCropped){
+    <app-modal
+		zindex="z-4"
+	>
+	<div class="w-full">
+		<main>
+			<image-cropper
+			class="bg-main-100 cropper w-[80%]"
+			[hidden]="!imageChangedEvent"
+			[imageChangedEvent]="imageChangedEvent"
+			[maintainAspectRatio]="true"
+			[aspectRatio]="1"
+			format="png"
+			(imageCropped)="imageCropped($event)"
+			(imageLoaded)="imageLoaded($event)"
+			(cropperReady)="cropperReady()"
+			(loadImageFailed)="loadImageFailed()"
+			output="base64"
+			></image-cropper>
+			<button (click)="confirmar()" appButton>
+				Confirmar
+			</button>
+		</main>
+	</div>
+	</app-modal>
+}
+
+@if(isModalOpen){
+    <app-modal
+		(onClose)="closeModal()"
+	>
+	<div class="w-full">
+		<header
+			class="border-b-4 border-b-main-500 w-full flex flex-row justify-start"
+		>
+			<h1 class="font-bold text-3xl">{{ isEdit? ToggleModal.EDIT : ToggleModal.NEW}}</h1>
+		</header>
+		<main>
+			<form [formGroup]="figurinoForm" class="flex flex-col p-2 space-y-3">
+                <section class="flex flex-row space-x-2 flex-1">
+				        <div class="flex flex-col flex-1">
+                            <label for="nome">Nome:</label>
+							<input
+								required
+								class="p-1 rounded-md bg-main-300"
+								type="text"
+								name="nome"
+								id="nome"
+								formControlName="nome"
+							/>
+                        </div>
+                        <div class="flex flex-col flex-1">
+                            <label for="nome">Valor:</label>
+							<input
+								required
+								class="p-1 rounded-md bg-main-300"
+								type="number"
+								name="valor"
+								id="valor"
+								formControlName="valor"
+							/>
+                        </div>
+				</section>
+                <section class="flex flex-row space-x-2 flex-1">
+					<div class="flex flex-col flex-1">
+                        <label for="tipo">Tipo:</label>
+	                    <select
+							required
+							class="p-1 bg-main-300 rounded-md"
+							name="tipo"
+							id="tipo"
+							formControlName="tipo"
+						>
+							<option *ngFor="let tipo of tipos" [ngValue]="tipo.value">{{ tipo.name }}</option>
+						</select>
+					</div>
+                    <div class="flex flex-col flex-1">
+						<label for="foto">Foto:</label>
+						<input
+						placeholder="Escolha um arquivo..."
+						class="p-1 bg-main-500 text-main-100 rounded-md"
+						type="file"
+						(change)="fileChangeEvent($event)"
+						/>
+					</div>
+				</section>
+				@if(isEdit && urlFotoEdit != ''){
+					<section class="flex flex-row space-x-2 flex-1">
+						<div class="flex flex-col flex-1">
+							
+						</div>
+						<div class="flex flex-col flex-1">
+							<button (click)="ver()" appButton>
+								Ver foto
+							</button>
+						</div>
+					</section>
+				}
+				
+				<button class="self-start mt-3" type="submit" [disabled]="!isFormValido()" (click)="salvar()" appButton>
+				  Salvar
+				</button>
+			</form>
+		</main>
+	</div>
+	</app-modal>
+}
+
 <main class="py-4 max-w-full max-h-full h-full">
     <section class="flex flex-col pb-4 max-w-full">
 		<div class="flex flex-row space-x-4">
@@ -63,6 +192,7 @@
 	<app-simple-table
 	[colunas]="colunas"
 	[dados]="figurinoObj.conteudo"
+	[botoesAcoes]="acoes"
 	[totalItens]="figurinoObj.total"
 	(paginacaoChange)="onPaginacaoChange($event)"
     (orderChange)="orderBy($event)">

@@ -261,7 +261,7 @@ export class FigurinosPorAlunoAdminPageComponent {
 
 	salvar() {
 		this.eventoService
-			.salvarFigurinoAluno(this.getFigurnoAlunoForm())
+			.salvarFigurinoAluno(this.getFigurinoAlunoForm())
 			.subscribe({
 				next: (response) => {
 					this.alertService.sucesso(
@@ -339,7 +339,7 @@ export class FigurinosPorAlunoAdminPageComponent {
 		return this.figurinoAlunoForm.valid;
 	}
 
-	getFigurnoAlunoForm() {
+	getFigurinoAlunoForm() {
 		const item = this.figurinoAlunoForm.value;
 		const Figurino: FigurinoAluno = item;
 

@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { FigurinoAluno, FigurinoAlunoFilter } from "../models/FigurinoAluno.model";
 import { environment } from "../../environment/environment";
-import { FigurinoFilter } from "../models/Figurino.model";
+import { Figurino, FigurinoFilter } from "../models/Figurino.model";
 
 @Injectable({
 	providedIn: "root",
@@ -40,5 +40,13 @@ export class EventoService {
 
     public filterFigurino(filtro: FigurinoFilter){
         return this.http.post(`${this.url}figurino/buscar`, { ...filtro })
+    }
+
+    public salvarFigurino(item: Figurino){
+        return this.http.post(`${this.url}figurino`, { ...item })
+    }
+
+    public excluirFigurino(id: number){
+        return this.http.delete(`${this.url}figurino/excluir/${id}`)
     }
 }

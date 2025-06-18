@@ -13,5 +13,7 @@ public class FigurinoDTO {
     private String nome;
     private Integer tipo;
     private BigDecimal valor;
+    private String base64;
+    private String nomeArquivo;
     private String urlFoto;
 }
