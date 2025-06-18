@@ -1,1 +1,70 @@
-<p><strong>RENATO NAO FEZ ESSE COMPONENTE</strong></p>
+<main class="py-4 max-w-full max-h-full h-full">
+    <section class="flex flex-col pb-4 max-w-full">
+		<div class="flex flex-row space-x-4">
+			<h1 class="text-main-500 text-xl font-bold">Filtros</h1>
+			<button
+				type="button"
+				appButton
+				size="extraSmall"
+				(click)="limparFiltros()"
+			>
+				Limpar filtros
+			</button>
+		</div>
+		<form class="flex flex-col text-main-500 font-bold" [formGroup]="filterForm">
+			<div class="flex px-1 flex-row space-x-2">
+				<section class="flex flex-row space-x-4 flex-1">
+					<div class="flex flex-col">
+                        <label for="nome">Nome:</label>
+                        <input
+                            class="p-1 rounded-md bg-main-300"
+                            type="text"
+                            name="nome"
+                            id="nome"
+                            formControlName="nome"
+                        />
+					</div>
+					<div class="flex flex-col">
+                        <label for="nome">Valor:</label>
+                        <input
+                            class="p-1 rounded-md bg-main-300"
+                            type="number"
+                            name="valor"
+                            id="valor"
+                            formControlName="valor"
+                        />
+					</div>
+					<div class="flex flex-col">
+                        <label for="tipo">Tipo:</label>
+						<select
+							class="p-1 bg-main-300 rounded-md w-36 h-8.5"
+							name="tipo"
+							id="tipo"
+							formControlName="tipo"
+						>
+							<option value="">Todos</option>
+							<option *ngFor="let tipo of tipos" [ngValue]="tipo.value">{{ tipo.name }}</option>
+						</select>
+					</div>
+				</section>
+			</div>
+		</form>
+	</section>
+	<section class="flex justify-between flex-row">
+		<div class="flex flex-row space-x-2">
+            <button icon="add_circle" icon-slot="right" appButton color="dark" (click)="novo()">
+				Novo
+            </button>
+			<button icon="search" icon-slot="right" appButton color="dark" (click)="onFilter()">
+				Filtrar
+			</button>
+		</div>
+	</section>
+	<app-simple-table
+	[colunas]="colunas"
+	[dados]="figurinoObj.conteudo"
+	[totalItens]="figurinoObj.total"
+	(paginacaoChange)="onPaginacaoChange($event)"
+    (orderChange)="orderBy($event)">
+	</app-simple-table>
+</main>

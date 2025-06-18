@@ -37,4 +37,8 @@ export class EventoService {
     public toogleStatusFigurinoAluno(id: number){
         return this.http.get(`${this.url}figurino/aluno/status/${id}`);
     }
+
+    public filterFigurino(filtro: FigurinoFilter){
+        return this.http.post(`${this.url}figurino/buscar`, { ...filtro })
+    }
 }
