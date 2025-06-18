@@ -1,11 +1,15 @@
-.green{
-    background-color: #569256;
+.green {
+	background-color: #569256;
 }
 
-.red{
-    background-color: #C00E0E;
+.red {
+	background-color: #c00e0e;
 }
 
-.yellow{
-    background-color: #FFD037;
+.yellow {
+	background-color: #ffd037;
+}
+
+.transicao {
+	transition: background-color 0.3s;
 }

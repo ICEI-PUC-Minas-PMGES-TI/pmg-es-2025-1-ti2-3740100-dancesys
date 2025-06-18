@@ -1,25 +1,30 @@
-import { Component, inject, ViewChild } from '@angular/core';
-import { ModalComponent } from '../../../components/modal/modal.component';
-import { FormsModule } from '@angular/forms';
-import { CalendarioItemComponent, ItemDeCalendario } from '../../../components/calendario-item/calendario-item.component';
-import { SearchBoxSingleComponent } from '../../../components/search-box-single/search-box-single.component';
-import { MiniCalendarComponent } from '../../../components/mini-calendar/mini-calendar.component';
-import { BotaoComponent } from '../../../components/botao/botao.component';
-import { CommonModule, DatePipe } from '@angular/common';
-import { AulaExtraFilter } from '../../../models/AulaExtra.model';
-import { switchMap } from 'rxjs';
-import { EnsaioFilter } from '../../../models/Ensaio.model';
-import { AulaOcorrenciaFilter } from '../../../models/AulaOcorrencia.model';
-import { AdminService } from '../../../services/admin.service';
-import { AulaService } from '../../../services/aula.service';
-import { UsuarioService } from '../../../services/usuario.service';
-import { ModalidadesService } from '../../../services/modalidades.service';
-import { AlertService } from '../../../services/Alert.service';
+import { Component, inject, ViewChild } from "@angular/core";
+import { ModalComponent } from "../../../components/modal/modal.component";
+import { FormsModule } from "@angular/forms";
+import {
+	CalendarioItemComponent,
+	ItemDeCalendario,
+} from "../../../components/calendario-item/calendario-item.component";
+import { SearchBoxSingleComponent } from "../../../components/search-box-single/search-box-single.component";
+import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
+import { BotaoComponent } from "../../../components/botao/botao.component";
+import { CommonModule, DatePipe } from "@angular/common";
+import { AulaExtraFilter } from "../../../models/AulaExtra.model";
+import { switchMap } from "rxjs";
+import { EnsaioFilter } from "../../../models/Ensaio.model";
+import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
+import { AdminService } from "../../../services/admin.service";
+import { AulaService } from "../../../services/aula.service";
+import { UsuarioService } from "../../../services/usuario.service";
+import { ModalidadesService } from "../../../services/modalidades.service";
+import { AlertService } from "../../../services/Alert.service";
+import { UsuarioTipos } from "../../../models/usuario.model";
+import { AulaExperimentalFilter } from "../../../models/AulaExperimental.model";
 
 @Component({
-  selector: 'app-calendar-admin-page',
-  imports: [
-    ModalComponent,
+	selector: "app-calendar-admin-page",
+	imports: [
+		ModalComponent,
 		FormsModule,
 		CalendarioItemComponent,
 		SearchBoxSingleComponent,
@@ -27,12 +32,12 @@ import { AlertService } from '../../../services/Alert.service';
 		BotaoComponent,
 		DatePipe,
 		CommonModule,
-  ],
-  templateUrl: './calendar-admin-page.component.html',
-  styleUrl: './calendar-admin-page.component.css'
+	],
+	templateUrl: "./calendar-admin-page.component.html",
+	styleUrl: "./calendar-admin-page.component.css",
 })
 export class CalendarAdminPageComponent {
-  currPag: number = 0;
+	currPag: number = 0;
 
 	adminService = inject(AdminService);
 	aulaService = inject(AulaService);
@@ -112,6 +117,23 @@ export class CalendarAdminPageComponent {
 							title: `Aula de ${aula.idAula.idModalidade.nome} | Professor: ${aula.idAula.idProfessor.idUsuario.nome}`,
 							subtitle: `Sala: ${aula.idAula.idSala.nome}`,
 							dataHorario: dataIni,
+						} as ItemDeCalendario;
+					});
+					itensDeCalendario = [...itensDeCalendario, ...arr];
+					return this.aulaService.filterAulaExperimental({
+						dataInicial: this.dadosSobreMesSelecionado.firstDay,
+						dataFinal: this.dadosSobreMesSelecionado.lastDay,
+					} as AulaExperimentalFilter);
+				}),
+				switchMap((aulasExperimentais: any) => {
+					let arr = [...aulasExperimentais?.conteudo];
+					arr = arr.map((aula: any) => {
+						const dataIni = new Date(aula.dataHorarioInicio);
+						return {
+							title: `Aula Experimental | Professor: ${aula.idProfessor.idUsuario.nome}`,
+							subtitle: `Aluno: ${aula.nome}`,
+							dataHorario: dataIni,
+							tipoUsuario: UsuarioTipos.ADMIN,
 						} as ItemDeCalendario;
 					});
 					itensDeCalendario = [...itensDeCalendario, ...arr];
@@ -203,5 +225,4 @@ export class CalendarAdminPageComponent {
 			return item.dataHorario;
 		});
 	}
-
 }
