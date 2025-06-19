@@ -61,7 +61,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void trocarFoto(UsuarioDTO dto) throws Exception{
+    public UsuarioDTO trocarFoto(UsuarioDTO dto) throws Exception{
         try{
             if(dto.getBase64() != null && !dto.getBase64().equals("")){
                 MultipartFile foto = filesServiceImpl.convertBase64ToMultipartFile(dto.getBase64(), dto.getNomeArquivo());
@@ -71,16 +71,16 @@ public class UsuarioServiceImpl implements UsuarioService {
                 }
                 dto.setUrlFoto(newUrl);
             }
-            usuarioRepository.save(UsuarioMapper.toEntity(dto));
+            return usuarioRepository.save(UsuarioMapper.toEntity(dto));
         }catch (RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }
     }
 
     @Override
-    public void trocarSenha(UsuarioDTO dto) throws Exception{
+    public UsuarioDTO trocarSenha(UsuarioDTO dto) throws Exception{
         try{
-            usuarioRepository.save(UsuarioMapper.toEntity(dto));
+            return usuarioRepository.save(UsuarioMapper.toEntity(dto));
         }catch (RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }

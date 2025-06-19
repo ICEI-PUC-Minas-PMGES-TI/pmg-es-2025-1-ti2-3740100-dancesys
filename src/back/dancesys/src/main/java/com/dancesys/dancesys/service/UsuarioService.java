@@ -31,9 +31,9 @@ public interface UsuarioService{
 
     public Object validacaoLogin(LoginCookie cookie) throws RuntimeException;
 
-    public void trocarFoto(UsuarioDTO dto) throws Exception;
+    public UsuarioDTO trocarFoto(UsuarioDTO dto) throws Exception;
 
-    public void trocarSenha(UsuarioDTO dto) throws Exception;
+    public UsuarioDTO trocarSenha(UsuarioDTO dto) throws Exception;
 
     public UsuarioDTO findById(Long id) throws Exception;
 }

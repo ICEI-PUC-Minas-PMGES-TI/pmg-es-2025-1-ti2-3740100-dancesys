@@ -84,12 +84,12 @@ public class UsuarioController {
     }
 
     @PostMapping(value = "foto")
-    public void trocarFoto(@RequestBody UsuarioDTO dto) throws Exception{
-        usuarioService.trocarFoto(dto);
+    public UsuarioDTO trocarFoto(@RequestBody UsuarioDTO dto) throws Exception{
+        return usuarioService.trocarFoto(dto);
     }
 
     @PostMapping(value = "senha")
-    public void trocarSenha(@RequestBody UsuarioDTO dto) throws Exception{
-        usuarioService.trocarSenha(dto);
+    public UsuarioDTO trocarSenha(@RequestBody UsuarioDTO dto) throws Exception{
+        return  usuarioService.trocarSenha(dto);
     }
 }
