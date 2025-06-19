@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @RestController
-@RequestMapping("/ingressoEvento")
+@RequestMapping("evento/ingresso")
 public class IngressoEventoController {
     @Autowired
     IngressoEventoService ingressoEventoService;

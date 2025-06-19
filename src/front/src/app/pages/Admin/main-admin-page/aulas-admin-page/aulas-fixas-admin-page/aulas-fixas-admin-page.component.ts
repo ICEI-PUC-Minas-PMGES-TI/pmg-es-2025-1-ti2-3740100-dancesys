@@ -9,6 +9,7 @@ import {
 	FormBuilder,
 	FormGroup,
 	ReactiveFormsModule,
+	Validators,
 } from "@angular/forms";
 import {
 	AdminService,
@@ -132,7 +133,7 @@ export class AulasFixasAdminPageComponent {
 			diaSemana: [],
 			horarioInicio: [],
 			horarioFim: [],
-			maxAlunos: [],
+			maxAlunos: [[Validators.required, Validators.min(1)]],
 			nivel: [],
 			status: [],
 			idSala: [],
@@ -226,7 +227,7 @@ export class AulasFixasAdminPageComponent {
 			diaSemana: [],
 			horarioInicio: [],
 			horarioFim: [],
-			maxAlunos: [],
+			maxAlunos: [[Validators.required, Validators.min(1)]],
 			nivel: [],
 			status: [],
 			idSala: [],

@@ -20,4 +20,6 @@ public class UsuarioDTO {
     private String urlFoto;
     private LocalDate dataNascimento;
     private LocalDate criadoEm;
+    private String base64;
+    private String nomeArquivo;
 }

@@ -212,6 +212,7 @@ export class EventosAdminPageComponent implements OnInit {
 				nome: form?.value.nome as string | "",
 				local: form?.value.local as string | "",
 				data: form?.value.data as Date | null,
+				dataInicio: null,
 				alunos: null,
 				pagina: this.paginaAtual,
 				tamanho: this.itensPage,

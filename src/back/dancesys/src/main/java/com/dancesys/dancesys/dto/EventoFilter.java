@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -12,6 +13,7 @@ public class EventoFilter {
     private String nome;
     private String local;
     private LocalDate data;
+    private LocalDateTime dataInicio;
     private List<Long> alunos;
     private Integer pagina;
     private Integer tamanho;

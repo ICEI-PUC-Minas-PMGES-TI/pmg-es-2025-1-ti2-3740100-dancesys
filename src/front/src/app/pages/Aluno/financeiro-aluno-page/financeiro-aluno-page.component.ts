@@ -6,6 +6,7 @@ import { UsuarioService } from "../../../services/usuario.service";
 import { Dividendo, DividendoFilter } from "../../../models/Dividendo.model";
 import { DividendoService } from "../../../services/dividendo.service";
 import { prettyLog } from "../../../prettylog";
+import { AlertService } from "../../../services/Alert.service";
 
 @Component({
 	selector: "app-financeiro-aluno-page",
@@ -18,6 +19,7 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 	adminService = inject(AdminService);
 	usuarioService = inject(UsuarioService);
 	dividendoService = inject(DividendoService);
+	alertService = inject(AlertService)
 
 	boletos: Dividendo[] = [];
 
@@ -30,7 +32,7 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 			criadoEm: "",
 			pagoEm: "",
 			alunos: [this.usuarioService.usuario()!.id],
-			status: [],
+			status: [1,3],
 			tipos: [],
 			tamanho: 0,
 			pagina: 0,
@@ -49,7 +51,8 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 		prettyLog(`Pagando o boleto de id: ${id}`);
 		this.dividendoService.pagarBoleto(id).subscribe({
 			next: () => {
-				this.buscar();
+				this.alertService.sucesso("Boleto pago com sucesso")
+				this.buscar()
 			},
 			error: (err: any) => {
 			},

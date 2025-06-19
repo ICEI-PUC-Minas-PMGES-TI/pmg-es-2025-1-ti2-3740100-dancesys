@@ -30,4 +30,10 @@ public interface UsuarioService{
     public void gerarBoletosMensalJob() throws Exception;
 
     public Object validacaoLogin(LoginCookie cookie) throws RuntimeException;
+
+    public void trocarFoto(UsuarioDTO dto) throws Exception;
+
+    public void trocarSenha(UsuarioDTO dto) throws Exception;
+
+    public UsuarioDTO findById(Long id) throws Exception;
 }

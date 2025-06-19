@@ -46,6 +46,10 @@ public class EventoRepositoryCustom {
             predicates.add(cb.between(root.get("dataHoraInicio"), startOfDay, endOfDay));
         }
 
+        if(filtro.getDataInicio() != null){
+            predicates.add(cb.greaterThanOrEqualTo(root.get("dataHoraInicio"), filtro.getDataInicio()));
+        }
+
         if(filtro.getAlunos() != null &&  !filtro.getAlunos().isEmpty()){
             predicates.add(root.get("apresentacoes").get("alunos").get("idAluno").get("id").in(filtro.getAlunos()));
         }
@@ -91,6 +95,10 @@ public class EventoRepositoryCustom {
             LocalDateTime endOfDay = data.atTime(LocalTime.MAX);
 
             countPredicates.add(cb.between(countRoot.get("dataHoraInicio"), startOfDay, endOfDay));
+        }
+
+        if(filtro.getDataInicio() != null){
+            countPredicates.add(cb.greaterThanOrEqualTo(countRoot.get("dataHoraInicio"), filtro.getDataInicio()));
         }
 
         if(filtro.getAlunos() != null &&  !filtro.getAlunos().isEmpty()){

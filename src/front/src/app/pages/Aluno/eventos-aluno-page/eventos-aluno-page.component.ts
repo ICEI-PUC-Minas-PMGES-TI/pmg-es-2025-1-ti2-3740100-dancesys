@@ -6,12 +6,15 @@ import { UsuarioService } from "../../../services/usuario.service";
 import { AdminService } from "../../../services/admin.service";
 import { EventoResponse } from "../../../models/evento.model";
 import { AlertService } from "../../../services/Alert.service";
+import { ModalComponent } from "../../../components/modal/modal.component";
+import { EventoService } from "../../../services/evento.service";
+import { Ingresso } from "../../../models/Ingresso.model";
 
 @Component({
 	selector: "app-eventos-aluno-page",
 	templateUrl: "./eventos-aluno-page.component.html",
 	styleUrls: ["./eventos-aluno-page.component.css"],
-	imports: [CommonModule, ReactiveFormsModule],
+	imports: [CommonModule, ReactiveFormsModule, ModalComponent],
 })
 export class EventosAlunoPageComponent implements OnInit {
 	eventos: EventoResponse | undefined;
@@ -24,14 +27,15 @@ export class EventosAlunoPageComponent implements OnInit {
 		private adminService: AdminService,
 		private alertService: AlertService,
 		private fb: FormBuilder,
-		private usuarioService: UsuarioService
+		private usuarioService: UsuarioService,
+		private eventoService: EventoService
 	) {
 		this.ingressoForm = this.fb.group({
 			qtdIngressos: [
 				1,
 				[Validators.required, Validators.min(1), Validators.max(10)],
 			],
-			tipoIngresso: ["normal", Validators.required],
+			tipoIngresso: [1, Validators.required],
 		});
 	}
 
@@ -46,6 +50,7 @@ export class EventosAlunoPageComponent implements OnInit {
 				nome: "",
 				local: "",
 				data: null,
+				dataInicio: new Date(),
 				alunos: null,
 				pagina: 0,
 				tamanho: 0,
@@ -75,13 +80,27 @@ export class EventosAlunoPageComponent implements OnInit {
 		if (this.ingressoForm.valid && this.alunoId !== undefined) {
 			const qtdIngressos = this.ingressoForm.value.qtdIngressos;
 			const tipoIngresso = this.ingressoForm.value.tipoIngresso;
+
+			const ingresso : Ingresso = {
+				id: null,
+				tipo: tipoIngresso,
+				codigo: null,
+				quantidade: qtdIngressos,
+				idAluno: this.alunoId,
+				idEvento: this.eventoId
+			}
+			
+			this.eventoService.gerarIngresso(ingresso).subscribe({
+				next: () =>{
+					this.alertService.sucesso("Compra realizada com sucesso!");
+				}
+			})
 			console.log(
 				`Evento ID: ${this.eventoId}, Aluno ID: ${this.alunoId}, Quantidade: ${qtdIngressos}, Tipo: ${tipoIngresso}`
 			);
-			this.alertService.sucesso("Compra realizada com sucesso!");
 			this.fecharModal();
 		} else {
-			this.alertService.erro("ID do aluno não encontrado.");
+			this.alertService.erro("Formulario invalido");
 		}
 	}
 }

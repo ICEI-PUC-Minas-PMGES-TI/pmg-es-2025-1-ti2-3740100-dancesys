@@ -177,7 +177,7 @@ export class FigurinosAdminPageComponent {
           this.buscar()
         },
         error: (err) =>{
-          this.alertService.erro("Esse figurino ja esta relacionado a um figurino")
+          this.alertService.erro("Esse figurino ja esta relacionado a um aluno")
         }
       })
 		}

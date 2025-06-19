@@ -13,6 +13,6 @@ public class IngressoEventoDTO {
     private Integer tipo;
     private String codigo;
     private Integer quantidade;
-    private Aluno idAluno;
-    private Evento idEvento;
+    private Long idAluno;
+    private Long idEvento;
 }

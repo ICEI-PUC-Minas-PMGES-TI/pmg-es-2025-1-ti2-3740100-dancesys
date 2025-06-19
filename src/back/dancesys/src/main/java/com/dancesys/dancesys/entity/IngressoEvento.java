@@ -16,6 +16,8 @@ public class IngressoEvento {
 
     @Column(name = "tipo", nullable = false)
     private Integer tipo;
+    public static final Integer NORMAL = 1;
+    public static final Integer MEIA = 2;
 
     @Column(name = "codigo", nullable = false)
     private String codigo;

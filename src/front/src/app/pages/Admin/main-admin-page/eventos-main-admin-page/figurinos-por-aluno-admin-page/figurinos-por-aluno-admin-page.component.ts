@@ -175,6 +175,7 @@ export class FigurinosPorAlunoAdminPageComponent {
 			nome: termo,
 			local: null,
 			data: null,
+			dataInicio: new Date(),
 			alunos: [],
 			pagina: 0,
 			tamanho: 0,

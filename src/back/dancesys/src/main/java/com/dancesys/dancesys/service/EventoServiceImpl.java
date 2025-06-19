@@ -61,4 +61,8 @@ public class EventoServiceImpl implements EventoService {
         filesServiceImpl.deleteFileByUrl(evento.getUrlFoto());
         eventoRepository.deleteById(idEvento);
     }
+
+    public Evento findById(Long idEvento){
+        return eventoRepository.findById(idEvento).get();
+    }
 }

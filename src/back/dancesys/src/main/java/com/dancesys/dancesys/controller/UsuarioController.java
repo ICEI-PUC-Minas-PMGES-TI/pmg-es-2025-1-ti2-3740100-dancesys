@@ -77,4 +77,19 @@ public class UsuarioController {
     public Object validar(@RequestBody LoginCookie cookie) throws Exception {
         return usuarioService.validacaoLogin(cookie);
     }
+
+    @GetMapping(value = "{id}")
+    public UsuarioDTO findById(@PathVariable Long id) throws Exception{
+        return usuarioService.findById(id);
+    }
+
+    @PostMapping(value = "foto")
+    public void trocarFoto(@RequestBody UsuarioDTO dto) throws Exception{
+        usuarioService.trocarFoto(dto);
+    }
+
+    @PostMapping(value = "senha")
+    public void trocarSenha(@RequestBody UsuarioDTO dto) throws Exception{
+        usuarioService.trocarSenha(dto);
+    }
 }

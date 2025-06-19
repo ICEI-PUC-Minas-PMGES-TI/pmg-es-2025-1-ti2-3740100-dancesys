@@ -19,6 +19,7 @@ export type EventoFilter = {
 	nome: string | null;
 	local: string | null;
 	data: Date | null;
+	dataInicio: Date | null;
 	alunos: number[] | null;
 	pagina: number;
 	tamanho: number;

@@ -123,6 +123,24 @@ public class DividendoServiceImpl implements DividendoService {
         }
     }
 
+    public DividendoDTO gerarIngresso(String codigo, BigDecimal valor, Long idAluno) throws RuntimeException{
+        try{
+            DividendoDTO  dto = new DividendoDTO();
+
+            Aluno aluno = new Aluno();
+            aluno.setId(idAluno);
+            dto.setIdAluno(aluno);
+
+            dto.setCodigo(codigo);
+            dto.setValor(valor);
+            dto.setTipo(Dividendo.EVENTO);
+
+            return salvar(dto);
+        }catch(RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     @Override
     public PaginatedResponse<Dividendo> buscar(DividendoFilter filtro){
         return dividendoRepositoryCustom.buscar(filtro);

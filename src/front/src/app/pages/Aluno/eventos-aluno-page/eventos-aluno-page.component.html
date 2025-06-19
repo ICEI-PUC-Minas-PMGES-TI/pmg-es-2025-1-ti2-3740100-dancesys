@@ -1,4 +1,4 @@
-<main class="p-8 max-w-full max-h-full h-full">
+<main class="p-8 max-w-full max-h-full h-full overflow-auto max-h-[90vh] app-scrollbar">
 	<section class="flex flex-col pb-4 max-w-full">
 		<div class="flex flex-row space-x-4">
 			<h1 class="text-main-500 text-5xl font-bold">
@@ -6,14 +6,13 @@
 			</h1>
 		</div>
 
-		<div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-4">
+		<div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 gap-10 mt-4">
 			<div
 				*ngFor="let evento of eventos?.conteudo"
-				class="border rounded-lg p-4 shadow-md bg-white"
+				class="border-2 border-main-500 rounded-lg p-4 shadow-md bg-main-300"
 			>
 				<img
-					[ngClass]="{ hidden: !evento.urlFoto }"
-					[src]="evento.urlFoto"
+					[src]="evento.urlFoto != null ? evento.urlFoto : './no-image.svg'"
 					alt="{{ evento.nome }}"
 					class="w-full h-48 object-cover rounded-lg mb-4"
 				/>
@@ -25,7 +24,7 @@
 				</p>
 				<p class="mt-2 text-sm">Preço: R$ {{ evento.valor }}</p>
 				<button
-					class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-600"
+					class="bg-main-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-main-600"
 					(click)="
 						evento.id !== undefined
 							? comprarIngresso(evento.id)
@@ -38,10 +37,14 @@
 		</div>
 	</section>
 
-	<div *ngIf="isModalOpen" class="modal-overlay">
-		<div class="modal-content">
-			<h2 class="font-semibold text-lg">Compra de Ingresso</h2>
-			<form (ngSubmit)="processarCompra()" [formGroup]="ingressoForm">
+	@if(isModalOpen){
+		<app-modal (onClose)="fecharModal()">
+			<div class="w-full">
+				<header class="border-b-4 border-b-main-500 w-full flex flex-row justify-start">
+					<h1 class="font-bold text-3xl">Compra de Ingresso</h1>
+				</header>
+        		<main>
+					<form (ngSubmit)="processarCompra()" [formGroup]="ingressoForm">
 				<label for="qtdIngressos" class="text-sm"
 					>Quantidade de Ingressos</label
 				>
@@ -61,8 +64,8 @@
 					formControlName="tipoIngresso"
 					class="w-full p-2 rounded-md border"
 				>
-					<option value="normal">Entrada Normal</option>
-					<option value="meio">Meio Ingresso</option>
+					<option [value]="1">Entrada Normal</option>
+					<option [value]="2">Meia entrada</option>
 				</select>
 
 				<button
@@ -79,6 +82,8 @@
 					Fechar
 				</button>
 			</form>
-		</div>
-	</div>
+				</main>
+			</div>
+		</app-modal>
+	}
 </main>

@@ -6,6 +6,7 @@ import com.dancesys.dancesys.infra.PaginatedResponse;
 import com.dancesys.dancesys.mapper.*;
 import com.dancesys.dancesys.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final ProfessorModalidadeServiceImpl professorModalidadeServiceImpl;
     private final EmailServiceImpl emailServiceImpl;
     private final DividendoServiceImpl dividendoServiceImpl;
+    private final FilesServiceImpl filesServiceImpl;
 
     public UsuarioServiceImpl(
             UsuarioRepository usuarioRepository,
@@ -28,7 +30,8 @@ public class UsuarioServiceImpl implements UsuarioService {
             ProfessorServiceImpl professorServiceImpl,
             ProfessorModalidadeServiceImpl professorModalidadeServiceImpl,
             EmailServiceImpl emailServiceImpl,
-            DividendoServiceImpl dividendoServiceImpl
+            DividendoServiceImpl dividendoServiceImpl,
+            FilesServiceImpl filesServiceImpl
     ) {
         this.usuarioRepository = usuarioRepository;
         this.alunoServiceImpl = alunoServiceImpl;
@@ -37,6 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.professorModalidadeServiceImpl = professorModalidadeServiceImpl;
         this.emailServiceImpl = emailServiceImpl;
         this.dividendoServiceImpl = dividendoServiceImpl;
+        this.filesServiceImpl = filesServiceImpl;
     }
 
     @Override
@@ -53,6 +57,42 @@ public class UsuarioServiceImpl implements UsuarioService {
             return UsuarioMapper.toDTO(usuario);
         }catch (Exception e){
             throw new Exception(e.getMessage());
+        }
+    }
+
+    @Override
+    public void trocarFoto(UsuarioDTO dto) throws Exception{
+        try{
+            if(dto.getBase64() != null && !dto.getBase64().equals("")){
+                MultipartFile foto = filesServiceImpl.convertBase64ToMultipartFile(dto.getBase64(), dto.getNomeArquivo());
+                String newUrl = filesServiceImpl.uploadFile(foto);
+                if(dto.getUrlFoto() != null && !dto.getUrlFoto().equals("")){
+                    filesServiceImpl.deleteFileByUrl(dto.getUrlFoto());
+                }
+                dto.setUrlFoto(newUrl);
+            }
+            usuarioRepository.save(UsuarioMapper.toEntity(dto));
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void trocarSenha(UsuarioDTO dto) throws Exception{
+        try{
+            usuarioRepository.save(UsuarioMapper.toEntity(dto));
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public UsuarioDTO findById(Long id) throws Exception{
+        try{
+            Usuario usuario = usuarioRepository.findById(id);
+            return UsuarioMapper.toDTO(usuario);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
