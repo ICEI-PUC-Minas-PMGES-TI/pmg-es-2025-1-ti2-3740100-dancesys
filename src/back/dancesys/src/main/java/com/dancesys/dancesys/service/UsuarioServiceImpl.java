@@ -71,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 }
                 dto.setUrlFoto(newUrl);
             }
-            return usuarioRepository.save(UsuarioMapper.toEntity(dto));
+            return UsuarioMapper.toDTO(usuarioRepository.save(UsuarioMapper.toEntity(dto)));
         }catch (RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }
@@ -80,7 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioDTO trocarSenha(UsuarioDTO dto) throws Exception{
         try{
-            return usuarioRepository.save(UsuarioMapper.toEntity(dto));
+            return UsuarioMapper.toDTO(usuarioRepository.save(UsuarioMapper.toEntity(dto)));
         }catch (RuntimeException e){
             throw new RuntimeException(e.getMessage());
         }
