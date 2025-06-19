@@ -1,5 +1,6 @@
 package com.dancesys.dancesys.service;
 
+import com.dancesys.dancesys.dto.ChamadaDTO;
 import com.dancesys.dancesys.entity.Aluno;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.entity.Chamada;
@@ -90,6 +91,18 @@ public class ChamadaServiceImpl implements ChamadaService {
 
     public List<Chamada> findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(Long idAula, List<Long> idsAlunos){
         return chamadaRepository.findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(idAula,idsAlunos);
+    }
+
+    @Override
+    public void fazerChamada(List<ChamadaDTO> chamada, Long idAulaOcorrencia){
+        for(ChamadaDTO dto : chamada ){
+            ChamadaId id = new ChamadaId(dto.getIdAluno(),idAulaOcorrencia);
+            if(dto.getPresente().equals(true)){
+                chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,dto.getIdAluno(),Chamada.presente));
+            }else{
+                chamadaRepository.save(ChamadaMapper.toEntity(idAulaOcorrencia,dto.getIdAluno(),Chamada.faltante));
+            }
+        }
     }
 
 }

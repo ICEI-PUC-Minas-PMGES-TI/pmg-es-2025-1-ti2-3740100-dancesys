@@ -1,9 +1,6 @@
 package com.dancesys.dancesys.controller;
 
-import com.dancesys.dancesys.dto.AulaDTO;
-import com.dancesys.dancesys.dto.AulaFilter;
-import com.dancesys.dancesys.dto.AulaOcorrenciaFilter;
-import com.dancesys.dancesys.dto.MensagemDTO;
+import com.dancesys.dancesys.dto.*;
 import com.dancesys.dancesys.entity.Aula;
 import com.dancesys.dancesys.entity.AulaOcorrencia;
 import com.dancesys.dancesys.entity.Chamada;
@@ -69,5 +66,11 @@ public class AulaController {
     public List<AulaOcorrencia> buscarAo2(@RequestBody AulaOcorrenciaFilter filter){
         return aulaService.buscarAo2(filter);
     }
+
+    @PostMapping(value = "chamada/{idAula}")
+    public void fazerChamada(@RequestBody List<ChamadaDTO> chamadas, @PathVariable Long idAula){
+        chamadaService.fazerChamada(chamadas, idAula);
+    }
+
 
 }
