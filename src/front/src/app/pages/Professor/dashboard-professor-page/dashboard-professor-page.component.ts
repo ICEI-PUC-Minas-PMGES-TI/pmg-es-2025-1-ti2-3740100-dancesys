@@ -6,7 +6,6 @@ import { IconComponent } from '../../../components/icon/icon.component';
 enum PossibleRoutes {
 	MAIN = "main",
 	CALENDAR = "calendar",
-	FINANCEIRO = "financeiro",
 	EVENTOS = "eventos",
 	PROFILE = "profile",
 }
@@ -24,12 +23,12 @@ enum PossibleRoutes {
 })
 export class DashboardProfessorPageComponent {
 
-  router = inject(Router);
+  	router = inject(Router);
 	currRoute = inject(ActivatedRoute);
 	public possibleRoutes = PossibleRoutes;
 	currentSelectedRoute: string = PossibleRoutes.MAIN;
 
-  handleSelectRoute(gotoRoute: string) {
+  	handleSelectRoute(gotoRoute: string) {
 		this.router
 			.navigate([gotoRoute], { relativeTo: this.currRoute })
 			.then(() => {

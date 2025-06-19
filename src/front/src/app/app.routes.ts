@@ -41,6 +41,7 @@ import { IndicadorAulasAdminPageComponent } from "./pages/Admin/indicadores-admi
 import { CalendarProfessorPageComponent } from "./pages/Professor/calendar-professor-page/calendar-professor-page.component";
 import { IndicardorModalidadeAdminPageComponent } from "./pages/Admin/indicadores-admin-page/indicador-modalidade-admin-page/indicador-modalidade-admin-page.component";
 import { MainProfessorPageComponent } from "./pages/Professor/main-professor-page/main-professor-page.component";
+import { EventosProfessorPageComponent } from "./pages/Professor/eventos-professor-page/eventos-professor-page.component";
 
 
 export  const routes: Routes = [
@@ -270,6 +271,10 @@ export  const routes: Routes = [
 					{
 						path: "calendar",
 						component: CalendarProfessorPageComponent,
+					},
+					{
+						path: "eventos",
+						component: EventosProfessorPageComponent
 					},
 					{
 						path: "main",
