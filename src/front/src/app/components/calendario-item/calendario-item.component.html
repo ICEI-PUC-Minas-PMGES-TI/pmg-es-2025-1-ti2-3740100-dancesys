@@ -2,10 +2,19 @@
 	<section
 		class="w-1/4 rounded-s-2xl text-main-100 bg-main-500 items-center justify-center flex flex-col font-bold"
 	>
-		<p>{{ item.dataHorario | date }}</p>
+		<p>{{ item.isHomeProp ? "Horários:" : (item.dataHorario | date) }}</p>
 		<p>
-			{{ diasDaSemana[item.dataHorario.getDay()] }} -
-			{{ getHoras(item.dataHorario) }}
+			{{
+				item.isHomeProp
+					? getHoras(item.dataHorario)
+					: diasDaSemana[item.dataHorario.getDay()]
+			}}
+			-
+			{{
+				item.isHomeProp
+					? getHoras(item.dataHorarioFim)
+					: getHoras(item.dataHorario)
+			}}
 		</p>
 	</section>
 	<section

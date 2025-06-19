@@ -116,8 +116,8 @@ export class AulasExtrasAdminPageComponent {
 
 	statusObj: { value: number; name: string }[] = [
 		{ value: 1, name: "Pendente" },
-		{ value: 2, name: "Indeferido" },
-		{ value: 3, name: "Aceito" },
+		{ value: 2, name: "Aceito" },
+		{ value: 3, name: "Indeferido" },
 		{ value: 4, name: "Cancelado" },
 	];
 

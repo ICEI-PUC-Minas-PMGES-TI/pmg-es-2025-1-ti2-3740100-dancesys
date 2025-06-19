@@ -1,81 +1,47 @@
-<main class="content">
-    <!-- Próximas aulas -->
-    <section class="next-classes">
-      <h2>Minhas próximas aulas</h2>
-
-      <div class="class-card">
-        <div class="info-left">
-          <div class="date">
-            <app-icon name="calendar"></app-icon>
-            <span>26/03/2025</span>
-          </div>
-          <div class="students">
-            <app-icon name="student"></app-icon>
-            <span>8 alunos inscritos</span>
-          </div>
-        </div>
-        <div class="info-right">
-          <div class="time">
-            <app-icon name="clock"></app-icon>
-            <span>18:00 às 19:00</span>
-          </div>
-          <div class="class-type">Contemporâneo - Adulto</div>
-        </div>
-      </div>
-
-      <div class="class-card">
-        <div class="info-left">
-          <div class="date">
-            <app-icon name="calendar"></app-icon>
-            <span>26/03/2025</span>
-          </div>
-          <div class="students">
-            <app-icon name="student"></app-icon>
-            <span>4 alunos inscritos</span>
-          </div>
-        </div>
-        <div class="info-right">
-          <div class="time">
-            <app-icon name="clock"></app-icon>
-            <span>20:00 às 21:00</span>
-          </div>
-          <div class="class-type">Contemporâneo - Avançado</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Próximos eventos -->
-    <section class="next-events">
-      <h2>Veja os próximos eventos...</h2>
-
-      <div class="events-container">
-        <div class="event-card">
-          <div class="image"></div>
-          <div class="event-title">Evento 1</div>
-          <div class="event-date">23/03</div>
-          <div class="event-time">14:00 às 16:00</div>
-        </div>
-
-        <div class="event-card">
-          <div class="image"></div>
-          <div class="event-title">Evento 2</div>
-          <div class="event-date">23/03</div>
-          <div class="event-time">14:00 às 16:00</div>
-        </div>
-
-        <div class="event-card">
-          <div class="image"></div>
-          <div class="event-title">Evento 3</div>
-          <div class="event-date">23/03</div>
-          <div class="event-time">14:00 às 16:00</div>
-        </div>
-
-        <div class="event-card">
-          <div class="image"></div>
-          <div class="event-title">Evento 4</div>
-          <div class="event-date">23/03</div>
-          <div class="event-time">14:00 às 16:00</div>
-        </div>
-      </div>
-    </section>
-  </main>
+<main class="bg-main-100 flex flex-1 flex-col h-full w-full p-8">
+	<section class="flex flex-1 flex-col">
+		<h1 class="text-3xl sm:text-5xl text-main-500 py-2 font-bold">
+			Veja os próximos eventos...
+		</h1>
+		<div
+			class="justify-start items-center space-x-12 py-2 flex-1 flex-row flex"
+		>
+			@for (evento of proximosEventos; track evento.id) {
+				<app-simple-card
+					[imageUrl]="evento.urlFoto || 'no-image.svg'"
+					[title]="evento.nome"
+				>
+					{{ getDataTexto(evento) }}
+					<br />
+					{{ getHorarioTexto(evento) }}
+				</app-simple-card>
+			}
+		</div>
+	</section>
+	<section class="flex flex-1 flex-col">
+		<h1 class="text-3xl sm:text-5xl py-2 text-main-500 font-bold">
+			Aulas do Dia:
+		</h1>
+		@if (aulasDoDia.length > 0) {
+			<div class="py-2 items-center flex justify-between">
+				<app-calendario-item
+					[item]="aulasDoDia[aulaNaTelaIndex]"
+				></app-calendario-item>
+				<div class="flex flex-col space-y-2 w-1/3 px-4">
+					<button appButton (click)="proximaAula()" moreStyles="w-32">
+						Próxima Aula
+					</button>
+					<button
+						appButton
+						(click)="aulaAnterior()"
+						moreStyles="w-32"
+					>
+						Aula Anterior
+					</button>
+				</div>
+			</div>
+		} @else {
+			<h1 class="font-bold text-2xl text-main-500">Não há aulas hoje!</h1>
+		}
+	</section>
+</main>

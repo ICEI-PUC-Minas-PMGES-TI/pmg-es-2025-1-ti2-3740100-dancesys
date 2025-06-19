@@ -4,43 +4,44 @@
 			Veja os próximos eventos...
 		</h1>
 		<div
-			class="justify-start items-center space-x-5 py-2 flex-1 flex-row flex"
+			class="justify-start items-center space-x-12 py-2 flex-1 flex-row flex"
 		>
-			<app-simple-card
-				imageUrl="https://stickerrs.com/wp-content/uploads/2024/03/Cat-Meme-Stickers-Featured.png"
-				[checked]="true"
-				title="Evento 1"
-			>
-				23/03 <br />
-				14:00 às 16:00
-			</app-simple-card>
-			<app-simple-card
-				imageUrl="https://i.pinimg.com/736x/b4/bb/b2/b4bbb2198b036fe1024571ec6b60f8b8.jpg"
-				title="Evento 1"
-			>
-				23/03 <br />
-				14:00 às 16:00
-			</app-simple-card>
-			<app-simple-card title="Evento 1">
-				23/03 <br />
-				14:00 às 16:00
-			</app-simple-card>
-			<app-simple-card [checked]="true" title="Evento 1">
-				23/03 <br />
-				14:00 às 16:00
-			</app-simple-card>
+			@for (evento of proximosEventos; track evento.id) {
+				<app-simple-card
+					[imageUrl]="evento.urlFoto || 'no-image.svg'"
+					[title]="evento.nome"
+				>
+					{{ getDataTexto(evento) }}
+					<br />
+					{{ getHorarioTexto(evento) }}
+				</app-simple-card>
+			}
 		</div>
 	</section>
 	<section class="flex flex-1 flex-col">
 		<h1 class="text-3xl sm:text-5xl py-2 text-main-500 font-bold">
-			Minha próxima aula
+			Aulas do Dia:
 		</h1>
-		<div class="flex-1 py-2 bg-amber-400 items-center flex">card ...</div>
-		<div
-			class="flex flex-1 justify-between sm:justify-start items-start py-2 flex-row space-x-4"
-		>
-			<button type="button" appButton color="danger">Cancelar</button>
-			<button type="button" appButton color="medium">Reagendar</button>
-		</div>
+		@if (aulasDoDia.length > 0) {
+			<div class="py-2 items-center flex justify-between">
+				<app-calendario-item
+					[item]="aulasDoDia[aulaNaTelaIndex]"
+				></app-calendario-item>
+				<div class="flex flex-col space-y-2 w-1/3 px-4">
+					<button appButton (click)="proximaAula()" moreStyles="w-32">
+						Próxima Aula
+					</button>
+					<button
+						appButton
+						(click)="aulaAnterior()"
+						moreStyles="w-32"
+					>
+						Aula Anterior
+					</button>
+				</div>
+			</div>
+		} @else {
+			<h1 class="font-bold text-2xl text-main-500">Não há aulas hoje!</h1>
+		}
 	</section>
 </main>

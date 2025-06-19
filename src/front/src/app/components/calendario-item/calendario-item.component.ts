@@ -8,8 +8,10 @@ export type ItemDeCalendario = {
 	tipoUsuario: UsuarioTipos;
 	tipoAluno?: TipoAluno;
 	dataHorario: Date;
+	dataHorarioFim?: Date;
 	title: string;
 	subtitle: string;
+	isHomeProp?: boolean;
 	button?: { label: string; click: Function; cor: string };
 };
 
@@ -35,7 +37,10 @@ export class CalendarioItemComponent {
 		"Sábado",
 	];
 
-	getHoras(date: Date) {
+	getHoras(date: Date | undefined) {
+		if (!date) {
+			return;
+		}
 		const horas: string = date.getHours().toString().padStart(2, "0");
 		const minutos: string = date.getMinutes().toString().padStart(2, "0");
 		return `${horas}:${minutos}`;

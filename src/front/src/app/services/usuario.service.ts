@@ -45,7 +45,6 @@ export class UsuarioService {
 					next: (response) => {
 						this.currentUsuario.set(response);
 						this.redirecionarUsuario();
-						console.log(this.currentUsuario());
 					},
 				});
 		}
@@ -57,7 +56,6 @@ export class UsuarioService {
 			this.router.navigate(["login"]);
 			return;
 		}
-		console.log(this.getLoggedInUserType() === UsuarioTipos.FUNCIONARIO);
 		if (this.getLoggedInUserType() === UsuarioTipos.ADMIN) {
 			// logado como admin
 			this.router.navigate(["admin"]);
@@ -74,7 +72,6 @@ export class UsuarioService {
 			.post<UsuarioCookie>(url, { email, senha: password })
 			.pipe(
 				switchMap((cookie) => {
-					console.log(cookie);
 					localStorage.clear();
 					localStorage.setItem("user_cookie", JSON.stringify(cookie));
 					this._myCookie.set({ ...cookie });
@@ -88,7 +85,6 @@ export class UsuarioService {
 				next: (response: possibleUserTypes) => {
 					this.currentUsuario.set(response);
 					this.redirecionarUsuario();
-					console.log(this.currentUsuario());
 				},
 				error: (err: any) => {
 					this.alertService.erro(err.error.mensagem);
@@ -127,7 +123,6 @@ export class UsuarioService {
 							idUsuario: response,
 						} as possibleUserTypes;
 					});
-					console.log(this.currentUsuario());
 				},
 				error: (err: any) => {
 					this.alertService.erro(err.error.mensagem);

@@ -39,7 +39,6 @@ export class DashboardProfessorPageComponent {
 
 	constructor() {
 		effect(() => {
-			console.log("rodou");
 			this.urlFoto = (
 				this.usuarioService.getLoggedInUserType() === UsuarioTipos.ADMIN
 					? (this.usuarioService.usuario() as Usuario)
