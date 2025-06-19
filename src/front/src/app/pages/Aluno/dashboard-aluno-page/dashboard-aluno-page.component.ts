@@ -1,8 +1,14 @@
-import { Component, inject } from "@angular/core";
+import { Component, effect, inject } from "@angular/core";
 import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import { NavbarComponent } from "../../../components/navbar/navbar.component";
 import { NavbarButtonComponent } from "../../../components/navbar-button/navbar-button.component";
 import { IconComponent } from "../../../components/icon/icon.component";
+import { UsuarioService } from "../../../services/usuario.service";
+import { Usuario, UsuarioTipos } from "../../../models/usuario.model";
+import {
+	AlunoResponse,
+	ProfessorResponse,
+} from "../../../services/admin.service";
 
 enum PossibleRoutes {
 	MAIN = "main",
@@ -24,10 +30,28 @@ enum PossibleRoutes {
 	styleUrl: "./dashboard-aluno-page.component.css",
 })
 export class DashboardAlunoPageComponent {
+	usuarioService = inject(UsuarioService);
 	router = inject(Router);
 	currRoute = inject(ActivatedRoute);
 	public possibleRoutes = PossibleRoutes;
 	currentSelectedRoute: string = PossibleRoutes.MAIN;
+
+	urlFoto: string | null = null;
+
+	constructor() {
+		effect(() => {
+			console.log("rodou");
+			this.urlFoto = (
+				this.usuarioService.getLoggedInUserType() === UsuarioTipos.ADMIN
+					? (this.usuarioService.usuario() as Usuario)
+					: ((
+							this.usuarioService.usuario() as
+								| AlunoResponse
+								| ProfessorResponse
+						).idUsuario as Usuario)
+			)?.urlFoto;
+		});
+	}
 
 	handleSelectRoute(gotoRoute: string) {
 		this.router

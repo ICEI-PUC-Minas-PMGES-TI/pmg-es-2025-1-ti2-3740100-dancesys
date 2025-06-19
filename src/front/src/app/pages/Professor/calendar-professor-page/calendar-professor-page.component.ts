@@ -3,8 +3,6 @@ import {
 	CalendarioItemComponent,
 	ItemDeCalendario,
 } from "../../../components/calendario-item/calendario-item.component";
-import { UsuarioTipos } from "../../../models/usuario.model";
-import { TipoAluno } from "../../../models/aluno.model";
 import { BotaoComponent } from "../../../components/botao/botao.component";
 import {
 	AdminService,
@@ -13,21 +11,18 @@ import {
 } from "../../../services/admin.service";
 import { UsuarioService } from "../../../services/usuario.service";
 import { AulaOcorrenciaFilter } from "../../../models/AulaOcorrencia.model";
-import { of, switchMap } from "rxjs";
 import { EnsaioFilter } from "../../../models/Ensaio.model";
 import { MiniCalendarComponent } from "../../../components/mini-calendar/mini-calendar.component";
 import { CommonModule, DatePipe } from "@angular/common";
 import { ModalComponent } from "../../../components/modal/modal.component";
-import { FormsModule, NgForm } from "@angular/forms";
-import { Modalidade } from "../../../models/modalidade.model";
+import { FormsModule } from "@angular/forms";
 import { ModalidadesService } from "../../../services/modalidades.service";
-import { ProfessorFiltro } from "../../../models/professor.model";
 import { SearchBoxSingleComponent } from "../../../components/search-box-single/search-box-single.component";
-import { AulaExtraDTO } from "../../../models/Aula.model";
 import { AulaService } from "../../../services/aula.service";
 import { AulaExtraFilter } from "../../../models/AulaExtra.model";
 import { AlertService } from "../../../services/Alert.service";
 import { AulaExperimentalFilter } from "../../../models/AulaExperimental.model";
+import { switchMap } from "rxjs/operators";
 
 @Component({
 	selector: "app-calendar-aluno-page",
@@ -58,6 +53,10 @@ export class CalendarProfessorPageComponent {
 	selectedDay: Date = new Date();
 	dadosSobreMesSelecionado!: { firstDay: Date; lastDay: Date };
 	paginas = Math.ceil(this.calendarItems.length / 5);
+
+	presencaModal: boolean = false;
+	aulaChamada: any = undefined;
+	arrPresencaAlunos: { idAluno: AlunoResponse; presente: boolean }[] = [];
 
 	isLoading: boolean = true;
 
@@ -138,9 +137,7 @@ export class CalendarProfessorPageComponent {
 											cor: "dark",
 											click: () => {
 												// TODO: COLOCAR LÓGICA DA CHAMADA
-												console.log(
-													"Fazendo chamada!!",
-												);
+												this.abrirModalDeChamada(aula);
 											},
 										}
 									: undefined,
@@ -240,6 +237,44 @@ export class CalendarProfessorPageComponent {
 			return;
 		}
 		this.currPag++;
+	}
+
+	abrirModalDeChamada(aula: any) {
+		this.aulaChamada = aula;
+		console.log(aula);
+		this.arrPresencaAlunos = aula.chamada.map((val: any) => {
+			return {
+				idAluno: val.idAluno as AlunoResponse,
+				presente: val.presenca,
+			};
+		});
+		console.log(this.arrPresencaAlunos);
+		this.presencaModal = true;
+	}
+
+	fecharModalChamada(confirmar: boolean) {
+		if (confirmar) {
+			const arr = this.arrPresencaAlunos.map((val) => {
+				return { idAluno: val.idAluno.id, presente: val.presente };
+			});
+			this.aulaService.fazerChamada(this.aulaChamada.id, arr).subscribe({
+				next: () => {
+					this.alertService.sucesso("Chamada feita com sucesso");
+					this.carregarItens();
+				},
+				error: (err: any) => {
+					this.alertService.erro(err.error.mensagem);
+				},
+			});
+		}
+		this.aulaChamada = null;
+		this.arrPresencaAlunos = [];
+		this.presencaModal = false;
+	}
+
+	mudarPresenca(index: number) {
+		this.arrPresencaAlunos[index].presente =
+			!this.arrPresencaAlunos[index].presente;
 	}
 
 	previousPage() {

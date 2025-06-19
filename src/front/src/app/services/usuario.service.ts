@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { AlunoResponse, ProfessorResponse } from "./admin.service";
 import { Observable, switchMap } from "rxjs";
 import { AlertService } from "./Alert.service";
+import { Aluno } from "../models/aluno.model";
 
 const USER_INFO_EXPIRE_DAYS: number = 10; // em dias
 
@@ -98,6 +99,55 @@ export class UsuarioService {
 
 	public getLoggedInUserType() {
 		return this._myCookie()?.tipo ? this._myCookie()?.tipo : null;
+	}
+
+	public mudarImagem(foto: string, nomeArquivo: string) {
+		const usuario =
+			this.getLoggedInUserType() === UsuarioTipos.ADMIN
+				? this.usuario()
+				: (this.usuario() as AlunoResponse | ProfessorResponse)
+						.idUsuario;
+		this.http
+			.post<Usuario>(
+				`${environment.API_URL}${this.usuarioController}/foto`,
+				{
+					...usuario,
+					base64: foto,
+					nomeArquivo,
+				},
+			)
+			.subscribe({
+				next: (response: Usuario) => {
+					this.currentUsuario.update((valor: possibleUserTypes) => {
+						if (this.getLoggedInUserType() === UsuarioTipos.ADMIN) {
+							return response;
+						}
+						return {
+							...(valor as AlunoResponse | ProfessorResponse),
+							idUsuario: response,
+						} as possibleUserTypes;
+					});
+					console.log(this.currentUsuario());
+				},
+				error: (err: any) => {
+					this.alertService.erro(err.error.mensagem);
+					console.log(err);
+				},
+			});
+	}
+
+	public redefinirSenha(senha: string) {
+		const usuario =
+			this.getLoggedInUserType() === UsuarioTipos.ADMIN
+				? this.usuario()
+				: (this.usuario() as AlunoResponse | ProfessorResponse)
+						.idUsuario;
+		this.http
+			.post(`${environment.API_URL}${this.usuarioController}/senha`, {
+				...usuario,
+				senha,
+			})
+			.subscribe();
 	}
 
 	public deslogar() {

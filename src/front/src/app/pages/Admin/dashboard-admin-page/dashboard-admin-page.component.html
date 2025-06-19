@@ -27,7 +27,7 @@
 			[active]="possibleRoutes.PROFILE === currentSelectedRoute"
 			(selected)="handleSelectRoute($event)"
 		>
-			<app-icon name="account"></app-icon>
+			<app-icon name="account" [urlFoto]="urlFoto"></app-icon>
 		</app-navbar-button>
 	</app-navbar>
 	<router-outlet />

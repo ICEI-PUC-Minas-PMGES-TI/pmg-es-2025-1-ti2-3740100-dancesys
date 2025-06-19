@@ -62,6 +62,13 @@ export class AulaService {
 		);
 	}
 
+	public fazerChamada(
+		idAula: number,
+		chamada: { idAluno: number; presente: boolean }[],
+	) {
+		return this.http.post(`${this.url}chamada/${idAula}`, [...chamada]);
+	}
+
 	public seInscreverAula(idAula: number, idAluno: number) {
 		return this.http.get(`${this.url}inscrever/${idAula}/${idAluno}`);
 	}

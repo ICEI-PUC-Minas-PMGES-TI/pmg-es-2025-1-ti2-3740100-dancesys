@@ -9,6 +9,8 @@ export interface Usuario {
 	status: boolean; // Boolean
 	endereco: string; // String
 	urlFoto: string | null; // String
+	base64: string | null;
+	nomeArquivo: string | null;
 	dataNascimento: Date; // LocalDate
 	criadoEm: Date; // LocalDate
 }

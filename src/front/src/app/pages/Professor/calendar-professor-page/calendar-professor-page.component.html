@@ -1,3 +1,54 @@
+@if (presencaModal) {
+	<app-modal (onClose)="fecharModalChamada(false)">
+		<h1 class="font-bold text-3xl pb-4 border-b-4 border-b-main-500">
+			Lista de Presença:
+		</h1>
+		<section
+			class="flex flex-col w-full space-y-2 pt-4 max-h-96 scroll-auto overflow-auto app-scrollbar px-3"
+		>
+			@for (
+				aluno of arrPresencaAlunos;
+				track aluno.idAluno;
+				let i = $index
+			) {
+				<div
+					class="flex justify-between font-bold text-lg text-main-500"
+				>
+					<div class="flex space-x-2 items-center">
+						<img
+							[src]="
+								aluno.idAluno.idUsuario.urlFoto
+									? aluno.idAluno.idUsuario.urlFoto
+									: './account_icon_dark.svg'
+							"
+							class="w-10 rounded-full"
+						/>
+
+						<span>{{ aluno.idAluno.idUsuario.nome }}</span>
+					</div>
+					<div
+						class="flex w-64 justify-between space-x-8 items-center"
+					>
+						<span>{{
+							aluno.presente ? "🟢 Presente" : "🔴 Ausente"
+						}}</span>
+						<button
+							appButton
+							(click)="mudarPresenca(i)"
+							size="small"
+							moreStyles="w-28"
+						>
+							{{ aluno.presente ? "Dar Falta" : "Dar Presença" }}
+						</button>
+					</div>
+				</div>
+			}
+		</section>
+		<button appButton moreStyles="mt-4" (click)="fecharModalChamada(true)">
+			Confirmar Chamada
+		</button>
+	</app-modal>
+}
 <div *ngIf="isLoading" class="overlay">
 	<div class="loader"></div>
 </div>

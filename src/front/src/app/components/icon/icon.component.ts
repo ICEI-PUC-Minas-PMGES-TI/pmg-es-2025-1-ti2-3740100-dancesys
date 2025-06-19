@@ -16,7 +16,7 @@ enum Icons {
 	menu = "menu_icon.svg",
 	check = "check_icon.svg",
 	view = "view_icon.svg",
-	indicadores = "indicadores_icon.svg"
+	indicadores = "indicadores_icon.svg",
 }
 
 enum Sizes {
@@ -37,6 +37,7 @@ export class IconComponent {
 	@Input({ required: true }) name!: string;
 	@Input("size") size: string = "1/1";
 	@Input("fill") fill: boolean = false;
+	@Input("urlFoto") urlFoto: string | null = null;
 
 	public get iconSrc() {
 		return Icons[this.name as keyof typeof Icons];
@@ -46,6 +47,9 @@ export class IconComponent {
 		const styles = [Sizes[this.size as keyof typeof Sizes], "p-1"];
 		if (this.fill) {
 			styles.push("bg-main-500");
+			styles.push("rounded-full");
+		}
+		if (this.urlFoto) {
 			styles.push("rounded-full");
 		}
 		return styles;

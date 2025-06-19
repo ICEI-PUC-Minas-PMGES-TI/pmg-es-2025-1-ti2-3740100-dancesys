@@ -37,6 +37,8 @@ export interface AlunoResponse {
 		status: boolean;
 		endereco: string;
 		urlFoto: null | string;
+		base64: string | null;
+		nomeArquivo: string | null;
 		dataNascimento: Date;
 		criadoEm: Date;
 	};
@@ -68,6 +70,8 @@ export interface ProfessorResponse {
 		status: boolean;
 		endereco: string;
 		urlFoto: null | string;
+		base64: string | null;
+		nomeArquivo: string | null;
 		dataNascimento: Date;
 		criadoEm: Date;
 	};

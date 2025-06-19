@@ -1,6 +1,105 @@
-<div class="p-8">
-  <button appButton (click)="deslogar()">
-    Deslogar
-  </button>
-  
+@if (ImageCropped) {
+	<app-modal zindex="z-4">
+		<div class="w-full">
+			<main>
+				<image-cropper
+					class="bg-main-100 cropper w-[80%]"
+					[hidden]="!imageChangedEvent"
+					[imageChangedEvent]="imageChangedEvent"
+					[maintainAspectRatio]="true"
+					[aspectRatio]="1"
+					format="png"
+					(imageCropped)="imageCropped($event)"
+					(imageLoaded)="imageLoaded($event)"
+					(cropperReady)="cropperReady()"
+					(loadImageFailed)="loadImageFailed()"
+					output="base64"
+				></image-cropper>
+				<button (click)="confirmar(true)" appButton>Confirmar</button>
+				<button (click)="confirmar(false)" appButton>Cancelar</button>
+			</main>
+		</div>
+	</app-modal>
+}
+@if (redefinirSenhaModal) {
+	<app-modal (onClose)="redefinirSenha()">
+		<div class="flex flex-col space-y-4">
+			<h1 class="font-bold text-xl border-b-4 border-b-main-500">
+				Redefina sua senha:
+			</h1>
+			<form class="flex flex-col space-y-2" #novaSenhaForm="ngForm">
+				<div class="flex-col flex space-y-1">
+					<label class="font-bold" for="novaSenha">Nova Senha:</label>
+					<div class="flex space-x-2">
+						<input
+							[type]="!exibirSenha ? 'password' : 'text'"
+							class="p-1 bg-main-300 rounded-md w-52"
+							placeholder="..."
+							ngModel
+							name="novaSenha"
+						/>
+						<button
+							type="button"
+							appButton
+							icon-slot="icon-only"
+							icon="view"
+							icon-size="small"
+							(click)="flipExibirSenha()"
+						></button>
+					</div>
+				</div>
+				<div class="flex-col flex space-y-1">
+					<label class="font-bold" for="novaSenhaConfirm"
+						>Confirme a nova senha:</label
+					>
+					<input
+						[type]="!exibirSenha ? 'password' : 'text'"
+						class="p-1 bg-main-300 rounded-md w-52"
+						placeholder="..."
+						ngModel
+						name="novaSenhaConfirm"
+					/>
+				</div>
+				<button
+					type="submit"
+					appButton
+					(click)="redefinirSenha(novaSenhaForm)"
+				>
+					Confirmar
+				</button>
+			</form>
+		</div>
+	</app-modal>
+}
+<div class="p-8 w-full text-main-500">
+	<h1 class="font-bold text-5xl pb-4">Sua Conta</h1>
+	<section class="flex flex-col space-y-8 w-60">
+		<div class="flex flex-col flex-1 space-y-2">
+			<label class="text-xl text-main-500 font-bold" for="foto"
+				>Foto de Perfil:</label
+			>
+			<img
+				[src]="croppedImage || urlFoto || 'account_icon_dark.svg'"
+				class="w-44 rounded-lg"
+			/>
+			<input
+				placeholder="Escolha um arquivo..."
+				class="p-1 bg-main-500 text-main-100 rounded-md"
+				type="file"
+				(change)="fileChangeEvent($event)"
+			/>
+		</div>
+		<div class="flex space-x-2">
+			<button appButton (click)="deslogar()" moreStyles="w-36">
+				Deslogar
+			</button>
+			<button
+				appButton
+				(click)="abrirModalRedefinirSenha()"
+				moreStyles="w-36"
+			>
+				Redefinir Senha
+			</button>
+		</div>
+	</section>
 </div>
