@@ -22,7 +22,34 @@
 
 ## Instruções de utilização
 
-Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.
+BACK:
+
+Clone este repositório:
+git clone https://github.com/seu_usuario/dancesys.git
+
+No Intelij abra o projeto na rota 
+..\pmg-es-2025-1-ti2-3740100-dancesys\src\back\dancesys 
+
+Inicie o projeto no run de DancesysApplication
+
+Caso não haja nenhum erro o servidor estará rodando no http://localhost:8080 
+
+FRONT:
+
+Baixe o nvm.exe
+
+Abra um cmd e digite: 
+nvm install 22.16.0 
+nvm use 22.16.0 
+
+Abra o projeto em um terminal na rota 
+..\pmg-es-2025-1-ti2-3740100-dancesys\src\front
+
+Digite no terminal: 
+npm install 
+ng serve
+
+Caso não haja nenhum erro o servidor estará rodando no https://localhost:4200
 
 ## Histórico de versões
 
