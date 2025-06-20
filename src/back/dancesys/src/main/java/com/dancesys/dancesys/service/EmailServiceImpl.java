@@ -23,24 +23,23 @@ public class EmailServiceImpl {
     private String remetente;
 
     public String enviarEmailHtml(String destinatario, String senha) {
-//        try {
-//            String htmlContent = carregarTemplateEmail(destinatario, senha);
-//
-//            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-//
-//            helper.setFrom(remetente);
-//            helper.setTo(destinatario);
-//            helper.setSubject("Bem-vindo ao Dancesys!");
-//            helper.setText(htmlContent, true);
-//
-//            javaMailSender.send(mimeMessage);
-//            return "Email enviado com sucesso";
-//
-//        } catch (MessagingException | IOException e) {
-//            return "Erro ao tentar enviar email: " + e.getLocalizedMessage();
-//        }
-        return "";
+        try {
+            String htmlContent = carregarTemplateEmail(destinatario, senha);
+
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setFrom(remetente);
+            helper.setTo(destinatario);
+            helper.setSubject("Bem-vindo ao Dancesys!");
+            helper.setText(htmlContent, true);
+
+            javaMailSender.send(mimeMessage);
+            return "Email enviado com sucesso";
+
+        } catch (MessagingException | IOException e) {
+            return "Erro ao tentar enviar email: " + e.getLocalizedMessage();
+        }
     }
 
     private String carregarTemplateEmail(String usuario, String senha) throws IOException {
