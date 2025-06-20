@@ -11,6 +11,7 @@ enum ButtonColors {
 	yellow = "yellow text-white",
 	green = "green text-white",
 	red = "red text-white",
+	black_blue = "black_blue text-white"
 }
 
 enum IconSlots {

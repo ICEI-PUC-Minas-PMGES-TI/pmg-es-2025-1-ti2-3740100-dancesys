@@ -68,12 +68,12 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 		{
 			icon: "edit",
 			title: "Editar",
-			cor: "dark",
+			cor: "black_blue",
 			callback: (item: ApresentacaoEvento) =>
 				this.onToggleEditarModal(item),
 		},
 		{
-			icon: "delete",
+			icon: "trash",
 			title: "Excluir",
 			cor: "dark",
 			callback: (item: ApresentacaoEvento) =>

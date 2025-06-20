@@ -106,11 +106,11 @@ export class AulasFixasAdminPageComponent {
 		{
 			icon: "edit",
 			title: "Editar",
-			cor: "dark",
+			cor: "black_blue",
 			callback: (item: any) => this.editar(item),
 		},
 		{
-			icon: "warning",
+			text: "Mudar status",
 			title: "Status",
 			cor: "dark",
 			callback: (item: any) => this.status(item),

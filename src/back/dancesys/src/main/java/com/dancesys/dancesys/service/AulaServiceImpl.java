@@ -55,7 +55,7 @@ public class AulaServiceImpl implements  AulaService {
                     chamadaServiceImpl.deletarAll(chamadaServiceImpl.findByIdAulaOcorrenciaIdAulaIdAndIdAlunoIdIn(dto.getId(), idsNotIn));
                 }
 
-                List<AulaOcorrencia> aos = aulaOcorrenciaServiceImpl.findyByIdAulaId(dto.getId());
+                List<AulaOcorrencia> aos = aulaOcorrenciaServiceImpl.buscarAulasPosData(LocalDate.now().minusDays(1),dto.getId());
                 for(AulaOcorrencia ao : aos){
                     chamadaServiceImpl.gerarChamada(dto.getAlunos(), ao.getId());
                 }

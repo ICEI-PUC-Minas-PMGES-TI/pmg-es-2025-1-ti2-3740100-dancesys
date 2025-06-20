@@ -98,17 +98,17 @@ export class FigurinosPorAlunoAdminPageComponent {
 		{
 			icon: "edit",
 			title: "Editar",
-			cor: "dark",
+			cor: "black_blue",
 			callback: (item: any) => this.editar(item),
 		},
 		{
-			icon: "delete",
+			icon: "trash",
 			title: "Excluir",
 			cor: "dark",
 			callback: (item: any) => this.excluir(item.id),
 		},
 		{
-			icon: "warning",
+			text: "Mudar status",
 			title: "Status",
 			cor: "dark",
 			callback: (item: any) => this.status(item.id),

@@ -10,6 +10,10 @@
 	background-color: #ffd037;
 }
 
+.black_blue{
+	background-color: #173066;
+}
+
 .transicao {
 	transition: background-color 0.3s;
 }

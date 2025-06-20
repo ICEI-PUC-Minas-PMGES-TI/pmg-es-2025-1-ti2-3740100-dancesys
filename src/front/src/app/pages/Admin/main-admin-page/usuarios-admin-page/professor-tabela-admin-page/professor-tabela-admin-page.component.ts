@@ -103,7 +103,7 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 		{
 			icon: "edit",
 			title: "Editar",
-			cor: "dark",
+			cor: "black_blue",
 			callback: (item: any) => this.openEditModal(item.id),
 		},
 		{

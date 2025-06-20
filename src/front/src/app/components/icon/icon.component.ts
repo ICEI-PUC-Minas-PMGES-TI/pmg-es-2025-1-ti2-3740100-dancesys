@@ -17,6 +17,7 @@ enum Icons {
 	check = "check_icon.svg",
 	view = "view_icon.svg",
 	indicadores = "indicadores_icon.svg",
+	trash = "trash_icon.svg"
 }
 
 enum Sizes {

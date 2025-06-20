@@ -84,14 +84,14 @@ export class AulasRecorrentesAdminPageComponent {
 	acoes = [
 		{
 			icon: "warning",
-			title: "Status",
-			cor: "dark",
+			title: "Cancelar",
+			cor: "red",
 			callback: (item: any) => this.status(item),
 		},
 		{
 			icon: "view",
 			title: "Visualizar",
-			cor: "dark",
+			cor: "blue",
 			callback: (item: any) => this.visualizar(item),
 		},
 	];

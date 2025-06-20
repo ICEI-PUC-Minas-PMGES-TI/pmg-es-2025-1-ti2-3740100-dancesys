@@ -70,11 +70,11 @@ export class EventosAdminPageComponent implements OnInit {
 		{
 			icon: "edit",
 			title: "Editar",
-			cor: "dark",
+			cor: "black_blue",
 			callback: (item: Evento) => this.onToggleEditarModal(item),
 		},
 		{
-			icon: "delete",
+			icon: "trash",
 			title: "Excluir",
 			cor: "dark",
 			callback: (item: Evento) =>

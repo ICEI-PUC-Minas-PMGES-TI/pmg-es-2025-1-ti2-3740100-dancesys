@@ -45,11 +45,11 @@ export class SalaAdminPageComponent {
 		{
 		  icon: 'edit',
 		  title: 'Editar',
-		  cor: 'dark',
+		  cor: 'black_blue',
 		  callback: (item: any) => this.editar(item)
 		},
 		{
-		  icon: 'delete',
+		  icon: 'trash',
 		  title: 'Excluir',
 		  cor: 'dark',
 		  callback: (item: any) => this.excluir(item.id)
