@@ -32,15 +32,15 @@ import { AlertService } from "../../../../../services/Alert.service";
 	styleUrl: "./eventos-admin-page.component.css",
 })
 export class EventosAdminPageComponent implements OnInit {
-  	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent
+	@ViewChild(SimpleTableComponent) tabela!: SimpleTableComponent;
 
 	private adminService = inject(AdminService);
 	private alertService = inject(AlertService);
 
 	paginaAtual: number = 0;
 	itensPage: number = 10;
-	orderByValue: string = '';
-	orderValue: string = '';
+	orderByValue: string = "";
+	orderValue: string = "";
 
 	currentEventoEditar: Evento | undefined = undefined;
 
@@ -84,7 +84,11 @@ export class EventosAdminPageComponent implements OnInit {
 
 	eventos: EventoResponse | undefined = undefined;
 
+	isModalFoto: boolean = false;
+	ImageCropped: boolean = false;
+
 	imageChangedEvent: any = null;
+	urlFotoEdit: string = "";
 	croppedImage: any = "";
 	nomeArquivoFoto: string = "";
 
@@ -95,8 +99,11 @@ export class EventosAdminPageComponent implements OnInit {
 	}
 
 	fileChangeEvent(event: any): void {
-		this.imageChangedEvent = event;
-		this.nomeArquivoFoto = event.target!.files[0].name;
+		if (event.target!.files[0].name) {
+			this.ImageCropped = true;
+			this.imageChangedEvent = event;
+			this.nomeArquivoFoto = event.target!.files[0].name;
+		}
 	}
 	imageCropped(event: ImageCroppedEvent) {
 		this.croppedImage = event!.base64;
@@ -106,7 +113,7 @@ export class EventosAdminPageComponent implements OnInit {
 	loadImageFailed() {}
 
 	onPaginacaoChange(event: { paginaSelecionada: number; itensPage: number }) {
-		this.tabela.isLoad(true)
+		this.tabela.isLoad(true);
 		this.paginaAtual = --event.paginaSelecionada;
 		this.itensPage = event.itensPage;
 		this.onFiltrar();
@@ -119,9 +126,25 @@ export class EventosAdminPageComponent implements OnInit {
 		this.isModalEditarOpen = !this.isModalEditarOpen;
 		if (this.isModalEditarOpen) {
 			this.currentEventoEditar = item;
+			this.urlFotoEdit = item!.urlFoto as string;
+		} else {
+			this.urlFotoEdit = "";
 		}
 		this.imageChangedEvent = null;
 	}
+
+	confirmar() {
+		this.ImageCropped = false;
+	}
+
+	ver() {
+		this.isModalFoto = true;
+	}
+
+	closeModalFoto() {
+		this.isModalFoto = false;
+	}
+
 	onToggleExcluirModal(confirmed?: boolean | void) {
 		this.isModalExcluirOpen = !this.isModalExcluirOpen;
 		if (confirmed) {
@@ -199,12 +222,12 @@ export class EventosAdminPageComponent implements OnInit {
 		return `${strD[2]}/${strD[1]}/${strD[0]} - ${strarr[1]}`;
 	}
 
-	onFilter(form?: NgForm){
-		this.tabela.isLoad(true)
+	onFilter(form?: NgForm) {
+		this.tabela.isLoad(true);
 		this.paginaAtual = 0;
-		this.tabela.resetPage()
-		this.onFiltrar(form)
-  	}
+		this.tabela.resetPage();
+		this.onFiltrar(form);
+	}
 
 	onFiltrar(form?: NgForm) {
 		this.adminService
@@ -217,16 +240,16 @@ export class EventosAdminPageComponent implements OnInit {
 				pagina: this.paginaAtual,
 				tamanho: this.itensPage,
 				orderBy: this.orderByValue,
-				order: this.orderValue
+				order: this.orderValue,
 			} as EventoFilter)
 			.subscribe({
 				next: (ev: EventoResponse) => {
-					if(ev.total == 0){
-						this.alertService.info("Nenhum registro encontrado!")
-					}else{
+					if (ev.total == 0) {
+						this.alertService.info("Nenhum registro encontrado!");
+					} else {
 						this.eventos = { ...ev };
 					}
-					this.tabela.isLoad(false)
+					this.tabela.isLoad(false);
 				},
 			});
 	}
