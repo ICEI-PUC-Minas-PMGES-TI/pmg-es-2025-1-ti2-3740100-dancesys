@@ -33,7 +33,7 @@ export class MainAlunoPageComponent implements OnInit {
 	ngOnInit(): void {
 		let aulaArr: any[] = [];
 		const d = new Date();
-		d.setDate(d.getDate() - 1);
+		// d.setDate(d.getDate() - 1);
 		this.adminService
 			.fetchAulasOcorrentes({
 				alunos: [(this.usuarioService.usuario() as AlunoResponse).id],
