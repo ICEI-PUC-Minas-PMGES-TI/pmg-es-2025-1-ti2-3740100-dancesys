@@ -32,17 +32,20 @@ export class MainAlunoPageComponent implements OnInit {
 
 	ngOnInit(): void {
 		let aulaArr: any[] = [];
+		const d = new Date();
+		d.setDate(d.getDate() - 1);
 		this.adminService
 			.fetchAulasOcorrentes({
 				alunos: [(this.usuarioService.usuario() as AlunoResponse).id],
-				dataInicio: new Date(),
-				dataFim: new Date(),
+				dataInicio: d,
+				dataFim: d,
 				orderBy: "idAula.horarioInicio",
 				order: "desc",
 			} as AulaOcorrenciaFilter)
 			.pipe(
 				switchMap((val: any) => {
 					aulaArr = [
+						...aulaArr,
 						...val.conteudo.map((val: any) => {
 							const dataIni = new Date(
 								new Date(val.data).getFullYear(),
@@ -70,8 +73,8 @@ export class MainAlunoPageComponent implements OnInit {
 					];
 					return this.aulaService.filterAulaExtra({
 						idAluno: this.usuarioService.usuario()!.id,
-						dataInicio: new Date(),
-						dataFim: new Date(),
+						dataInicio: d,
+						dataFim: d,
 						status: [2],
 					} as AulaExtraFilter);
 				}),
@@ -79,6 +82,7 @@ export class MainAlunoPageComponent implements OnInit {
 			.subscribe({
 				next: (val: any) => {
 					aulaArr = [
+						...aulaArr,
 						...val.conteudo.map((value: any) => {
 							return {
 								title: "Aula Extra ",
@@ -90,8 +94,10 @@ export class MainAlunoPageComponent implements OnInit {
 							} as ItemDeCalendario;
 						}),
 					];
-					console.log(aulaArr);
 					this.aulasDoDia = [...aulaArr];
+					this.aulasDoDia.sort((a, b) =>
+						a.dataHorario > b.dataHorario ? 1 : -1,
+					);
 				},
 				error: (err) => {
 					console.log(err);
@@ -103,7 +109,7 @@ export class MainAlunoPageComponent implements OnInit {
 				nome: "",
 				local: "",
 				data: null,
-				dataInicio: new Date(),
+				dataInicio: d,
 				alunos: null,
 				pagina: 0,
 				tamanho: 4,
