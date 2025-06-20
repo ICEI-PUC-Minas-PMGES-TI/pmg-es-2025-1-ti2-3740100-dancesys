@@ -67,6 +67,7 @@ export class AulasFixasAdminPageComponent {
 	isModalOpen: boolean = false;
 	isModalConfirm: boolean = false;
 	isEdit: boolean = false;
+	isLoading: boolean = false
 
 	statusId!: number;
 
@@ -295,6 +296,7 @@ export class AulasFixasAdminPageComponent {
 			return;
 		}
 
+		this.isLoading = true
 		this.adminService.addAula(formValue).subscribe({
 			next: (response) => {
 				this.buscar();
@@ -305,6 +307,7 @@ export class AulasFixasAdminPageComponent {
 						? "Aula editada com sucesso"
 						: "Aula criada com sucesso",
 				);
+				this.isLoading = false
 			},
 		});
 	}
@@ -321,8 +324,10 @@ export class AulasFixasAdminPageComponent {
 
 	onConfirmStatus(choice: boolean | void) {
 		if (choice) {
+			this.isLoading = true
 			this.adminService.alterarStatusAula(this.statusId).subscribe({
 				next: () => {
+					this.isLoading = false
 					this.buscar();
 					this.alertService.info("Status da aula alterado!");
 				},
