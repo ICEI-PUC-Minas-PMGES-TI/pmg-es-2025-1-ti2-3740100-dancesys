@@ -39,7 +39,6 @@ import { AlertService } from "../../../services/Alert.service";
 	templateUrl: "./calendar-aluno-page.component.html",
 	styleUrl: "./calendar-aluno-page.component.css",
 })
-
 export class CalendarAlunoPageComponent {
 	currPag: number = 0;
 
@@ -135,7 +134,7 @@ export class CalendarAlunoPageComponent {
 			.subscribe({
 				next: (value: any) => {
 					this.alertService.sucesso(
-						"Inscrição realizada com sucesso! 😎",
+						"Inscrição realizada com sucesso!",
 					);
 					this.carregarItens();
 				},
@@ -252,8 +251,8 @@ export class CalendarAlunoPageComponent {
 				}),
 				switchMap((aulasExtras: any) => {
 					const statusAula = [
-						"Pendente ⏲️",
-						"Aceita 😼",
+						"Pendente ⏳",
+						"Aceita ✅",
 						"Indeferida ❌",
 						"Cancelada ⛔",
 					];
@@ -372,9 +371,7 @@ export class CalendarAlunoPageComponent {
 		} as AulaExtraDTO;
 		this.aulaService.solicitarAulaExtra(valor).subscribe({
 			next: () => {
-				this.alertService.sucesso(
-					"Solicitação realizada com sucesso! 😎",
-				);
+				this.alertService.sucesso("Solicitação realizada com sucesso!");
 				this.carregarItens();
 			},
 			error: (error: any) => {
@@ -390,4 +387,3 @@ export class CalendarAlunoPageComponent {
 		});
 	}
 }
-

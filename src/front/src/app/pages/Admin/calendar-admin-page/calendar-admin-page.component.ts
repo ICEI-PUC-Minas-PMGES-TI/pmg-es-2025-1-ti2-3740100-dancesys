@@ -148,8 +148,8 @@ export class CalendarAdminPageComponent {
 				}),
 				switchMap((aulasExtras: any) => {
 					const statusAula = [
-						"Pendente ⏲️",
-						"Aceita 😼",
+						"Pendente ⏳",
+						"Aceita ✅",
 						"Indeferida ❌",
 						"Cancelada ⛔",
 					];
