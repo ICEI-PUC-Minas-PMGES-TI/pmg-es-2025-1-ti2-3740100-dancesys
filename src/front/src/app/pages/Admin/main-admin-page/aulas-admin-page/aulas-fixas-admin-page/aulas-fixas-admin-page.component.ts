@@ -24,6 +24,8 @@ import { SalaService } from "../../../../../services/sala.service";
 import { Sala } from "../../../../../models/Sala.model";
 import { AlertService } from "../../../../../services/Alert.service";
 import { AlunoFilter } from "../../../../../models/aluno.model";
+import { ProfessorFiltro } from "../../../../../models/professor.model";
+import { SearchBoxSingleComponent } from "../../../../../components/search-box-single/search-box-single.component";
 
 enum ToggleModal {
 	NEW = "Criar Aula",
@@ -41,6 +43,7 @@ enum ToggleModal {
 		ReactiveFormsModule,
 		BotaoComponent,
 		CommonModule,
+		SearchBoxSingleComponent
 	],
 	templateUrl: "./aulas-fixas-admin-page.component.html",
 	styleUrl: "./aulas-fixas-admin-page.component.css",
@@ -165,7 +168,6 @@ export class AulasFixasAdminPageComponent {
 
 	ngOnInit() {
 		this.carregarModalidade();
-		this.carregarProfessores();
 		this.carregarSalas();
 		this.buscar();
 	}
@@ -179,12 +181,18 @@ export class AulasFixasAdminPageComponent {
 		});
 	}
 
-	carregarProfessores() {
-		this.adminService.fetchProfessores().subscribe({
+	buscarProfessores(termo: any) {
+		const filtro: ProfessorFiltro = {
+			nome: termo,
+			email: "",
+			cpf: "",
+			status: 1,
+		};
+	
+		this.adminService.filterProfessores(filtro).subscribe({
 			next: (response) => {
 				this.professoresObj = response.conteudo;
 			},
-			error: (err: any) => {},
 		});
 	}
 
@@ -205,6 +213,7 @@ export class AulasFixasAdminPageComponent {
 
 	preencherFormValue(item: any) {
 		this.alunosFilterLs = this.getAlunos(item.alunos);
+		this.professoresObj = [item.idProfessor]
 
 		this.aulaForm = this.fb.group({
 			id: [item.id],
@@ -344,10 +353,12 @@ export class AulasFixasAdminPageComponent {
 
 	closeModal() {
 		this.isModalOpen = false;
+		this.professoresObj = []
 	}
 
 	openModal() {
 		this.isModalOpen = true;
+		this.professoresObj = []
 	}
 
 	isFormValido(): boolean {

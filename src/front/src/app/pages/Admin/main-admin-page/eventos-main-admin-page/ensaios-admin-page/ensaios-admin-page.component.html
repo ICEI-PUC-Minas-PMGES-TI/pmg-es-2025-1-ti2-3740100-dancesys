@@ -20,27 +20,29 @@
 			<form [formGroup]="ensaioForm" class="flex flex-col p-2 space-y-3">
                 <section class="flex flex-row space-x-2 flex-1">
 					<div class="flex flex-col flex-1">
-					  <label for="idProfessor">Professor: </label>
-					  <select
-					  class="p-1 bg-main-300 rounded-md"
-					  name="idProfessor"
-					  id="idProfessor"
-					  formControlName="idProfessor"
-					  required>
-						  <option *ngFor="let professor of professoresObj" [ngValue]="professor.id">{{ professor.idUsuario.nome }}</option>
-					  </select>
+						<app-search-box-single
+                        formControlName="idProfessor"
+						required
+                        [label]="'Professor:'"
+                        [options]="professoresObj"
+                        [optionLabel]="'idUsuario.nome'"
+                        [optionValue]="'id'"
+                        nullLabel="Pesquisar"
+                        (searchChange)="buscarProfessores($event)"
+                        ></app-search-box-single>
 					</div>
 
                     <div class="flex flex-col flex-1">
-					  <label for="idApresentacaoEvento">Apresentação: </label>
-					  <select
-					  class="p-1 bg-main-300 rounded-md"
-					  name="idApresentacaoEvento"
-					  id="idApresentacaoEvento"
-					  formControlName="idApresentacaoEvento"
-					  required>
-						  <option *ngFor="let apresentacao of apresentacoesLs" [ngValue]="apresentacao.id">{{ apresentacao.nome }}</option>
-					  </select>
+						<app-search-box-single
+                        formControlName="idApresentacaoEvento"
+						required
+                        [label]="'Apresentação:'"
+                        [options]="apresentacoesLs"
+                        [optionLabel]="'nome'"
+                        [optionValue]="'id'"
+                        nullLabel="Pesquisar"
+                        (searchChange)="buscarApresentacoesSingle($event)"
+                        ></app-search-box-single>
 					</div>
 				  </section>
 
@@ -124,15 +126,16 @@
                         </app-search-box-multi>
                     </div>
                     <div class="flex flex-col">
-                        <label for="idProfessor">Professor: </label>
-                        <select
-                        class="p-1 bg-main-300 w-50 rounded-md h-8.5"
-                        name="idProfessor"
-                        id="idProfessor"
-                        formControlName="idProfessor">
-                            <option value="">Selecione...</option>	
-                            <option *ngFor="let professor of professoresObj" [ngValue]="professor.id">{{ professor.idUsuario.nome }}</option>
-                        </select>
+						<app-search-box-single
+                        formControlName="idProfessor"
+						required
+                        [label]="'Professor:'"
+                        [options]="professoresObj"
+                        [optionLabel]="'idUsuario.nome'"
+                        [optionValue]="'id'"
+                        nullLabel="Pesquisar"
+                        (searchChange)="buscarProfessores($event)"
+                        ></app-search-box-single>
                     </div>
                     <div class="flex flex-col">
 					<p>Data</p>

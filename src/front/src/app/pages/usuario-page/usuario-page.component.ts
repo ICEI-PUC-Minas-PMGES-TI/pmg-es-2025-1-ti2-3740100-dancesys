@@ -78,7 +78,6 @@ export class UsuarioPageComponent implements OnInit {
 			this.ImageCropped = true;
 			this.imageChangedEvent = event;
 			this.nomeArquivoFoto = event.target!.files[0].name;
-			console.log(event);
 		}
 	}
 	imageCropped(event: ImageCroppedEvent) {

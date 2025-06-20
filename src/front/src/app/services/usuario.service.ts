@@ -88,7 +88,6 @@ export class UsuarioService {
 				},
 				error: (err: any) => {
 					this.alertService.erro(err.error.mensagem);
-					console.log(err);
 				},
 			});
 	}
@@ -126,7 +125,6 @@ export class UsuarioService {
 				},
 				error: (err: any) => {
 					this.alertService.erro(err.error.mensagem);
-					console.log(err);
 				},
 			});
 	}

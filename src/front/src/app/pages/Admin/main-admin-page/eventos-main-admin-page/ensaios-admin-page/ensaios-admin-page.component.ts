@@ -25,6 +25,7 @@ import {
 import { EventoResponse } from "../../../../../models/evento.model";
 import { Ensaio, EnsaioFilter } from "../../../../../models/Ensaio.model";
 import { AlunoFilter } from "../../../../../models/aluno.model";
+import { SearchBoxSingleComponent } from "../../../../../components/search-box-single/search-box-single.component";
 
 enum ToggleModal {
 	NEW = "Criar Ensaio",
@@ -42,6 +43,7 @@ enum ToggleModal {
 		ReactiveFormsModule,
 		BotaoComponent,
 		CommonModule,
+		SearchBoxSingleComponent
 	],
 	templateUrl: "./ensaios-admin-page.component.html",
 	styleUrl: "./ensaios-admin-page.component.css",
@@ -132,8 +134,6 @@ export class EnsaiosAdminPageComponent {
 	apresentacoesLs: any = [];
 
 	ngOnInit() {
-		this.carregarProfessores();
-		this.carregarApresentacoes();
 		this.buscar();
 	}
 
@@ -183,6 +183,8 @@ export class EnsaiosAdminPageComponent {
 
 	preencherEnsaioForm(item: any) {
 		this.alunosLs = this.getAlunos(item.alunos);
+		this.professoresObj = [item.idProfessor]
+		this.apresentacoesLs = [item.idApresentacaoEvento]
 
 		this.ensaioForm = this.fb.group({
 			id: [item.id],
@@ -235,10 +237,14 @@ export class EnsaiosAdminPageComponent {
 
 	openModal() {
 		this.isModalOpen = true;
+		this.professoresObj = []
+		this.apresentacoesLs = []
 	}
 
 	closeModal() {
 		this.isModalOpen = false;
+		this.professoresObj = []
+		this.apresentacoesLs = []
 	}
 
 	novo() {
@@ -315,18 +321,24 @@ export class EnsaiosAdminPageComponent {
 		});
 	}
 
-	carregarProfessores() {
-		this.adminService.fetchProfessores().subscribe({
+	buscarProfessores(termo: any) {
+		const filtro: ProfessorFiltro = {
+			nome: termo,
+			email: "",
+			cpf: "",
+			status: 1,
+		};
+	
+		this.adminService.filterProfessores(filtro).subscribe({
 			next: (response) => {
 				this.professoresObj = response.conteudo;
 			},
-			error: (err: any) => {},
 		});
 	}
 
-	carregarApresentacoes() {
+	buscarApresentacoesSingle(termo: any){
 		const filtro: ApresentacaoEventoFilter = {
-			nome: null,
+			nome: termo,
 			idEvento: null,
 			alunos: null,
 			tamanho: 0,

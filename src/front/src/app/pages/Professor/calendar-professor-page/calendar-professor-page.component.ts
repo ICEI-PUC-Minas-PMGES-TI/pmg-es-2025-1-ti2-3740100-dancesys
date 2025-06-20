@@ -241,14 +241,12 @@ export class CalendarProfessorPageComponent {
 
 	abrirModalDeChamada(aula: any) {
 		this.aulaChamada = aula;
-		console.log(aula);
 		this.arrPresencaAlunos = aula.chamada.map((val: any) => {
 			return {
 				idAluno: val.idAluno as AlunoResponse,
 				presente: val.presenca,
 			};
 		});
-		console.log(this.arrPresencaAlunos);
 		this.presencaModal = true;
 	}
 

@@ -174,7 +174,6 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 				this.isLoading = false;
 			},
 			error: (err: any) => {
-				console.log(err);
 			},
 		});
 	}

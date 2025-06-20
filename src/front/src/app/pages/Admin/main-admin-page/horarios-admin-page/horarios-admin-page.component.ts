@@ -9,6 +9,9 @@ import { HorarioProfessor } from "../../../../models/horarioProfessor.model";
 import { ModalComponent } from "../../../../components/modal/modal.component";
 import { AlertService } from "../../../../services/Alert.service";
 import { horarioProfessorFilter } from "../../../../models/horarioProfessorFilter.model";
+import { ProfessorFiltro } from "../../../../models/professor.model";
+import { SearchBoxMultiComponent } from "../../../../components/search-box-multi/search-box-multi.component";
+import { SearchBoxSingleComponent } from "../../../../components/search-box-single/search-box-single.component";
 
 enum ToggleModal {
 	NEW = "Criar Horario",
@@ -24,7 +27,9 @@ enum ToggleModal {
 		MultiSelectInputComponent,
 		CommonModule,
 		ReactiveFormsModule,
-		ModalComponent
+		ModalComponent,
+		SearchBoxMultiComponent,
+		SearchBoxSingleComponent
 	],
 	templateUrl: "./horarios-admin-page.component.html",
 	styleUrl: "./horarios-admin-page.component.css",
@@ -116,7 +121,6 @@ export class HorariosAdminPageComponent {
 	  ];
 
 	ngOnInit(): void{
-		this.carregarProfessores();
 		this.buscar();
 	}
 
@@ -131,6 +135,8 @@ export class HorariosAdminPageComponent {
 	}
 
 	preencherHorarioForm(item: HorarioProfessor){
+		this.professoresObj = [item.idProfessor]
+		
 		this.horarioForm = this.fb.group({
 			id: [item.id],
 			diaSemana: [item.diaSemana],
@@ -150,15 +156,20 @@ export class HorariosAdminPageComponent {
 		return this.horarioForm.valid;
 	}
 
-	carregarProfessores(){
-		this.adminService.fetchProfessores().subscribe({
-			next: (response) => {
-				this.professoresObj = response.conteudo;
-			},
-			error: (err) => {
-			},
-		});
-	}
+	buscarProfessores(termo: any) {
+			const filtro: ProfessorFiltro = {
+				nome: termo,
+				email: "",
+				cpf: "",
+				status: 1,
+			};
+		
+			this.adminService.filterProfessores(filtro).subscribe({
+				next: (response) => {
+					this.professoresObj = response.conteudo;
+				},
+			});
+		}
 
 	onDiaChange(selected: number[]) {
 		this.diasSemanaFilter = selected;

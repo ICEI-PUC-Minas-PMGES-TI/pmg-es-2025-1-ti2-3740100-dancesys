@@ -127,7 +127,6 @@ export class MainProfessorPageComponent {
 					this.aulasDoDia = [...aulaArr];
 				},
 				error: (err) => {
-					console.log(err);
 				},
 			});
 
@@ -148,7 +147,6 @@ export class MainProfessorPageComponent {
 					this.proximosEventos = [...val.conteudo];
 				},
 				error: (err) => {
-					console.log(err);
 				},
 			});
 	}

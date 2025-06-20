@@ -17,6 +17,7 @@ import { SearchBoxMultiComponent } from "../../../../../components/search-box-mu
 import { UsuarioFiltro } from "../../../../../models/usuario.model";
 import { AlertService } from "../../../../../services/Alert.service";
 import { AlunoFilter } from "../../../../../models/aluno.model";
+import { SearchBoxSingleComponent } from "../../../../../components/search-box-single/search-box-single.component";
 
 @Component({
 	selector: "app-eventos-admin-page",
@@ -28,6 +29,7 @@ import { AlunoFilter } from "../../../../../models/aluno.model";
 		DatePipe,
 		FormsModule,
 		ModalComponent,
+		SearchBoxSingleComponent
 	],
 	templateUrl: "./apresentacoes-admin-page.component.html",
 	styleUrl: "./apresentacoes-admin-page.component.css",
@@ -82,14 +84,13 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 	];
 
 	apresentacoes: ApresentacaoEventoResponse | undefined = undefined;
-	eventos: EventoResponse | undefined = undefined;
+	eventos: any = [];
 
 	alunosLs: any = [];
 	alunosEditar: any = [];
 
 	ngOnInit(): void {
 		this.onFiltrar(); // esse método é o equivalente ao fetchApresentacoes
-		this.fetchEventos();
 	}
 
 	limparFiltros(form: NgForm) {
@@ -104,11 +105,10 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 		return false;
 	}
 
-	// puxa todos os eventos sem nenhum filtro
-	private fetchEventos() {
+	buscarEventos(termo: any){
 		this.adminService
 			.fetchEventos({
-				nome: "",
+				nome: termo,
 				local: "",
 				data: null,
 				alunos: null,
@@ -117,7 +117,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 			} as EventoFilter)
 			.subscribe({
 				next: (ev: EventoResponse) => {
-					this.eventos = ev;
+					this.eventos = ev.conteudo;
 				},
 			});
 	}
@@ -149,6 +149,7 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 	onToggleCriarModal() {
 		this.isModalCriarOpen = !this.isModalCriarOpen;
 		if (!this.isModalCriarOpen) {
+			this.eventos = []
 			this.alunosLs = [];
 		}
 	}
@@ -157,10 +158,14 @@ export class ApresentacoesAdminPageComponent implements OnInit {
 		this.isModalEditarOpen = !this.isModalEditarOpen;
 		if (this.isModalEditarOpen) {
 			this.currentApresentacaoEditar = item;
+			this.eventos = [{id: item?.idEvento, nome: item?.eventoNome}]
 			this.alunosLs = this.getAlunos(item!.alunos);
 			this.alunosEditar = this.getAlunosIds(item!.alunos);
+
 			return;
 		}
+
+		this.eventos = []
 		this.alunosLs = [];
 	}
 	onToggleExcluirModal(confirmed?: boolean | void) {

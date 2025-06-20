@@ -95,9 +95,6 @@ export class EventosAlunoPageComponent implements OnInit {
 					this.alertService.sucesso("Compra realizada com sucesso!");
 				}
 			})
-			console.log(
-				`Evento ID: ${this.eventoId}, Aluno ID: ${this.alunoId}, Quantidade: ${qtdIngressos}, Tipo: ${tipoIngresso}`
-			);
 			this.fecharModal();
 		} else {
 			this.alertService.erro("Formulario invalido");

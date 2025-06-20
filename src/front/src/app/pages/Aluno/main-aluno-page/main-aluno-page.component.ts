@@ -90,11 +90,9 @@ export class MainAlunoPageComponent implements OnInit {
 							} as ItemDeCalendario;
 						}),
 					];
-					console.log(aulaArr);
 					this.aulasDoDia = [...aulaArr];
 				},
 				error: (err) => {
-					console.log(err);
 				},
 			});
 
@@ -115,7 +113,6 @@ export class MainAlunoPageComponent implements OnInit {
 					this.proximosEventos = [...val.conteudo];
 				},
 				error: (err) => {
-					console.log(err);
 				},
 			});
 	}

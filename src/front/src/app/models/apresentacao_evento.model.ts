@@ -6,6 +6,7 @@ export class ApresentacaoEvento {
 	horaInicio!: Date;
 	horaFim!: Date;
 	idEvento!: number;
+	eventoNome!: string;
 	alunos!: number[];
 }
 

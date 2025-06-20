@@ -22,7 +22,17 @@
 				>
 					<section class="flex flex-row space-x-3 flex-1">
 						<div class="flex flex-col flex-2">
-							<label for="idProfessor">Professor: </label>
+							<app-search-box-single
+							formControlName="idProfessor"
+							required
+							[label]="'Professor:'"
+							[options]="professoresObj"
+							[optionLabel]="'idUsuario.nome'"
+							[optionValue]="'id'"
+							nullLabel="Pesquisar"
+							(searchChange)="buscarProfessores($event)"
+							></app-search-box-single>
+							<!-- <label for="idProfessor">Professor: </label>
 							<select
 								class="p-1 bg-main-300 rounded-md"
 								name="idProfessor"
@@ -37,7 +47,7 @@
 								>
 									{{ professor.idUsuario.nome }}
 								</option>
-							</select>
+							</select> -->
 						</div>
 
 						<div class="flex flex-col flex-1">
@@ -121,16 +131,15 @@
 		</div>
 		<form [formGroup]="filterForm" class="flex flex-col text-main-500 font-bold">
 			<div class="flex px-1 flex-row space-x-2">
-				<app-multi-select-input
-					formControlName="professores"
-					[label]="'Professor:'"
-					[options]="professoresObj"
-					optionLabel="idUsuario.nome"
-					optionValue="id"
-					(selectionChange)="onProfessorChange($event)"
-					nullLabel="Todos"
-				></app-multi-select-input>
-
+				<app-search-box-multi 
+				[options]="professoresObj" 
+				optionLabel="idUsuario.nome"
+                optionValue="id" 
+				[label]="'Professor: '" 
+				[nullLabel]="'Pesquisar...'"
+                (searchChange)="buscarProfessores($event)" 
+				formControlName="professores">
+                </app-search-box-multi>
 				<app-multi-select-input
 					formControlName="diasSemana"
 					[label]="'Dias:'"
