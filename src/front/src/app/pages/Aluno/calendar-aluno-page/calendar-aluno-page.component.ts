@@ -39,6 +39,7 @@ import { AlertService } from "../../../services/Alert.service";
 	templateUrl: "./calendar-aluno-page.component.html",
 	styleUrl: "./calendar-aluno-page.component.css",
 })
+
 export class CalendarAlunoPageComponent {
 	currPag: number = 0;
 
@@ -389,3 +390,4 @@ export class CalendarAlunoPageComponent {
 		});
 	}
 }
+

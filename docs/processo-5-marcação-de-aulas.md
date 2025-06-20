@@ -2,7 +2,8 @@
 
 _Este é o processo de marcação de aulas, onde tanto a administração quanto o aluno podem interagir com o sistema. O aluno, que possui um determinado tipo de matrícula, pode escolher quais aulas pretende fazer durante a semana, sendo guiado pelas regras e validações definidas pelo sistema. A administração pode controlar quais turmas o aluno de matrícula fixa tem acesso._
 
-![Porcesso_MarcaçãoAula](https://github.com/user-attachments/assets/b366e44b-f450-4a63-8f21-a80f5fa9e4ca)
+![Porcesso_MarcaçãoAula](https://github.com/user-attachments/assets/366d4677-7af2-4fae-8991-beaecc1443af)
+
 
 
 ---

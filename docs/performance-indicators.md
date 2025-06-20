@@ -1,13 +1,9 @@
-## 5. Indicadores de desempenho
+| **Indicador**                                         | **Objetivo**                                      | **Descrição**                                                              | **Fonte de Dados**                       | **Fórmula de Cálculo**                                                                   |
+| ----------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Taxa de conversão em matrícula após aula experimental | Avaliar a eficácia da aula experimental           | Mede quantos alunos se matriculam após participarem da aula experimental   | Sistema de agendamento e de matrículas   | (Nº de alunos matriculados após aula ÷ Nº de alunos que fizeram aula experimental) × 100 |
+| Percentual de alunos por modalidade                   | Verificar a aderência às modalidades da escola    | Mede a porcentagem de alunos por modalidade ofertada                       | Relatório de quantitativos               | (Nº de alunos na modalidade ÷ Nº total de alunos) × 100                                  |
+| Aulas por professor                                   | Monitorar a quantidade de aulas por professor     | Quantidade de aulas ministradas por professor em um semestre               | Relatório quantitativo                   | Nº de aulas ministradas ÷ Nº de professores                                              |
+| Taxa de remarcação/desmarcação de aulas               | Monitorar o volume de alterações nos agendamentos | Número de alterações feitas pelos alunos em relação ao agendamento inicial | Registro de agendamentos e cancelamentos | (Nº de remarcações + desmarcações) ÷ Nº total de aulas agendadas × 100                   |
+| Percentual de boletos pagos em atraso                 | Monitorar inadimplência                           | Percentual de boletos pagos após o vencimento                              | Sistema financeiro                       | (Nº de boletos pagos em atraso ÷ Nº total de boletos emitidos) × 100                     |
 
-_Apresente aqui os principais indicadores de desempenho e algumas metas para o processo. Atenção: as informações necessárias para gerar os indicadores devem estar contempladas no modelo relacional. Defina no mínimo 3 indicadores de desempenho._
 
-_Usar o seguinte modelo:_
-
-| **Indicador** | **Objetivos** | **Descrição** | **Fonte de dados** | **Fórmula de cálculo** |
-| ---           | ---           | ---           | ---             | ---             |
-| Percentual de reclamações | Avaliar quantitativamente as reclamações | Percentual de reclamações em relação ao total de atendimentos | Tabela Reclamações | número total de reclamações / número total de atendimentos |
-| Taxa de requisições atendidas | Melhorar a prestação de serviços medindo a porcentagem de requisições atendidas| Mede a % de requisições atendidas na semana | Tabela Solicitações | (número de requisições atendidas / número total de requisições) * 100 |
-| Taxa de entrega de material | Manter controle sobre os materiais que estão sendo entregues | Mede % de material entregue dentro do mês | Tabela Pedidos | (número de pedidos entregues / número total de pedidos) * 100 |
-
-_Obs.: todas as informações para gerar os indicadores devem estar no modelo relacional._
