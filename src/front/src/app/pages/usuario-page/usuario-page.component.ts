@@ -11,12 +11,16 @@ import { Usuario, UsuarioTipos } from "../../models/usuario.model";
 import { AlunoResponse, ProfessorResponse } from "../../services/admin.service";
 import { FormsModule, NgForm } from "@angular/forms";
 import { AlertService } from "../../services/Alert.service";
+import { DatePipe } from "@angular/common";
+import { NgxMaskPipe } from "ngx-mask";
 
 @Component({
 	selector: "app-usuario-page",
 	standalone: true,
 	imports: [
 		BotaoComponent,
+		DatePipe,
+		NgxMaskPipe,
 		ModalComponent,
 		ImageCropperComponent,
 		FormsModule,
@@ -33,6 +37,8 @@ export class UsuarioPageComponent implements OnInit {
 	imageChangedEvent: any = null;
 	croppedImage: any = "";
 	nomeArquivoFoto: string = "";
+
+	UsuarioTipos = UsuarioTipos;
 
 	ngOnInit(): void {}
 

@@ -1,3 +1,36 @@
+@if (isModalFoto) {
+	<app-modal (onClose)="closeModalFoto()" zindex="z-4">
+		<div class="w-full">
+			<main class="w-full relative flex flex-row justify-center">
+				<img src="{{ urlFotoEdit }}" class="h-full" />
+			</main>
+		</div>
+	</app-modal>
+}
+
+@if (ImageCropped) {
+	<app-modal zindex="z-4">
+		<div class="w-full">
+			<main>
+				<image-cropper
+					class="bg-main-100 cropper w-[80%]"
+					[hidden]="!imageChangedEvent"
+					[imageChangedEvent]="imageChangedEvent"
+					[maintainAspectRatio]="true"
+					[aspectRatio]="1"
+					format="png"
+					(imageCropped)="imageCropped($event)"
+					(imageLoaded)="imageLoaded($event)"
+					(cropperReady)="cropperReady()"
+					(loadImageFailed)="loadImageFailed()"
+					output="base64"
+				></image-cropper>
+				<button (click)="confirmar()" appButton>Confirmar</button>
+			</main>
+		</div>
+	</app-modal>
+}
+
 @if (isModalExcluirOpen) {
 	<app-modal
 		class="w-full"
@@ -56,20 +89,6 @@
 									type="file"
 									(change)="fileChangeEvent($event)"
 								/>
-								<image-cropper
-									class="bg-main-100 cropper"
-									[hidden]="!imageChangedEvent"
-									[imageChangedEvent]="imageChangedEvent"
-									[maintainAspectRatio]="true"
-									[aspectRatio]="1"
-									format="png"
-									(imageCropped)="imageCropped($event)"
-									(imageLoaded)="imageLoaded($event)"
-									(cropperReady)="cropperReady()"
-									(loadImageFailed)="loadImageFailed()"
-									output="base64"
-								></image-cropper>
-								<button type="button"></button>
 							</div>
 						</section>
 						<section class="flex flex-col space-y-2 flex-1">
@@ -114,7 +133,7 @@
 							</div>
 						</section>
 					</section>
-					<button class="flex flex-0 mt-3" type="submit" appButton>
+					<button class="w-36 mt-3" type="submit" appButton>
 						Criar
 					</button>
 				</form>
@@ -175,29 +194,6 @@
 									type="file"
 									(change)="fileChangeEvent($event)"
 								/>
-								<image-cropper
-									class="bg-main-100 cropper"
-									[hidden]="!imageChangedEvent"
-									[imageChangedEvent]="imageChangedEvent"
-									[maintainAspectRatio]="true"
-									[aspectRatio]="1"
-									format="png"
-									(imageCropped)="imageCropped($event)"
-									(imageLoaded)="imageLoaded($event)"
-									(cropperReady)="cropperReady()"
-									(loadImageFailed)="loadImageFailed()"
-									output="base64"
-								></image-cropper>
-								@if (
-									!imageChangedEvent &&
-									currentEventoEditar.urlFoto
-								) {
-									<img
-										class="object-contain w-40 h-40 mt-2"
-										[src]="currentEventoEditar.urlFoto"
-										alt=""
-									/>
-								}
 							</div>
 						</section>
 						<section class="flex flex-col space-y-2 flex-1">
@@ -242,7 +238,17 @@
 							</div>
 						</section>
 					</section>
-					<button class="flex flex-0 mt-3" type="submit" appButton>
+					@if (urlFotoEdit != "") {
+						<section class="flex flex-row space-x-2 flex-1">
+							<div class="flex flex-col flex-1"></div>
+							<div class="flex flex-col flex-1">
+								<button type="button" (click)="ver()" appButton>
+									Ver foto
+								</button>
+							</div>
+						</section>
+					}
+					<button class="w-36 mt-3" type="submit" appButton>
 						Salvar Edições
 					</button>
 				</form>

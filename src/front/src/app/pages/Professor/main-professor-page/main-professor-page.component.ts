@@ -44,13 +44,15 @@ export class MainProfessorPageComponent {
 
 	ngOnInit(): void {
 		let aulaArr: any[] = [];
+		const d = new Date();
+		d.setDate(d.getDate() - 1);
 		this.adminService
 			.fetchAulasOcorrentes({
 				professores: [
 					(this.usuarioService.usuario() as ProfessorResponse).id,
 				],
-				dataInicio: new Date(),
-				dataFim: new Date(),
+				dataInicio: d,
+				dataFim: d,
 				orderBy: "idAula.horarioInicio",
 				order: "desc",
 			} as AulaOcorrenciaFilter)
@@ -84,12 +86,13 @@ export class MainProfessorPageComponent {
 						idProfessor: (
 							this.usuarioService.usuario() as ProfessorResponse
 						).id,
-						dataInicial: new Date(),
-						dataFinal: new Date(),
+						dataInicial: d,
+						dataFinal: d,
 					} as AulaExperimentalFilter);
 				}),
 				switchMap((val: any) => {
 					aulaArr = [
+						...aulaArr,
 						...val.conteudo.map((aula: any) => {
 							const dataIni = new Date(aula.dataHorarioInicio);
 							return {
@@ -104,8 +107,8 @@ export class MainProfessorPageComponent {
 					];
 					return this.aulaService.filterAulaExtra({
 						idProfessor: this.usuarioService.usuario()!.id,
-						dataInicio: new Date(),
-						dataFim: new Date(),
+						dataInicio: d,
+						dataFim: d,
 						status: [2],
 					} as AulaExtraFilter);
 				}),
@@ -113,6 +116,7 @@ export class MainProfessorPageComponent {
 			.subscribe({
 				next: (val: any) => {
 					aulaArr = [
+						...aulaArr,
 						...val.conteudo.map((value: any) => {
 							return {
 								title: "Aula Extra ",
@@ -125,6 +129,9 @@ export class MainProfessorPageComponent {
 						}),
 					];
 					this.aulasDoDia = [...aulaArr];
+					this.aulasDoDia.sort((a, b) =>
+						a.dataHorario > b.dataHorario ? 1 : -1,
+					);
 				},
 				error: (err) => {
 				},
@@ -135,7 +142,7 @@ export class MainProfessorPageComponent {
 				nome: "",
 				local: "",
 				data: null,
-				dataInicio: new Date(),
+				dataInicio: d,
 				alunos: null,
 				pagina: 0,
 				tamanho: 4,
