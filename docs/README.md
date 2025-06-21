@@ -159,7 +159,15 @@ _A sessão a seguir apresenta a descrição do produto de software desenvolvido.
 
 ## 7. Conclusão
 
-_Apresente aqui a conclusão do seu trabalho. Deve ser apresentada aqui uma discussão dos resultados obtidos no trabalho, local em que se verifica as observações pessoais de cada aluno. Essa seção poderá também apresentar sugestões de novas linhas de estudo._
+O desenvolvimento do sistema DanceSys representa um avanço significativo na gestão de escolas de dança, oferecendo soluções adaptadas às necessidades específicas dessas instituições. A implementação de um sistema integrado e especializado facilita a administração de turmas, agendamentos, comunicação e controle financeiro, além de proporcionar maior autonomia aos alunos para gerenciar suas aulas.
+
+A solução proposta visa otimizar a experiência de alunos, professores e administradores, tornando os processos mais eficientes e minimizando os erros comuns encontrados em sistemas genéricos. A flexibilidade no agendamento de aulas, o controle financeiro preciso e o gerenciamento de eventos são apenas alguns dos aspectos que tornam este sistema uma ferramenta poderosa para a administração de escolas de dança.
+
+Além disso, a utilização de uma interface intuitiva e acessível garante que todos os usuários possam interagir com o sistema de forma simples e eficaz. A possibilidade de personalização de turmas e horários, juntamente com a gestão de eventos e comunicação, torna o DanceSys uma plataforma completa para escolas de dança de diferentes portes.
+
+Para futuras melhorias, seria interessante explorar a integração com outros sistemas de gestão e expandir a plataforma para incluir recursos como avaliação de desempenho dos alunos, análise de relatórios mais detalhados e a criação de um módulo de feedback para professores e alunos. Essas sugestões podem aumentar ainda mais a eficiência da gestão e promover uma comunicação mais fluida e transparente dentro da escola de dança.
+
+Esse trabalho contribui para a evolução das ferramentas utilizadas nas escolas de dança, alinhando-se às demandas modernas de gestão e proporcionando uma experiência de ensino e aprendizado mais organizada e profissionalizada.
 
 # REFERÊNCIAS
 

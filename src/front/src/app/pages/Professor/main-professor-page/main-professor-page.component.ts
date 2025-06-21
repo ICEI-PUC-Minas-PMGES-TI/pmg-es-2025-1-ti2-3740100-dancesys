@@ -45,7 +45,7 @@ export class MainProfessorPageComponent {
 	ngOnInit(): void {
 		let aulaArr: any[] = [];
 		const d = new Date();
-		d.setDate(d.getDate() - 1);
+		// d.setDate(d.getDate() - 1);
 		this.adminService
 			.fetchAulasOcorrentes({
 				professores: [
