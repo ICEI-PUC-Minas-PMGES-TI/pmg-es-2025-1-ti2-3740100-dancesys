@@ -324,7 +324,7 @@ export class IndicadorFinanceiroAdminPageComponent {
   getBoletosMesValorNoPrazo(response: Financeiro[]){
     let n = 0;
     response.forEach((el) =>{
-      n += el.boletosPagosSemAtraso
+      n += el.somaValoresSemAtraso
     })
 
     this.boletosMesValorNoPrazo = n

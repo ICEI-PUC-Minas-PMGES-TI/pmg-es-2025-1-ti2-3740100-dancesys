@@ -1,7 +1,7 @@
 <div class="boleto" [style.background-color]="getCorFundo()">
 	<div class="info">
 		<p>
-			<strong>Mensalidade {{ boleto.criadoEm | date: "MM/yyyy" }}</strong>
+			<strong>Boleto de {{ getTipo(boleto.tipo) }} {{ boleto.criadoEm | date: "MM/yyyy" }}</strong>
 		</p>
 		<p>{{ boleto.valor | currency: "BRL" }}</p>
 		@if (boleto.status === 3) {

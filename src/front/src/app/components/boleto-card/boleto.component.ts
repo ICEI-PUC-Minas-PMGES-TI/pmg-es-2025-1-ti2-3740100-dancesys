@@ -51,4 +51,21 @@ export class BoletoCardComponent {
   pagarBoleto() {
     this.payEvent.emit(this.boleto.id)
   }
+
+    getTipo(tipo: number){
+    switch(tipo){
+      case 1 :
+        return 'Matricula'
+      case 2 : 
+        return 'Mensalidade'
+      case 3 : 
+        return 'Aula extra'
+      case 4 :
+        return 'Ingresso de evento'
+      case 5 :
+        return 'Figurino'
+      default : 
+        return ''
+    }
+  }
 }

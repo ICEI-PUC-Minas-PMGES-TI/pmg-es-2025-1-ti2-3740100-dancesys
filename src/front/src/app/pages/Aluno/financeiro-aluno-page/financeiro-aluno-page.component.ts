@@ -43,6 +43,7 @@ export class FinanceiroAlunoPageComponent implements OnInit {
 		this.adminService.filterDividendos(filtro).subscribe({
 			next: (response: any) => {
 				this.boletos = response.conteudo;
+				console.log(this.boletos)
 			},
 		});
 	}
