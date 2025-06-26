@@ -113,6 +113,7 @@ export class UsuarioService {
 			)
 			.subscribe({
 				next: (response: Usuario) => {
+					this.alertService.sucesso("Imagem alterada com sucesso")
 					this.currentUsuario.update((valor: possibleUserTypes) => {
 						if (this.getLoggedInUserType() === UsuarioTipos.ADMIN) {
 							return response;
@@ -140,7 +141,11 @@ export class UsuarioService {
 				...usuario,
 				senha,
 			})
-			.subscribe();
+			.subscribe({
+				next: ()=>{
+					this.alertService.sucesso("Senha alterada com sucesso")
+				}
+			});
 	}
 
 	public deslogar() {

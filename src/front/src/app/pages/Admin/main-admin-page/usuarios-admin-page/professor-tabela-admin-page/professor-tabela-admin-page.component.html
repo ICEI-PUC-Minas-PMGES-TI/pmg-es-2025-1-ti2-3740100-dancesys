@@ -432,6 +432,11 @@
 		</div>
 	</app-modal>
 }
+
+<div *ngIf="isLoading" class="overlay">
+	<div class="loader"></div>
+</div>
+
 <main class="py-4 max-w-full max-h-full h-full">
 	<section class="flex flex-col pb-4 max-w-full">
 		<div class="flex flex-row space-x-4">
@@ -529,7 +534,7 @@
 			</button>
 		</div>
 	</section>
-	@if (professores.length > 0 && !isLoading) {
+	@if (professores.length > 0) {
 		<app-simple-table
 			[colunas]="colunas"
 			[botoesAcoes]="acoes"
