@@ -1,6 +1,7 @@
 INSERT INTO Modalidade (nome)
 VALUES
-    ('Ballet jazz'),
+    ('Ballet'),
+    ('Jazz'),
     ('Contemporâneo'),
     ('Stiletto'),
     ('Jazz funk'),

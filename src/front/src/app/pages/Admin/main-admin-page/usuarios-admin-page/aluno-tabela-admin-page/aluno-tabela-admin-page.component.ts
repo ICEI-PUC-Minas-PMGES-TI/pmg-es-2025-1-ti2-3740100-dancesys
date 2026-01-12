@@ -26,6 +26,7 @@ import {
 	formatarData,
 	formatarTelefone,
 } from "../../../../../utils/formatters";
+import { CommonModule } from "@angular/common";
 
 export type FormAlunoValue = {
 	nome: string;
@@ -56,6 +57,7 @@ enum ToggleUserStatusMessages {
 		NgxMaskDirective,
 		NgxMaskPipe,
 		FormsModule,
+		CommonModule
 	],
 	templateUrl: "./aluno-tabela-admin-page.component.html",
 	styleUrl: "./aluno-tabela-admin-page.component.css",
@@ -139,7 +141,6 @@ export class AlunoTabelaAdminPageComponent {
 	}
 
 	reloadUsers() {
-		this.isLoading = true;
 		this.adminService
 			.fetchAlunos({
 				tamanho: this.itensPage,
@@ -181,15 +182,12 @@ export class AlunoTabelaAdminPageComponent {
 		});
 		this.totalItens = response.total;
 		this.tabela.isLoad(false);
-		this.isLoading = false;
 	}
 
 	reloadModalidades() {
-		this.isLoading = true;
 		this.modalidadesService.fetchModalidades().subscribe({
 			next: (response) => {
 				this.modalidades = response;
-				this.isLoading = false;
 			},
 			error: (err) => {},
 		});
@@ -296,8 +294,10 @@ export class AlunoTabelaAdminPageComponent {
 		value.tipo = UsuarioTipos.ALUNO; // forçado
 		value.modalidades = [...this.modalidadesAlunoArr];
 		this.closeAddModal();
+		this.isLoading = true
 		this.adminService.addUsuarioAluno(value).subscribe({
 			next: () => {
+				this.isLoading = false
 				this.filterFormSubmit();
 			},
 		});
@@ -311,8 +311,10 @@ export class AlunoTabelaAdminPageComponent {
 			boolBaile: !!(form.value as FormAlunoValue).boolBaile,
 		};
 		this.closeEditModal();
+		this.isLoading = true
 		this.adminService.editarAluno(value).subscribe({
 			next: () => {
+				this.isLoading = false
 				this.filterFormSubmit();
 			},
 		});

@@ -19,6 +19,7 @@ import {
 	formatarData,
 	formatarTelefone,
 } from "../../../../../utils/formatters";
+import { CommonModule } from "@angular/common";
 
 export type FormProfessorValue = {
 	nome: string;
@@ -50,6 +51,7 @@ enum ToggleUserStatusMessages {
 		NgxMaskDirective,
 		NgxMaskPipe,
 		SimpleTableComponent,
+		CommonModule
 	],
 	templateUrl: "./professor-tabela-admin-page.component.html",
 	styleUrl: "./professor-tabela-admin-page.component.css",
@@ -125,7 +127,6 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 	}
 
 	reloadUsers() {
-		this.isLoading = true;
 		this.adminService
 			.fetchProfessores({
 				tamanho: this.itensPage,
@@ -136,7 +137,6 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 			.subscribe({
 				next: (response) => {
 					this.handleProfessorResponse(response);
-					this.isLoading = false;
 				},
 				error: (err) => {},
 			});
@@ -163,15 +163,12 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 		});
 		this.totalItens = response.total;
 		this.tabela.isLoad(false);
-		this.isLoading = false;
 	}
 
 	reloadModalidades() {
-		this.isLoading = true;
 		this.modalidadesService.fetchModalidades().subscribe({
 			next: (response) => {
 				this.modalidades = response;
-				this.isLoading = false;
 			},
 			error: (err: any) => {
 			},
@@ -203,8 +200,10 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 		value.tipo = UsuarioTipos.FUNCIONARIO; // forçado
 		value.modalidades = [...this.modalidadesProfArr];
 		this.closeAddModal();
+		this.isLoading = true
 		this.adminService.addUsuarioProfessor(value).subscribe({
 			next: () => {
+				this.isLoading = false
 				this.filterFormSubmit();
 			},
 		});
@@ -215,9 +214,11 @@ export class ProfessorTabelaAdminPageComponent implements OnInit {
 			...this.tempEditProf!,
 		};
 		this.closeEditModal();
+		this.isLoading = true
 		if (form.valid) {
 			this.adminService.editarProfessor(value).subscribe({
 				next: () => {
+					this.isLoading = false
 					this.filterFormSubmit();
 				},
 			});
